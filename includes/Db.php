@@ -1,6 +1,6 @@
 <?php
 /**
- * Database schema (redirects, 404 log and report snapshot tables). Additive and idempotent: dbDelta may run any number of times.
+ * Database schema (redirects, 404 log, report snapshot and activity event tables). Additive and idempotent: dbDelta may run any number of times.
  *
  * @package Wpseokit
  */
@@ -14,12 +14,12 @@ defined( 'ABSPATH' ) || exit;
 final class Db {
 
 	/** Schema version; raise it whenever DDL below changes. */
-	public const VERSION = 2;
+	public const VERSION = 3;
 
 	public const OPTION = 'wpseokit_db_version';
 
 	/**
-	 * Full table name for a short name: 'redirects', '404_logs' or 'snapshots'.
+	 * Full table name for a short name: 'redirects', '404_logs', 'snapshots' or 'events'.
 	 */
 	public static function table( string $name ): string {
 		global $wpdb;
@@ -46,6 +46,7 @@ final class Db {
 		$redir   = self::table( 'redirects' );
 		$logs    = self::table( '404_logs' );
 		$snaps   = self::table( 'snapshots' );
+		$events  = self::table( 'events' );
 
 		dbDelta(
 			"CREATE TABLE {$redir} (
@@ -88,6 +89,19 @@ final class Db {
   taken_at datetime NOT NULL,
   PRIMARY KEY  (id),
   UNIQUE KEY snapshot_date (snapshot_date)
+) {$charset};"
+		);
+		dbDelta(
+			"CREATE TABLE {$events} (
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  at datetime NOT NULL,
+  type varchar(20) NOT NULL,
+  event varchar(40) NOT NULL,
+  detail varchar(255) NOT NULL DEFAULT '',
+  link varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY  (id),
+  KEY at (at),
+  KEY type_at (type,at)
 ) {$charset};"
 		);
 		update_option( self::OPTION, self::VERSION, true );

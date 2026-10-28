@@ -123,12 +123,14 @@ final class ReportService {
 		$date    = wp_date( 'Y-m-d' );
 		$created = SnapshotRepository::upsert( $date, $metrics, Snapshot::SCHEMA_VERSION );
 		if ( null === $created ) {
+			EventLogService::error( 'snapshot', 'The snapshot could not be saved.' );
 			return array(
 				'status'  => 'error',
 				'message' => __( 'The snapshot could not be saved.', 'wpseokit' ),
 			);
 		}
 		SnapshotRepository::prune( (int) SettingsRepository::get( 'reports.retention_days', 400 ) );
+		EventLogService::record( 'snapshot', $created ? 'snapshot_taken' : 'snapshot_replaced', $date, array( 'tool' => 'reports' ) );
 		$row = SnapshotRepository::find_by_date( $date );
 		return array(
 			'status'   => 'ok',

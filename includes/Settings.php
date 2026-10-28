@@ -157,6 +157,10 @@ final class Settings {
 				'daily_enabled'  => array( 'bool', true ),
 				'retention_days' => array( 'int', 400, 30, 1095 ),
 			),
+			'logs'      => array(
+				'max_events'     => array( 'int', 500, 50, 5000 ),
+				'retention_days' => array( 'int', 90, 7, 365 ),
+			),
 		);
 	}
 

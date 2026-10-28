@@ -220,6 +220,11 @@ final class Updater {
 		);
 		set_transient( self::CACHE, $record, $ttl );
 		update_option( self::OPT_CHECKED, $record['time'], false );
+		$found = 'ok' === $status && is_array( $rel ) && version_compare( $rel['version'], WPSEOKIT_VERSION, '>' );
+		Services\EventLogService::update_check( 'error' === $status ? 'failed' : ( $found ? 'update_found' : 'up_to_date' ), $found ? $rel['version'] : WPSEOKIT_VERSION );
+		if ( 'error' === $status ) {
+			Services\EventLogService::error( 'update_check', 'The release check failed.' );
+		}
 		return $record;
 	}
 

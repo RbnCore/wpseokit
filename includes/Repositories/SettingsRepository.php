@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Wpseokit\Repositories;
 
+use Wpseokit\Services\EventLogService;
 use Wpseokit\Settings;
 
 defined( 'ABSPATH' ) || exit;
@@ -72,9 +73,12 @@ final class SettingsRepository {
 	 * @return array<string, array<string, mixed>>
 	 */
 	public static function update( array $partial ): array {
+		$before = self::all();
 		update_option( Settings::OPTION, self::sanitize( $partial ), true );
 		self::reset_cache();
-		return self::all();
+		$after = self::all();
+		EventLogService::settings_changed( $before, $after );
+		return $after;
 	}
 
 	public static function reset_cache(): void {

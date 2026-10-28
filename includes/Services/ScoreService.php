@@ -87,11 +87,18 @@ final class ScoreService {
 	}
 
 	public static function cron_site(): void {
-		self::compute_site();
+		self::log_failure( self::compute_site() );
 	}
 
 	public static function cron_daily(): void {
-		self::compute_site();
+		self::log_failure( self::compute_site() );
+	}
+
+	/** A background run that returns an error is written to the Logs error list. */
+	private static function log_failure( $result ): void {
+		if ( is_wp_error( $result ) ) {
+			EventLogService::error( 'score', $result->get_error_message() );
+		}
 	}
 
 	/* ------------------------------------------------------------------ helpers */
@@ -340,6 +347,7 @@ final class ScoreService {
 			if ( $posts['pending'] > 0 && ! wp_next_scheduled( self::CRON_SITE ) ) {
 				wp_schedule_single_event( time() + 60, self::CRON_SITE );
 			}
+			EventLogService::record( 'score', 'score_refreshed', (string) ( $stored['score'] ?? '' ), array( 'tool' => 'score' ) );
 			return self::present_site( $stored );
 		} finally {
 			delete_transient( self::LOCK );
