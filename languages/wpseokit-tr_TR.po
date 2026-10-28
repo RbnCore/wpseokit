@@ -1,0 +1,207 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WPSeoKit 0.1.1\n"
+"Report-Msgid-Bugs-To: https://github.com/RbnCore/wpseokit/issues\n"
+"PO-Revision-Date: 2026-10-28 12:00+0000\n"
+"Language: tr_TR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: wpseokit\n"
+
+#: src/includes/Admin.php
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: src/includes/Admin.php
+msgid "WPSeoKit — SEO Toolkit"
+msgstr "WPSeoKit — SEO Araç Seti"
+
+#: src/includes/Admin.php
+#: src/includes/Updater.php
+msgid "SEO Toolkit"
+msgstr "SEO Araç Seti"
+
+#: src/includes/Admin.php
+msgid "Yoast SEO is active. WPSeoKit prints nothing while it is active, so the two never output duplicate tags. Remove Yoast SEO first, then use WPSeoKit."
+msgstr "Yoast SEO etkin. O etkinken WPSeoKit hiçbir çıktı üretmez; böylece ikisi çift etiket basmaz. Önce Yoast SEO'yu kaldırın, sonra WPSeoKit'i kullanın."
+
+#: src/includes/Admin.php
+#: src/includes/Updater.php
+msgid "Status"
+msgstr "Durum"
+
+#: src/includes/Admin.php
+msgid "You do not have permission to open this page."
+msgstr "Bu sayfayı açma yetkiniz yok."
+
+#: src/includes/Admin.php
+msgid "WPSeoKit sections"
+msgstr "WPSeoKit bölümleri"
+
+#: src/includes/Admin.php
+msgid "Update check finished."
+msgstr "Güncelleme denetimi tamamlandı."
+
+#: src/includes/Admin.php
+msgid "The update check is off; nothing was checked."
+msgstr "Güncelleme denetimi kapalı; hiçbir şey denetlenmedi."
+
+#: src/includes/Admin.php
+msgid "The update check was turned off."
+msgstr "Güncelleme denetimi kapatıldı."
+
+#: src/includes/Admin.php
+msgid "The update check was turned on."
+msgstr "Güncelleme denetimi açıldı."
+
+#: src/includes/Admin.php
+msgid "Plugin version"
+msgstr "Eklenti sürümü"
+
+#: src/includes/Admin.php
+msgid "Database schema"
+msgstr "Veritabanı şeması"
+
+#: src/includes/Admin.php
+msgid "Output"
+msgstr "Çıktı"
+
+#: src/includes/Admin.php
+msgid "On"
+msgstr "Açık"
+
+#: src/includes/Admin.php
+msgid "Off (Yoast SEO is active)"
+msgstr "Kapalı (Yoast SEO etkin)"
+
+#: src/includes/Admin.php
+msgid "Updates"
+msgstr "Güncellemeler"
+
+#: src/includes/Rest.php
+msgid "Send the settings to change as a JSON object."
+msgstr "Değiştirilecek ayarları JSON nesnesi olarak gönderin."
+
+#: src/includes/Rest.php
+msgid "Some settings have the wrong type."
+msgstr "Bazı ayarların türü yanlış."
+
+#: src/includes/Updater.php
+msgid "Update rejected: signature verification (sodium) is missing on the server. The old version was kept."
+msgstr "Güncelleme reddedildi: sunucuda imza doğrulaması (sodium) yok. Eski sürüm korundu."
+
+#: src/includes/Updater.php
+msgid "Update rejected: the plugin has no valid signature key. The old version was kept."
+msgstr "Güncelleme reddedildi: eklentide geçerli bir imza anahtarı yok. Eski sürüm korundu."
+
+#: src/includes/Updater.php
+msgid "Update rejected: the package signature is invalid. The old version was kept."
+msgstr "Güncelleme reddedildi: paket imzası geçersiz. Eski sürüm korundu."
+
+#: src/includes/Updater.php
+msgid "Update rejected: the package size is not in the expected range. The old version was kept."
+msgstr "Güncelleme reddedildi: paket boyutu beklenen aralıkta değil. Eski sürüm korundu."
+
+#: src/includes/Updater.php
+msgid "Update rejected: the digest (SHA-256) file could not be read. The old version was kept."
+msgstr "Güncelleme reddedildi: özet (SHA-256) dosyası okunamadı. Eski sürüm korundu."
+
+#: src/includes/Updater.php
+msgid "Update rejected: the SHA-256 digest of the package does not match. The old version was kept."
+msgstr "Güncelleme reddedildi: paketin SHA-256 özeti eşleşmiyor. Eski sürüm korundu."
+
+#: src/includes/Updater.php
+msgid "Update rejected: the root folder of the package is not “wpseokit” or wpseokit.php is missing. The old version was kept."
+msgstr "Güncelleme reddedildi: paketin kök klasörü “wpseokit” değil ya da wpseokit.php eksik. Eski sürüm korundu."
+
+#: src/includes/Updater.php
+msgid "Update rejected: the version inside the package does not match the published version. The old version was kept."
+msgstr "Güncelleme reddedildi: paketin içindeki sürüm yayınlanan sürümle eşleşmiyor. Eski sürüm korundu."
+
+#: src/includes/Updater.php
+msgid "SEO titles and meta descriptions, canonical and robots, Open Graph, XML sitemap, schema graph, redirects and a 404 log."
+msgstr "SEO başlıkları ve meta açıklamaları, kanonik ve robots, Open Graph, XML site haritası, şema grafiği, yönlendirmeler ve 404 kaydı."
+
+#: src/includes/Updater.php
+msgid "There are no release notes for this version."
+msgstr "Bu sürüm için sürüm notu yok."
+
+#: src/includes/Updater.php
+msgid "Update rejected: the package address is not in the expected format. The old version was kept."
+msgstr "Güncelleme reddedildi: paket adresi beklenen biçimde değil. Eski sürüm korundu."
+
+#: src/includes/Updater.php
+msgid "Update stopped: the digest or signature file could not be downloaded. The old version was kept."
+msgstr "Güncelleme durduruldu: özet ya da imza dosyası indirilemedi. Eski sürüm korundu."
+
+#: src/includes/Updater.php
+msgid "Update rejected: the package did not pass the WPSeoKit verification. The old version was kept."
+msgstr "Güncelleme reddedildi: paket WPSeoKit doğrulamasından geçmedi. Eski sürüm korundu."
+
+#: src/includes/Updater.php
+msgid "You do not have permission for this action."
+msgstr "Bu işlem için yetkiniz yok."
+
+#: src/includes/Updater.php
+msgid "The update check is off; GitHub is never contacted."
+msgstr "Güncelleme denetimi kapalı; GitHub'a hiç bağlanılmaz."
+
+#: src/includes/Updater.php
+msgid "Not checked yet."
+msgstr "Henüz denetlenmedi."
+
+#: src/includes/Updater.php
+msgid "There is no published version yet."
+msgstr "Henüz yayınlanmış bir sürüm yok."
+
+#: src/includes/Updater.php
+msgid "Could not check; it will be tried again later. The plugin works normally."
+msgstr "Denetlenemedi; daha sonra yeniden denenecek. Eklenti normal çalışır."
+
+#: src/includes/Updater.php
+#, php-format
+msgid "A new version is available: %s. Click “Update” on the Plugins page."
+msgstr "Yeni sürüm var: %s. Eklentiler sayfasında “Güncelle”ye tıklayın."
+
+#: src/includes/Updater.php
+msgid "The plugin is up to date."
+msgstr "Eklenti güncel."
+
+#: src/includes/Updater.php
+msgid "never"
+msgstr "hiç"
+
+#: src/includes/Updater.php
+msgid "Installed version"
+msgstr "Kurulu sürüm"
+
+#: src/includes/Updater.php
+msgid "Last check"
+msgstr "Son denetim"
+
+#: src/includes/Updater.php
+msgid "Automatic updates"
+msgstr "Otomatik güncellemeler"
+
+#: src/includes/Updater.php
+msgid "Turned on or off with the “Enable auto-updates” link on the WPSeoKit row in the Plugins page."
+msgstr "Eklentiler sayfasında WPSeoKit satırındaki “Otomatik güncellemeleri etkinleştir” bağlantısıyla açılır ya da kapatılır."
+
+#: src/includes/Updater.php
+msgid "The update package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Only a standard GET request is sent; your site address or user information is not sent."
+msgstr "Güncelleme paketi kurulmadan önce SHA-256 özeti ve Ed25519 imzasıyla doğrulanır; doğrulanamayan paket kurulmaz. Yalnız standart bir GET isteği gönderilir; site adresiniz ya da kullanıcı bilgileriniz gönderilmez."
+
+#: src/includes/Updater.php
+msgid "Check now"
+msgstr "Şimdi denetle"
+
+#: src/includes/Updater.php
+msgid "Turn off the update check"
+msgstr "Güncelleme denetimini kapat"
+
+#: src/includes/Updater.php
+msgid "Turn on the update check"
+msgstr "Güncelleme denetimini aç"
+
