@@ -230,7 +230,8 @@ final class SitemapService {
 				'paged'     => 1,
 				'max_pages' => 1,
 			);
-			if ( ! RobotsService::is_noindex( $ctx ) ) {
+			// A redirected or gone address is not a page to list: the sitemap holds 200 addresses only.
+			if ( ! RobotsService::is_noindex( $ctx ) && ! RedirectService::is_redirected_url( (string) get_permalink( $post ) ) ) {
 				$rows[] = array( (int) $row[0], (string) $row[1] );
 			}
 		}
