@@ -76,7 +76,6 @@ final class Ui {
 			'loading'        => __( 'Loading…', 'wpseokit' ),
 			'loadFailed'     => __( 'This list could not be loaded.', 'wpseokit' ),
 			'retry'          => __( 'Try again', 'wpseokit' ),
-			'demo'           => __( 'Demo data: the server part of this screen is not installed yet, so nothing here is saved.', 'wpseokit' ),
 			'on'             => __( 'On', 'wpseokit' ),
 			'off'            => __( 'Off', 'wpseokit' ),
 			'edit'           => __( 'Edit', 'wpseokit' ),

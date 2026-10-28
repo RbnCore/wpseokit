@@ -23,9 +23,7 @@
 		return '<div class="rbn-note rbn-note--' + type + '"' + ( role ? ' role="' + role + '"' : '' ) + '>' + icon( ic ) + '<div><p>' + html + '</p></div></div>';
 	}
 
-	/* ---------- REST (with a demo fallback while a server route does not exist yet) ---------- */
-
-	var demoUsed = false;
+	/* ---------- REST ---------- */
 
 	function request( method, path, body, isForm ) {
 		var opts = { method: method, credentials: 'same-origin', headers: { 'X-WP-Nonce': T.nonce, Accept: 'application/json' } };
@@ -41,30 +39,8 @@
 		} );
 	}
 
-	/** Calls a route; when the route is not registered yet (rest_no_route) the demo store answers instead. */
-	function api( method, path, body ) {
-		return request( method, path, body ).then( function ( r ) {
-			if ( r.status === 404 && r.data && r.data.code === 'rest_no_route' ) {
-				demoUsed = true;
-				showDemo();
-				return Demo.handle( method, path, body );
-			}
-			return r;
-		} );
-	}
-
 	function errMsg( r ) {
 		return ( r && r.data && r.data.message ) ? r.data.message : ( I.saveFailed || 'Request failed.' );
-	}
-
-	function showDemo() {
-		var region = $( '[data-result]' );
-		if ( region && ! $( '.wps-demo', region.parentNode ) ) {
-			var d = doc.createElement( 'div' );
-			d.className = 'wps-demo';
-			d.innerHTML = note( 'info', esc( I.demo ) );
-			region.parentNode.insertBefore( d, region.nextSibling );
-		}
 	}
 
 	function say( type, html ) {
@@ -72,106 +48,6 @@
 		if ( ! region ) { return; }
 		region.innerHTML = note( type, html, type === 'err' ? 'alert' : 'status' );
 	}
-
-	/* ---------- Demo store ---------- */
-
-	var Demo = ( function () {
-		var now = new Date().toISOString();
-		var redirects = [
-			{ id: 1, source_path: '/eski-dizi/', target_url: '/dizi/yeni-dizi/', status_code: 301, match_type: 'exact', hits: 124, last_hit_at: now, is_active: true },
-			{ id: 2, source_path: '/film-yorumlari/golge/', target_url: '/suc/golgeler-sehri/', status_code: 301, match_type: 'exact', hits: 58, last_hit_at: now, is_active: true },
-			{ id: 3, source_path: '/yonetmenler/*', target_url: '/oyuncular/', status_code: 301, match_type: 'prefix', hits: 31, last_hit_at: now, is_active: true },
-			{ id: 4, source_path: '/kampanya/', target_url: '/', status_code: 302, match_type: 'exact', hits: 9, last_hit_at: now, is_active: true },
-			{ id: 5, source_path: '/eski-liste/', target_url: '/listeler/en-iyi-gerilimler/', status_code: 301, match_type: 'exact', hits: 4, last_hit_at: null, is_active: false }
-		];
-		var logs = [
-			{ id: 1, url_path: '/suc/golgeler-sehri-2/', hit_count: 31, referer: 'google.com', last_seen_at: now },
-			{ id: 2, url_path: '/wp-login.php', hit_count: 22, referer: '', last_seen_at: now },
-			{ id: 3, url_path: '/xmlrpc.php', hit_count: 18, referer: '', last_seen_at: now },
-			{ id: 4, url_path: '/dizi/eski-dizi/', hit_count: 9, referer: 'bing.com', last_seen_at: now },
-			{ id: 5, url_path: '/feed/atom/', hit_count: 7, referer: '', last_seen_at: now }
-		];
-		var seq = 10;
-
-		function page( list, q ) {
-			var per = parseInt( q.per_page || '10', 10 ), pg = parseInt( q.page || '1', 10 );
-			return { ok: true, status: 200, data: list.slice( ( pg - 1 ) * per, pg * per ), total: list.length, pages: Math.max( 1, Math.ceil( list.length / per ) ) };
-		}
-		function res( data, status ) { return { ok: ( status || 200 ) < 400, status: status || 200, data: data, total: -1, pages: 1 }; }
-		function err( code, msg, status ) { return res( { code: 'wpseokit_' + code, message: msg, data: { status: status } }, status ); }
-
-		function handle( method, path, body ) {
-			var parts = path.split( '?' ), p = parts[ 0 ].replace( /^\/|\/$/g, '' ), q = {};
-			( parts[ 1 ] || '' ).split( '&' ).forEach( function ( kv ) { if ( kv ) { var a = kv.split( '=' ); q[ a[ 0 ] ] = decodeURIComponent( a[ 1 ] || '' ); } } );
-			var m, list;
-			return new Promise( function ( resolve ) {
-				var out;
-				if ( p === 'redirects' && method === 'GET' ) {
-					list = redirects.filter( function ( r ) {
-						return ( ! q.search || ( r.source_path + r.target_url ).indexOf( q.search ) > -1 ) && ( ! q.status_code || String( r.status_code ) === q.status_code ) && ( q.is_active === undefined || q.is_active === '' || String( r.is_active ? 1 : 0 ) === q.is_active );
-					} );
-					out = page( list, q );
-				} else if ( p === 'redirects' && method === 'POST' ) {
-					if ( redirects.some( function ( r ) { return r.source_path === body.source_path; } ) ) { out = err( 'conflict', 'A redirect for this path already exists.', 409 ); } else {
-						var n = { id: ++seq, hits: 0, last_hit_at: null, is_active: true, match_type: /\*$/.test( body.source_path ) ? 'prefix' : 'exact' };
-						Object.keys( body ).forEach( function ( k ) { n[ k ] = body[ k ]; } );
-						redirects.unshift( n );
-						out = res( n, 201 );
-					}
-				} else if ( ( m = p.match( /^redirects\/(\d+)$/ ) ) ) {
-					var idx = redirects.findIndex( function ( r ) { return r.id === +m[ 1 ]; } );
-					if ( idx < 0 ) { out = err( 'not_found', 'Not found.', 404 ); } else if ( method === 'DELETE' ) { redirects.splice( idx, 1 ); out = res( { deleted: true } ); } else {
-						Object.keys( body || {} ).forEach( function ( k ) { redirects[ idx ][ k ] = body[ k ]; } );
-						out = res( redirects[ idx ] );
-					}
-				} else if ( p === 'redirects/import' ) {
-					var lines = String( ( body && body.csv ) || '' ).split( /\r?\n/ ).filter( Boolean ), add = 0;
-					lines.forEach( function ( l ) { var c = l.split( ',' ); if ( c[ 0 ] && c[ 0 ].charAt( 0 ) === '/' ) { redirects.push( { id: ++seq, source_path: c[ 0 ].trim(), target_url: ( c[ 1 ] || '' ).trim(), status_code: parseInt( c[ 2 ] || '301', 10 ), match_type: 'exact', hits: 0, last_hit_at: null, is_active: true } ); add++; } } );
-					out = res( { added: add, updated: 0, skipped: 0, errors: [] } );
-				} else if ( p === '404-logs' && method === 'GET' ) {
-					list = logs.filter( function ( l ) { return ! q.search || l.url_path.indexOf( q.search ) > -1; } );
-					out = page( list, q );
-				} else if ( ( m = p.match( /^404-logs\/(\d+)(\/redirect)?$/ ) ) ) {
-					var li = logs.findIndex( function ( l ) { return l.id === +m[ 1 ]; } );
-					if ( li < 0 ) { out = err( 'not_found', 'Not found.', 404 ); } else {
-						if ( m[ 2 ] ) { redirects.unshift( { id: ++seq, source_path: logs[ li ].url_path, target_url: body.target_url, status_code: body.status_code || 301, match_type: 'exact', hits: 0, last_hit_at: null, is_active: true } ); }
-						logs.splice( li, 1 );
-						out = res( m[ 2 ] ? { created: true } : { deleted: true }, m[ 2 ] ? 201 : 200 );
-					}
-				} else if ( p === 'sitemap/status' ) {
-					out = res( { enabled: true, index_url: '', items: [
-						{ name: 'sitemap_index.xml', url: '', count: 3, lastmod: now },
-						{ name: 'post-sitemap.xml', url: '', count: 363, lastmod: now },
-						{ name: 'page-sitemap.xml', url: '', count: 10, lastmod: now },
-						{ name: 'category-sitemap.xml', url: '', count: 21, lastmod: now } ] } );
-				} else if ( p === 'sitemap/flush' ) {
-					out = res( { flushed: true } );
-				} else if ( p === 'feed/status' ) {
-					out = res( { enabled: true, url: location.origin + '/feed/', content_mode: 'inherit', items_count: 0 } );
-				} else if ( p === 'feed/preview' ) {
-					out = res( { post_id: 0, title: 'Gentle Shadows', url: location.origin + '/', footer_rendered: '', copyright_rendered: '', sample_item_xml: '<item>\n  <title>Gentle Shadows</title>\n  <link>' + location.origin + '/</link>\n  <description>A short summary of the post.</description>\n</item>' } );
-				} else if ( p === 'llms/preview' ) {
-					out = res( { enabled: false, url: location.origin + '/llms.txt', content: '# Site\n\n> Summary\n', bytes: 18, lines: 3, sections: [], skipped: 0, warnings: [] } );
-				} else if ( p === 'llms/flush' ) {
-					out = res( { flushed: true } );
-				} else if ( p === 'import/state' ) {
-					out = res( { state: 'none' } );
-				} else if ( p === 'import/yoast' ) {
-					var mode = body && body.mode;
-					out = res( { mode: mode, rows: [
-						{ key: 'metadesc', label: 'Meta descriptions', found: 372, will_import: 372, skipped: 0, conflicts: 0, note: '' },
-						{ key: 'title', label: 'SEO titles', found: 9, will_import: 9, skipped: 0, conflicts: 0, note: 'Variables are converted.' },
-						{ key: 'primary', label: 'Primary categories', found: 179, will_import: 179, skipped: 0, conflicts: 0, note: 'Posts keep their URLs.' },
-						{ key: 'terms', label: 'Category descriptions', found: 21, will_import: 20, skipped: 0, conflicts: 1, note: '1 already has a value here.' },
-						{ key: 'settings', label: 'Titles and social settings', found: 24, will_import: 24, skipped: 0, conflicts: 0, note: '' } ] } );
-				} else {
-					out = err( 'demo', 'This part of the screen has no server route yet.', 404 );
-				}
-				setTimeout( function () { resolve( out ); }, 120 );
-			} );
-		}
-		return { handle: handle };
-	}() );
 
 	/* ---------- Shared behaviour ---------- */
 
