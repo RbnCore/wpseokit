@@ -84,6 +84,9 @@ final class SitemapService {
 			exit;
 		}
 		if ( self::INDEX === $request ) {
+			if ( self::browse( '', 1, $method ) ) {
+				return;
+			}
 			self::send( self::index_xml(), 'text/xml', $method, true );
 			return;
 		}
@@ -98,7 +101,31 @@ final class SitemapService {
 		if ( null === $xml ) {
 			return;
 		}
+		self::browse( $m[1], $page, $method );
 		self::send( $xml, 'text/xml', $method, true );
+	}
+
+	/**
+	 * A person opening a sitemap address in a browser gets the designed page (`SitemapView`) by 302; bots, curl and every
+	 * other client (they do not send these headers) get the same pure XML at the same address. The XML body never changes.
+	 * A click from a page of this site (`Sec-Fetch-Site: same-origin`, e.g. the "Open the XML" button) still gets the XML.
+	 *
+	 * @param string $group  Group key of the file ('' = index).
+	 * @param int    $page   File number in the group.
+	 * @param string $method GET or HEAD.
+	 * @return bool Always false when it returns (a redirect exits).
+	 */
+	private static function browse( string $group, int $page, string $method ): bool {
+		header( 'Vary: Sec-Fetch-Dest, Sec-Fetch-Mode, Sec-Fetch-Site, Accept' );
+		$h = static function ( string $name ): string {
+			return strtolower( trim( (string) ( $_SERVER[ $name ] ?? '' ) ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		};
+		if ( 'document' !== $h( 'HTTP_SEC_FETCH_DEST' ) || 'navigate' !== $h( 'HTTP_SEC_FETCH_MODE' ) || 'same-origin' === $h( 'HTTP_SEC_FETCH_SITE' ) || false === strpos( $h( 'HTTP_ACCEPT' ), 'text/html' ) ) {
+			return false;
+		}
+		header( 'Cache-Control: private, no-store' );
+		wp_safe_redirect( SitemapView::url( $group, $page ), 302, 'WPSeoKit' );
+		exit;
 	}
 
 	/**
