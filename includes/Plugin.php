@@ -30,6 +30,7 @@ final class Plugin {
 		'Services\\RedirectService',
 		'Services\\Log404Service',
 		'Services\\CsvService',
+		'Services\\YoastImportService',
 	);
 
 	/** Started in the admin only. */
@@ -46,9 +47,7 @@ final class Plugin {
 	);
 
 	/** Started under WP-CLI only. */
-	public const CLI = array(
-		'Services\\YoastImportService',
-	);
+	public const CLI = array();
 
 	/** True when Yoast SEO is active: WPSeoKit then prints nothing and starts no service. */
 	public static function yoast_active(): bool {
