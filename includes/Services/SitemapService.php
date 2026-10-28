@@ -29,7 +29,6 @@ defined( 'ABSPATH' ) || exit;
 final class SitemapService {
 
 	public const INDEX      = 'sitemap_index.xml';
-	public const STYLESHEET = 'wpseokit-sitemap.xsl';
 	public const VERSION    = 'wpseokit_sitemap_ver';
 
 	private const NS_SITEMAP = 'http://www.sitemaps.org/schemas/sitemap/0.9';
@@ -83,10 +82,6 @@ final class SitemapService {
 		if ( 'sitemap.xml' === $request ) {
 			wp_safe_redirect( self::index_url(), 301, 'WPSeoKit' );
 			exit;
-		}
-		if ( self::STYLESHEET === $request ) {
-			self::send( self::stylesheet(), 'text/xsl', $method, true );
-			return;
 		}
 		if ( self::INDEX === $request ) {
 			self::send( self::index_xml(), 'text/xml', $method, true );
@@ -469,29 +464,17 @@ final class SitemapService {
 	}
 
 	/**
-	 * XML declaration, stylesheet and the opening tag.
+	 * XML declaration and the opening tag.
 	 *
 	 * @param string $root `sitemapindex` or `urlset`.
-	 * @param string $file File name of a `urlset` document: the stylesheet is told which file it dresses (`?f=`) so the view can
-	 *                     mark it among its siblings. Only this line differs; the XML body is the same for every viewer.
+	 * @param string $file File name of a `urlset` document (unused: the XML is the same for every viewer).
 	 */
 	private static function head( string $root, string $file = '' ): string {
-		$href = home_url( '/' . self::STYLESHEET ) . ( '' === $file ? '' : '?f=' . rawurlencode( $file ) );
-		$xml  = '<?xml version="1.0" encoding="UTF-8"?>' . '<?xml-stylesheet type="text/xsl" href="' . self::esc( $href ) . '"?>' . "\n";
+		$xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 		if ( 'sitemapindex' === $root ) {
 			return $xml . '<sitemapindex xmlns="' . self::NS_SITEMAP . "\">\n";
 		}
 		return $xml . '<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="' . self::NS_IMAGE . '" xsi:schemaLocation="' . self::NS_SITEMAP . ' http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd ' . self::NS_IMAGE . ' http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="' . self::NS_SITEMAP . "\">\n";
-	}
-
-	/**
-	 * Browser view of the sitemaps (search engines ignore it): `SitemapView` writes it. `?f=` names the sitemap file being
-	 * viewed; it is only compared with the names of the files that exist, never used as a path, so anything else is ignored.
-	 */
-	private static function stylesheet(): string {
-		$asked = isset( $_GET['f'] ) && is_string( $_GET['f'] ) ? wp_unslash( $_GET['f'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification, WordPress.Security.ValidatedSanitizedInput -- public read-only view, value is matched against a fixed list.
-		$names = array_column( self::files(), 'name' );
-		return SitemapView::stylesheet( in_array( $asked, $names, true ) ? $asked : '' );
 	}
 
 	/* ------------------------------------------------------------------ cache */

@@ -2876,6 +2876,18 @@ msgid "Sitemap index"
 msgstr "Site haritası dizini"
 
 #: src/includes/Services/SitemapView.php
+msgid "Open the XML"
+msgstr "XML'i aç"
+
+#: src/includes/Screens/SitemapScreen.php
+msgid "Open the human view"
+msgstr "İnsan görünümünü aç"
+
+#: src/includes/Screens/SitemapScreen.php
+msgid "Bots read this address."
+msgstr "Botlar bu adresi okur."
+
+#: src/includes/Services/SitemapView.php
 msgid "Skip to the list"
 msgstr "Listeye geç"
 

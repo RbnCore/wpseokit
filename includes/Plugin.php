@@ -25,6 +25,7 @@ final class Plugin {
 		'Services\\CanonicalService',
 		'Services\\SocialService',
 		'Services\\SitemapService',
+		'Services\\SitemapView',
 		'Services\\SchemaService',
 		'Services\\BreadcrumbService',
 		'Services\\RedirectService',
