@@ -2,8 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPSeoKit 0.1.1\n"
 "Report-Msgid-Bugs-To: https://github.com/RbnCore/wpseokit/issues\n"
-"PO-Revision-Date: 2026-10-28 12:00+0000\n"
+"PO-Revision-Date: 2026-10-29 12:00+0000\n"
 "Language: tr_TR\n"
+"Last-Translator: Ozan <info@rbncore.tr>\n"
+"Language-Team: Turkce\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2519,7 +2521,9 @@ msgstr "Sayfa başlığı ile site adı arasında kullanılır."
 msgid "Title separator"
 msgstr "Başlık ayracı"
 
-#: src/includes/Screens
+#: src/includes/Screens/TemplatesScreen.php
+#. translators: %sep% is a WPSeoKit template variable, not a printf placeholder; it is replaced with str_replace before printing.
+#, no-php-format, no-python-format
 msgid "Replaces %sep% in every template."
 msgstr "Her şablondaki %sep% yerine geçer."
 
@@ -3486,3 +3490,944 @@ msgstr "Adresleri kontrol et"
 msgid "Check address"
 msgstr "Adresi kontrol et"
 
+
+# --- WPRJ-556: WPRJ-586/590/594 sonrasında eklenen arayüz metinleri (tr_TR) ---
+#: src/includes/Screens/DashboardScreen.php
+msgid "%d setup item is missing."
+msgstr "%d kurulum adımı eksik."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "%d setup items are missing."
+msgstr "%d kurulum adımı eksik."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "30 days"
+msgstr "30 gün"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "7 days"
+msgstr "7 gün"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "90 days"
+msgstr "90 gün"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Activity"
+msgstr "Etkinlik"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Background problems, newest first."
+msgstr "Arka plandaki sorunlar; en yeni önce."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Dashboard sections"
+msgstr "Pano bölümleri"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Download CSV"
+msgstr "CSV indir"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Each time WPSeoKit looks for a new version, newest first."
+msgstr "WPSeoKit her yeni sürüm arayışında buraya bir satır yazar; en yeni önce."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Errors"
+msgstr "Hatalar"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Every check and import step, newest first."
+msgstr "Tüm denetim ve aktarım adımları; en yeni önce."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Feed"
+msgstr "Besleme"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Filter the log"
+msgstr "Günlüğü süz"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Go to Setup"
+msgstr "Kuruluma git"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "How it is calculated"
+msgstr "Nasıl hesaplanır"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Import your Yoast data to continue."
+msgstr "Sürdürmek için Yoast verilerinizi aktarın."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Loading the activity log…"
+msgstr "Etkinlik günlüğü yükleniyor…"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Loading the errors…"
+msgstr "Hatalar yükleniyor…"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Loading the import log…"
+msgstr "Aktarım günlüğü yükleniyor…"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Loading the update checks…"
+msgstr "Güncelleme denetimleri yükleniyor…"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Loading your reports…"
+msgstr "Raporlarınız yükleniyor…"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Logs"
+msgstr "Günlükler"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "No Yoast import yet"
+msgstr "Henüz Yoast aktarımı yok"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "No activity yet"
+msgstr "Henüz etkinlik yok"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "No errors recorded"
+msgstr "Kayıtlı hata yok"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "No report data yet"
+msgstr "Henüz rapor verisi yok"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "No update check yet"
+msgstr "Henüz güncelleme denetimi yok"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Nothing went wrong in the background. Problems WPSeoKit cannot fix on its own will show up here."
+msgstr "Arka planda ters giden bir şey yok. WPSeoKit'in tek başına çözemediği sorunlar burada görünür."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Overview"
+msgstr "Genel bakış"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Paused"
+msgstr "Duraklatıldı"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Preparing your first snapshot… This usually takes a few seconds."
+msgstr "İlk anlık görüntünüz hazırlanıyor… Genellikle birkaç saniye sürer."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Print"
+msgstr "Yazdır"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Recommendations"
+msgstr "Öneriler"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Report range"
+msgstr "Rapor aralığı"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Reports"
+msgstr "Raporlar"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Reports are not recorded while WPSeoKit output is paused. Import your Yoast data to continue."
+msgstr "WPSeoKit çıktısı duraklatılmışken rapor kaydedilmez. Sürdürmek için Yoast verilerinizi aktarın."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Reset"
+msgstr "Sıfırla"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "SEO score"
+msgstr "SEO skoru"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Score overview"
+msgstr "Skor özeti"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Sitemap rebuilds, snapshots, score recalculations and setting changes will be listed here."
+msgstr "Site haritası yenilemeleri, anlık görüntüler, skor hesaplamaları ve ayar değişiklikleri burada listelenir."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Snapshot"
+msgstr "Anlık görüntü"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Snapshot settings"
+msgstr "Anlık görüntü ayarları"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Take snapshot now"
+msgstr "Şimdi anlık görüntü al"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "The score could not be recalculated."
+msgstr "Skor yeniden hesaplanamadı."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "The score is paused while Yoast SEO is active."
+msgstr "Yoast SEO etkinken skor duraklatılır."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Update checks"
+msgstr "Güncelleme denetimleri"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "WPSeoKit checks for a new version once a day. The first check has not run."
+msgstr "WPSeoKit günde bir kez yeni sürüm arar. İlk denetim henüz çalışmadı."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "WPSeoKit could not finish checking the site. The results below are from the last successful calculation."
+msgstr "WPSeoKit site denetimini tamamlayamadı. Aşağıdaki sonuçlar son başarılı hesaplamadan."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "WPSeoKit could not load the activity log."
+msgstr "WPSeoKit etkinlik günlüğünü yükleyemedi."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "WPSeoKit could not load the errors."
+msgstr "WPSeoKit hataları yükleyemedi."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "WPSeoKit could not load the import log."
+msgstr "WPSeoKit aktarım günlüğünü yükleyemedi."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "WPSeoKit could not load the reports."
+msgstr "WPSeoKit raporları yükleyemedi."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "WPSeoKit could not load the update checks."
+msgstr "WPSeoKit güncelleme denetimlerini yükleyemedi."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "WPSeoKit prints nothing now, so a score would not describe what search engines see. Import your Yoast data to continue."
+msgstr "WPSeoKit şu an hiçbir çıktı vermiyor; bu yüzden skor, arama motorlarının gördüğünü anlatmaz. Sürdürmek için Yoast verilerinizi aktarın."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "WPSeoKit saves one snapshot of your numbers each day. You can also take one now; it changes nothing on your site."
+msgstr "WPSeoKit her gün sayılarınızın bir anlık görüntüsünü kaydeder. Şimdi de alabilirsiniz; sitenizde hiçbir şeyi değiştirmez."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "What WPSeoKit and you changed on this site."
+msgstr "WPSeoKit ve sizin bu sitede değiştirdikleriniz."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "When you check or import Yoast data, each step is recorded here."
+msgstr "Yoast verilerini denetlediğinizde ya da aktardığınızda her adım burada kaydedilir."
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Yoast import log"
+msgstr "Yoast aktarım günlüğü"
+
+#: src/includes/Screens/DashboardScreen.php
+msgid "Your data is safe. Try again in a moment."
+msgstr "Verileriniz güvende. Birazdan tekrar deneyin."
+
+#: src/includes/Screens/SettingsScreen.php
+msgid "Setup"
+msgstr "Kurulum"
+
+#: src/includes/Screens/TemplatesScreen.php
+msgid "%d published item."
+msgstr "%d yayımlanmış öğe."
+
+#: src/includes/Screens/TemplatesScreen.php
+msgid "%d published items."
+msgstr "%d yayımlanmış öğe."
+
+#: src/includes/Screens/Ui.php
+msgid "%1$d of %2$d recent posts scored"
+msgstr "Son %2$d yazıdan %1$d tanesi puanlandı"
+
+#: src/includes/Screens/Ui.php
+msgid "%d descriptions"
+msgstr "%d açıklama"
+
+#: src/includes/Screens/Ui.php
+msgid "%d new 404 error"
+msgstr "%d yeni 404 hatası"
+
+#: src/includes/Screens/Ui.php
+msgid "%d new 404 errors"
+msgstr "%d yeni 404 hatası"
+
+#: src/includes/Screens/Ui.php
+msgid "%d recommendations to review"
+msgstr "İncelenecek %d öneri"
+
+#: src/includes/Screens/Ui.php
+msgid "%d titles"
+msgstr "%d başlık"
+
+#: src/includes/Screens/Ui.php
+msgid "%s (total)"
+msgstr "%s (toplam)"
+
+#: src/includes/Screens/Ui.php
+msgid "%s turned off"
+msgstr "%s kapatıldı"
+
+#: src/includes/Screens/Ui.php
+msgid "%s turned on"
+msgstr "%s açıldı"
+
+#: src/includes/Screens/Ui.php
+msgid "(opens in a new tab)"
+msgstr "(yeni sekmede açılır)"
+
+#: src/includes/Screens/Ui.php
+msgid "404 hits"
+msgstr "404 isabeti"
+
+#: src/includes/Screens/Ui.php
+msgid "A critical rule fails, so the score cannot go above 79 until it is fixed."
+msgstr "Kritik bir kural başarısız; o düzeltilene kadar skor 79'u geçemez."
+
+#: src/includes/Screens/Ui.php
+msgid "Activity log"
+msgstr "Etkinlik günlüğü"
+
+#: src/includes/Screens/Ui.php
+msgid "All scores"
+msgstr "Tüm skorlar"
+
+#: src/includes/Screens/Ui.php
+msgid "Already the same"
+msgstr "Zaten aynı"
+
+#: src/includes/Screens/Ui.php
+msgid "Applies to"
+msgstr "Kapsam"
+
+#: src/includes/Screens/Ui.php
+msgid "Average of posts"
+msgstr "Yazıların ortalaması"
+
+#: src/includes/Screens/Ui.php
+msgid "Band"
+msgstr "Bant"
+
+#: src/includes/Screens/Ui.php
+msgid "Calculate now"
+msgstr "Şimdi hesapla"
+
+#: src/includes/Screens/Ui.php
+msgid "Calculated %s"
+msgstr "Hesaplandı: %s"
+
+#: src/includes/Screens/Ui.php
+msgid "Calculating…"
+msgstr "Hesaplanıyor…"
+
+#: src/includes/Screens/Ui.php
+msgid "Cannot be hidden."
+msgstr "Gizlenemez."
+
+#: src/includes/Screens/Ui.php
+msgid "Change"
+msgstr "Değişim"
+
+#: src/includes/Screens/Ui.php
+msgid "Could not check"
+msgstr "Denetlenemedi"
+
+#: src/includes/Screens/Ui.php
+msgid "Critical"
+msgstr "Kritik"
+
+#: src/includes/Screens/Ui.php
+msgid "Daily snapshot saved for %s."
+msgstr "%s için günlük anlık görüntü kaydedildi."
+
+#: src/includes/Screens/Ui.php
+msgid "Dashed line"
+msgstr "Kesikli çizgi"
+
+#: src/includes/Screens/Ui.php
+msgid "Details"
+msgstr "Ayrıntı"
+
+#: src/includes/Screens/Ui.php
+msgid "Dry run completed"
+msgstr "Deneme çalıştırması tamamlandı"
+
+#: src/includes/Screens/Ui.php
+msgid "Edit post"
+msgstr "Yazıyı düzenle"
+
+#: src/includes/Screens/Ui.php
+msgid "End"
+msgstr "Bitiş"
+
+#: src/includes/Screens/Ui.php
+msgid "Every rule WPSeoKit checks is in place."
+msgstr "WPSeoKit'in denetlediği her kural yerinde."
+
+#: src/includes/Screens/Ui.php
+msgid "Failing on %1$d of %2$d sampled posts."
+msgstr "%2$d örnek yazıdan %1$d tanesinde başarısız."
+
+#: src/includes/Screens/Ui.php
+msgid "Failing rules"
+msgstr "Başarısız kurallar"
+
+#: src/includes/Screens/Ui.php
+msgid "Fix in %s"
+msgstr "Düzelt: %s"
+
+#: src/includes/Screens/Ui.php
+msgid "Gaps in a line are days without a snapshot."
+msgstr "Çizgideki boşluklar anlık görüntü alınmayan günlerdir."
+
+#: src/includes/Screens/Ui.php
+msgid "Hidden"
+msgstr "Gizli"
+
+#: src/includes/Screens/Ui.php
+msgid "Hidden recommendations (%d)"
+msgstr "Gizli öneriler (%d)"
+
+#: src/includes/Screens/Ui.php
+msgid "Hide"
+msgstr "Gizle"
+
+#: src/includes/Screens/Ui.php
+msgid "Import finished"
+msgstr "Aktarım bitti"
+
+#: src/includes/Screens/Ui.php
+msgid "Imported"
+msgstr "Aktarıldı"
+
+#: src/includes/Screens/Ui.php
+msgid "Info"
+msgstr "Bilgi"
+
+#: src/includes/Screens/Ui.php
+msgid "Last checked %s."
+msgstr "Son denetim: %s."
+
+#: src/includes/Screens/Ui.php
+msgid "Last snapshot: %s"
+msgstr "Son anlık görüntü: %s"
+
+#: src/includes/Screens/Ui.php
+msgid "Level"
+msgstr "Düzey"
+
+#: src/includes/Screens/Ui.php
+msgid "Logged 404 addresses"
+msgstr "Kayıtlı 404 adresleri"
+
+#: src/includes/Screens/Ui.php
+msgid "Measure"
+msgstr "Ölçü"
+
+#: src/includes/Screens/Ui.php
+msgid "Message"
+msgstr "İleti"
+
+#: src/includes/Screens/Ui.php
+msgid "New 404 addresses (24 h)"
+msgstr "Yeni 404 adresleri (24 saat)"
+
+#: src/includes/Screens/Ui.php
+msgid "Next page"
+msgstr "Sonraki sayfa"
+
+#: src/includes/Screens/Ui.php
+msgid "No Yoast data has been checked yet."
+msgstr "Henüz Yoast verisi denetlenmedi."
+
+#: src/includes/Screens/Ui.php
+msgid "No data"
+msgstr "Veri yok"
+
+#: src/includes/Screens/Ui.php
+msgid "No events match these filters"
+msgstr "Bu süzgeçlerle eşleşen olay yok"
+
+#: src/includes/Screens/Ui.php
+msgid "No scored posts yet."
+msgstr "Henüz puanlanmış yazı yok."
+
+#: src/includes/Screens/Ui.php
+msgid "None"
+msgstr "Yok"
+
+#: src/includes/Screens/Ui.php
+msgid "Nothing to fix"
+msgstr "Düzeltilecek bir şey yok"
+
+#: src/includes/Screens/Ui.php
+msgid "Nothing was changed."
+msgstr "Hiçbir şey değiştirilmedi."
+
+#: src/includes/Screens/Ui.php
+msgid "One snapshot so far. A trend needs at least two days; the numbers of that day are below."
+msgstr "Şu ana kadar tek anlık görüntü var. Eğilim için en az iki gün gerekir; o günün sayıları aşağıda."
+
+#: src/includes/Screens/Ui.php
+msgid "Open Reports"
+msgstr "Raporları aç"
+
+#: src/includes/Screens/Ui.php
+msgid "Open SEO score"
+msgstr "SEO skorunu aç"
+
+#: src/includes/Screens/Ui.php
+msgid "Open dry run"
+msgstr "Deneme çalıştırmasını aç"
+
+#: src/includes/Screens/Ui.php
+msgid "Open import"
+msgstr "Aktarımı aç"
+
+#: src/includes/Screens/Ui.php
+msgid "Open summary"
+msgstr "Özeti aç"
+
+#: src/includes/Screens/Ui.php
+msgid "Open the 404 log"
+msgstr "404 günlüğünü aç"
+
+#: src/includes/Screens/Ui.php
+msgid "Open update checks"
+msgstr "Güncelleme denetimlerini aç"
+
+#: src/includes/Screens/Ui.php
+msgid "Out of date: calculated %s. Recalculate to refresh it."
+msgstr "Güncel değil: hesaplanma %s. Yenilemek için yeniden hesaplayın."
+
+#: src/includes/Screens/Ui.php
+msgid "Page"
+msgstr "Sayfa"
+
+#: src/includes/Screens/Ui.php
+msgid "Post"
+msgstr "Yazı"
+
+#: src/includes/Screens/Ui.php
+msgid "Posts counted"
+msgstr "Sayılan yazılar"
+
+#: src/includes/Screens/Ui.php
+msgid "Posts with a title"
+msgstr "Başlığı olan yazılar"
+
+#: src/includes/Screens/Ui.php
+msgid "Previous page"
+msgstr "Önceki sayfa"
+
+#: src/includes/Screens/Ui.php
+msgid "Recalculate"
+msgstr "Yeniden hesapla"
+
+#: src/includes/Screens/Ui.php
+msgid "Redirect added"
+msgstr "Yönlendirme eklendi"
+
+#: src/includes/Screens/Ui.php
+msgid "Redirect changed"
+msgstr "Yönlendirme değiştirildi"
+
+#: src/includes/Screens/Ui.php
+msgid "Redirect deleted"
+msgstr "Yönlendirme silindi"
+
+#: src/includes/Screens/Ui.php
+msgid "Redirect hits"
+msgstr "Yönlendirme isabeti"
+
+#: src/includes/Screens/Ui.php
+msgid "Redirects and 404 errors"
+msgstr "Yönlendirmeler ve 404 hataları"
+
+#: src/includes/Screens/Ui.php
+msgid "Report created"
+msgstr "Rapor oluşturuldu"
+
+#: src/includes/Screens/Ui.php
+msgid "Reset filters"
+msgstr "Süzgeçleri sıfırla"
+
+#: src/includes/Screens/Ui.php
+msgid "Restore"
+msgstr "Geri getir"
+
+#: src/includes/Screens/Ui.php
+msgid "Review posts"
+msgstr "Yazıları incele"
+
+#: src/includes/Screens/Ui.php
+msgid "Rule"
+msgstr "Kural"
+
+#: src/includes/Screens/Ui.php
+msgid "Rules"
+msgstr "Kurallar"
+
+#: src/includes/Screens/Ui.php
+msgid "Rules checked"
+msgstr "Denetlenen kurallar"
+
+#: src/includes/Screens/Ui.php
+msgid "Rules not applicable"
+msgstr "Uygulanamayan kurallar"
+
+#: src/includes/Screens/Ui.php
+msgid "Rules passed"
+msgstr "Geçen kurallar"
+
+#: src/includes/Screens/Ui.php
+msgid "Rules to fix"
+msgstr "Düzeltilecek kurallar"
+
+#: src/includes/Screens/Ui.php
+msgid "Run the check again to see whether anything new is left to import."
+msgstr "Aktarılacak yeni bir şey kaldı mı diye denetimi tekrar çalıştırın."
+
+#: src/includes/Screens/Ui.php
+msgid "SEO score: %1$d out of 100, %2$s"
+msgstr "SEO skoru: 100 üzerinden %1$d, %2$s"
+
+#: src/includes/Screens/Ui.php
+msgid "Schema types"
+msgstr "Şema türleri"
+
+#: src/includes/Screens/Ui.php
+msgid "Schema: %s"
+msgstr "Şema: %s"
+
+#: src/includes/Screens/Ui.php
+msgid "Score"
+msgstr "Skor"
+
+#: src/includes/Screens/Ui.php
+msgid "Score recalculated"
+msgstr "Skor yeniden hesaplandı"
+
+#: src/includes/Screens/Ui.php
+msgid "Setting changed"
+msgstr "Ayar değiştirildi"
+
+#: src/includes/Screens/Ui.php
+msgid "Showing %1$s of %2$s"
+msgstr "%1$s / %2$s gösteriliyor"
+
+#: src/includes/Screens/Ui.php
+msgid "Site"
+msgstr "Site"
+
+#: src/includes/Screens/Ui.php
+msgid "Site score %s."
+msgstr "Site skoru %s."
+
+#: src/includes/Screens/Ui.php
+msgid "Site settings"
+msgstr "Site ayarları"
+
+#: src/includes/Screens/Ui.php
+msgid "Sitemap size"
+msgstr "Site haritası boyutu"
+
+#: src/includes/Screens/Ui.php
+msgid "Sitemap: %s"
+msgstr "Site haritası: %s"
+
+#: src/includes/Screens/Ui.php
+msgid "Snapshot replaced"
+msgstr "Anlık görüntü güncellendi"
+
+#: src/includes/Screens/Ui.php
+msgid "Snapshot saved."
+msgstr "Anlık görüntü kaydedildi."
+
+#: src/includes/Screens/Ui.php
+msgid "Snapshot taken"
+msgstr "Anlık görüntü alındı"
+
+#: src/includes/Screens/Ui.php
+msgid "Solid line"
+msgstr "Düz çizgi"
+
+#: src/includes/Screens/Ui.php
+msgid "Source"
+msgstr "Kaynak"
+
+#: src/includes/Screens/Ui.php
+msgid "Start"
+msgstr "Başlangıç"
+
+#: src/includes/Screens/Ui.php
+msgid "Taking a snapshot…"
+msgstr "Anlık görüntü alınıyor…"
+
+#: src/includes/Screens/Ui.php
+msgid "The Yoast import was applied on %s."
+msgstr "Yoast aktarımı %s tarihinde uygulandı."
+
+#: src/includes/Screens/Ui.php
+msgid "The check on %s found a difference. Verify again from the Report tab."
+msgstr "%s tarihli denetim bir fark buldu. Rapor sekmesinden yeniden doğrulayın."
+
+#: src/includes/Screens/Ui.php
+msgid "The dry run is done. Nothing is imported yet."
+msgstr "Deneme çalıştırması bitti. Henüz bir şey aktarılmadı."
+
+#: src/includes/Screens/Ui.php
+msgid "The import is already applied."
+msgstr "Aktarım zaten uygulandı."
+
+#: src/includes/Screens/Ui.php
+msgid "The import is applied. Newest steps first."
+msgstr "Aktarım uygulandı. En yeni adım önce."
+
+#: src/includes/Screens/Ui.php
+msgid "The import was applied, so there is no current check. Run it again to see what would change now."
+msgstr "Aktarım uygulandığı için güncel bir denetim yok. Şimdi neyin değişeceğini görmek için tekrar çalıştırın."
+
+#: src/includes/Screens/Ui.php
+msgid "The list of releases could not be reached. This is expected until a release is published; WPSeoKit tries again later."
+msgstr "Sürüm listesine ulaşılamadı. Bir sürüm yayımlanana kadar beklenen durumdur; WPSeoKit sonra tekrar dener."
+
+#: src/includes/Screens/Ui.php
+msgid "The result of the import is ready to read."
+msgstr "Aktarımın sonucu okumaya hazır."
+
+#: src/includes/Screens/Ui.php
+msgid "The score could not be calculated."
+msgstr "Skor hesaplanamadı."
+
+#: src/includes/Screens/Ui.php
+msgid "The score has not been calculated yet."
+msgstr "Skor henüz hesaplanmadı."
+
+#: src/includes/Screens/Ui.php
+msgid "The snapshot could not be taken."
+msgstr "Anlık görüntü alınamadı."
+
+#: src/includes/Screens/Ui.php
+msgid "The values were saved in WPSeoKit."
+msgstr "Değerler WPSeoKit'e kaydedildi."
+
+#: src/includes/Screens/Ui.php
+msgid "This date range is not valid. Check the dates and apply again."
+msgstr "Bu tarih aralığı geçerli değil. Tarihleri kontrol edip yeniden uygulayın."
+
+#: src/includes/Screens/Ui.php
+msgid "Time"
+msgstr "Zaman"
+
+#: src/includes/Screens/Ui.php
+msgid "Title and description coverage"
+msgstr "Başlık ve açıklama kapsamı"
+
+#: src/includes/Screens/Ui.php
+msgid "Try a different type or a wider date range."
+msgstr "Başka bir tür ya da daha geniş bir tarih aralığı deneyin."
+
+#: src/includes/Screens/Ui.php
+msgid "Up to +%s points"
+msgstr "En fazla +%s puan"
+
+#: src/includes/Screens/Ui.php
+msgid "Up to date"
+msgstr "Güncel"
+
+#: src/includes/Screens/Ui.php
+msgid "Update check"
+msgstr "Güncelleme denetimi"
+
+#: src/includes/Screens/Ui.php
+msgid "Update found"
+msgstr "Güncelleme var"
+
+#: src/includes/Screens/Ui.php
+msgid "Verified on %s."
+msgstr "%s tarihinde doğrulandı."
+
+#: src/includes/Screens/Ui.php
+msgid "Version %s is available."
+msgstr "%s sürümü var."
+
+#: src/includes/Screens/Ui.php
+msgid "Version %s is the newest version."
+msgstr "En yeni sürüm %s."
+
+#: src/includes/Screens/Ui.php
+msgid "View as table"
+msgstr "Tablo olarak gör"
+
+#: src/includes/Screens/Ui.php
+msgid "WPSeoKit checks the site settings and your recent posts. It changes nothing on your site."
+msgstr "WPSeoKit site ayarlarını ve son yazılarınızı denetler. Sitenizde hiçbir şeyi değiştirmez."
+
+#: src/includes/Screens/Ui.php
+msgid "Warning"
+msgstr "Uyarı"
+
+#: src/includes/Screens/Ui.php
+msgid "Weight"
+msgstr "Ağırlık"
+
+#: src/includes/Screens/Ui.php
+msgid "Weight %s"
+msgstr "Ağırlık %s"
+
+#: src/includes/Screens/Ui.php
+msgid "What the import did"
+msgstr "Aktarım ne yaptı"
+
+#: src/includes/Screens/Ui.php
+msgid "Where"
+msgstr "Yer"
+
+#: src/includes/Screens/Ui.php
+msgid "Yoast SEO data was detected."
+msgstr "Yoast SEO verisi algılandı."
+
+#: src/includes/Screens/Ui.php
+msgid "Yoast data found"
+msgstr "Yoast verisi bulundu"
+
+#: src/includes/Screens/Ui.php
+msgid "for the entry at %s"
+msgstr "%s girdisi için"
+
+#: src/includes/Screens/Ui.php
+msgid "for this import step"
+msgstr "bu aktarım adımı için"
+
+#: src/includes/Screens/Ui.php
+msgid "for: %s"
+msgstr "%s için"
+
+#: src/includes/Screens/Ui.php
+msgid "in the last 24 hours. Visits are counted in the 404 log, not here."
+msgstr "son 24 saatte. Ziyaretler 404 günlüğünde sayılır, burada değil."
+
+#: src/includes/Screens/Ui.php
+msgid "the post editor"
+msgstr "yazı düzenleyici"
+
+#: src/includes/Services/CsvService.php
+msgid "Send a CSV file or a csv text."
+msgstr "Bir CSV dosyası ya da CSV metni gönderin."
+
+#: src/includes/Services/CsvService.php
+msgid "The CSV could not be read."
+msgstr "CSV okunamadı."
+
+#: src/includes/Services/CsvService.php
+msgid "The CSV is larger than 1 MB."
+msgstr "CSV 1 MB'tan büyük."
+
+#: src/includes/Services/CsvService.php
+msgid "The CSV must be UTF-8."
+msgstr "CSV UTF-8 olmalı."
+
+#: src/includes/Services/Log404Service.php
+msgid "Log entry not found."
+msgstr "Günlük girdisi bulunamadı."
+
+#: src/includes/Services/RedirectService.php
+msgid "%1$s already redirects back to %2$s. That is a loop."
+msgstr "%1$s zaten %2$s adresine geri yönlendiriyor. Bu bir döngü."
+
+#: src/includes/Services/RedirectService.php
+msgid "%1$s already redirects to %2$s. Change that rule to the final address first, so visitors make one hop only."
+msgstr "%1$s zaten %2$s adresine yönlendiriyor. Ziyaretçiler tek sıçrama yapsın diye önce o kuralı son adrese çevirin."
+
+#: src/includes/Services/RedirectService.php
+msgid "%s is itself redirected. Point to its final address so visitors make one hop only."
+msgstr "%s kendisi de yönlendiriliyor. Ziyaretçiler tek sıçrama yapsın diye son adresini gösterin."
+
+#: src/includes/Services/RedirectService.php
+msgid "A redirect for %s already exists."
+msgstr "%s için zaten bir yönlendirme var."
+
+#: src/includes/Services/RedirectService.php
+msgid "Enter the new address, or choose 410 if the page is gone."
+msgstr "Yeni adresi girin; sayfa kalktıysa 410 seçin."
+
+#: src/includes/Services/RedirectService.php
+msgid "Gone"
+msgstr "Sayfa kaldırıldı"
+
+#: src/includes/Services/RedirectService.php
+msgid "Only exact paths are supported."
+msgstr "Yalnız tam yollar destekleniyor."
+
+#: src/includes/Services/RedirectService.php
+msgid "Redirect not found."
+msgstr "Yönlendirme bulunamadı."
+
+#: src/includes/Services/RedirectService.php
+msgid "The new address is not valid. Encode spaces and special characters."
+msgstr "Yeni adres geçerli değil. Boşlukları ve özel karakterleri kodlayın."
+
+#: src/includes/Services/RedirectService.php
+msgid "The new address must be a path on this site or a full http(s) address."
+msgstr "Yeni adres bu sitede bir yol ya da tam bir http(s) adresi olmalı."
+
+#: src/includes/Services/RedirectService.php
+msgid "The old address must be a path on this site, such as /old-page/."
+msgstr "Eski adres bu sitede bir yol olmalı; örneğin /old-page/."
+
+#: src/includes/Services/RedirectService.php
+msgid "The old and the new address are the same page. That is a loop."
+msgstr "Eski ve yeni adres aynı sayfa. Bu bir döngü."
+
+#: src/includes/Services/RedirectService.php
+msgid "The redirect could not be saved."
+msgstr "Yönlendirme kaydedilemedi."
+
+#: src/includes/Services/RedirectService.php
+msgid "This page has been removed for good."
+msgstr "Bu sayfa kalıcı olarak kaldırıldı."
+
+#: src/includes/Services/RedirectService.php
+msgid "This site uses HTTPS. Do not redirect to an HTTP address."
+msgstr "Bu site HTTPS kullanıyor. HTTP adresine yönlendirmeyin."
+
+#: src/includes/Services/RedirectService.php
+msgid "Use 301, 302, 307 or 410."
+msgstr "301, 302, 307 ya da 410 kullanın."
+
+#: src/includes/Services/RedirectService.php
+msgid "WordPress needs this path; it cannot be redirected."
+msgstr "WordPress bu yolu kullanıyor; yönlendirilemez."
+
+#: src/includes/Services/SitemapView.php
+msgid "%1$s URLs in %2$s"
+msgstr "%2$s içinde %1$s adres"
+
+#: src/includes/Services/SitemapView.php
+msgid "%s URLs"
+msgstr "%s adres"
+
+#: src/includes/Services/SitemapView.php
+msgid "URLs in %s files"
+msgstr "%s dosyada adres"
+
+#: src/includes/Services/SocialService.php
+msgid "%d minutes"
+msgstr "%d dakika"
+
+#: src/includes/Services/YoastImportService.php
+msgid "Run the check first: nothing is written before you have seen the report."
+msgstr "Önce denetimi çalıştırın: raporu görmeden hiçbir şey yazılmaz."
+
+#: src/includes/Services/YoastImportService.php
+msgid "Unknown import mode."
+msgstr "Bilinmeyen aktarım kipi."
