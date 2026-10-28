@@ -192,7 +192,7 @@ final class SocialService {
 	 */
 	private static function print_tags( array $rows ): void {
 		foreach ( $rows as $row ) {
-			if ( '' === $row[2] ) {
+			if ( '' === $row[2] || Variables::has_token( $row[2] ) ) {
 				continue;
 			}
 			$value = in_array( $row[1], array( 'og:url', 'og:image' ), true ) ? esc_url( $row[2] ) : esc_attr( $row[2] );

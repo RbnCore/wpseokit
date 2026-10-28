@@ -111,7 +111,8 @@ final class SchemaService {
 			$graph = apply_filters( 'wpseo_schema_graph', $graph );
 		}
 
-		return array_values( (array) $graph );
+		/* Last guard: a node field that still holds `%variable%` is dropped, never sent to Google. */
+		return array_values( Variables::scrub( (array) $graph ) );
 	}
 
 	/**

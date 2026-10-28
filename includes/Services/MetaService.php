@@ -96,7 +96,7 @@ final class MetaService {
 	public static function title( array $ctx ): string {
 		$template = self::title_template( $ctx );
 		$title    = Variables::replace( $template, $ctx );
-		return '' !== $title ? $title : Variables::plain( (string) get_option( 'blogname' ) );
+		return '' !== $title && ! Variables::has_token( $title ) ? $title : Variables::plain( (string) get_option( 'blogname' ) );
 	}
 
 	/** Resolved meta description for a context (no HTML escaping). Empty when the page has none. */
@@ -149,7 +149,7 @@ final class MetaService {
 		$ctx = self::context();
 		echo "\t<title>" . esc_html( self::title( $ctx ) ) . "</title>\n";
 		$description = self::description( $ctx );
-		if ( '' !== $description ) {
+		if ( '' !== $description && ! Variables::has_token( $description ) ) {
 			echo "\t" . '<meta name="description" content="' . esc_attr( $description ) . '" />' . "\n";
 		}
 		$codes = array(

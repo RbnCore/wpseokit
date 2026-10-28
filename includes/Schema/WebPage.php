@@ -12,6 +12,8 @@ declare(strict_types=1);
 namespace Wpseokit\Schema;
 
 use Wpseokit\Repositories\SettingsRepository;
+use Wpseokit\Services\MetaService;
+use Wpseokit\Services\Variables;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -155,13 +157,22 @@ final class WebPage extends Piece {
 			$sitename = get_bloginfo( 'name' );
 		}
 
+		$vars = $this->variable_context();
+
 		if ( $is_home ) {
-			$tpl_home = (string) SettingsRepository::get( 'templates.home_title', '' );
-			if ( '' !== $tpl_home && '%sitename% %sep% %sitedesc%' !== $tpl_home ) {
-				return $tpl_home;
+			/* Same engine and same template as `<title>` (a static front page may carry its own title field). */
+			$front = (int) get_option( 'page_on_front' );
+			$ctx   = array(
+				'type'      => 'home',
+				'front'     => true,
+				'paged'     => 1,
+				'max_pages' => 1,
+			);
+			if ( 'page' === get_option( 'show_on_front' ) && $front > 0 && get_post( $front ) instanceof \WP_Post ) {
+				$ctx['type'] = 'post';
+				$ctx['post'] = get_post( $front );
 			}
-			$desc = get_bloginfo( 'description' );
-			return '' !== $desc ? ( $sitename . ' - ' . $desc ) : $sitename;
+			return MetaService::title( $ctx );
 		}
 
 		if ( $is_search ) {
@@ -188,24 +199,52 @@ final class WebPage extends Piece {
 			$post = get_post();
 		}
 		if ( $post instanceof \WP_Post ) {
-			$custom_title = get_post_meta( $post->ID, '_wpseokit_title', true );
-			if ( is_string( $custom_title ) && '' !== trim( $custom_title ) ) {
-				return trim( $custom_title );
-			}
 			$yoast_title = get_post_meta( $post->ID, '_yoast_wpseo_title', true );
-			if ( is_string( $yoast_title ) && '' !== trim( $yoast_title ) ) {
-				// Replace basic Yoast vars if present.
-				$yoast_title = str_replace(
-					array( '%%title%%', '%%sitename%%', '%%sep%%', '%%page%%' ),
-					array( get_the_title( $post ), $sitename, '-', '' ),
-					$yoast_title
-				);
-				return trim( (string) preg_replace( '/\s+/', ' ', $yoast_title ) );
+			$own_title   = get_post_meta( $post->ID, '_wpseokit_title', true );
+			if ( ( ! is_string( $own_title ) || '' === trim( $own_title ) ) && is_string( $yoast_title ) && '' !== trim( $yoast_title ) ) {
+				$resolved = Variables::replace( Variables::from_yoast( $yoast_title ), $vars );
+				if ( '' !== $resolved ) {
+					return $resolved;
+				}
+			}
+			$vars['type'] = 'post';
+			$resolved     = MetaService::title( $vars );
+			if ( '' !== $resolved ) {
+				return $resolved;
 			}
 			return get_the_title( $post ) . ' - ' . $sitename;
 		}
 
 		return wp_get_document_title();
+	}
+
+	/**
+	 * Variable context for the same template engine `<title>` uses. A schema name is one per URL, so the page number
+	 * is left out (`%page%` stays empty), exactly like Yoast's WebPage name on `/page/2/`.
+	 *
+	 * @return array<string, mixed>
+	 */
+	private function variable_context(): array {
+		$vars = array(
+			'paged'     => 1,
+			'max_pages' => 1,
+		);
+		$post = $this->context['post'] ?? null;
+		$term = $this->context['term'] ?? null;
+		$user = $this->context['author_user'] ?? null;
+		if ( $post instanceof \WP_Post ) {
+			$vars['post'] = $post;
+		}
+		if ( $term instanceof \WP_Term ) {
+			$vars['term'] = $term;
+		}
+		if ( $user instanceof \WP_User ) {
+			$vars['user'] = $user;
+		}
+		if ( isset( $this->context['search_query'] ) ) {
+			$vars['search_phrase'] = (string) $this->context['search_query'];
+		}
+		return $vars;
 	}
 
 	private function get_description( bool $is_home, bool $is_search, bool $is_cat, bool $is_tag, bool $is_tax, ?\WP_Post $post ): string {

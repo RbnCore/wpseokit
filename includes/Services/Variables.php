@@ -167,6 +167,34 @@ final class Variables {
 		return trim( html_entity_decode( wp_strip_all_tags( $html ), ENT_QUOTES | ENT_HTML5, 'UTF-8' ) );
 	}
 
+	/**
+	 * Whether a value still carries an unresolved `%variable%` (3+ letters, so a percent-encoded `%ab%cd` never matches).
+	 * Output layers drop such a field instead of printing the raw template (docs/sozlesme.md §3).
+	 */
+	public static function has_token( string $value ): bool {
+		return 1 === preg_match( '/%[a-z_]{3,}%/', $value );
+	}
+
+	/**
+	 * Removes every string field with an unresolved token from a nested array (JSON-LD graph). Silent on purpose:
+	 * the `wpseokit_unresolved_token` action is the only trace, no log line.
+	 *
+	 * @param array<mixed> $data Graph node(s).
+	 * @return array<mixed>
+	 */
+	public static function scrub( array $data, string $path = '' ): array {
+		foreach ( $data as $key => $value ) {
+			$where = '' === $path ? (string) $key : $path . '.' . $key;
+			if ( is_array( $value ) ) {
+				$data[ $key ] = self::scrub( $value, $where );
+			} elseif ( is_string( $value ) && self::has_token( $value ) ) {
+				do_action( 'wpseokit_unresolved_token', $where, $value );
+				unset( $data[ $key ] );
+			}
+		}
+		return $data;
+	}
+
 	/** The separator from the settings (`-` when empty). */
 	public static function separator(): string {
 		$sep = trim( (string) SettingsRepository::get( 'templates.sep', '-' ) );
