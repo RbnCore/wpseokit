@@ -1,6 +1,6 @@
 <?php
 /**
- * Database schema (redirects and 404 log tables). Additive and idempotent: dbDelta may run any number of times.
+ * Database schema (redirects, 404 log and report snapshot tables). Additive and idempotent: dbDelta may run any number of times.
  *
  * @package Wpseokit
  */
@@ -14,12 +14,12 @@ defined( 'ABSPATH' ) || exit;
 final class Db {
 
 	/** Schema version; raise it whenever DDL below changes. */
-	public const VERSION = 1;
+	public const VERSION = 2;
 
 	public const OPTION = 'wpseokit_db_version';
 
 	/**
-	 * Full table name for a short name: 'redirects' or '404_logs'.
+	 * Full table name for a short name: 'redirects', '404_logs' or 'snapshots'.
 	 */
 	public static function table( string $name ): string {
 		global $wpdb;
@@ -38,13 +38,14 @@ final class Db {
 		}
 	}
 
-	/** Creates or updates both tables with dbDelta and records the schema version. */
+	/** Creates or updates the tables with dbDelta and records the schema version. */
 	public static function install(): void {
 		global $wpdb;
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		$charset = $wpdb->get_charset_collate();
 		$redir   = self::table( 'redirects' );
 		$logs    = self::table( '404_logs' );
+		$snaps   = self::table( 'snapshots' );
 
 		dbDelta(
 			"CREATE TABLE {$redir} (
@@ -76,6 +77,17 @@ final class Db {
   PRIMARY KEY  (id),
   UNIQUE KEY url_path (url_path),
   KEY last_seen_at (last_seen_at)
+) {$charset};"
+		);
+		dbDelta(
+			"CREATE TABLE {$snaps} (
+  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  snapshot_date date NOT NULL,
+  metrics longtext NOT NULL,
+  schema_version smallint(5) unsigned NOT NULL DEFAULT 1,
+  taken_at datetime NOT NULL,
+  PRIMARY KEY  (id),
+  UNIQUE KEY snapshot_date (snapshot_date)
 ) {$charset};"
 		);
 		update_option( self::OPTION, self::VERSION, true );

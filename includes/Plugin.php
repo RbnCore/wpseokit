@@ -35,6 +35,7 @@ final class Plugin {
 		'Services\\FeedService',
 		'Services\\ScoreService',
 		'Services\\PreferredAddressService',
+		'Services\\ReportService',
 	);
 
 	/** Started in the admin only. */

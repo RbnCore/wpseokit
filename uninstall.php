@@ -18,7 +18,7 @@ $wpseokit_settings = get_option( 'wpseokit_settings', array() );
 if ( is_array( $wpseokit_settings ) && ! empty( $wpseokit_settings['general']['delete_on_uninstall'] ) ) {
 	global $wpdb;
 	require_once __DIR__ . '/includes/Db.php';
-	$wpseokit_tables = array( \Wpseokit\Db::table( 'redirects' ), \Wpseokit\Db::table( '404_logs' ) );
+	$wpseokit_tables = array( \Wpseokit\Db::table( 'redirects' ), \Wpseokit\Db::table( '404_logs' ), \Wpseokit\Db::table( 'snapshots' ) );
 	foreach ( $wpseokit_tables as $wpseokit_table ) {
 		$wpdb->query( 'DROP TABLE IF EXISTS `' . esc_sql( $wpseokit_table ) . '`' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared -- table name is comes from Db::table().
 	}

@@ -3086,3 +3086,11 @@ msgstr "Çoklu site ağı PHP yedeğinin kapsamı dışındadır; devre dışı 
 msgid "WordPress Address and Site Address do not match the preferred address. Set both to the preferred address in Settings > General."
 msgstr "WordPress Adresi ve Site Adresi tercih edilen adresle uyuşmuyor. Ayarlar > Genel bölümünde ikisini de tercih edilen adrese ayarlayın."
 
+
+#: src/includes/Services/ReportService.php
+msgid "The snapshot could not be saved."
+msgstr "Anlık görüntü kaydedilemedi."
+
+#: src/includes/Services/ReportService.php
+msgid "The snapshot is being prepared in the background. Check again in a few minutes."
+msgstr "Anlık görüntü arka planda hazırlanıyor. Birkaç dakika sonra tekrar bakın."

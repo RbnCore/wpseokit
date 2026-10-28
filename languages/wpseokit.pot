@@ -3083,3 +3083,11 @@ msgstr ""
 #: src/includes/Services/PreferredAddressService.php
 msgid "WordPress Address and Site Address do not match the preferred address. Set both to the preferred address in Settings > General."
 msgstr ""
+
+#: src/includes/Services/ReportService.php
+msgid "The snapshot could not be saved."
+msgstr ""
+
+#: src/includes/Services/ReportService.php
+msgid "The snapshot is being prepared in the background. Check again in a few minutes."
+msgstr ""

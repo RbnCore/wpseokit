@@ -153,6 +153,10 @@ final class Settings {
 				'http_timeout'  => array( 'int', 5, 2, 15 ),
 				'batch_seconds' => array( 'int', 20, 5, 60 ),
 			),
+			'reports'   => array(
+				'daily_enabled'  => array( 'bool', true ),
+				'retention_days' => array( 'int', 400, 30, 1095 ),
+			),
 		);
 	}
 
