@@ -757,7 +757,7 @@ msgstr "Önizleme"
 
 #: src/includes/Screens
 msgid "Turn on"
-msgstr "Aç"
+msgstr "Etkinleştir"
 
 #: src/includes/Screens
 msgid "Active"
@@ -1713,7 +1713,7 @@ msgstr "Tümü"
 
 #: src/includes/Screens
 msgid "Turn off"
-msgstr "Kapat"
+msgstr "Devre dışı bırak"
 
 #: src/includes/Screens
 msgid "Delete"
@@ -1821,7 +1821,7 @@ msgstr "En fazla 1 MB, UTF-8."
 
 #: src/includes/Screens
 msgid "Keep them"
-msgstr "Vazgeç"
+msgstr "Kalsınlar"
 
 #: src/includes/Screens
 msgid "Edit redirect"
@@ -2861,7 +2861,7 @@ msgstr "Kaydedilmemiş değişiklikleriniz var."
 
 #: src/includes/Screens
 msgid "Discard"
-msgstr "Vazgeç"
+msgstr "Değişiklikleri at"
 
 #: src/includes/Screens
 msgid "Save changes"

@@ -114,7 +114,7 @@ final class Shell {
 
 	/** Page head with the title and the output chip. */
 	public static function head( string $title, string $extra = '' ): string {
-		return '<header class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html( $title ) . '</h1>' . self::chip() . '</div><div class="rbn-head__act">' . $extra . '</div></header>';
+		return '<div class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html( $title ) . '</h1>' . self::chip() . '</div><div class="rbn-head__act">' . $extra . '</div></div>';
 	}
 
 	/** Yoast warning shown above a tool. */

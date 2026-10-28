@@ -164,7 +164,7 @@ final class DashboardScreen {
 			array( 'log', 'alert', __( '404 errors logged', 'wpseokit' ), '–', '', 'log404' ),
 			array( 'described', 'doc', __( 'Posts with a description', 'wpseokit' ), (string) $done, '<small>/ ' . (int) $total . '</small>', 'templates' ),
 		);
-		$out              = Ui::open( 'dashboard' ) . '<header class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html__( 'WPSeoKit', 'wpseokit' ) . '</h1><span class="rbn-chip">' . esc_html( WPSEOKIT_VERSION ) . '</span>' . Shell::chip() . '</div><div class="rbn-head__act"></div></header>';
+		$out              = Ui::open( 'dashboard' ) . '<div class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html__( 'WPSeoKit', 'wpseokit' ) . '</h1><span class="rbn-chip">' . esc_html( WPSEOKIT_VERSION ) . '</span>' . Shell::chip() . '</div><div class="rbn-head__act"></div></div>';
 		$out             .= Shell::yoast_note() . '<ul class="rbn-stats">';
 		foreach ( $stats as $s ) {
 			$out .= '<li class="rbn-stat"><p class="rbn-stat__k">' . Ui::icon( $s[1] ) . '<a href="' . esc_url( Shell::url( $s[5] ) ) . '">' . esc_html( $s[2] ) . '</a></p><p class="rbn-stat__v" data-stat="' . esc_attr( $s[0] ) . '">' . esc_html( $s[3] ) . $s[4] . '</p><p class="rbn-stat__s" data-stat-sub="' . esc_attr( $s[0] ) . '"></p></li>';

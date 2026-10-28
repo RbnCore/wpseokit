@@ -219,3 +219,18 @@
 @media (prefers-reduced-motion:reduce){.wps-chev{transition:none}}
 .wps-chev{transition:transform .15s}
 .wps-og__t small{font-size:17px}
+
+/* ===== WPRJ-576 — Blok aralığı (kit düzeyi, ekran başına yama yok) =====
+   Kural: eylem satırı (düğme/bağlantı grubu) kendinden önceki bloğa (önizleme, alan, not, paragraf) >= 12 px (--rbn-s3);
+   dikey yığılmış kart/bölüm >= 16 px (--rbn-s4); düğmeler arası >= 8 px (--rbn-s2). */
+.rbn-row{row-gap:var(--rbn-s3)}
+:is(.rbn-field__c,.rbn-card__b,.rbn-card__b--pad)>*+:is(.rbn-row,.wps-copy,.rbn-card__act){margin-top:var(--rbn-s3)}
+.wps-pre+.rbn-row{margin-top:var(--rbn-s3)}
+.wps-copy{row-gap:var(--rbn-s3)}
+/* Uzun yazılı düğme (ör. "… (yeni sekmede açılır)") dar ekranda taşmaz, satıra sarar; tek satırda yükseklik yine 40 px. */
+.rbn-btn{max-width:100%;padding-block:var(--rbn-s2);white-space:normal;line-height:1.25;text-align:center}
+/* Değişken düğmeleri ile üstündeki başlık arası */
+.wps-vars[open]>summary{margin-bottom:var(--rbn-s2)}
+/* Boş liste: veri yokken başlık satırı (ve içindeki gizli "tümünü seç" kutusu) gösterilmez; boş sayfalayıcı çizgi çizmez. */
+.rbn-tw:has(>.rbn-table>tbody:empty){display:none}
+.rbn-pager:empty{display:none}
