@@ -82,24 +82,31 @@ final class Plugin {
 		add_action( 'plugins_loaded', array( self::class, 'start_services' ), 20 );
 	}
 
-	/** `plugins_loaded` (priority 20): starts the listed classes whose files exist. */
+	/** `plugins_loaded` (priority 20): starts the services (and WP-CLI commands). Screens wait for `init`: their labels are translated while registering. */
 	public static function start_services(): void {
-		$lists = array( self::SERVICES );
-		if ( is_admin() ) {
-			$lists[] = self::SCREENS;
-		}
+		self::start( self::SERVICES );
 		if ( defined( 'WP_CLI' ) ) {
-			$lists[] = self::CLI;
+			self::start( self::CLI );
 		}
-		foreach ( $lists as $list ) {
-			foreach ( $list as $name ) {
-				if ( ! is_readable( WPSEOKIT_DIR . 'includes/' . str_replace( '\\', '/', $name ) . '.php' ) ) {
-					continue;
-				}
-				$class = __NAMESPACE__ . '\\' . $name;
-				if ( method_exists( $class, 'init' ) ) {
-					$class::init();
-				}
+		if ( is_admin() ) {
+			add_action( 'init', array( self::class, 'start_screens' ), 0 );
+		}
+	}
+
+	/** `init` (priority 0, admin only): translations are available from here on, so screens may translate while registering. */
+	public static function start_screens(): void {
+		self::start( self::SCREENS );
+	}
+
+	/** @param array<int, string> $list Class names relative to `includes/`. */
+	private static function start( array $list ): void {
+		foreach ( $list as $name ) {
+			if ( ! is_readable( WPSEOKIT_DIR . 'includes/' . str_replace( '\\', '/', $name ) . '.php' ) ) {
+				continue;
+			}
+			$class = __NAMESPACE__ . '\\' . $name;
+			if ( method_exists( $class, 'init' ) ) {
+				$class::init();
 			}
 		}
 	}
