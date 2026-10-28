@@ -24,7 +24,7 @@ if ( is_array( $wpseokit_settings ) && ! empty( $wpseokit_settings['general']['d
 	}
 	$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE %s", $wpdb->esc_like( '_wpseokit_' ) . '%' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->termmeta} WHERE meta_key LIKE %s", $wpdb->esc_like( 'wpseokit_' ) . '%' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-	foreach ( array( 'wpseokit_settings', 'wpseokit_db_version', 'wpseokit_redirect_map', 'wpseokit_import_state', 'wpseokit_ip_salt' ) as $wpseokit_option ) {
+	foreach ( array( 'wpseokit_settings', 'wpseokit_db_version', 'wpseokit_redirect_map', 'wpseokit_import_state', 'wpseokit_ip_salt', 'wpseokit_score_site', 'wpseokit_score_dismissed' ) as $wpseokit_option ) {
 		delete_option( $wpseokit_option );
 	}
 }

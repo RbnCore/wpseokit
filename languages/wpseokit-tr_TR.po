@@ -330,3 +330,259 @@ msgstr "WPSeoKit tarafından üretildi"
 #: src/includes/Services/FeedService.php
 msgid "No post found"
 msgstr "Yazı bulunamadı"
+
+#: src/includes/Rules/score-rules.json
+msgid "Site is open to search engines"
+msgstr "Site arama motorlarına açık"
+
+#: src/includes/Rules/score-rules.json
+msgid "Turn search engine visibility back on. The site currently sends noindex on every page, so nothing can be indexed until this is fixed."
+msgstr "Arama motoru görünürlüğünü yeniden açın. Site şu anda her sayfada noindex gönderiyor; düzeltilene kadar hiçbir sayfa dizine giremez."
+
+#: src/includes/Rules/score-rules.json
+msgid "robots.txt reachable and within limits"
+msgstr "robots.txt erişilebilir ve sınırlar içinde"
+
+#: src/includes/Rules/score-rules.json
+msgid "Serve a valid robots.txt: plain text, from the site root, under 500 KiB."
+msgstr "Geçerli bir robots.txt sunun: düz metin, site kökünden, 500 KiB altında."
+
+#: src/includes/Rules/score-rules.json
+msgid "robots.txt declares the sitemap"
+msgstr "robots.txt site haritasını bildiriyor"
+
+#: src/includes/Rules/score-rules.json
+msgid "Add a Sitemap line with the full sitemap URL to robots.txt."
+msgstr "robots.txt dosyasına tam site haritası adresini içeren bir Sitemap satırı ekleyin."
+
+#: src/includes/Rules/score-rules.json
+msgid "Sitemap reachable and parseable"
+msgstr "Site haritası erişilebilir ve okunabilir"
+
+#: src/includes/Rules/score-rules.json
+msgid "Regenerate the sitemap and confirm it answers with XML and absolute URLs."
+msgstr "Site haritasını yeniden üretin; XML ve mutlak adreslerle yanıt verdiğinden emin olun."
+
+#: src/includes/Rules/score-rules.json
+msgid "Sitemap URLs answer 200"
+msgstr "Site haritasındaki adresler 200 yanıtı veriyor"
+
+#: src/includes/Rules/score-rules.json
+msgid "Fix the sitemap URLs that return a redirect or an error; list only URLs that answer 200."
+msgstr "Yönlendirme ya da hata dönen site haritası adreslerini düzeltin; yalnız 200 veren adresleri listeleyin."
+
+#: src/includes/Rules/score-rules.json
+msgid "lastmod carries the content date"
+msgstr "lastmod içerik tarihini taşıyor"
+
+#: src/includes/Rules/score-rules.json
+msgid "Write each URL's real content-modification date into lastmod instead of the generation time."
+msgstr "Her adresin gerçek içerik değişiklik tarihini, üretim zamanı yerine lastmod alanına yazın."
+
+#: src/includes/Rules/score-rules.json
+msgid "HTTPS with a valid certificate"
+msgstr "Geçerli sertifikayla HTTPS"
+
+#: src/includes/Rules/score-rules.json
+msgid "Serve the site over HTTPS with a valid certificate and redirect HTTP to HTTPS once, without going back to HTTP."
+msgstr "Siteyi geçerli bir sertifikayla HTTPS üzerinden sunun; HTTP’yi tek sıçramada HTTPS’e yönlendirin, tekrar HTTP’ye dönmeyin."
+
+#: src/includes/Rules/score-rules.json
+msgid "Every page outputs its own canonical"
+msgstr "Her sayfa kendi canonical adresini basıyor"
+
+#: src/includes/Rules/score-rules.json
+msgid "Emit rel=canonical on every page with the page's own absolute URL."
+msgstr "Her sayfada, sayfanın kendi mutlak adresiyle rel=canonical basın."
+
+#: src/includes/Rules/score-rules.json
+msgid "Home page Open Graph set is complete"
+msgstr "Ana sayfa Open Graph seti eksiksiz"
+
+#: src/includes/Rules/score-rules.json
+msgid "Add the missing Open Graph tags; a homepage needs og:title, og:type, og:image and og:url."
+msgstr "Eksik Open Graph etiketlerini ekleyin; ana sayfa için og:title, og:type, og:image ve og:url gerekir."
+
+#: src/includes/Rules/score-rules.json
+msgid "Organization node is complete"
+msgstr "Organization düğümü eksiksiz"
+
+#: src/includes/Rules/score-rules.json
+msgid "Fill the organization name, URL and logo in the schema settings."
+msgstr "Şema ayarlarında kuruluş adını, adresini ve logosunu doldurun."
+
+#: src/includes/Rules/score-rules.json
+msgid "No unsupported or wrong schema nodes"
+msgstr "Desteklenmeyen ya da yanlış şema düğümü yok"
+
+#: src/includes/Rules/score-rules.json
+msgid "Remove the structured-data nodes Google no longer supports here and keep ratings off your own organization."
+msgstr "Google’ın burada artık desteklemediği yapısal veri düğümlerini kaldırın ve kendi kuruluşunuza puan (rating) eklemeyin."
+
+#: src/includes/Rules/score-rules.json
+msgid "Missing pages return HTTP 404"
+msgstr "Olmayan sayfalar HTTP 404 döndürüyor"
+
+#: src/includes/Rules/score-rules.json
+msgid "Return HTTP 404 for missing pages instead of a page that says 'not found' with a 200 status."
+msgstr "Olmayan sayfalar için 200 durumuyla “bulunamadı” yazan sayfa yerine HTTP 404 döndürün."
+
+#: src/includes/Rules/score-rules.json
+msgid "Feed is valid"
+msgstr "Besleme (feed) geçerli"
+
+#: src/includes/Rules/score-rules.json
+msgid "Keep the feed valid: absolute item links that answer 200 and RFC 822 pubDate."
+msgstr "Beslemeyi geçerli tutun: 200 yanıtı veren mutlak öğe bağlantıları ve RFC 822 pubDate."
+
+#: src/includes/Rules/score-rules.json
+msgid "llms.txt is consistent (when enabled)"
+msgstr "llms.txt tutarlı (etkinse)"
+
+#: src/includes/Rules/score-rules.json
+msgid "If llms.txt is on, serve it as UTF-8 plain text with an H1 on the first line and links that answer 200; otherwise leave it off."
+msgstr "llms.txt açıksa UTF-8 düz metin olarak, ilk satırda H1 ve 200 veren bağlantılarla sunun; değilse kapalı bırakın."
+
+#: src/includes/Rules/score-rules.json
+msgid "Resolved page title is not empty"
+msgstr "Çözümlenen sayfa başlığı boş değil"
+
+#: src/includes/Rules/score-rules.json
+msgid "Give the post a title; the resolved page title is empty."
+msgstr "Yazıya bir başlık verin; çözümlenen sayfa başlığı boş."
+
+#: src/includes/Rules/score-rules.json
+msgid "Self-referencing canonical"
+msgstr "Kendine işaret eden canonical"
+
+#: src/includes/Rules/score-rules.json
+msgid "Output a self-referencing canonical with the post's absolute URL."
+msgstr "Yazının mutlak adresiyle kendine işaret eden bir canonical basın."
+
+#: src/includes/Rules/score-rules.json
+msgid "One canonical method only"
+msgstr "Tek canonical yöntemi"
+
+#: src/includes/Rules/score-rules.json
+msgid "Use one canonical method only: the head tag or the HTTP header, never both, and never two different URLs."
+msgstr "Tek canonical yöntemi kullanın: head etiketi ya da HTTP başlığı, ikisi birden değil; iki farklı adres de olmasın."
+
+#: src/includes/Rules/score-rules.json
+msgid "Post is indexable"
+msgstr "Yazı dizine alınabilir"
+
+#: src/includes/Rules/score-rules.json
+msgid "Make the post indexable again: it is currently excluded by a robots directive."
+msgstr "Yazıyı yeniden dizine alınabilir yapın: şu anda bir robots yönergesiyle dışlanıyor."
+
+#: src/includes/Rules/score-rules.json
+msgid "Article/BlogPosting markup present"
+msgstr "Article/BlogPosting işaretlemesi var"
+
+#: src/includes/Rules/score-rules.json
+msgid "Mark the post up with one Article, BlogPosting or NewsArticle node."
+msgstr "Yazıyı tek bir Article, BlogPosting ya da NewsArticle düğümüyle işaretleyin."
+
+#: src/includes/Rules/score-rules.json
+msgid "Article fields are complete"
+msgstr "Article alanları eksiksiz"
+
+#: src/includes/Rules/score-rules.json
+msgid "Complete the Article markup with headline, image, author and publisher."
+msgstr "Article işaretlemesini headline, image, author ve publisher ile tamamlayın."
+
+#: src/includes/Rules/score-rules.json
+msgid "Dates are ISO 8601 with a time zone"
+msgstr "Tarihler saat dilimli ISO 8601"
+
+#: src/includes/Rules/score-rules.json
+msgid "Write datePublished and dateModified in ISO 8601 with a time zone."
+msgstr "datePublished ve dateModified alanlarını saat dilimli ISO 8601 biçiminde yazın."
+
+#: src/includes/Rules/score-rules.json
+msgid "Primary category set and used in the URL"
+msgstr "Ana kategori seçili ve adreste kullanılıyor"
+
+#: src/includes/Rules/score-rules.json
+msgid "Pick a primary category; it decides the post URL and the breadcrumb."
+msgstr "Bir ana kategori seçin; yazı adresini ve gezinti yolunu o belirler."
+
+#: src/includes/Rules/score-rules.json
+msgid "Post Open Graph set is complete"
+msgstr "Yazı Open Graph seti eksiksiz"
+
+#: src/includes/Rules/score-rules.json
+msgid "Complete the post's Open Graph set: type, title, description, image and the canonical URL."
+msgstr "Yazının Open Graph setini tamamlayın: tür, başlık, açıklama, görsel ve canonical adres."
+
+#: src/includes/Rules/score-rules.json
+msgid "Breadcrumb markup is valid"
+msgstr "Gezinti yolu (breadcrumb) işaretlemesi geçerli"
+
+#: src/includes/Rules/score-rules.json
+msgid "Add a BreadcrumbList whose items link to pages that answer 200."
+msgstr "200 yanıtı veren sayfalara bağlanan öğelerle bir BreadcrumbList ekleyin."
+
+#: src/includes/Rules/score-rules.json
+msgid "Post is in the sitemap"
+msgstr "Yazı site haritasında"
+
+#: src/includes/Rules/score-rules.json
+msgid "Add the post's canonical URL to the sitemap."
+msgstr "Yazının canonical adresini site haritasına ekleyin."
+
+#: src/includes/Services/ScoreService.php
+msgid "Poor"
+msgstr "Zayıf"
+
+#: src/includes/Services/ScoreService.php
+msgid "Needs improvement"
+msgstr "Geliştirilmeli"
+
+#: src/includes/Services/ScoreService.php
+msgid "Good"
+msgstr "İyi"
+
+#: src/includes/Services/ScoreService.php
+msgid "A critical rule is failing, so the score is capped at 79 until it is fixed."
+msgstr "Kritik bir kural başarısız; düzeltilene kadar skor en fazla 79 olabilir."
+
+#: src/includes/Services/ScoreService.php
+msgid "This score is not a ranking guarantee."
+msgstr "Bu skor bir sıralama garantisi değildir."
+
+#: src/includes/Services/ScoreService.php
+msgid "Not applicable on this site, so it is left out of the calculation."
+msgstr "Bu sitede uygulanamıyor; hesaplamaya girmiyor."
+
+#: src/includes/Services/ScoreService.php
+msgid "Only published posts have an SEO score."
+msgstr "Yalnız yayımlanmış yazıların SEO skoru vardır."
+
+#: src/includes/Services/ScoreService.php
+msgid "The page did not answer 200, so it could not be measured."
+msgstr "Sayfa 200 yanıtı vermedi, bu yüzden ölçülemedi."
+
+#: src/includes/Services/ScoreService.php
+msgid "A score calculation is already running."
+msgstr "Bir skor hesaplaması zaten çalışıyor."
+
+#: src/includes/Services/ScoreService.php
+msgid "This is a local site: the HTTPS, certificate and public-access rules may fail here and pass on the live site."
+msgstr "Bu bir yerel site: HTTPS, sertifika ve herkese açık erişim kuralları burada başarısız olup canlı sitede geçebilir."
+
+#: src/includes/Services/ScoreService.php
+msgid "Unknown rule."
+msgstr "Bilinmeyen kural."
+
+#: src/includes/Services/ScoreService.php
+msgid "A critical rule cannot be dismissed."
+msgstr "Kritik bir kural yok sayılamaz."
+
+#: src/includes/Services/ScoreService.php
+msgid "A post rule needs a post_id."
+msgstr "Yazı kuralı için post_id gerekir."
+
+#: src/includes/Services/ScoreService.php
+msgid "A post scope needs a post_id you can edit."
+msgstr "Yazı kapsamı için düzenleyebildiğiniz bir post_id gerekir."

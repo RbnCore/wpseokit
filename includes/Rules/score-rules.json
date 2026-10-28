@@ -1,0 +1,922 @@
+{
+  "schema_version": "1.0.0",
+  "product": "WPSeoKit",
+  "document": "E:/localhost/wordpress/Plugins/wpseokit/docs/seo-skoru-yontemi.md",
+  "generated_at": "2026-10-28",
+  "source_policy": {
+    "knowledge_base": "E:/localhost/docs",
+    "index_file": "E:/localhost/docs/INDEKS.md",
+    "rule": "Every scoring rule must be backed by a 'Kurallar' or 'Uygulama talimati' item of a knowledge-base document (source.doc + source.section). Items listed under a document's DOGRULANMADI section and rules without a document ('SEO folklore') are never scoring rules.",
+    "verified_at": "2026-10-13",
+    "no_black_hat": true
+  },
+  "scores": {
+    "site": {
+      "label": { "en": "SEO score", "tr": "SEO skoru" },
+      "rule_count": 14,
+      "weight_total": 143,
+      "components": [
+        { "id": "config", "weight": 0.65, "source": "site rules" },
+        { "id": "posts", "weight": 0.35, "source": "arithmetic mean of post scores" }
+      ],
+      "post_sample": { "strategy": "newest", "limit": 200 },
+      "fallback_when_no_posts": "score = config"
+    },
+    "post": {
+      "label": { "en": "Post SEO score", "tr": "Yazi SEO skoru" },
+      "rule_count": 11,
+      "weight_total": 123
+    }
+  },
+  "formula": {
+    "expression": "score = round(100 * sum(weight * state) / sum(applicable_weight))",
+    "site_expression": "site = round(0.65 * config + 0.35 * posts_mean)",
+    "state_values": { "pass": 1, "partial": "0..1 from the rule's partial formula", "fail": 0, "not_applicable": "excluded from numerator and denominator" },
+    "rounding": "half-up, integer 0..100",
+    "critical_cap": { "applies_when": "any rule with level=critical has state 0", "max_score": 79 },
+    "notes": [
+      "Weights do not have to total 100; the formula normalises.",
+      "The critical cap limits the band, it does not change the formula. UI must show the cap note.",
+      "Median of post scores may be displayed for information only and never feeds the score."
+    ]
+  },
+  "bands": [
+    { "id": "poor", "min": 0, "max": 49, "label_en": "Poor", "label_tr": "Zayif" },
+    { "id": "fair", "min": 50, "max": 79, "label_en": "Needs improvement", "label_tr": "Gelistirilmeli" },
+    { "id": "good", "min": 80, "max": 100, "label_en": "Good", "label_tr": "Iyi" }
+  ],
+  "rules": {
+    "site": [
+      {
+        "id": "site_indexable",
+        "scope": "site",
+        "level": "critical",
+        "weight": 20,
+        "title": { "en": "Site is open to search engines", "tr": "Site arama motorlarina acik" },
+        "measures": "wp_options.blog_public, rendered <meta name='robots'> on the home page, 'Disallow: /' under 'User-agent: *' in /robots.txt",
+        "checks": [
+          { "id": "option", "read": "option blog_public", "expect": "1" },
+          { "id": "meta_robots", "read": "GET {home} -> head meta robots", "expect": "no noindex and no none" },
+          { "id": "robots_disallow_root", "read": "GET /robots.txt -> group User-agent: *", "expect": "no Disallow: /" }
+        ],
+        "pass_condition": "all 3 checks pass",
+        "partial": null,
+        "recommendation": {
+          "en": "Turn search engine visibility back on. The site currently sends noindex on every page, so nothing can be indexed until this is fixed.",
+          "tr": "Arama motoru gorunurlugunu yeniden acin. Site su anda her sayfada noindex gonderiyor; duzeltilene kadar hicbir sayfa dizine giremez.",
+          "fix": "one_click",
+          "target": "WPSeoKit > Settings > General (blog_public)"
+        },
+        "dismissible": false,
+        "source": {
+          "doc": "E:/localhost/docs/araclar-ve-botlar/robots-meta-ve-x-robots-tag.md",
+          "section": "Kurallar + Uygulama talimati 1,3,4",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "robots_txt_healthy",
+        "scope": "site",
+        "level": "warning",
+        "weight": 5,
+        "title": { "en": "robots.txt reachable and within limits", "tr": "robots.txt erisilebilir ve sinir icinde" },
+        "measures": "GET /robots.txt -> status code, Content-Type, body byte size",
+        "checks": [
+          { "id": "status", "read": "GET /robots.txt", "expect": "200" },
+          { "id": "content_type", "read": "response header Content-Type", "expect": "text/plain" },
+          { "id": "size", "read": "body length in bytes", "expect": "<= 512000" }
+        ],
+        "pass_condition": "all 3 checks pass",
+        "partial": { "type": "ratio", "formula": "passed_checks / 3" },
+        "recommendation": {
+          "en": "Serve a valid robots.txt: plain text, from the site root, under 500 KiB.",
+          "tr": "Gecerli bir robots.txt sunun: site kokunden, duz metin olarak, 500 KiB altinda.",
+          "fix": "manual",
+          "target": "hosting / server (WPSeoKit only adds the Sitemap line)"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/robots-txt.md",
+          "section": "Uygulama talimati 1,4 + Dogrulama 1,2",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/robots/robots_txt",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "robots_txt_sitemap_line",
+        "scope": "site",
+        "level": "warning",
+        "weight": 5,
+        "title": { "en": "robots.txt declares the sitemap", "tr": "robots.txt sitemap'i bildiriyor" },
+        "measures": "body of /robots.txt; HEAD request to the URL on the Sitemap line",
+        "checks": [
+          { "id": "line_present", "read": "/robots.txt body", "expect": "at least one 'Sitemap:' line with an absolute URL (scheme + host)" },
+          { "id": "target_ok", "read": "HEAD {sitemap_url}", "expect": "200" }
+        ],
+        "pass_condition": "both checks pass",
+        "partial": { "type": "ratio", "formula": "line exists but relative or not 200 => 0.5" },
+        "recommendation": {
+          "en": "Add a Sitemap line with the full sitemap URL to robots.txt.",
+          "tr": "robots.txt'ye tam sitemap adresini iceren bir Sitemap satiri ekleyin.",
+          "fix": "one_click",
+          "target": "WPSeoKit > Sitemap (virtual robots.txt, no .htaccess change)"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/robots-txt.md",
+          "section": "Uygulama talimati 2,3",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "sitemap_reachable_valid",
+        "scope": "site",
+        "level": "critical",
+        "weight": 20,
+        "title": { "en": "Sitemap reachable and parseable", "tr": "Sitemap erisilebilir ve ayristirilabilir" },
+        "measures": "GET sitemap URL, XML parse, root element, first 5 <loc> values",
+        "checks": [
+          { "id": "reachable_xml", "read": "GET {sitemap_url}", "expect": "200 with an XML content type" },
+          { "id": "structure", "read": "parsed XML document", "expect": "root urlset or sitemapindex and every <loc> an absolute https URL" }
+        ],
+        "pass_condition": "both checks pass",
+        "partial": { "type": "ratio", "formula": "passed_checks / 2" },
+        "recommendation": {
+          "en": "Regenerate the sitemap and confirm it answers with XML and absolute URLs.",
+          "tr": "Sitemap'i yeniden uretin; XML olarak yanit verdigini ve adreslerin mutlak oldugunu dogrulayin.",
+          "fix": "one_click",
+          "target": "WPSeoKit > Sitemap"
+        },
+        "dismissible": false,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/sitemap.md",
+          "section": "Uygulama talimati 1,2,6 + Dogrulama 1,2,3",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "sitemap_urls_resolve",
+        "scope": "site",
+        "level": "warning",
+        "weight": 10,
+        "title": { "en": "Sitemap URLs answer 200", "tr": "Sitemap adresleri 200 donuyor" },
+        "measures": "first 50 <loc> values in document order; HEAD each one, redirects not followed",
+        "checks": [
+          { "id": "sample_200", "read": "HEAD each sampled loc", "expect": "200 for every URL; any 3xx/4xx/5xx counts as failure" }
+        ],
+        "pass_condition": "200 count == sample count",
+        "partial": { "type": "ratio", "formula": "count_200 / sample_count", "sample": 50 },
+        "recommendation": {
+          "en": "Fix the sitemap URLs that return a redirect or an error; list only URLs that answer 200.",
+          "tr": "Sitemap'te yonlendirme veya hata donen adresleri duzeltin; yalniz 200 donen adresleri listeleyin.",
+          "fix": "mixed",
+          "target": "WPSeoKit > Redirects / per-URL"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/sitemap.md",
+          "section": "Dogrulama 4",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "sitemap_lastmod_honest",
+        "scope": "site",
+        "level": "warning",
+        "weight": 8,
+        "title": { "en": "lastmod carries the content date", "tr": "lastmod icerik tarihini tasiyor" },
+        "measures": "first 100 <loc>/<lastmod> pairs of the sitemap",
+        "checks": [
+          { "id": "distinct", "read": "unique lastmod values / sampled URLs", "expect": "distinct ratio close to 1.0" },
+          { "id": "bulk_generation", "read": "share of URLs covered by one single timestamp", "expect": "<= 90%" }
+        ],
+        "pass_condition": "distinct ratio == 1.0 and no single timestamp covers more than 90%",
+        "partial": { "type": "ratio", "formula": "distinct / sampled; force 0 when one timestamp covers > 90%", "sample": 100 },
+        "recommendation": {
+          "en": "Write each URL's real content-modification date into lastmod instead of the generation time.",
+          "tr": "lastmod alanina uretim anini degil, her adresin gercek icerik degisiklik tarihini yazin.",
+          "fix": "one_click",
+          "target": "WPSeoKit > Sitemap (generator uses post_modified)"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/sitemap.md",
+          "section": "Uygulama talimati 8 + Dogrulama 5",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "https_secure",
+        "scope": "site",
+        "level": "critical",
+        "weight": 20,
+        "title": { "en": "HTTPS with a valid certificate", "tr": "Gecerli sertifikayla HTTPS" },
+        "measures": "GET http://{host}/ (redirect code and target), GET https://{host}/ with certificate verification on, HTTPS response Location header",
+        "checks": [
+          { "id": "http_redirect", "read": "GET http://{host}/", "expect": "301 or 308 to the same host over https" },
+          { "id": "certificate", "read": "TLS handshake to https://{host}/", "expect": "certificate validates" },
+          { "id": "no_downgrade", "read": "GET https://{host}/", "expect": "no redirect to http://" }
+        ],
+        "pass_condition": "all 3 checks pass",
+        "partial": { "type": "ratio", "formula": "passed_checks / 3" },
+        "environment_note": "On local/staging hosts a self-signed certificate fails check 2. Show an environment note and re-measure on the live host; do not silently treat staging as healthy.",
+        "recommendation": {
+          "en": "Serve the site over HTTPS with a valid certificate and redirect HTTP to HTTPS once, without going back to HTTP.",
+          "tr": "Siteyi gecerli sertifikayla HTTPS uzerinden sunun; HTTP'yi tek adimda HTTPS'e yonlendirin ve geri http'ye donmeyin.",
+          "fix": "external",
+          "target": "hosting / certificate"
+        },
+        "dismissible": false,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/sayfa-deneyimi-https-mobil.md",
+          "section": "Kurallar (HTTPS) + Uygulama talimati 1,2 + Dogrulama",
+          "url": "https://developers.google.com/search/docs/appearance/page-experience",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "canonical_output",
+        "scope": "site",
+        "level": "critical",
+        "weight": 15,
+        "title": { "en": "Every page outputs its own canonical", "tr": "Her sayfa kendi canonical'ini basiyor" },
+        "measures": "head of the home page plus 3 URLs picked deterministically from the sitemap",
+        "checks": [
+          { "id": "home", "read": "GET {home} -> head", "expect": "exactly one link rel=canonical, absolute, equal to the page URL" },
+          { "id": "sample_1", "read": "GET {sitemap[0]} -> head", "expect": "same" },
+          { "id": "sample_2", "read": "GET {sitemap[1]} -> head", "expect": "same" },
+          { "id": "sample_3", "read": "GET {sitemap[2]} -> head", "expect": "same" }
+        ],
+        "pass_condition": "all 4 checks pass",
+        "partial": { "type": "ratio", "formula": "passed_checks / 4" },
+        "recommendation": {
+          "en": "Emit rel=canonical on every page with the page's own absolute URL.",
+          "tr": "Her sayfada, sayfanin kendi mutlak adresini tasiyan rel=canonical etiketi basın.",
+          "fix": "one_click",
+          "target": "WPSeoKit > Settings > General (core rel_canonical is disabled)"
+        },
+        "dismissible": false,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/kanonik-url.md",
+          "section": "Uygulama talimati 1,2,3,4 + Dogrulama 1",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "og_site_complete",
+        "scope": "site",
+        "level": "warning",
+        "weight": 8,
+        "title": { "en": "Home page Open Graph set is complete", "tr": "Ana sayfa Open Graph seti tam" },
+        "measures": "head of the home page; HEAD request for og:image",
+        "checks": [
+          { "id": "og_title", "read": "head meta property og:title", "expect": "non-empty" },
+          { "id": "og_type", "read": "head meta property og:type", "expect": "non-empty" },
+          { "id": "og_image", "read": "head meta property og:image", "expect": "absolute URL that answers 200" },
+          { "id": "og_url", "read": "head meta property og:url", "expect": "absolute URL equal to the canonical/page URL" }
+        ],
+        "pass_condition": "all 4 checks pass",
+        "partial": { "type": "ratio", "formula": "passed_checks / 4" },
+        "recommendation": {
+          "en": "Add the missing Open Graph tags; a homepage needs og:title, og:type, og:image and og:url.",
+          "tr": "Eksik Open Graph etiketlerini ekleyin; ana sayfada og:title, og:type, og:image ve og:url zorunlu.",
+          "fix": "one_click",
+          "target": "WPSeoKit > Social (default OG image)"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/yapisal-veri-ve-onizleme/acik-grafik-ve-sosyal-onizleme.md",
+          "section": "Uygulama talimati 1,2",
+          "url": "https://ogp.me/",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "schema_organization_complete",
+        "scope": "site",
+        "level": "warning",
+        "weight": 10,
+        "title": { "en": "Organization node is complete", "tr": "Kurum dugumu tam" },
+        "measures": "Organization (or LocalBusiness) node in the home page JSON-LD",
+        "checks": [
+          { "id": "name", "read": "Organization.name", "expect": "non-empty" },
+          { "id": "url", "read": "Organization.url", "expect": "non-empty absolute URL of the site" },
+          { "id": "logo", "read": "Organization.logo", "expect": "absolute image URL" }
+        ],
+        "pass_condition": "all 3 checks pass",
+        "partial": { "type": "ratio", "formula": "passed_checks / 3" },
+        "recommendation": {
+          "en": "Fill the organization name, URL and logo in the schema settings.",
+          "tr": "Schema ayarlarinda kurum adini, adresini ve logosunu doldurun.",
+          "fix": "one_click",
+          "target": "WPSeoKit > Settings > Schema"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/yapisal-veri-ve-onizleme/yapisal-veri-turleri.md",
+          "section": "Organization tablosu + json-ld-hedef-semalari.md 'Kurum dugumu'",
+          "url": "https://developers.google.com/search/docs/appearance/structured-data/organization",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "schema_forbidden_nodes",
+        "scope": "site",
+        "level": "warning",
+        "weight": 8,
+        "title": { "en": "No unsupported or wrong schema nodes", "tr": "Desteklenmeyen/yanlis sema dugumu yok" },
+        "measures": "JSON-LD on the home page, one post and one category page",
+        "checks": [
+          { "id": "no_faqpage", "read": "all @type values", "expect": "no FAQPage (Google stopped showing it on 7 May 2026)" },
+          { "id": "no_self_rating", "read": "Organization node", "expect": "no aggregateRating and no review" },
+          { "id": "no_product_on_list", "read": "category/list page JSON-LD", "expect": "no Product node on a list page" },
+          { "id": "no_searchaction", "read": "WebSite node", "expect": "no SearchAction (sitelinks search box was retired)" }
+        ],
+        "pass_condition": "all 4 checks pass",
+        "partial": { "type": "ratio", "formula": "passed_checks / 4" },
+        "recommendation": {
+          "en": "Remove the structured-data nodes Google no longer supports here and keep ratings off your own organization.",
+          "tr": "Google'in artik desteklemedigi yapisal veri dugumlerini kaldirin ve kurumun kendi dugumunde puanlama tutmayin.",
+          "fix": "mixed",
+          "target": "WPSeoKit > Settings > Schema (a,d) / content markup (b,c)"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/json-ld-hedef-semalari.md",
+          "section": "Kurallar + Uygulama talimati 5",
+          "url": "https://developers.google.com/search/docs/appearance/structured-data/faqpage",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "not_found_returns_404",
+        "scope": "site",
+        "level": "warning",
+        "weight": 8,
+        "title": { "en": "Missing pages return HTTP 404", "tr": "Olmayan sayfalar HTTP 404 donuyor" },
+        "measures": "GET a random 12-character path that cannot exist",
+        "checks": [
+          { "id": "status", "read": "GET /{random-12}/", "expect": "404 (410 also accepted); 200 with a 'not found' message is a soft 404 => fail" }
+        ],
+        "pass_condition": "status is 404 or 410",
+        "partial": null,
+        "recommendation": {
+          "en": "Return HTTP 404 for missing pages instead of a page that says 'not found' with a 200 status.",
+          "tr": "Olmayan sayfalar icin 200 durumuyla 'bulunamadi' diyen sayfa yerine HTTP 404 dondurun.",
+          "fix": "mixed",
+          "target": "WPSeoKit > 404 log / Redirects (theme template fix may be manual)"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/search-console/url-denetimi-ve-dizin.md",
+          "section": "Kurallar 5 (Soft 404) + Uygulama talimati 4",
+          "url": "https://support.google.com/webmasters/answer/7440203",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "feed_valid",
+        "scope": "site",
+        "level": "info",
+        "weight": 4,
+        "title": { "en": "Feed is valid", "tr": "Feed gecerli" },
+        "measures": "GET /feed/: status, XML parse, first 5 <item><link>, first 5 <pubDate>",
+        "checks": [
+          { "id": "status", "read": "GET /feed/", "expect": "200" },
+          { "id": "parse", "read": "XML document", "expect": "parses" },
+          { "id": "links", "read": "first 5 item link values", "expect": "absolute and answering 200" },
+          { "id": "pubdate", "read": "first 5 pubDate values", "expect": "RFC 822 format" }
+        ],
+        "pass_condition": "all 4 checks pass",
+        "partial": { "type": "ratio", "formula": "passed_checks / 4" },
+        "recommendation": {
+          "en": "Keep the feed valid: absolute item links that answer 200 and RFC 822 pubDate.",
+          "tr": "Feed'i gecerli tutun: 200 donen mutlak oge baglantilari ve RFC 822 bicimli pubDate.",
+          "fix": "one_click",
+          "target": "WPSeoKit > Feed"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/rss-besleme.md",
+          "section": "Uygulama talimati 2,3,4,6 + Dogrulama",
+          "url": "https://www.rssboard.org/rss-specification",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "llms_txt_consistent",
+        "scope": "site",
+        "level": "info",
+        "weight": 2,
+        "title": { "en": "llms.txt is consistent (when enabled)", "tr": "llms.txt tutarli (acikken)" },
+        "measures": "option llms.enabled; GET /llms.txt when enabled",
+        "na_when": "llms.enabled is false => rule is NOT_APPLICABLE and leaves the denominator",
+        "checks": [
+          { "id": "content_type", "read": "GET /llms.txt", "expect": "200 text/plain; charset=utf-8" },
+          { "id": "no_bom", "read": "first bytes", "expect": "no UTF-8 BOM" },
+          { "id": "h1_first", "read": "first line", "expect": "'# ' H1 with the site name" },
+          { "id": "links", "read": "sample of 10 links", "expect": "all answer 200" }
+        ],
+        "pass_condition": "all 4 checks pass (or rule is N/A)",
+        "partial": { "type": "ratio", "formula": "passed_checks / 4" },
+        "weight_rationale": "llms.txt is a proposal, not a standard; Google states it is not needed. The rule only checks self-consistency, hence the lowest weight.",
+        "recommendation": {
+          "en": "If llms.txt is on, serve it as UTF-8 plain text with an H1 on the first line and links that answer 200; otherwise leave it off.",
+          "tr": "llms.txt aciksa UTF-8 duz metin olarak, ilk satirda H1 ile ve 200 donen baglantilarla sunun; acik degilse kapali birakin.",
+          "fix": "one_click",
+          "target": "WPSeoKit > llms.txt"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/yapay-zeka-aramalari/llms-txt.md",
+          "section": "Uygulama talimati 1-4 + Dogrulama",
+          "url": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+          "verified": "2026-10-13"
+        }
+      }
+    ],
+    "post": [
+      {
+        "id": "title_present",
+        "scope": "post",
+        "level": "warning",
+        "weight": 10,
+        "title": { "en": "Resolved page title is not empty", "tr": "Cozulen sayfa basligi bos degil" },
+        "measures": "rendered <title> after template resolution; og:title",
+        "checks": [
+          { "id": "title", "read": "GET {permalink} -> head title", "expect": "non-empty after template variables resolve" }
+        ],
+        "pass_condition": "title is non-empty",
+        "partial": null,
+        "note": "Title LENGTH is not scored; no official threshold exists (see excluded_rules).",
+        "recommendation": {
+          "en": "Give the post a title; the resolved page title is empty.",
+          "tr": "Yaziya bir baslik verin; cozulen sayfa basligi bos.",
+          "fix": "manual",
+          "target": "post editor"
+        },
+        "dismissible": true,
+        "derived": true,
+        "source": {
+          "doc": "E:/localhost/docs/yapisal-veri-ve-onizleme/acik-grafik-ve-sosyal-onizleme.md",
+          "section": "Uygulama talimati 1 (og:title) + E:/localhost/docs/google-arama/yapisal-veri-article.md Uygulama talimati 2 (headline = visible title)",
+          "url": "https://ogp.me/",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "canonical_self",
+        "scope": "post",
+        "level": "critical",
+        "weight": 20,
+        "title": { "en": "Self-referencing canonical", "tr": "Kendini gosteren canonical" },
+        "measures": "rendered head of the post URL",
+        "checks": [
+          { "id": "single", "read": "head link rel=canonical count", "expect": "exactly 1" },
+          { "id": "absolute", "read": "canonical value", "expect": "absolute URL" },
+          { "id": "self", "read": "canonical value vs get_permalink()", "expect": "equal after trailing-slash normalisation" }
+        ],
+        "pass_condition": "all 3 checks pass",
+        "partial": { "type": "ratio", "formula": "relative URL => 0.5; more than one canonical => 0" },
+        "recommendation": {
+          "en": "Output a self-referencing canonical with the post's absolute URL.",
+          "tr": "Yazinin mutlak adresini tasiyan kendine referansli bir canonical basın.",
+          "fix": "one_click",
+          "target": "WPSeoKit > Settings / post override"
+        },
+        "dismissible": false,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/kanonik-url.md",
+          "section": "Uygulama talimati 1,2 + Dogrulama 1",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "canonical_single_method",
+        "scope": "post",
+        "level": "warning",
+        "weight": 8,
+        "title": { "en": "One canonical method only", "tr": "Tek kanonik yontemi" },
+        "measures": "head link rel=canonical, Link HTTP header, per-post override",
+        "checks": [
+          { "id": "one_method", "read": "head tag and Link header", "expect": "not both" },
+          { "id": "no_conflict", "read": "override vs computed canonical", "expect": "no two different URLs for the same page" }
+        ],
+        "pass_condition": "one method and no conflicting URL",
+        "na_when": "no canonical is output at all (canonical_self already covers it)",
+        "recommendation": {
+          "en": "Use one canonical method only: the head tag or the HTTP header, never both, and never two different URLs.",
+          "tr": "Tek bir kanonik yontem kullanin: head etiketi veya HTTP basligi; ikisi birden olmaz ve iki farkli adres gosterilmez.",
+          "fix": "manual",
+          "target": "WPSeoKit > Settings / post override"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/kanonik-url.md",
+          "section": "Uygulama talimati 3,4,8",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "indexable",
+        "scope": "post",
+        "level": "critical",
+        "weight": 20,
+        "title": { "en": "Post is indexable", "tr": "Yazi dizinlenebilir" },
+        "measures": "rendered robots meta of the post; robots.txt rules for its path",
+        "checks": [
+          { "id": "meta", "read": "head meta name=robots", "expect": "no noindex and no none" },
+          { "id": "robots_txt", "read": "robots.txt rules for the post path", "expect": "path not disallowed" }
+        ],
+        "pass_condition": "both checks pass",
+        "partial": null,
+        "note": "A meta directive is only read when the URL is crawlable, so both checks are needed together.",
+        "recommendation": {
+          "en": "Make the post indexable again: it is currently excluded by a robots directive.",
+          "tr": "Yaziyi yeniden dizinlenebilir yapin; su anda bir robots kurali onu disliyor.",
+          "fix": "one_click",
+          "target": "post editor > robots field"
+        },
+        "dismissible": false,
+        "source": {
+          "doc": "E:/localhost/docs/araclar-ve-botlar/robots-meta-ve-x-robots-tag.md",
+          "section": "Kurallar + Uygulama talimati 1,3,4",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "schema_type_valid",
+        "scope": "post",
+        "level": "warning",
+        "weight": 10,
+        "title": { "en": "Article/BlogPosting markup present", "tr": "Article/BlogPosting isaretlemesi var" },
+        "measures": "JSON-LD of the post page",
+        "checks": [
+          { "id": "one_node", "read": "@type values", "expect": "exactly one of Article, BlogPosting or NewsArticle" }
+        ],
+        "pass_condition": "exactly one matching node",
+        "partial": { "type": "ratio", "formula": "more than one matching node => 0.5" },
+        "recommendation": {
+          "en": "Mark the post up with one Article, BlogPosting or NewsArticle node.",
+          "tr": "Yaziyi tek bir Article, BlogPosting veya NewsArticle dugumuyle isaretleyin.",
+          "fix": "one_click",
+          "target": "WPSeoKit > Settings > Schema"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/yapisal-veri-article.md",
+          "section": "Uygulama talimati 1",
+          "url": "https://developers.google.com/search/docs/appearance/structured-data/article",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "schema_article_fields",
+        "scope": "post",
+        "level": "warning",
+        "weight": 12,
+        "title": { "en": "Article fields are complete", "tr": "Article alanlari tam" },
+        "measures": "Article node of the post JSON-LD",
+        "checks": [
+          { "id": "headline", "read": "Article.headline", "expect": "non-empty and equal to the visible title" },
+          { "id": "image", "read": "Article.image", "expect": "absolute URL of an existing image" },
+          { "id": "author", "read": "Article.author.name", "expect": "non-empty" },
+          { "id": "publisher", "read": "Article.publisher", "expect": "present (@id pointing to the organization node)" }
+        ],
+        "pass_condition": "all 4 checks pass",
+        "partial": { "type": "ratio", "formula": "passed_checks / 4" },
+        "recommendation": {
+          "en": "Complete the Article markup with headline, image, author and publisher.",
+          "tr": "Article isaretlemesini headline, image, author ve publisher ile tamamlayin.",
+          "fix": "mixed",
+          "target": "WPSeoKit > Settings > Schema / author selection"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/yapisal-veri-article.md",
+          "section": "Uygulama talimati 2,3,7,8,9",
+          "url": "https://developers.google.com/search/docs/appearance/structured-data/article",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "schema_dates",
+        "scope": "post",
+        "level": "warning",
+        "weight": 10,
+        "title": { "en": "Dates are ISO 8601 with a time zone", "tr": "Tarihler ISO 8601 + saat dilimi" },
+        "measures": "Article.datePublished and Article.dateModified",
+        "checks": [
+          { "id": "date_published", "read": "Article.datePublished", "expect": "matches ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|[+-][0-9]{2}:[0-9]{2})$" },
+          { "id": "date_modified", "read": "Article.dateModified", "expect": "same pattern" }
+        ],
+        "pass_condition": "both dates valid",
+        "partial": { "type": "ratio", "formula": "passed_checks / 2" },
+        "note": "A missing dateModified is not invented; if the content genuinely never changed, datePublished is used.",
+        "recommendation": {
+          "en": "Write datePublished and dateModified in ISO 8601 with a time zone.",
+          "tr": "datePublished ve dateModified alanlarini saat dilimli ISO 8601 biciminde yazin.",
+          "fix": "one_click",
+          "target": "WPSeoKit > Settings > Schema"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/tarih-kurallari.md",
+          "section": "Uygulama talimati 2 + E:/localhost/docs/google-arama/yapisal-veri-article.md Uygulama talimati 4,5,6",
+          "url": "https://developers.google.com/search/docs/appearance/structured-data/article",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "primary_category",
+        "scope": "post",
+        "level": "warning",
+        "weight": 8,
+        "title": { "en": "Primary category set and used in the URL", "tr": "Birincil kategori secili ve adreste" },
+        "measures": "primary category meta (wpseokit, or _yoast_wpseo_primary_category on import) vs get_permalink()",
+        "checks": [
+          { "id": "set", "read": "primary category term id", "expect": "non-empty" },
+          { "id": "in_permalink", "read": "get_permalink() category segment vs term slug", "expect": "equal" }
+        ],
+        "pass_condition": "both checks pass",
+        "partial": { "type": "ratio", "formula": "set but not in the permalink => 0.5" },
+        "risk": "Changing the primary category changes the post URL. The recommendation must show the 301 that goes with it.",
+        "recommendation": {
+          "en": "Pick a primary category; it decides the post URL and the breadcrumb.",
+          "tr": "Bir birincil kategori secin; yazinin adresini ve kirinti navigasyonunu o belirler.",
+          "fix": "manual",
+          "target": "post editor > primary category"
+        },
+        "dismissible": true,
+        "derived": true,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/kanonik-url.md",
+          "section": "Uygulama talimati 1 (tek kanonik adres) + E:/localhost/docs/google-arama/sitemap.md Uygulama talimati 3 (yalniz tercih edilen adres)",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "og_post_complete",
+        "scope": "post",
+        "level": "warning",
+        "weight": 10,
+        "title": { "en": "Post Open Graph set is complete", "tr": "Yazi Open Graph seti tam" },
+        "measures": "head of the post page",
+        "checks": [
+          { "id": "og_type", "read": "og:type", "expect": "article" },
+          { "id": "og_title", "read": "og:title", "expect": "non-empty" },
+          { "id": "og_description", "read": "og:description", "expect": "non-empty" },
+          { "id": "og_image", "read": "og:image", "expect": "absolute URL that answers 200" },
+          { "id": "og_url", "read": "og:url", "expect": "equal to the canonical URL" }
+        ],
+        "pass_condition": "all 5 checks pass",
+        "partial": { "type": "ratio", "formula": "passed_checks / 5" },
+        "recommendation": {
+          "en": "Complete the post's Open Graph set: type, title, description, image and the canonical URL.",
+          "tr": "Yazinin Open Graph setini tamamlayin: type, title, description, image ve kanonik adres.",
+          "fix": "mixed",
+          "target": "WPSeoKit > Social / post editor"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/yapisal-veri-ve-onizleme/acik-grafik-ve-sosyal-onizleme.md",
+          "section": "Uygulama talimati 1,2,5",
+          "url": "https://ogp.me/",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "breadcrumb_schema",
+        "scope": "post",
+        "level": "info",
+        "weight": 5,
+        "title": { "en": "Breadcrumb markup is valid", "tr": "Kirinti isaretlemesi gecerli" },
+        "measures": "BreadcrumbList node of the post JSON-LD",
+        "checks": [
+          { "id": "item_count", "read": "BreadcrumbList.itemListElement", "expect": ">= 2 items" },
+          { "id": "item_urls", "read": "each item URL", "expect": "answers 200" },
+          { "id": "last_is_post", "read": "last item", "expect": "is the current post" }
+        ],
+        "pass_condition": "all 3 checks pass",
+        "partial": { "type": "ratio", "formula": "an item URL not answering 200 => 0.5" },
+        "recommendation": {
+          "en": "Add a BreadcrumbList whose items link to pages that answer 200.",
+          "tr": "Ogrenleri 200 donen sayfalara baglanan bir BreadcrumbList ekleyin.",
+          "fix": "mixed",
+          "target": "WPSeoKit > Settings > Schema (theme HTML is separate work)"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/json-ld-hedef-semalari.md",
+          "section": "Kurallar (BreadcrumbList >= 2 ogeler, oge URL 200)",
+          "url": "https://developers.google.com/search/docs/appearance/structured-data/breadcrumb",
+          "verified": "2026-10-13"
+        }
+      },
+      {
+        "id": "post_in_sitemap",
+        "scope": "post",
+        "level": "warning",
+        "weight": 10,
+        "title": { "en": "Post is in the sitemap", "tr": "Yazi sitemap'te" },
+        "measures": "cached sitemap content vs the post's canonical URL and post_modified",
+        "checks": [
+          { "id": "present", "read": "sitemap <loc> set", "expect": "contains the post's canonical URL" },
+          { "id": "lastmod_fresh", "read": "lastmod for that loc vs dateModified", "expect": "lastmod >= dateModified" }
+        ],
+        "pass_condition": "both checks pass",
+        "partial": { "type": "ratio", "formula": "present but stale lastmod => 0.5" },
+        "recommendation": {
+          "en": "Add the post's canonical URL to the sitemap.",
+          "tr": "Yazinin kanonik adresini sitemap'e ekleyin.",
+          "fix": "one_click",
+          "target": "WPSeoKit > Sitemap (regenerate)"
+        },
+        "dismissible": true,
+        "source": {
+          "doc": "E:/localhost/docs/google-arama/sitemap.md",
+          "section": "Uygulama talimati 3,8",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
+          "verified": "2026-10-13"
+        }
+      }
+    ]
+  },
+  "contenthealth_overlap": {
+    "policy": "ContentHealth owns content-level checks. WPSeoKit must not re-measure them (no double scoring). Their rows below are explicit NON-rules for WPSeoKit.",
+    "not_wpseokit_rules": [
+      { "contenthealth_rules": ["missing_meta_description", "meta_description_length"], "topic": "meta description" },
+      { "contenthealth_rules": ["duplicate_title", "title_too_long"], "topic": "title quality" },
+      { "contenthealth_rules": ["multiple_h1", "heading_hierarchy", "empty_headings"], "topic": "heading structure" },
+      { "contenthealth_rules": ["images_missing_alt", "broken_image_host"], "topic": "images" },
+      { "contenthealth_rules": ["no_internal_links", "broken_internal_links", "orphan_content"], "topic": "internal linking" },
+      { "contenthealth_rules": ["bad_host_url", "mixed_content"], "topic": "URL health" },
+      { "contenthealth_rules": ["thin_content"], "topic": "word count" },
+      { "contenthealth_rules": ["missing_featured_image"], "topic": "featured image" },
+      { "contenthealth_rules": ["term_empty", "term_too_long", "term_single_use", "term_ai_residue", "term_numeric_only", "term_duplicate", "terms_per_post_high"], "topic": "terms/tags" },
+      { "contenthealth_rules": ["ai_chat_residue", "ai_ui_artifacts", "markdown_leftovers", "placeholder_leftovers", "encoding_garbage", "latex_leftovers", "duplicate_paragraphs"], "topic": "content cleanliness" }
+    ],
+    "shared_touchpoints": [
+      {
+        "topic": "noindex on terms",
+        "rule": "ContentHealth registers a term noindex list on wp_robots; WPSeoKit merges its own directive instead of overwriting it.",
+        "wpseokit_rules": ["indexable", "site_indexable"]
+      },
+      {
+        "topic": "404 handling",
+        "rule": "ContentHealth does not own 404s; not_found_returns_404 is a WPSeoKit rule."
+      }
+    ],
+    "formula_note": "ContentHealth uses a separate penalty model (CAP critical 15 / warning 8 / info 3, WEIGHT 1.5 / 0.8 / 0.3, score = 100 - sum(min(cap, weight * affected percent))). WPSeoKit does not reuse it; the two scores are never summed or converted."
+  },
+  "excluded_rules": [
+    { "candidate": "title length 30-60 characters", "reason": "No official threshold in any knowledge-base document", "lives_in": "UI counter + ContentHealth title_too_long" },
+    { "candidate": "meta description 70-155 characters", "reason": "No threshold document; also a ContentHealth rule", "lives_in": "UI counter + ContentHealth meta_description_length" },
+    { "candidate": "focus keyword / keyword density", "reason": "Keyword stuffing is a spam policy with no numeric threshold", "lives_in": "nowhere (forbidden)" },
+    { "candidate": "internal link count >= N", "reason": "No knowledge-base document defines a count", "lives_in": "ContentHealth no_internal_links" },
+    { "candidate": "single H1 / heading order", "reason": "Already measured by ContentHealth", "lives_in": "ContentHealth multiple_h1, heading_hierarchy" },
+    { "candidate": "image alt text", "reason": "Already measured by ContentHealth", "lives_in": "ContentHealth images_missing_alt" },
+    { "candidate": "word count / thin content", "reason": "Already measured by ContentHealth", "lives_in": "ContentHealth thin_content" },
+    { "candidate": "duplicate title, long title, featured image", "reason": "Already measured by ContentHealth", "lives_in": "ContentHealth" },
+    { "candidate": "Core Web Vitals score (LCP/INP/CLS)", "reason": "Only field measurement is valid and the plugin has no field data source; lab data would produce false 'good' verdicts", "lives_in": "link to PageSpeed / Search Console (information only)" },
+    { "candidate": "quantified ranking weight of HTTPS", "reason": "Official page gives no numeric weight (DOGRULANMADI)", "lives_in": "https_secure is binary only" },
+    { "candidate": "llms.txt as a requirement", "reason": "Google states it is not needed", "lives_in": "llms_txt_consistent (lowest weight, consistency only)" },
+    { "candidate": "adding FAQPage markup", "reason": "Removed from display on 7 May 2026", "lives_in": "forbidden; schema_forbidden_nodes fails if present" },
+    { "candidate": "sitelinks search box (SearchAction)", "reason": "Retired", "lives_in": "forbidden; schema_forbidden_nodes fails if present" },
+    { "candidate": "hreflang / mobile parity", "reason": "Responsive theme serves one document for both user agents; nothing to measure", "lives_in": "not applicable on this site" }
+  ],
+  "recommendation_policy": {
+    "ordering": ["level: critical > warning > info", "weight descending", "fix type: one_click > manual > external", "rule id ascending (stable order)"],
+    "must_show_measured_value": true,
+    "forbidden_phrasing": ["improve your SEO", "SEO should be bettered"],
+    "fix_types": { "one_click": "the plugin can change a setting or regenerate output", "manual": "a human must edit content or a template", "external": "hosting / DNS / certificate", "mixed": "part one-click, part manual" }
+  },
+  "dismiss_policy": {
+    "critical_rules_dismissible": false,
+    "warning_info_dismissible": true,
+    "record": ["rule_id", "user_id", "date", "state_at_dismiss"],
+    "affects_score": false,
+    "visibility": "hidden from the list, listed under 'Dismissed (n); they still count in the score'",
+    "reappear_when": ["state changed since dismissal", "30 days elapsed"]
+  },
+  "worked_example": {
+    "site": "filmmakinesi (local, Herd)",
+    "measured_at": "2026-10-28",
+    "mode": "read-only mysqli, no WordPress bootstrap",
+    "precision_note": "States below are rounded to 3 decimals for readability. ScoreService MUST compute with the exact fractions (sitemap_lastmod_honest = 22/29, https_secure = 2/3); with exact values the config numerator is 88.4023, not 88.40 exactly, and the score is 62.6967.",
+    "config": {
+      "applicable_weight": 141,
+      "numerator": 88.40,
+      "score": 62.7,
+      "states": {
+        "site_indexable": 0,
+        "robots_txt_healthy": 1,
+        "robots_txt_sitemap_line": 0,
+        "sitemap_reachable_valid": 1,
+        "sitemap_urls_resolve": 1,
+        "sitemap_lastmod_honest": 0.759,
+        "https_secure": 0.667,
+        "canonical_output": 0,
+        "og_site_complete": 0.75,
+        "schema_organization_complete": 1,
+        "schema_forbidden_nodes": 0.75,
+        "not_found_returns_404": 1,
+        "feed_valid": 1,
+        "llms_txt_consistent": "N/A"
+      }
+    },
+    "posts": [
+      {
+        "id": 1200,
+        "slug": "interstellar",
+        "applicable_weight": 115,
+        "numerator": 70,
+        "score": 60.87,
+        "states": {
+          "title_present": 1,
+          "canonical_self": 0,
+          "canonical_single_method": "N/A",
+          "indexable": 0,
+          "schema_type_valid": 1,
+          "schema_article_fields": 1,
+          "schema_dates": 0.5,
+          "primary_category": 1,
+          "og_post_complete": 1,
+          "breadcrumb_schema": 1,
+          "post_in_sitemap": 1
+        }
+      },
+      {
+        "id": 1203,
+        "slug": "the-revenant",
+        "applicable_weight": 115,
+        "numerator": 70,
+        "score": 60.87,
+        "states": {
+          "title_present": 1,
+          "canonical_self": 0,
+          "canonical_single_method": "N/A",
+          "indexable": 0,
+          "schema_type_valid": 1,
+          "schema_article_fields": 1,
+          "schema_dates": 0.5,
+          "primary_category": 1,
+          "og_post_complete": 1,
+          "breadcrumb_schema": 1,
+          "post_in_sitemap": 1
+        }
+      },
+      {
+        "id": 1191,
+        "slug": "jurassic-world-rebirth",
+        "applicable_weight": 115,
+        "numerator": 67,
+        "score": 58.26,
+        "states": {
+          "title_present": 1,
+          "canonical_self": 0,
+          "canonical_single_method": "N/A",
+          "indexable": 0,
+          "schema_type_valid": 1,
+          "schema_article_fields": 1,
+          "schema_dates": 1,
+          "primary_category": 0,
+          "og_post_complete": 1,
+          "breadcrumb_schema": 1,
+          "post_in_sitemap": 1
+        }
+      }
+    ],
+    "posts_mean": 60.0,
+    "site_score": 62,
+    "site_calc": "round(0.65 * 62.70 + 0.35 * 60.00) = round(61.755) = 62",
+    "band": "fair",
+    "critical_cap_binding": false,
+    "critical_cap_note": "site_indexable and canonical_output are 0, but 62 < 79, so the cap does not change the number."
+  },
+  "i18n": {
+    "source_locale": "en",
+    "translations": ["tr_TR"],
+    "keys": {
+      "score.title_site": { "en": "SEO score", "tr": "SEO skoru" },
+      "score.title_post": { "en": "Post SEO score", "tr": "Yazi SEO skoru" },
+      "score.band.good": { "en": "Good", "tr": "Iyi" },
+      "score.band.fair": { "en": "Needs improvement", "tr": "Gelistirilmeli" },
+      "score.band.poor": { "en": "Poor", "tr": "Zayif" },
+      "score.cap_note": { "en": "A critical rule is failing, so the score is capped at 79 until it is fixed.", "tr": "Kritik bir kural kaliyor; duzeltilene kadar skor en fazla 79 olabilir." },
+      "score.not_a_guarantee": { "en": "This score is not a ranking guarantee.", "tr": "Bu skor bir siralama garantisi degildir." },
+      "score.na_note": { "en": "Not applicable on this site, so it is left out of the calculation.", "tr": "Bu sitede uygulanamiyor; hesaplamaya girmiyor." },
+      "score.formula_link": { "en": "How this score is calculated", "tr": "Bu skor nasil hesaplanir" }
+    }
+  }
+}

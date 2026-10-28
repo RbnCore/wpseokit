@@ -328,3 +328,259 @@ msgstr ""
 #: src/includes/Services/FeedService.php
 msgid "No post found"
 msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Site is open to search engines"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Turn search engine visibility back on. The site currently sends noindex on every page, so nothing can be indexed until this is fixed."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "robots.txt reachable and within limits"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Serve a valid robots.txt: plain text, from the site root, under 500 KiB."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "robots.txt declares the sitemap"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Add a Sitemap line with the full sitemap URL to robots.txt."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Sitemap reachable and parseable"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Regenerate the sitemap and confirm it answers with XML and absolute URLs."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Sitemap URLs answer 200"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Fix the sitemap URLs that return a redirect or an error; list only URLs that answer 200."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "lastmod carries the content date"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Write each URL's real content-modification date into lastmod instead of the generation time."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "HTTPS with a valid certificate"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Serve the site over HTTPS with a valid certificate and redirect HTTP to HTTPS once, without going back to HTTP."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Every page outputs its own canonical"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Emit rel=canonical on every page with the page's own absolute URL."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Home page Open Graph set is complete"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Add the missing Open Graph tags; a homepage needs og:title, og:type, og:image and og:url."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Organization node is complete"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Fill the organization name, URL and logo in the schema settings."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "No unsupported or wrong schema nodes"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Remove the structured-data nodes Google no longer supports here and keep ratings off your own organization."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Missing pages return HTTP 404"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Return HTTP 404 for missing pages instead of a page that says 'not found' with a 200 status."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Feed is valid"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Keep the feed valid: absolute item links that answer 200 and RFC 822 pubDate."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "llms.txt is consistent (when enabled)"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "If llms.txt is on, serve it as UTF-8 plain text with an H1 on the first line and links that answer 200; otherwise leave it off."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Resolved page title is not empty"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Give the post a title; the resolved page title is empty."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Self-referencing canonical"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Output a self-referencing canonical with the post's absolute URL."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "One canonical method only"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Use one canonical method only: the head tag or the HTTP header, never both, and never two different URLs."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Post is indexable"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Make the post indexable again: it is currently excluded by a robots directive."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Article/BlogPosting markup present"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Mark the post up with one Article, BlogPosting or NewsArticle node."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Article fields are complete"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Complete the Article markup with headline, image, author and publisher."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Dates are ISO 8601 with a time zone"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Write datePublished and dateModified in ISO 8601 with a time zone."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Primary category set and used in the URL"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Pick a primary category; it decides the post URL and the breadcrumb."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Post Open Graph set is complete"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Complete the post's Open Graph set: type, title, description, image and the canonical URL."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Breadcrumb markup is valid"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Add a BreadcrumbList whose items link to pages that answer 200."
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Post is in the sitemap"
+msgstr ""
+
+#: src/includes/Rules/score-rules.json
+msgid "Add the post's canonical URL to the sitemap."
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "Poor"
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "Needs improvement"
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "Good"
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "A critical rule is failing, so the score is capped at 79 until it is fixed."
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "This score is not a ranking guarantee."
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "Not applicable on this site, so it is left out of the calculation."
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "Only published posts have an SEO score."
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "The page did not answer 200, so it could not be measured."
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "A score calculation is already running."
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "This is a local site: the HTTPS, certificate and public-access rules may fail here and pass on the live site."
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "Unknown rule."
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "A critical rule cannot be dismissed."
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "A post rule needs a post_id."
+msgstr ""
+
+#: src/includes/Services/ScoreService.php
+msgid "A post scope needs a post_id you can edit."
+msgstr ""

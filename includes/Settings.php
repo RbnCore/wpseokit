@@ -142,6 +142,12 @@ final class Settings {
 				'noindex_feed'               => array( 'bool', false ),
 				'clean_head_links'           => array( 'bool', false ),
 			),
+			'score'     => array(
+				'daily_recalc'  => array( 'bool', true ),
+				'cache_hours'   => array( 'int', 6, 1, 48 ),
+				'http_timeout'  => array( 'int', 5, 2, 15 ),
+				'batch_seconds' => array( 'int', 20, 5, 60 ),
+			),
 		);
 	}
 

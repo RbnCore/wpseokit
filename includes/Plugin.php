@@ -33,6 +33,7 @@ final class Plugin {
 		'Services\\YoastImportService',
 		'Services\\LlmsTxtService',
 		'Services\\FeedService',
+		'Services\\ScoreService',
 	);
 
 	/** Started in the admin only. */
