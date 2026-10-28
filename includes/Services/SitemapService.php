@@ -390,6 +390,51 @@ final class SitemapService {
 		return $files;
 	}
 
+	/** Fixed place of the well-known groups in every human-facing list; anything else sorts between post_tag and author. */
+	private const DISPLAY_ORDER = array( 'page', 'category', 'post', 'post_tag' );
+
+	/**
+	 * Position of a group key in human-facing lists: pages, categories, posts, tags, then custom types A-Z, then authors.
+	 * The XML index keeps `files()` order; this only orders what people read.
+	 *
+	 * @return array{0: int, 1: string}
+	 */
+	public static function display_rank( string $key ): array {
+		$fixed = array_search( $key, self::DISPLAY_ORDER, true );
+		if ( false !== $fixed ) {
+			return array( (int) $fixed, '' );
+		}
+		return array( 'author' === $key ? 6 : 5, $key );
+	}
+
+	/**
+	 * Group keys in display order.
+	 *
+	 * @param array<int, string> $keys Group keys.
+	 * @return array<int, string>
+	 */
+	public static function display_sort( array $keys ): array {
+		usort( $keys, static fn( string $a, string $b ): int => self::display_rank( $a ) <=> self::display_rank( $b ) );
+		return $keys;
+	}
+
+	/**
+	 * `files()` regrouped in display order (same entries, page order inside a group kept).
+	 *
+	 * @return array<int, array{name: string, url: string, count: int, lastmod: string}>
+	 */
+	public static function files_for_display(): array {
+		$by_group = array();
+		foreach ( self::files() as $file ) {
+			$by_group[ (string) strstr( $file['name'], '-sitemap', true ) ][] = $file;
+		}
+		$out = array();
+		foreach ( self::display_sort( array_keys( $by_group ) ) as $key ) {
+			$out = array_merge( $out, $by_group[ $key ] );
+		}
+		return $out;
+	}
+
 	/**
 	 * One file of a group, or null when that file does not exist.
 	 */
@@ -606,7 +651,7 @@ final class SitemapService {
 		$enabled = self::enabled();
 		$items   = array();
 		if ( $enabled ) {
-			$files = self::files();
+			$files = self::files_for_display();
 			$items[] = array(
 				'name'    => self::INDEX,
 				'url'     => self::index_url(),

@@ -301,8 +301,8 @@ final class ReportService {
 				$groups[ (string) $group ] = true;
 			}
 		}
-		ksort( $groups );
-		$out = array();
+		$groups = array_fill_keys( SitemapService::display_sort( array_map( 'strval', array_keys( $groups ) ) ), true );
+		$out    = array();
 		foreach ( self::COLUMNS as $key => $type ) {
 			$out[] = array(
 				'key'  => $key,

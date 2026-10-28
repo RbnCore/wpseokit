@@ -119,14 +119,14 @@ final class SitemapView {
 	/* ------------------------------------------------------------------ data */
 
 	/**
-	 * Files grouped by content type, in index order.
+	 * Files grouped by content type, in display order (pages, categories, posts, ...), not XML order.
 	 *
 	 * @return array<string, array{key: string, label: string, kind: string, icon: string, urls: int, lastmod: string, files: array<int, array{name: string, url: string, count: int, lastmod: string}>}>
 	 */
 	private static function groups(): array {
 		$kinds  = SitemapService::kinds();
 		$groups = array();
-		foreach ( SitemapService::files() as $file ) {
+		foreach ( SitemapService::files_for_display() as $file ) {
 			if ( ! preg_match( '/^(.+)-sitemap[0-9]*\.xml$/', $file['name'], $m ) || ! isset( $kinds[ $m[1] ] ) ) {
 				continue;
 			}
