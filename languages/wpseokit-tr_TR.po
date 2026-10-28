@@ -3094,3 +3094,383 @@ msgstr "Anlık görüntü kaydedilemedi."
 #: src/includes/Services/ReportService.php
 msgid "The snapshot is being prepared in the background. Check again in a few minutes."
 msgstr "Anlık görüntü arka planda hazırlanıyor. Birkaç dakika sonra tekrar bakın."
+
+#: WPRJ-580 Redirects > Preferred address
+msgid "Preferred address"
+msgstr "Tercih edilen adres"
+
+msgid "Automatic"
+msgstr "Otomatik"
+
+msgid "Why only one address?"
+msgstr "Neden tek adres?"
+
+msgid "<code>http</code>, <code>https</code>, <code>www</code> and no <code>www</code> make four different addresses. If all four answer, search engines see four copies of your site. One answers, the other three redirect to it."
+msgstr "<code>http</code>, <code>https</code>, <code>www</code> ve <code>www</code>'suz hâli dört ayrı adres eder. Dördü de yanıt verirse arama motorları sitenizin dört kopyasını görür. Biri yanıt verir, diğer üçü ona yönlenir."
+
+msgid "Scheme"
+msgstr "Protokol"
+
+msgid "Automatic follows your WordPress address. Google prefers https pages."
+msgstr "Otomatik, WordPress adresinizi izler. Google https sayfalarını tercih eder."
+
+msgid "Host name"
+msgstr "Alan adı"
+
+msgid "Leave empty to use the host of your WordPress address. Choose with or without <code>www</code>, and keep it. Changing it later means new redirects for every address."
+msgstr "WordPress adresinizin alan adını kullanmak için boş bırakın. <code>www</code>'lu ya da <code>www</code>'suz seçin ve değiştirmeyin. Sonradan değiştirmek her adres için yeni yönlendirme demektir."
+
+msgid "Enter the host name only, such as <code>example.com</code>. Leave out <code>https://</code> and any path."
+msgstr "Yalnız alan adını yazın, örneğin <code>example.com</code>. <code>https://</code> ve yol eklemeyin."
+
+msgid "In use:"
+msgstr "Kullanılan:"
+
+msgid "The audit and the rules use what you see here, even before you save."
+msgstr "Denetim ve kurallar, kaydetmeden önce bile burada gördüğünüzü kullanır."
+
+msgid "Save preference"
+msgstr "Tercihi kaydet"
+
+msgid "Run audit"
+msgstr "Denetimi çalıştır"
+
+msgid "Not checked yet"
+msgstr "Henüz kontrol edilmedi"
+
+msgid "Run the audit to see how each version of your address behaves. The result is not saved. It also checks canonical tags, sitemap, feed and HSTS."
+msgstr "Adresinizin her sürümünün nasıl davrandığını görmek için denetimi çalıştırın. Sonuç kaydedilmez. Kanonik etiketi, site haritasını, beslemeyi ve HSTS'yi de kontrol eder."
+
+msgid "Apache (.htaccess)"
+msgstr "Apache (.htaccess)"
+
+msgid "Before you paste it"
+msgstr "Yapıştırmadan önce"
+
+msgid "WPSeoKit does not edit your server files."
+msgstr "WPSeoKit sunucu dosyalarınızı düzenlemez."
+
+msgid "You paste the rule yourself. After that, run the audit again: every version should show 301 and 1 redirect."
+msgstr "Kuralı kendiniz yapıştırırsınız. Sonra denetimi yeniden çalıştırın: her sürüm 301 ve 1 yönlendirme göstermeli."
+
+msgid "Server"
+msgstr "Sunucu"
+
+msgid "Apache rule, scrolls sideways"
+msgstr "Apache kuralı, yana kayar"
+
+msgid "nginx rule, scrolls sideways"
+msgstr "nginx kuralı, yana kayar"
+
+msgid "Copy Apache rule"
+msgstr "Apache kuralını kopyala"
+
+msgid "What the rule does"
+msgstr "Kuralın yaptığı"
+
+msgid "What the rule does for each version"
+msgstr "Kuralın her sürüm için yaptığı"
+
+msgid "Redirect with PHP when the server does not"
+msgstr "Sunucu yönlendirmiyorsa PHP ile yönlendir"
+
+msgid "Slower than a server rule"
+msgstr "Sunucu kuralından yavaş"
+
+msgid "WordPress answers first, so every redirect takes longer than a server rule. Sends one 301 to the preferred address and keeps the path and query. Never touches wp-admin, the REST API, cron, XML-RPC, <code>/.well-known/</code> or requests that are not GET or HEAD."
+msgstr "Önce WordPress yanıt verir, bu yüzden her yönlendirme sunucu kuralından uzun sürer. Tercih edilen adrese tek 301 gönderir, yolu ve sorguyu korur. wp-admin'e, REST API'ye, cron'a, XML-RPC'ye, <code>/.well-known/</code> yoluna ve GET ya da HEAD olmayan isteklere dokunmaz."
+
+msgid "Trust proxy headers"
+msgstr "Vekil üstbilgilerine güven"
+
+msgid "Turn on only if a proxy or CDN sits in front of your site and hides https from WordPress. It then reads <code>X-Forwarded-Proto</code> and <code>X-Forwarded-Host</code>. Off: when a proxy header says the visitor used https, no redirect happens, so it cannot loop. Available when the PHP fallback is on."
+msgstr "Yalnız sitenizin önünde https'i WordPress'ten gizleyen bir vekil sunucu ya da CDN varsa açın. O zaman <code>X-Forwarded-Proto</code> ve <code>X-Forwarded-Host</code> okunur. Kapalıyken vekil üstbilgisi ziyaretçinin https kullandığını söylüyorsa yönlendirme yapılmaz, böylece döngü olmaz. PHP yedeği açıkken kullanılabilir."
+
+msgid "Pick the one address your site answers on. Every other version should send visitors there in a single step."
+msgstr "Sitenizin yanıt verdiği tek adresi seçin. Diğer her sürüm ziyaretçileri tek adımda oraya göndermeli."
+
+msgid "Address check"
+msgstr "Adres denetimi"
+
+msgid "Asks your site for each of the four versions and follows the redirects, up to 5 steps. It changes nothing."
+msgstr "Sitenizden dört sürümün her birini ister ve yönlendirmeleri 5 adıma kadar izler. Hiçbir şeyi değiştirmez."
+
+msgid "Server rule"
+msgstr "Sunucu kuralı"
+
+msgid "One rule that sends every other version straight to the preferred address. Copy it into your server settings or ask your host to add it."
+msgstr "Diğer her sürümü doğrudan tercih edilen adrese gönderen tek kural. Sunucu ayarlarınıza kopyalayın ya da barındırıcınızdan ekletin."
+
+msgid "PHP fallback"
+msgstr "PHP yedeği"
+
+msgid "Only for sites where you cannot add a server rule. Off by default."
+msgstr "Yalnız sunucu kuralı ekleyemediğiniz siteler için. Varsayılan olarak kapalı."
+
+msgid "Verdict"
+msgstr "Karar"
+
+msgid "What each verdict means"
+msgstr "Her kararın anlamı"
+
+msgid "Verdicts"
+msgstr "Kararlar"
+
+msgid "OK"
+msgstr "Tamam"
+
+msgid "The preferred address answers with 200, or another version reaches it with one 301 or 308."
+msgstr "Tercih edilen adres 200 ile yanıt verir ya da başka bir sürüm ona tek 301 veya 308 ile ulaşır."
+
+msgid "Chain"
+msgstr "Zincir"
+
+msgid "Two or more redirects in a row. Send the version straight to the preferred address."
+msgstr "Art arda iki ya da daha fazla yönlendirme. Sürümü doğrudan tercih edilen adrese gönderin."
+
+msgid "Temporary redirect"
+msgstr "Geçici yönlendirme"
+
+msgid "302, 303 or 307. Search engines may keep the old address. Use 301."
+msgstr "302, 303 ya da 307. Arama motorları eski adresi tutabilir. 301 kullanın."
+
+msgid "Duplicate page (200)"
+msgstr "Yinelenen sayfa (200)"
+
+msgid "The version answers with 200. It is a second copy of your site."
+msgstr "Sürüm 200 ile yanıt verir. Sitenizin ikinci bir kopyasıdır."
+
+msgid "Wrong target"
+msgstr "Yanlış hedef"
+
+msgid "It redirects, but not to the preferred address."
+msgstr "Yönlendirir, ama tercih edilen adrese değil."
+
+msgid "HTTPS to HTTP"
+msgstr "HTTPS'ten HTTP'ye"
+
+msgid "A step moves visitors from https to http. Remove it."
+msgstr "Bir adım ziyaretçileri https'ten http'ye taşır. Kaldırın."
+
+msgid "Redirect loop"
+msgstr "Yönlendirme döngüsü"
+
+msgid "The redirects return to an address already visited, or pass 5 steps."
+msgstr "Yönlendirmeler daha önce ziyaret edilen bir adrese döner ya da 5 adımı aşar."
+
+msgid "Preferred address not OK"
+msgstr "Tercih edilen adres sorunlu"
+
+msgid "The preferred address itself does not answer with 200."
+msgstr "Tercih edilen adresin kendisi 200 ile yanıt vermiyor."
+
+msgid "Unreachable"
+msgstr "Ulaşılamıyor"
+
+msgid "No DNS record, refused connection, certificate error or timeout. The reason is shown."
+msgstr "DNS kaydı yok, bağlantı reddi, sertifika hatası ya da zaman aşımı. Neden gösterilir."
+
+msgid "Automatic follows your WordPress address, which is %s now. Google prefers https pages."
+msgstr "Otomatik, WordPress adresinizi izler; şu an %s. Google https sayfalarını tercih eder."
+
+msgid "Automatic (%s)"
+msgstr "Otomatik (%s)"
+
+msgid "Preference saved."
+msgstr "Tercih kaydedildi."
+
+msgid "The preference was not saved."
+msgstr "Tercih kaydedilmedi."
+
+msgid "The current settings could not be loaded."
+msgstr "Geçerli ayarlar yüklenemedi."
+
+msgid "Checking 4 addresses. This can take a few seconds."
+msgstr "4 adres kontrol ediliyor. Birkaç saniye sürebilir."
+
+msgid "Run audit again"
+msgstr "Denetimi yeniden çalıştır"
+
+msgid "The check could not run."
+msgstr "Kontrol çalışamadı."
+
+msgid "Your settings are unchanged. Wait a moment and try again."
+msgstr "Ayarlarınız değişmedi. Biraz bekleyip yeniden deneyin."
+
+msgid "Checked at %s"
+msgstr "Kontrol saati: %s"
+
+msgid "Audit finished: %s"
+msgstr "Denetim bitti: %s"
+
+msgid "%d OK"
+msgstr "%d tamam"
+
+msgid "%d to fix"
+msgstr "%d düzeltilecek"
+
+msgid "%d unreachable"
+msgstr "%d ulaşılamıyor"
+
+msgid "Needs attention"
+msgstr "Dikkat gerekiyor"
+
+msgid "One thing to know"
+msgstr "Bilmeniz gereken bir şey"
+
+msgid "All four versions end at the preferred address in one step."
+msgstr "Dört sürüm de tek adımda tercih edilen adreste bitiyor."
+
+msgid "Nothing to change."
+msgstr "Değiştirilecek bir şey yok."
+
+msgid "The four versions of your address"
+msgstr "Adresinizin dört sürümü"
+
+msgid "Status code"
+msgstr "Durum kodu"
+
+msgid "Goes to"
+msgstr "Nereye gidiyor"
+
+msgid "Preferred"
+msgstr "Tercih edilen"
+
+msgid "Stays here"
+msgstr "Burada kalır"
+
+msgid "Redirect step"
+msgstr "Yönlendirme adımı"
+
+msgid "Redirect steps"
+msgstr "Yönlendirme adımları"
+
+msgid "Step %d:"
+msgstr "Adım %d:"
+
+msgid "to"
+msgstr "şuraya:"
+
+msgid "by server"
+msgstr "sunucu tarafından"
+
+msgid "by %s"
+msgstr "%s tarafından"
+
+msgid "Other checks"
+msgstr "Diğer kontroller"
+
+msgid "Other address checks"
+msgstr "Diğer adres kontrolleri"
+
+msgid "Result"
+msgstr "Sonuç"
+
+msgid "WordPress address (home)"
+msgstr "WordPress adresi (home)"
+
+msgid "Site address (siteurl)"
+msgstr "Site adresi (siteurl)"
+
+msgid "Canonical tag"
+msgstr "Kanonik etiket"
+
+msgid "Sitemap links"
+msgstr "Site haritası bağlantıları"
+
+msgid "Feed links"
+msgstr "Besleme bağlantıları"
+
+msgid "HSTS header"
+msgstr "HSTS üstbilgisi"
+
+msgid "Matches"
+msgstr "Uyuyor"
+
+msgid "Differs"
+msgstr "Farklı"
+
+msgid "Information"
+msgstr "Bilgi"
+
+msgid "Could not be read"
+msgstr "Okunamadı"
+
+msgid "%1$s (preferred is %2$s)"
+msgstr "%1$s (tercih edilen %2$s)"
+
+msgid "%1$d of %2$d links point to another host"
+msgstr "%2$d bağlantıdan %1$d tanesi başka bir alan adına gidiyor"
+
+msgid "All links match"
+msgstr "Tüm bağlantılar uyuyor"
+
+msgid "Set:"
+msgstr "Ayarlı:"
+
+msgid "Not set. Optional: consider it only after the redirects are stable."
+msgstr "Ayarlı değil. İsteğe bağlı: yalnız yönlendirmeler oturduktan sonra düşünün."
+
+msgid "No rule yet."
+msgstr "Henüz kural yok."
+
+msgid "Enter a valid host name above to create the rule."
+msgstr "Kuralı oluşturmak için yukarıya geçerli bir alan adı yazın."
+
+msgid "Creating the rule…"
+msgstr "Kural oluşturuluyor…"
+
+msgid "The rule could not be created."
+msgstr "Kural oluşturulamadı."
+
+msgid "Copy nginx rule"
+msgstr "nginx kuralını kopyala"
+
+msgid "Apache rule copied."
+msgstr "Apache kuralı kopyalandı."
+
+msgid "nginx rule copied."
+msgstr "nginx kuralı kopyalandı."
+
+msgid "Copying is blocked here. The rule is selected: press Ctrl+C."
+msgstr "Burada kopyalama engelli. Kural seçildi: Ctrl+C'ye basın."
+
+msgid "This is a multisite network. The PHP fallback never runs here. Use the server rule."
+msgstr "Bu bir çoklu site ağı. PHP yedeği burada hiç çalışmaz. Sunucu kuralını kullanın."
+
+msgid "Locked for now."
+msgstr "Şimdilik kilitli."
+
+msgid "The audit found a chain or a loop. A PHP redirect would add one more step. Fix the server rule, run the audit again, then come back."
+msgstr "Denetim bir zincir ya da döngü buldu. PHP yönlendirmesi bir adım daha ekler. Sunucu kuralını düzeltin, denetimi yeniden çalıştırın, sonra dönün."
+
+msgid "The PHP fallback is on and a chain exists."
+msgstr "PHP yedeği açık ve bir zincir var."
+
+msgid "Turn it off, then rely on the server rule."
+msgstr "Kapatın, sunucu kuralına güvenin."
+
+msgid "Turn off PHP fallback"
+msgstr "PHP yedeğini kapat"
+
+msgid "Not needed."
+msgstr "Gerekmiyor."
+
+msgid "Your server already redirects every version in one step."
+msgstr "Sunucunuz her sürümü zaten tek adımda yönlendiriyor."
+
+msgid "If you cannot edit the server, this fallback can send the copies to the preferred address. A server rule is still faster."
+msgstr "Sunucuyu düzenleyemiyorsanız bu yedek kopyaları tercih edilen adrese gönderebilir. Sunucu kuralı yine de daha hızlıdır."
+
+msgid "Run the audit first. It shows whether your server already redirects."
+msgstr "Önce denetimi çalıştırın. Sunucunuzun zaten yönlendirip yönlendirmediğini gösterir."
+
+msgid "Saved."
+msgstr "Kaydedildi."
+
+msgid "Check addresses"
+msgstr "Adresleri kontrol et"
+
+msgid "Check address"
+msgstr "Adresi kontrol et"
+

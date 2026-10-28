@@ -889,6 +889,273 @@
 		if ( window.wp && wp.data && wp.data.subscribe ) { var last = JSON.stringify( currentIds() ); wp.data.subscribe( function () { var n = JSON.stringify( currentIds() ); if ( n !== last ) { last = n; draw(); } } ); }
 	}
 
+	/* ---------- Redirects: Preferred address (WPRJ-580) ---------- */
+
+	function address( root ) {
+		var box = $( '[data-addr]', root );
+		if ( ! box ) { return; }
+		var A = I.addr || {};
+		var form = $( '[data-addr-form]', box ), hostIn = $( '#pa-host', box ), hostErr = $( '[data-addr-host-err]', box );
+		var out = $( '[data-audit-out]', box ), live = $( '[data-audit-live]', box ), runBtn = $( '[data-audit-run]', box );
+		var status = null, audit = null, snip = null, snipTimer = 0, snipSeq = 0;
+		var HOST = /^(?=.{1,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/;
+
+		function sub( s, v ) { return String( s ).replace( /%s|%d/, v ); }
+		function scheme() { var c = $( 'input[name="pa-sch"]:checked', box ); return c ? c.value : 'auto'; }
+		function hostVal() { return hostIn.value.trim().toLowerCase(); }
+		function hostOk() { var h = hostVal(); return h === '' || h === 'localhost' || HOST.test( h ); }
+		function override() { return { redirects: { preferred_scheme: scheme(), preferred_host: hostOk() ? hostVal() : '' } }; }
+		function autoScheme() { return status && status.preferred && status.preferred.auto ? status.preferred.auto.scheme : 'https'; }
+		function autoHost() { return status && status.preferred && status.preferred.auto ? status.preferred.auto.host : ''; }
+
+		function renderInuse() {
+			var auto = $( '[data-addr-auto]', box ), inuse = $( '[data-addr-inuse]', box );
+			if ( auto ) { auto.textContent = status ? sub( A.autoNow, autoScheme() ) : ( A.auto || 'Automatic' ); }
+			if ( ! status || ! hostOk() ) { inuse.hidden = true; return; }
+			var s = scheme() === 'auto' ? autoScheme() : scheme(), h = hostVal() || autoHost();
+			$( '[data-addr-origin]', box ).textContent = s + '://' + h;
+			inuse.hidden = false;
+		}
+
+		function checkHost() {
+			var ok = hostOk();
+			hostIn.setAttribute( 'aria-invalid', ok ? 'false' : 'true' );
+			hostIn.setAttribute( 'aria-describedby', ok ? 'pa-host-h' : 'pa-host-h pa-host-e' );
+			hostErr.hidden = ok;
+			return ok;
+		}
+
+		/* -- status -- */
+
+		function loadStatus() {
+			var warn = $( '[data-addr-warn]', box );
+			return api( 'GET', 'preferred-address/status' ).then( function ( r ) {
+				if ( ! r.ok || ! r.data ) { warn.innerHTML = note( 'err', esc( A.statusFailed ), 'alert' ); return; }
+				status = r.data;
+				warn.innerHTML = ( status.warnings || [] ).map( function ( w ) { return note( 'warn', esc( w ) ); } ).join( '' );
+				renderInuse();
+				renderFallback();
+			} );
+		}
+
+		/* -- save preference -- */
+
+		var saved = $( '[data-addr-saved]', box );
+		form.addEventListener( 'submit', function ( e ) {
+			e.preventDefault();
+			if ( ! checkHost() ) { hostIn.focus(); return; }
+			var btn = $( 'button[type="submit"]', form );
+			btn.disabled = true;
+			form.setAttribute( 'aria-busy', 'true' );
+			saved.textContent = '';
+			api( 'POST', 'settings', override() ).then( function ( r ) {
+				btn.disabled = false;
+				form.removeAttribute( 'aria-busy' );
+				if ( ! r.ok ) { saved.textContent = A.prefFailed + ' ' + errMsg( r ); return; }
+				saved.textContent = A.prefSaved;
+				return loadStatus().then( loadSnippets );
+			} ).catch( function () { btn.disabled = false; form.removeAttribute( 'aria-busy' ); saved.textContent = A.prefFailed; } );
+		} );
+		form.addEventListener( 'input', function () { saved.textContent = ''; checkHost(); renderInuse(); queueSnippets(); } );
+		form.addEventListener( 'change', function () { saved.textContent = ''; renderInuse(); queueSnippets(); } );
+
+		/* -- audit -- */
+
+		function badge( id ) {
+			var v = ( A.verdicts || {} )[ id ] || { label: id, tone: 'mute', icon: 'info' };
+			return '<span class="rbn-badge rbn-badge--' + esc( v.tone ) + '">' + icon( v.icon ) + esc( v.label ) + '</span>';
+		}
+
+		function vsum( c ) {
+			var ok = c.ok || 0, un = c.unreachable || 0, fix = 0, parts = [], html = '';
+			Object.keys( c ).forEach( function ( k ) { if ( k !== 'ok' && k !== 'unreachable' ) { fix += c[ k ]; } } );
+			if ( ok ) { parts.push( sub( A.nOk, ok ) ); html += '<span class="rbn-badge rbn-badge--ok">' + icon( 'check' ) + esc( sub( A.nOk, ok ) ) + '</span>'; }
+			if ( fix ) { parts.push( sub( A.nFix, fix ) ); html += '<span class="rbn-badge rbn-badge--warn">' + icon( 'alert' ) + esc( sub( A.nFix, fix ) ) + '</span>'; }
+			if ( un ) { parts.push( sub( A.nUnreach, un ) ); html += '<span class="rbn-badge rbn-badge--mute">' + icon( 'octo' ) + esc( sub( A.nUnreach, un ) ) + '</span>'; }
+			return { html: '<p class="wps-vsum">' + html + '</p>', text: parts.join( ', ' ), fix: fix };
+		}
+
+		function hopsList( hops ) {
+			if ( ! hops || hops.length < 2 ) { return ''; }
+			return '<ol class="wps-hops">' + hops.map( function ( h, i ) {
+				var last = i === hops.length - 1;
+				return '<li><span>' + esc( sub( A.stepN, i + 1 ) ) + '</span> <code>' + esc( h.code || '—' ) + '</code>' + ( last ? '' : ' <span>' + esc( A.stepTo ) + '</span> <code>' + esc( h.location ) + '</code>' + ( h.by ? ' <span>' + esc( sub( A.viaOther, h.by ) ) + '</span>' : '' ) ) + '</li>';
+			} ).join( '' ) + '</ol>';
+		}
+
+		function variantRow( v ) {
+			var first = v.hops && v.hops[ 0 ] ? v.hops[ 0 ] : { code: 0 };
+			var goes = v.verdict === 'unreachable' ? '—' : ( v.redirects ? '<code>' + esc( v.final_url ) + '</code>' : esc( A.staysHere ) );
+			return '<tr><th scope="row" data-l="' + esc( A.colAddress ) + '"><code>' + esc( v.url ) + '</code>' + ( v.is_preferred ? ' <span class="rbn-badge rbn-badge--info">' + esc( A.preferredTag ) + '</span>' : '' ) + '</th>'
+				+ '<td data-l="' + esc( A.colStatus ) + '">' + ( first.code ? esc( first.code ) : '—' ) + '</td>'
+				+ '<td data-l="' + esc( A.colGoes ) + '">' + goes + ( v.redirects > 1 || v.verdict === 'loop' ? hopsList( v.hops ) : '' ) + '</td>'
+				+ '<td data-l="' + esc( A.colRedirects ) + '">' + esc( v.redirects ) + '</td>'
+				+ '<td data-l="' + esc( A.colVerdict ) + '">' + badge( v.verdict ) + ( v.verdict === 'ok' ? '' : '<span class="wps-cell-sub">' + esc( v.message ) + '</span>' ) + '</td></tr>';
+		}
+
+		function otherRows( c ) {
+			var rows = [];
+			function row( label, tone, ic, text, detail ) {
+				rows.push( '<tr><th scope="row" data-l="' + esc( A.colCheck ) + '">' + esc( label ) + '</th><td data-l="' + esc( A.colResult ) + '"><span class="rbn-badge rbn-badge--' + tone + '">' + icon( ic ) + esc( text ) + '</span>' + ( detail ? '<span class="wps-cell-sub">' + detail + '</span>' : '' ) + '</td></tr>' );
+			}
+			function match( label, yes, val ) { row( label, yes ? 'ok' : 'warn', yes ? 'check' : 'alert', yes ? A.matches : A.differs, val ? '<code>' + esc( val ) + '</code>' : '' ); }
+			match( A.chkHome, c.home_matches_preferred, c.home );
+			match( A.chkSiteurl, c.siteurl_matches_preferred, c.siteurl );
+			var can = c.canonical || {};
+			if ( can.status === 'missing' ) { row( A.chkCanonical, 'warn', 'alert', A.missing, '' ); } else if ( can.href ) { match( A.chkCanonical, can.matches, can.href ); } else { row( A.chkCanonical, 'mute', 'octo', A.notAvailable, '' ); }
+			[ [ 'sitemap', A.chkSitemap ], [ 'feed', A.chkFeed ] ].forEach( function ( p ) {
+				var x = c[ p[ 0 ] ] || {}, n = x.mismatches || 0;
+				if ( x.status !== 'checked' ) { row( p[ 1 ], 'mute', 'octo', A.notAvailable, '' ); return; }
+				row( p[ 1 ], n ? 'warn' : 'ok', n ? 'alert' : 'check', n ? A.differs : A.matches, n ? esc( sub( A.linksDiffer, n ) ) : esc( A.linksFine ) );
+			} );
+			var h = c.hsts || {};
+			row( A.chkHsts, 'info', 'info', A.information, h.present ? esc( A.hstsSet ) + ' <code>' + esc( h.header ) + '</code>' : esc( A.hstsNone ) );
+			return rows.join( '' );
+		}
+
+		function renderAudit( d ) {
+			var s = vsum( d.verdict_counts || {} ), notes = '';
+			if ( s.fix === 0 ) { notes += note( 'ok', '<b>' + esc( A.allGood ) + '</b> ' + esc( A.nothingToFix ) ); }
+			else {
+				var items = ( d.variants || [] ).filter( function ( v ) { return v.verdict !== 'ok' && v.verdict !== 'unreachable'; } );
+				notes += '<div class="rbn-note rbn-note--warn">' + icon( 'alert' ) + '<div><p><b>' + esc( A.attention ) + '</b></p><ul class="wps-ul">' + items.map( function ( v ) { return '<li><code>' + esc( v.url ) + '</code> ' + esc( v.message ) + '</li>'; } ).join( '' ) + '</ul></div></div>';
+			}
+			if ( ( d.warnings || [] ).length ) {
+				notes += '<div class="rbn-note rbn-note--info">' + icon( 'info' ) + '<div><p><b>' + esc( A.knowThis ) + '</b></p><ul class="wps-ul">' + d.warnings.map( function ( w ) { return '<li>' + esc( w ) + '</li>'; } ).join( '' ) + '</ul></div></div>';
+			}
+			out.innerHTML = '<div class="rbn-stack">' + s.html + '<p class="rbn-help">' + esc( sub( A.checkedAt, new Date().toLocaleTimeString() ) ) + '</p>' + notes
+				+ '<h3 class="wps-h3" id="pa-v-t">' + esc( A.fourVersions ) + '</h3><div class="rbn-tw"><table class="rbn-table rbn-table--stack" aria-labelledby="pa-v-t"><thead><tr><th scope="col">' + esc( A.colAddress ) + '</th><th scope="col">' + esc( A.colStatus ) + '</th><th scope="col">' + esc( A.colGoes ) + '</th><th scope="col">' + esc( A.colRedirects ) + '</th><th scope="col">' + esc( A.colVerdict ) + '</th></tr></thead><tbody>' + ( d.variants || [] ).map( variantRow ).join( '' ) + '</tbody></table></div>'
+				+ '<h3 class="wps-h3" id="pa-o-t">' + esc( A.otherChecks ) + '</h3><div class="rbn-tw"><table class="rbn-table rbn-table--stack" aria-labelledby="pa-o-t"><thead><tr><th scope="col">' + esc( A.colCheck ) + '</th><th scope="col">' + esc( A.colResult ) + '</th></tr></thead><tbody>' + otherRows( d.consistency || {} ) + '</tbody></table></div></div>';
+			live.textContent = sub( A.auditDone, s.text );
+		}
+
+		runBtn.addEventListener( 'click', function () {
+			if ( ! checkHost() ) { hostIn.focus(); return; }
+			runBtn.disabled = true;
+			runBtn.setAttribute( 'aria-busy', 'true' );
+			out.setAttribute( 'aria-busy', 'true' );
+			out.innerHTML = '<p class="rbn-help">' + esc( A.checking ) + '</p>';
+			live.textContent = A.checking;
+			api( 'POST', 'preferred-address/audit', override() ).then( function ( r ) {
+				runBtn.disabled = false;
+				runBtn.removeAttribute( 'aria-busy' );
+				out.removeAttribute( 'aria-busy' );
+				if ( ! r.ok || ! r.data || ! r.data.variants ) {
+					out.innerHTML = '<div class="rbn-note rbn-note--err" role="alert">' + icon( 'x' ) + '<div><p><b>' + esc( A.runFailedT ) + '</b> ' + esc( A.runFailedB ) + '</p></div></div>';
+					live.textContent = A.runFailedT;
+					return;
+				}
+				audit = r.data;
+				$( 'span', runBtn ).textContent = A.runAgain;
+				renderAudit( audit );
+				renderFallback();
+				var t = $( '#pa-v-t', out );
+				if ( t ) { t.setAttribute( 'tabindex', '-1' ); t.focus(); }
+			} );
+		} );
+
+		/* -- server rule -- */
+
+		var ruleState = $( '[data-rule-state]', box ), ruleBody = $( '[data-rule-body]', box ), copyBtn = $( '[data-rule-copy]', box ), copied = $( '[data-rule-copied]', box );
+		function server() { var c = $( 'input[name="pa-srv"]:checked', box ); return c ? c.value : 'apache'; }
+
+		function renderRule() {
+			var sv = server();
+			$$( '[data-srv]', box ).forEach( function ( el ) { el.hidden = el.getAttribute( 'data-srv' ) !== sv; } );
+			$( 'span', copyBtn ).textContent = sv === 'apache' ? A.copyApache : A.copyNginx;
+			copied.textContent = '';
+			if ( ! snip ) { return; }
+			$( '[data-rule-table]', box ).innerHTML = ( snip.table || [] ).map( function ( r ) {
+				var x = r[ sv ] || {};
+				return '<tr><th scope="row" data-l="' + esc( A.colAddress ) + '"><code>' + esc( r.from ) + '</code></th><td data-l="' + esc( A.colGoes ) + '">' + ( x.hops ? '<code>' + esc( x.to ) + '</code>' : esc( A.staysHere ) ) + '</td><td data-l="' + esc( A.colRedirects ) + '">' + esc( x.hops || 0 ) + '</td></tr>';
+			} ).join( '' );
+		}
+
+		function loadSnippets() {
+			if ( ! hostOk() ) {
+				snip = null;
+				ruleBody.hidden = true;
+				ruleState.innerHTML = '<div class="rbn-empty"><h3 class="wps-h3">' + esc( A.noRuleT ) + '</h3><p>' + esc( A.noRuleB ) + '</p></div>';
+				return Promise.resolve();
+			}
+			var seq = ++snipSeq;
+			ruleState.innerHTML = '<p class="rbn-help">' + esc( A.ruleLoading ) + '</p>';
+			return api( 'POST', 'preferred-address/snippets', override() ).then( function ( r ) {
+				if ( seq !== snipSeq ) { return; }
+				if ( ! r.ok || ! r.data || ! r.data.apache ) { snip = null; ruleBody.hidden = true; ruleState.innerHTML = note( 'err', '<b>' + esc( A.ruleFailed ) + '</b>', 'alert' ); return; }
+				snip = r.data;
+				ruleState.innerHTML = '';
+				ruleBody.hidden = false;
+				$( '[data-code="apache"]', box ).textContent = snip.apache;
+				$( '[data-code="nginx"]', box ).textContent = snip.nginx;
+				$( '[data-rule-panel]', box ).textContent = snip.panel;
+				$( '[data-rule-warn]', box ).innerHTML = ( snip.warnings || [] ).map( function ( w ) { return '<li>' + esc( w ) + '</li>'; } ).join( '' );
+				renderRule();
+			} );
+		}
+		function queueSnippets() { clearTimeout( snipTimer ); snipTimer = setTimeout( loadSnippets, 400 ); }
+
+		on( box, 'change', 'input[name="pa-srv"]', renderRule );
+		copyBtn.addEventListener( 'click', function () {
+			var sv = server(), code = $( '[data-code="' + sv + '"]', box );
+			var ok = function () { copied.textContent = sv === 'apache' ? A.copiedApache : A.copiedNginx; };
+			var fail = function () {
+				var rg = doc.createRange(), sel = window.getSelection();
+				rg.selectNodeContents( code );
+				sel.removeAllRanges();
+				sel.addRange( rg );
+				try { if ( doc.execCommand( 'copy' ) ) { ok(); return; } } catch ( e ) { /* falls through to the hint */ }
+				copied.textContent = A.copyFailed;
+			};
+			if ( navigator.clipboard && navigator.clipboard.writeText ) { navigator.clipboard.writeText( code.textContent ).then( ok, fail ); } else { fail(); }
+		} );
+
+		/* -- PHP fallback -- */
+
+		var fbState = $( '[data-fb-state]', box ), fbSaved = $( '[data-fb-saved]', box ), php = $( '#pa-php', box ), proxy = $( '#pa-proxy', box );
+
+		function chainFound() {
+			return !! audit && ( audit.variants || [] ).some( function ( v ) { return v.verdict === 'chain' || v.verdict === 'loop' || v.verdict === 'https_downgrade'; } );
+		}
+
+		function renderFallback() {
+			var html, lock = false;
+			if ( status && status.multisite ) { html = note( 'warn', esc( A.fbMulti ) ); lock = true; }
+			else if ( chainFound() ) {
+				if ( php.checked ) { html = '<div class="rbn-note rbn-note--warn" role="alert">' + icon( 'alert' ) + '<div><p><b>' + esc( A.fbOnChainT ) + '</b> ' + esc( A.fbOnChainB ) + '</p><p class="rbn-note__act"><button type="button" class="rbn-btn" data-fb-off>' + esc( A.fbOff ) + '</button></p></div></div>'; }
+				else { html = note( 'warn', '<b>' + esc( A.fbLockedT ) + '</b> ' + esc( A.fbLockedB ) ); lock = true; }
+			} else if ( audit && ! ( audit.variants || [] ).some( function ( v ) { return v.verdict !== 'ok' && v.verdict !== 'unreachable'; } ) ) { html = note( 'info', '<b>' + esc( A.fbNotNeededT ) + '</b> ' + esc( A.fbNotNeededB ) ); }
+			else if ( audit ) { html = note( 'info', esc( A.fbMaybe ) ); }
+			else { html = note( 'info', esc( A.fbFirst ) ); }
+			fbState.innerHTML = html;
+			php.disabled = lock && ! php.checked;
+			proxy.disabled = ! php.checked;
+		}
+
+		function saveFb( input, prev ) {
+			var key = input.getAttribute( 'data-fb' ), body = { redirects: {} };
+			body.redirects[ key ] = input.checked;
+			input.disabled = true;
+			fbSaved.textContent = '';
+			return api( 'POST', 'settings', body ).then( function ( r ) {
+				input.disabled = false;
+				if ( ! r.ok ) { input.checked = prev; fbSaved.textContent = I.saveFailed + ' ' + errMsg( r ); } else { fbSaved.textContent = A.fbSaved; }
+				renderFallback();
+			}, function () { input.disabled = false; input.checked = prev; renderFallback(); } );
+		}
+		[ php, proxy ].forEach( function ( input ) {
+			input.addEventListener( 'change', function () { saveFb( input, ! input.checked ); } );
+		} );
+		on( box, 'click', '[data-fb-off]', function () { php.checked = false; saveFb( php, true ).then( function () { php.focus(); } ); } );
+
+		/* -- start -- */
+
+		checkHost();
+		renderFallback();
+		loadStatus().then( loadSnippets );
+		if ( /[?&]tab=pref(&|$)/.test( window.location.search ) ) { runBtn.focus(); }
+	}
+
 	/* ---------- Start ---------- */
 
 	function start() {
@@ -909,7 +1176,7 @@
 		if ( name === 'sitemap' ) { sitemap( screen ); }
 		if ( name === 'feed' ) { feed( screen ); }
 		if ( name === 'llms' ) { llms( screen ); }
-		if ( name === 'redirects' ) { redirects( screen ); }
+		if ( name === 'redirects' ) { redirects( screen ); address( screen ); }
 		if ( name === 'log404' ) { log404( screen ); }
 		if ( name === 'import' ) { importer( screen ); }
 	}

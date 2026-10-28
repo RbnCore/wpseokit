@@ -234,3 +234,18 @@
 /* Boş liste: veri yokken başlık satırı (ve içindeki gizli "tümünü seç" kutusu) gösterilmez; boş sayfalayıcı çizgi çizmez. */
 .rbn-tw:has(>.rbn-table>tbody:empty){display:none}
 .rbn-pager:empty{display:none}
+
+/* WPRJ-580: Redirects > Preferred address */
+.wps-pre--scroll{white-space:pre;overflow-wrap:normal;word-break:normal;overflow:auto;max-width:100%;tab-size:4}
+.wps-pre--scroll code{font:inherit;white-space:inherit}
+.wps-addr code,.wps-addr .wps-url{overflow-wrap:anywhere}
+.wps-addr .wps-pre--scroll code{overflow-wrap:normal}
+.wps-h3{margin:var(--rbn-s4) 0 var(--rbn-s2);font-size:1.0625rem;font-weight:600}
+.wps-ul{margin:var(--rbn-s2) 0 0;padding-left:var(--rbn-s5);display:grid;gap:var(--rbn-s2)}
+.wps-cell-sub{display:block;margin-top:var(--rbn-s1);color:var(--rbn-muted)}
+.wps-vsum{display:flex;flex-wrap:wrap;gap:var(--rbn-s2);margin:0}
+.wps-hops{margin:var(--rbn-s2) 0 0;padding:0;list-style:none;display:grid;gap:var(--rbn-s1);color:var(--rbn-muted)}
+.wps-hops li{display:flex;flex-wrap:wrap;gap:0 var(--rbn-s2)}
+.wps-addr .rbn-empty{padding:var(--rbn-s4) 0}
+.wps-addr .wps-skel-rows{padding:var(--rbn-s3) 0}
+.wps-addr .wps-field-1{grid-template-columns:1fr}

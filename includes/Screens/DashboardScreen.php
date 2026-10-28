@@ -89,6 +89,13 @@ final class DashboardScreen {
 				false,
 			),
 			array(
+				__( 'Preferred address', 'wpseokit' ),
+				self::badge( 'info', 'info', __( 'Not checked yet', 'wpseokit' ) ),
+				__( 'Check addresses', 'wpseokit' ),
+				Shell::url( 'redirects', 'pref' ),
+				false,
+			),
+			array(
 				__( 'Yoast SEO data', 'wpseokit' ),
 				'<span data-import-state>' . self::badge( 'info', 'info', __( 'Not checked', 'wpseokit' ) ) . '</span>',
 				__( 'Review import', 'wpseokit' ),
@@ -128,7 +135,7 @@ final class DashboardScreen {
 				$on = (bool) Ui::val( 'llms.enabled', false );
 				return array( $on ? $ok( __( 'Published', 'wpseokit' ) ) : $mute( __( 'Off', 'wpseokit' ) ), $on ? __( 'Address: /llms.txt', 'wpseokit' ) : __( 'Not published yet', 'wpseokit' ), $on ? $link( 'llms', 'preview', __( 'Preview', 'wpseokit' ) ) : '<button type="button" class="rbn-btn" data-llms-on>' . esc_html__( 'Turn on', 'wpseokit' ) . '</button>' );
 			case 'redirects':
-				return array( '<span data-card-badge="redirects">' . $ok( __( 'Active', 'wpseokit' ) ) . '</span>', __( 'Loading…', 'wpseokit' ), $link( 'redirects', 'add', __( 'Add redirect', 'wpseokit' ) ) );
+				return array( '<span data-card-badge="redirects">' . $ok( __( 'Active', 'wpseokit' ) ) . '</span>', __( 'Loading…', 'wpseokit' ), $link( 'redirects', 'pref', __( 'Check address', 'wpseokit' ) ) );
 			case 'log404':
 				return array( '<span data-card-badge="log404">' . $mute( __( 'Checking', 'wpseokit' ) ) . '</span>', __( 'Loading…', 'wpseokit' ), $link( 'log404', '', __( 'Fix top errors', 'wpseokit' ) ) );
 			case 'import':

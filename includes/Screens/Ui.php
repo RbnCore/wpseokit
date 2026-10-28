@@ -67,7 +67,7 @@ final class Ui {
 		);
 	}
 
-	/** @return array<string, string> */
+	/** @return array<string, mixed> */
 	private static function strings(): array {
 		return array(
 			'saved'          => __( 'Settings saved.', 'wpseokit' ),
@@ -149,6 +149,109 @@ final class Ui {
 			'noPosts'        => __( 'There is no published post to show.', 'wpseokit' ),
 			'verify'         => __( 'Verify', 'wpseokit' ),
 			'verified'       => __( 'Verified.', 'wpseokit' ),
+			'addr'           => self::address_strings(),
+		);
+	}
+
+	/**
+	 * Strings of the Redirects > Preferred address tab. `verdicts` mirrors RedirectsScreen::verdicts().
+	 *
+	 * @return array<string, mixed>
+	 */
+	private static function address_strings(): array {
+		$verdicts = array();
+		foreach ( RedirectsScreen::verdicts() as $id => $v ) {
+			$verdicts[ $id ] = array(
+				'label' => $v[0],
+				'tone'  => $v[1],
+				'icon'  => $v[2],
+			);
+		}
+		return array(
+			'verdicts'      => $verdicts,
+			/* translators: %s: scheme, https or http. */
+			'autoHelp'      => __( 'Automatic follows your WordPress address, which is %s now. Google prefers https pages.', 'wpseokit' ),
+			/* translators: %s: scheme, https or http. */
+			'autoNow'       => __( 'Automatic (%s)', 'wpseokit' ),
+			'prefSaved'     => __( 'Preference saved.', 'wpseokit' ),
+			'prefFailed'    => __( 'The preference was not saved.', 'wpseokit' ),
+			'statusFailed'  => __( 'The current settings could not be loaded.', 'wpseokit' ),
+			'checking'      => __( 'Checking 4 addresses. This can take a few seconds.', 'wpseokit' ),
+			'runAgain'      => __( 'Run audit again', 'wpseokit' ),
+			'runFailedT'    => __( 'The check could not run.', 'wpseokit' ),
+			'runFailedB'    => __( 'Your settings are unchanged. Wait a moment and try again.', 'wpseokit' ),
+			/* translators: %s: time of day. */
+			'checkedAt'     => __( 'Checked at %s', 'wpseokit' ),
+			/* translators: %s: summary such as "3 OK, 1 to fix". */
+			'auditDone'     => __( 'Audit finished: %s', 'wpseokit' ),
+			/* translators: %d: number of versions. */
+			'nOk'           => __( '%d OK', 'wpseokit' ),
+			/* translators: %d: number of versions. */
+			'nFix'          => __( '%d to fix', 'wpseokit' ),
+			/* translators: %d: number of versions. */
+			'nUnreach'      => __( '%d unreachable', 'wpseokit' ),
+			'attention'     => __( 'Needs attention', 'wpseokit' ),
+			'knowThis'      => __( 'One thing to know', 'wpseokit' ),
+			'allGood'       => __( 'All four versions end at the preferred address in one step.', 'wpseokit' ),
+			'nothingToFix'  => __( 'Nothing to change.', 'wpseokit' ),
+			'fourVersions'  => __( 'The four versions of your address', 'wpseokit' ),
+			'colAddress'    => __( 'Address', 'wpseokit' ),
+			'colStatus'     => __( 'Status code', 'wpseokit' ),
+			'colGoes'       => __( 'Goes to', 'wpseokit' ),
+			'colRedirects'  => __( 'Redirects', 'wpseokit' ),
+			'colVerdict'    => __( 'Verdict', 'wpseokit' ),
+			'preferredTag'  => __( 'Preferred', 'wpseokit' ),
+			'staysHere'     => __( 'Stays here', 'wpseokit' ),
+			'stepOne'       => __( 'Redirect step', 'wpseokit' ),
+			'stepMany'      => __( 'Redirect steps', 'wpseokit' ),
+			/* translators: %d: step number. */
+			'stepN'         => __( 'Step %d:', 'wpseokit' ),
+			'stepTo'        => __( 'to', 'wpseokit' ),
+			'viaServer'     => __( 'by server', 'wpseokit' ),
+			/* translators: %s: who sent the redirect, such as WordPress. */
+			'viaOther'      => __( 'by %s', 'wpseokit' ),
+			'otherChecks'   => __( 'Other checks', 'wpseokit' ),
+			'otherCaption'  => __( 'Other address checks', 'wpseokit' ),
+			'colCheck'      => __( 'Check', 'wpseokit' ),
+			'colResult'     => __( 'Result', 'wpseokit' ),
+			'chkHome'       => __( 'WordPress address (home)', 'wpseokit' ),
+			'chkSiteurl'    => __( 'Site address (siteurl)', 'wpseokit' ),
+			'chkCanonical'  => __( 'Canonical tag', 'wpseokit' ),
+			'chkSitemap'    => __( 'Sitemap links', 'wpseokit' ),
+			'chkFeed'       => __( 'Feed links', 'wpseokit' ),
+			'chkHsts'       => __( 'HSTS header', 'wpseokit' ),
+			'matches'       => __( 'Matches', 'wpseokit' ),
+			'differs'       => __( 'Differs', 'wpseokit' ),
+			'information'   => __( 'Information', 'wpseokit' ),
+			'notAvailable'  => __( 'Could not be read', 'wpseokit' ),
+			'missing'       => __( 'Missing', 'wpseokit' ),
+			/* translators: 1: address found, 2: preferred address. */
+			'canonicalDiff' => __( '%1$s (preferred is %2$s)', 'wpseokit' ),
+			/* translators: 1: number of links that point to another host, 2: all links. */
+			'linksDiffer'   => __( '%1$d of %2$d links point to another host', 'wpseokit' ),
+			'linksFine'     => __( 'All links match', 'wpseokit' ),
+			'hstsSet'       => __( 'Set:', 'wpseokit' ),
+			'hstsNone'      => __( 'Not set. Optional: consider it only after the redirects are stable.', 'wpseokit' ),
+			'noRuleT'       => __( 'No rule yet.', 'wpseokit' ),
+			'noRuleB'       => __( 'Enter a valid host name above to create the rule.', 'wpseokit' ),
+			'ruleLoading'   => __( 'Creating the rule…', 'wpseokit' ),
+			'ruleFailed'    => __( 'The rule could not be created.', 'wpseokit' ),
+			'copyApache'    => __( 'Copy Apache rule', 'wpseokit' ),
+			'copyNginx'     => __( 'Copy nginx rule', 'wpseokit' ),
+			'copiedApache'  => __( 'Apache rule copied.', 'wpseokit' ),
+			'copiedNginx'   => __( 'nginx rule copied.', 'wpseokit' ),
+			'copyFailed'    => __( 'Copying is blocked here. The rule is selected: press Ctrl+C.', 'wpseokit' ),
+			'fbMulti'       => __( 'This is a multisite network. The PHP fallback never runs here. Use the server rule.', 'wpseokit' ),
+			'fbLockedT'     => __( 'Locked for now.', 'wpseokit' ),
+			'fbLockedB'     => __( 'The audit found a chain or a loop. A PHP redirect would add one more step. Fix the server rule, run the audit again, then come back.', 'wpseokit' ),
+			'fbOnChainT'    => __( 'The PHP fallback is on and a chain exists.', 'wpseokit' ),
+			'fbOnChainB'    => __( 'Turn it off, then rely on the server rule.', 'wpseokit' ),
+			'fbOff'         => __( 'Turn off PHP fallback', 'wpseokit' ),
+			'fbNotNeededT'  => __( 'Not needed.', 'wpseokit' ),
+			'fbNotNeededB'  => __( 'Your server already redirects every version in one step.', 'wpseokit' ),
+			'fbMaybe'       => __( 'If you cannot edit the server, this fallback can send the copies to the preferred address. A server rule is still faster.', 'wpseokit' ),
+			'fbFirst'       => __( 'Run the audit first. It shows whether your server already redirects.', 'wpseokit' ),
+			'fbSaved'       => __( 'Saved.', 'wpseokit' ),
 		);
 	}
 
