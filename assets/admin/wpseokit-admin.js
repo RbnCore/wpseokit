@@ -36,8 +36,14 @@
 				try { data = txt ? JSON.parse( txt ) : null; } catch ( e ) { data = txt; }
 				return { ok: res.ok, status: res.status, data: data, total: parseInt( res.headers.get( 'X-WP-Total' ) || '-1', 10 ), pages: parseInt( res.headers.get( 'X-WP-TotalPages' ) || '1', 10 ), text: txt };
 			} );
+		}, function () {
+			// Network failure: same shape as a failed response, so each screen shows its error state.
+			return { ok: false, status: 0, data: null, total: -1, pages: 1, text: '' };
 		} );
 	}
+
+	/** Every call goes to the real route; a missing or failing route shows the screen error state, never made-up data. */
+	function api( method, path, body ) { return request( method, path, body ); }
 
 	function errMsg( r ) {
 		return ( r && r.data && r.data.message ) ? r.data.message : ( I.saveFailed || 'Request failed.' );
