@@ -23,7 +23,7 @@ final class Db {
 	 */
 	public static function table( string $name ): string {
 		global $wpdb;
-		return $wpdb->prefix . 'wpseokit_' . $name;
+		return $wpdb->prefix . 'seokit_' . $name;
 	}
 
 	/** Activation hook. */

@@ -17,9 +17,10 @@ delete_option( 'wpseokit_update_off' );
 $wpseokit_settings = get_option( 'wpseokit_settings', array() );
 if ( is_array( $wpseokit_settings ) && ! empty( $wpseokit_settings['general']['delete_on_uninstall'] ) ) {
 	global $wpdb;
-	$wpseokit_tables = array( $wpdb->prefix . 'wpseokit_redirects', $wpdb->prefix . 'wpseokit_404_logs' );
+	require_once __DIR__ . '/includes/Db.php';
+	$wpseokit_tables = array( \Wpseokit\Db::table( 'redirects' ), \Wpseokit\Db::table( '404_logs' ) );
 	foreach ( $wpseokit_tables as $wpseokit_table ) {
-		$wpdb->query( 'DROP TABLE IF EXISTS `' . esc_sql( $wpseokit_table ) . '`' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared -- table name is built from the prefix and a constant.
+		$wpdb->query( 'DROP TABLE IF EXISTS `' . esc_sql( $wpseokit_table ) . '`' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared -- table name is comes from Db::table().
 	}
 	$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE %s", $wpdb->esc_like( '_wpseokit_' ) . '%' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->termmeta} WHERE meta_key LIKE %s", $wpdb->esc_like( 'wpseokit_' ) . '%' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
