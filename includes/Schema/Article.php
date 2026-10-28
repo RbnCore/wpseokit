@@ -9,9 +9,20 @@ declare(strict_types=1);
 
 namespace Wpseokit\Schema;
 
+use Wpseokit\Repositories\SettingsRepository;
+
 defined( 'ABSPATH' ) || exit;
 
 final class Article extends Piece {
+
+	/**
+	 * Configured Google Article subtype (schema.article_type); BlogPosting by default.
+	 */
+	public static function article_type(): string {
+		$type = (string) SettingsRepository::get( 'schema.article_type', 'BlogPosting' );
+
+		return in_array( $type, array( 'BlogPosting', 'Article', 'NewsArticle' ), true ) ? $type : 'BlogPosting';
+	}
 
 	public function is_needed(): bool {
 		if ( ! empty( $this->context['is_post'] ) ) {
@@ -70,15 +81,15 @@ final class Article extends Piece {
 		}
 
 		$article = array(
-			'@type'            => 'Article',
+			'@type'            => self::article_type(),
 			'@id'              => $id_ref,
 			'isPartOf'         => array(
 				'@id' => (string) $url_base,
 			),
 			'author'           => $author_data,
 			'headline'         => get_the_title( $post ),
-			'datePublished'    => gmdate( 'c', (int) $pub_time ),
-			'dateModified'     => gmdate( 'c', (int) $mod_time ),
+			'datePublished'    => wp_date( 'c', (int) $pub_time ),
+			'dateModified'     => wp_date( 'c', (int) $mod_time ),
 			'mainEntityOfPage' => array(
 				'@id' => (string) $url_base,
 			),

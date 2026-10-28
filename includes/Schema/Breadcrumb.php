@@ -20,12 +20,13 @@ final class Breadcrumb extends Piece {
 			return false;
 		}
 
-		return true;
+		return count( BreadcrumbService::get_items( $this->context ) ) >= 2;
 	}
 
 	public function generate(): ?array {
 		$items = BreadcrumbService::get_items( $this->context );
-		if ( array() === $items ) {
+		// Policy: BreadcrumbList needs at least 2 items (no single-item list on home/posts page).
+		if ( count( $items ) < 2 ) {
 			return null;
 		}
 

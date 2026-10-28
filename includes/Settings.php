@@ -84,6 +84,7 @@ final class Settings {
 				'website_name'           => array( 'text', '' ),
 				'alternate_website_name' => array( 'text', '' ),
 				'person_name'            => array( 'text', '' ),
+				'article_type'           => array( 'enum', 'BlogPosting', array( 'BlogPosting', 'Article', 'NewsArticle' ) ),
 				'type_map'               => array( 'type_map', array() ),
 			),
 			'sitemap'   => array(

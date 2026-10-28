@@ -87,10 +87,10 @@ final class WebPage extends Piece {
 			$pub_time = ! empty( $post->post_date_gmt ) ? strtotime( $post->post_date_gmt ) : strtotime( $post->post_date );
 			$mod_time = ! empty( $post->post_modified_gmt ) ? strtotime( $post->post_modified_gmt ) : strtotime( $post->post_modified );
 			if ( $pub_time ) {
-				$webpage['datePublished'] = gmdate( 'c', $pub_time );
+				$webpage['datePublished'] = wp_date( 'c', $pub_time );
 			}
 			if ( $mod_time ) {
-				$webpage['dateModified'] = gmdate( 'c', $mod_time );
+				$webpage['dateModified'] = wp_date( 'c', $mod_time );
 			}
 
 			// Author link for singular posts.
@@ -110,11 +110,13 @@ final class WebPage extends Piece {
 			$webpage['description'] = $desc;
 		}
 
-		// Breadcrumb linkage.
-		$bc_id = $is_search ? '#breadcrumb' : ( $is_home ? home_url( '/#breadcrumb' ) : ( rtrim( $current_url, '/' ) . '/#breadcrumb' ) );
-		$webpage['breadcrumb'] = array(
-			'@id' => $bc_id,
-		);
+		// Breadcrumb linkage (only when the list is emitted: 2+ items).
+		if ( ( new Breadcrumb( $this->context ) )->is_needed() ) {
+			$bc_id                 = $is_search ? '#breadcrumb' : ( $is_home ? home_url( '/#breadcrumb' ) : ( rtrim( $current_url, '/' ) . '/#breadcrumb' ) );
+			$webpage['breadcrumb'] = array(
+				'@id' => $bc_id,
+			);
+		}
 
 		// ReadAction on front page, singular post, or static page.
 		if ( $is_home || ( $post instanceof \WP_Post && ( 'post' === $post->post_type || 'page' === $post->post_type ) ) ) {

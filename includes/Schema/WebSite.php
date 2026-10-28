@@ -25,13 +25,6 @@ final class WebSite extends Piece {
 			$name = get_bloginfo( 'name' );
 		}
 
-		$description = get_bloginfo( 'description' );
-		$locale      = get_locale();
-		$lang        = strtolower( (string) substr( $locale, 0, 2 ) );
-		if ( '' === $lang ) {
-			$lang = 'tr';
-		}
-
 		$represents = (string) SettingsRepository::get( 'schema.site_represents', 'organization' );
 		$publisher_id = ( 'person' === $represents )
 			? home_url( '/#/schema/person/' . md5( (string) SettingsRepository::get( 'schema.person_name', $name ) ) )
@@ -42,22 +35,6 @@ final class WebSite extends Piece {
 			'@id'             => home_url( '/#website' ),
 			'url'             => home_url( '/' ),
 			'name'            => $name,
-			'description'     => $description,
-			'potentialAction' => array(
-				array(
-					'@type'       => 'SearchAction',
-					'target'      => array(
-						'@type'       => 'EntryPoint',
-						'urlTemplate' => home_url( '/?s={search_term_string}' ),
-					),
-					'query-input' => array(
-						'@type'         => 'PropertyValueSpecification',
-						'valueRequired' => true,
-						'valueName'     => 'search_term_string',
-					),
-				),
-			),
-			'inLanguage'      => $lang,
 			'publisher'       => array(
 				'@id' => $publisher_id,
 			),
