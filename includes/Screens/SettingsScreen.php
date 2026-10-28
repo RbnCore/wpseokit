@@ -1,6 +1,6 @@
 <?php
 /**
- * Settings tool: general (sharing, author and attachment pages), verification codes, access and advanced (data, status, updates).
+ * Settings tab of the dashboard: setup checklist, general (sharing, author and attachment pages), verification codes, access and advanced (data, status, updates).
  * Each tab that holds settings has its own save bar, so the updates card can keep its own forms.
  *
  * @package Wpseokit
@@ -19,29 +19,29 @@ defined( 'ABSPATH' ) || exit;
 
 final class SettingsScreen {
 
-	public static function init(): void {
-		Shell::register(
-			'settings',
-			static fn(): string => __( 'Settings', 'wpseokit' ),
-			'gear',
-			static fn(): string => __( 'Sharing, verification codes, access and data.', 'wpseokit' ),
-			90,
-			array( self::class, 'render' )
+	/**
+	 * Sub-tabs of the dashboard "Settings" tab: sub id => [label, panel html].
+	 *
+	 * @return array<string, array{0:string,1:string}>
+	 */
+	public static function panels(): array {
+		return array(
+			'setup'        => array( __( 'Setup', 'wpseokit' ), self::setup() ),
+			'general'      => array( __( 'General', 'wpseokit' ), '<h2 class="rbn-sr">' . esc_html__( 'General', 'wpseokit' ) . '</h2>' . self::general() ),
+			'verification' => array( __( 'Verification', 'wpseokit' ), '<h2 class="rbn-sr">' . esc_html__( 'Verification', 'wpseokit' ) . '</h2>' . self::verification() ),
+			'access'       => array( __( 'Access', 'wpseokit' ), self::access() ),
+			'advanced'     => array( __( 'Advanced', 'wpseokit' ), '<h2 class="rbn-sr">' . esc_html__( 'Advanced', 'wpseokit' ) . '</h2>' . self::advanced() ),
 		);
 	}
 
-	public static function render(): void {
-		Shell::page(
-			'settings',
-			__( 'Settings', 'wpseokit' ),
-			array(
-				'general'      => array( __( 'General', 'wpseokit' ), self::general() ),
-				'verification' => array( __( 'Verification', 'wpseokit' ), self::verification() ),
-				'access'       => array( __( 'Access', 'wpseokit' ), self::access() ),
-				'advanced'     => array( __( 'Advanced', 'wpseokit' ), self::advanced() ),
-			),
-			array( 'aria' => __( 'Settings sections', 'wpseokit' ) )
-		);
+	/** Setup checklist: the checks that decide whether the site is ready for search engines. */
+	private static function setup(): string {
+		$rows = '';
+		foreach ( DashboardScreen::checks() as $c ) {
+			$rows .= '<tr><th scope="row" data-l="' . esc_attr__( 'Check', 'wpseokit' ) . '">' . esc_html( $c[0] ) . '</th><td data-l="' . esc_attr__( 'Status', 'wpseokit' ) . '">' . $c[1] . '</td><td data-l="' . esc_attr__( 'Action', 'wpseokit' ) . '" class="rbn-acts"><a class="rbn-btn rbn-btn--sm' . ( $c[4] ? ' rbn-btn--pri' : '' ) . '" href="' . esc_url( $c[3] ) . '"' . ( $c[5] ?? '' ) . '>' . esc_html( $c[2] ) . '</a></td></tr>';
+		}
+		$table = '<div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--cols"><caption class="rbn-sr">' . esc_html__( 'Setup checklist', 'wpseokit' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Check', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Status', 'wpseokit' ) . '</th><th scope="col"><span class="rbn-sr">' . esc_html__( 'Action', 'wpseokit' ) . '</span></th></tr></thead><tbody>' . $rows . '</tbody></table></div></div>';
+		return '<section class="rbn-card"><div class="rbn-card__h"><h2>' . esc_html__( 'Setup checklist', 'wpseokit' ) . '</h2><p>' . esc_html__( 'These checks decide whether your site is ready for search engines.', 'wpseokit' ) . '</p></div>' . $table . '</section>';
 	}
 
 	private static function general(): string {

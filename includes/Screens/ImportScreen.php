@@ -1,6 +1,6 @@
 <?php
 /**
- * Yoast import tool: summary → dry run → run (with a confirmation dialog) → report.
+ * Yoast import tab of the dashboard: summary → dry run → run (with a confirmation dialog) → report.
  * The report is drawn by the screen script from `/import/yoast`.
  *
  * @package Wpseokit
@@ -14,30 +14,18 @@ defined( 'ABSPATH' ) || exit;
 
 final class ImportScreen {
 
-	public static function init(): void {
-		Shell::register(
-			'import',
-			static fn(): string => __( 'Yoast import', 'wpseokit' ),
-			'down',
-			static fn(): string => __( 'Bring your titles and descriptions over from Yoast SEO.', 'wpseokit' ),
-			80,
-			array( self::class, 'render' )
+	/**
+	 * Sub-tabs of the dashboard "Yoast import" tab: sub id => [label, panel html].
+	 *
+	 * @return array<string, array{0:string,1:string}>
+	 */
+	public static function panels(): array {
+		return array(
+			'summary' => array( __( 'Summary', 'wpseokit' ), self::summary() ),
+			'dry'     => array( __( 'Dry run', 'wpseokit' ), '<h2 class="rbn-sr">' . esc_html__( 'Dry run', 'wpseokit' ) . '</h2>' . self::dry() ),
+			'run'     => array( __( 'Run', 'wpseokit' ), '<h2 class="rbn-sr">' . esc_html__( 'Run', 'wpseokit' ) . '</h2>' . self::run() ),
+			'report'  => array( __( 'Report', 'wpseokit' ), '<h2 class="rbn-sr">' . esc_html__( 'Report', 'wpseokit' ) . '</h2><div data-import-done><p class="rbn-help">' . esc_html__( 'No import has run yet. The report appears here when it finishes.', 'wpseokit' ) . '</p></div>' ),
 		);
-	}
-
-	public static function render(): void {
-		Shell::page(
-			'import',
-			__( 'Yoast import', 'wpseokit' ),
-			array(
-				'summary' => array( __( 'Summary', 'wpseokit' ), self::summary() ),
-				'dry'     => array( __( 'Dry run', 'wpseokit' ), self::dry() ),
-				'run'     => array( __( 'Run', 'wpseokit' ), self::run() ),
-				'report'  => array( __( 'Report', 'wpseokit' ), '<div data-import-done><p class="rbn-help">' . esc_html__( 'No import has run yet. The report appears here when it finishes.', 'wpseokit' ) . '</p></div>' ),
-			),
-			array( 'aria' => __( 'Yoast import steps', 'wpseokit' ) )
-		);
-		echo self::dialog(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- every fragment is escaped in Ui.
 	}
 
 	private static function summary(): string {
@@ -68,7 +56,8 @@ final class ImportScreen {
 		return $wait . $decide . $bar;
 	}
 
-	private static function dialog(): string {
+	/** The confirmation dialog; the dashboard prints it once, after the tabs. */
+	public static function dialog(): string {
 		$x    = '<button type="button" class="rbn-dlg__x" data-dlg-close aria-label="' . esc_attr__( 'Close', 'wpseokit' ) . '">' . Ui::icon( 'x' ) . '</button>';
 		$out  = '<dialog class="rbn-dlg" aria-labelledby="imp-t" data-dlg="import"' . Ui::tone_attr() . '><div class="rbn-dlg__h"><h2 id="imp-t">' . esc_html__( 'Import Yoast data?', 'wpseokit' ) . '</h2>' . $x . '</div><div class="rbn-dlg__b"><div class="rbn-stack"><p class="rbn-p">' . esc_html__( 'WPSeoKit will write titles, descriptions, primary categories and settings. Your Yoast data stays where it is.', 'wpseokit' ) . '</p>';
 		$out .= '<label class="rbn-chk"><input type="checkbox" id="imp-ack" data-import-ack><span>' . esc_html__( 'I have a database backup and I want to import now.', 'wpseokit' ) . '</span></label></div></div>';

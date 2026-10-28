@@ -249,3 +249,218 @@
 .wps-addr .rbn-empty{padding:var(--rbn-s4) 0}
 .wps-addr .wps-skel-rows{padding:var(--rbn-s3) 0}
 .wps-addr .wps-field-1{grid-template-columns:1fr}
+
+/* ===== WPRJ-567 — SEO skoru ve öneriler =====
+   Yeni sabit renk YOK. Halka kitin .rbn-ring'i; bant rengi yalnız ek ipucu: her banta ikon + metin eşlik eder. */
+.rbn-ring__n span{font-size:1.0625rem}                      /* kit 12 px → 17 px tabanı */
+.rbn-ring--sm .rbn-ring__svg{width:5.5rem;height:5.5rem}
+
+/* Skor kartı (dashboard) */
+.wps-score{margin:0 0 var(--rbn-s5)}
+.wps-score__grid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--rbn-s5) var(--rbn-s6);align-items:start}
+.wps-score__fig{display:grid;justify-items:center;gap:var(--rbn-s3)}
+.wps-score__h{margin:0 0 var(--rbn-s2);font-size:1.125rem}
+.wps-score__lead{margin:0 0 var(--rbn-s3)}
+.wps-score__sub{margin:var(--rbn-s4) 0 var(--rbn-s2);font-size:1.0625rem;font-weight:600}
+.wps-score__when{margin:0 0 0 auto;color:var(--rbn-muted)}
+.wps-score__note{margin:var(--rbn-s3) 0 0}
+.wps-score .rbn-note{margin:var(--rbn-s3) 0 0}
+@media (max-width:782px){
+	.wps-score__grid{grid-template-columns:minmax(0,1fr)}
+	.wps-score__fig{justify-items:start}
+	.wps-score__when{margin-left:0}
+}
+
+/* Öneri satırı: sıralı liste (sıra anlamlıdır: seviye → ağırlık → düzeltme tipi → kimlik) */
+.wps-recs{display:grid;gap:var(--rbn-s3);margin:0;padding:0;list-style:none}
+.wps-rec{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--rbn-s3) var(--rbn-s5);padding:var(--rbn-s4);border:1px solid var(--rbn-line);border-left-width:4px;border-radius:var(--rbn-r-lg);background:var(--rbn-surface)}
+.wps-rec[data-level=critical]{border-left-color:var(--rbn-err)}
+.wps-rec[data-level=warning]{border-left-color:var(--rbn-warn)}
+.wps-rec[data-level=info]{border-left-color:var(--rbn-info)}
+.wps-rec__main{min-width:0}
+.wps-rec__top{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s2);margin:0 0 var(--rbn-s2)}
+.wps-rec__t{margin:0 0 var(--rbn-s1);font-size:1.0625rem;font-weight:600}
+.wps-rec__m{margin:0 0 var(--rbn-s1);font-weight:600}
+.wps-rec__d{margin:0;color:var(--rbn-muted)}
+.wps-rec__act{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:var(--rbn-s2);min-width:12rem}
+.wps-rec__lock{display:flex;align-items:center;gap:var(--rbn-s2);margin:0;color:var(--rbn-muted)}
+.wps-recs--mini{gap:var(--rbn-s2)}
+.wps-recs--mini .wps-rec{padding:var(--rbn-s3) var(--rbn-s4);align-items:center}
+.wps-recs--mini .wps-rec__d,.wps-recs--mini .wps-rec__lock{display:none}
+.wps-recs--mini .wps-rec__top{margin:0 0 var(--rbn-s1)}
+.wps-recs--mini .wps-rec__t{margin:0}
+.wps-recs--mini .wps-rec__m{margin:0;font-weight:400;color:var(--rbn-muted)}
+@media (max-width:782px){
+	.wps-rec{grid-template-columns:minmax(0,1fr)}
+	.wps-rec__act{flex-direction:row;flex-wrap:wrap;min-width:0}
+}
+
+/* Sayfa başlığı altı özet + parçalar + hesap satırı */
+.wps-parts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--rbn-s3);margin:0 0 var(--rbn-s4);padding:0;list-style:none}
+.wps-parts .rbn-stat__s{margin-top:var(--rbn-s1)}
+@media (max-width:1100px){.wps-parts{grid-template-columns:minmax(0,1fr)}}
+.wps-calc{margin:0 0 var(--rbn-s4)}
+.wps-calc code{display:inline-block;max-width:100%}
+.wps-stale{display:flex;align-items:center;gap:var(--rbn-s2);margin:0 0 var(--rbn-s3);color:var(--rbn-muted);font-weight:600}
+.wps-stale[hidden]{display:none}
+
+/* Gizlenen öneriler */
+.wps-hidden{margin:var(--rbn-s5) 0 0}
+.wps-hidden>summary{display:inline-flex;align-items:center;gap:var(--rbn-s2);min-height:2.5rem;padding:0 var(--rbn-s2);color:var(--rbn-ac);font-weight:600;cursor:pointer;border-radius:var(--rbn-r)}
+.wps-hidden[open]>summary{margin-bottom:var(--rbn-s3)}
+.wps-hidden .wps-rec{opacity:1;border-left-style:dashed}
+.wps-hidline{margin:var(--rbn-s4) 0 0;color:var(--rbn-muted)}
+.wps-recbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--rbn-s3);margin:0 0 var(--rbn-s4)}
+.wps-recbar p{margin:0}
+
+/* Yazılar süzgeci */
+.wps-filterbar{display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--rbn-s3) var(--rbn-s4);margin:0 0 var(--rbn-s4)}
+.wps-filterbar .rbn-field__l{margin:0 0 var(--rbn-s1)}
+.wps-filterbar .rbn-select{min-width:14rem}
+.wps-num{font-variant-numeric:tabular-nums;font-weight:600}
+
+/* Kural kataloğu (Nasıl hesaplanır) */
+.wps-how{max-width:52rem}
+.wps-how h2{margin:var(--rbn-s5) 0 var(--rbn-s2);font-size:1.125rem}
+.wps-how h2:first-child{margin-top:0}
+.wps-how p{margin:0 0 var(--rbn-s3)}
+.wps-bands{display:flex;flex-wrap:wrap;gap:var(--rbn-s2) var(--rbn-s3);margin:0 0 var(--rbn-s3);padding:0;list-style:none}
+.wps-catalog{margin:var(--rbn-s5) 0 0}
+.wps-catalog h2{margin:0 0 var(--rbn-s2);font-size:1.125rem}
+
+/* Yazı kutusu: Score sekmesi */
+.wps-pscore{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--rbn-s4) var(--rbn-s5);align-items:center;margin:0 0 var(--rbn-s4)}
+.wps-pscore p{margin:0 0 var(--rbn-s2)}
+.wps-pscore__act{display:flex;flex-wrap:wrap;gap:var(--rbn-s2) var(--rbn-s3);margin-top:var(--rbn-s2)}
+.wps-pgroup{margin:var(--rbn-s5) 0 var(--rbn-s3);font-size:1.0625rem;font-weight:600}
+.wps-rules{display:grid;gap:var(--rbn-s3);margin:0 0 var(--rbn-s3);padding:0;list-style:none}
+.wps-rule{display:grid;gap:var(--rbn-s1);padding:var(--rbn-s3) var(--rbn-s4);border:1px solid var(--rbn-line);border-left-width:4px;border-radius:var(--rbn-r-lg)}
+.wps-rule[data-level=critical]{border-left-color:var(--rbn-err)}
+.wps-rule[data-level=warning]{border-left-color:var(--rbn-warn)}
+.wps-rule[data-level=info]{border-left-color:var(--rbn-info)}
+.wps-rule__h{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s2)}
+.wps-rule__h b{font-weight:600}
+.wps-rule p{margin:0}
+.wps-rule__m{font-weight:600}
+.wps-rule__d{color:var(--rbn-muted)}
+.wps-rule__act{display:flex;flex-wrap:wrap;gap:var(--rbn-s2);margin-top:var(--rbn-s2)}
+.wps-ok-list{margin:0 0 var(--rbn-s3);padding:0;list-style:none;display:grid;gap:var(--rbn-s2)}
+.wps-ok-list li{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s2) var(--rbn-s3)}
+.wps-ok-list span.wps-ok-list__m{color:var(--rbn-muted)}
+@media (max-width:782px){.wps-pscore{grid-template-columns:minmax(0,1fr)}}
+@media (forced-colors:active){.wps-rec,.wps-rule{border-left-width:6px}}
+
+
+/* ── 20. WPRJ-575 — Dashboard'un kendi sekmeleri (iki seviyeli), sütunlu tablo, grafikler ──
+   Üst sekme = büyük, altı çizili, ikonlu (1. seviye). Alt sekme = küçük hap düğme (2. seviye); ikisi görsel olarak ayrıdır. */
+.wps-dash__top{display:flex;flex-wrap:wrap;gap:var(--rbn-s1);margin:0 0 var(--rbn-s5);padding:0 var(--rbn-s2);border-bottom:2px solid var(--rbn-line-strong)}
+.wps-dash__top [role=tab]{position:relative;display:flex;align-items:center;gap:var(--rbn-s2);min-height:3rem;padding:0 var(--rbn-s4);border:0;background:none;color:var(--rbn-muted);font:inherit;font-size:1.125rem;font-weight:700;white-space:nowrap;border-radius:var(--rbn-r) var(--rbn-r) 0 0;cursor:pointer}
+.wps-dash__top [role=tab]:hover{color:var(--rbn-text);background:var(--rbn-surface-2)}
+.wps-dash__top [role=tab][aria-selected=true]{color:var(--rbn-text)}
+.wps-dash__top [role=tab][aria-selected=true]::after{content:"";position:absolute;left:var(--rbn-s2);right:var(--rbn-s2);bottom:-2px;height:4px;border-radius:4px 4px 0 0;background:var(--rbn-ac)}
+.wps-dash__top [role=tab]:focus-visible{outline:2px solid var(--rbn-ac);outline-offset:-2px}
+.wps-dash__top .rbn-badge{margin-left:var(--rbn-s1)}
+.wps-tabs--sub{gap:var(--rbn-s2);margin:0 0 var(--rbn-s4);padding:0;border-bottom:0}
+.wps-tabs--sub [role=tab]{min-height:2.5rem;padding:0 var(--rbn-s4);border:1px solid var(--rbn-line-strong);border-radius:999px;background:var(--rbn-surface);color:var(--rbn-text);font-size:1.0625rem;font-weight:600}
+.wps-tabs--sub [role=tab]:hover{background:var(--rbn-surface-2)}
+.wps-tabs--sub [role=tab][aria-selected=true]{background:var(--rbn-ac-soft);border-color:var(--rbn-ac);color:var(--rbn-text)}
+.wps-tabs--sub [role=tab][aria-selected=true]::after{display:none}
+.wps-tabs--sub [role=tab]:focus-visible{outline:2px solid var(--rbn-ac);outline-offset:2px}
+.wps-where{margin:0 0 var(--rbn-s3);color:var(--rbn-muted);font-weight:600}
+.wps-where b{color:var(--rbn-text)}
+.wps-dpan>*:last-child{margin-bottom:0}
+.wps-band{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s2) var(--rbn-s4);margin:0 0 var(--rbn-s4);padding:var(--rbn-s3) var(--rbn-s4);border:1px solid var(--rbn-warn);border-radius:var(--rbn-r-lg);background:var(--rbn-warn-bg);color:var(--rbn-text)}
+.wps-band p{margin:0;flex:1 1 16rem;font-weight:600}
+@media (max-width:782px){
+	.wps-dash__top{padding:0}
+	.wps-dash__top [role=tab]{min-height:3rem;padding:0 var(--rbn-s3);font-size:1.0625rem}
+	.wps-tabs--sub [role=tab]{min-height:2.75rem}
+}
+@media (forced-colors:active){.wps-dash__top [role=tab][aria-selected=true],.wps-tabs--sub [role=tab][aria-selected=true]{outline:2px solid Highlight}}
+
+/* Sütunlu tablo: masaüstü ve tablet genişliğinde SÜTUN kalır; yalnız kutu 36 rem'den daralınca kart olur. */
+.rbn-table--cols{min-width:0}
+.rbn-table--cols td,.rbn-table--cols th{overflow-wrap:anywhere}
+.rbn-table--cols .rbn-acts{justify-content:flex-start;flex-wrap:wrap}
+@container (max-width:36rem){
+	.rbn-table--cols,.rbn-table--cols tbody{display:block;width:100%}
+	.rbn-table--cols thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+	.rbn-table--cols tr{position:relative;display:block;padding:var(--rbn-s3) var(--rbn-s4);border-bottom:1px solid var(--rbn-line)}
+	.rbn-table--cols tbody tr:last-child{border-bottom:0}
+	.rbn-table--cols td,.rbn-table--cols th{display:block;padding:0;border:0}
+	.rbn-table--cols td+td,.rbn-table--cols th+td{margin-top:.2rem}
+	.rbn-table--cols td[data-l]::before{content:attr(data-l) ": ";font-weight:600;color:var(--rbn-muted);font-size:1rem}
+	.rbn-table--cols .rbn-acts{margin-top:var(--rbn-s2)}
+}
+.rbn-table--cols .rbn-num{text-align:right}
+@container (max-width:36rem){.rbn-table--cols .rbn-num{text-align:left}}
+
+/* Raporlar: saf SVG/CSS grafikler. Etiket ve değerler HTML'dedir (SVG içi metin küçülmez); renk yanında desen ve metin var. */
+.wps-reports{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--rbn-s4);margin:0 0 var(--rbn-s4);padding:0;list-style:none}
+.wps-reports>li{display:flex;min-width:0}
+.wps-reports>li>.rbn-card{width:100%;margin:0}
+.wps-reports .wps-wide{grid-column:1/-1}
+.wps-chart{margin:0}
+.wps-chart__k{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--rbn-s1) var(--rbn-s3);margin:0 0 var(--rbn-s3)}
+.wps-chart__k strong{font-size:1.75rem;line-height:1.1}
+.wps-chart__k span{color:var(--rbn-muted)}
+.wps-chart__plot{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--rbn-s2) var(--rbn-s3);align-items:stretch}
+.wps-chart__y{display:flex;flex-direction:column;justify-content:space-between;color:var(--rbn-muted);text-align:right;font-variant-numeric:tabular-nums}
+.wps-chart__svg{display:block;width:100%;height:10rem;border-bottom:1px solid var(--rbn-line-strong);border-left:1px solid var(--rbn-line-strong)}
+.wps-chart__grid{stroke:var(--rbn-line);stroke-width:1;vector-effect:non-scaling-stroke}
+.wps-chart__area{fill:var(--rbn-ac-soft);stroke:none}
+.wps-chart__ln{fill:none;stroke:var(--rbn-ac);stroke-width:3;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.wps-chart__ln--2{stroke:var(--rbn-warn);stroke-dasharray:8 6}
+.wps-chart__pt{fill:none;stroke:var(--rbn-ac);stroke-width:8;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.wps-chart__pt--2{stroke:var(--rbn-warn)}
+.wps-chart__x{display:flex;justify-content:space-between;grid-column:2;color:var(--rbn-muted)}
+.wps-chart__lg{display:flex;flex-wrap:wrap;gap:var(--rbn-s2) var(--rbn-s5);margin:var(--rbn-s3) 0 0;padding:0;list-style:none}
+.wps-chart__lg li{display:flex;align-items:center;gap:var(--rbn-s2)}
+.wps-chart__lg svg{width:2.25rem;height:.75rem;flex:none}
+.wps-chart__lg line{stroke:var(--rbn-ac);stroke-width:3}
+.wps-chart__lg .is-2 line{stroke:var(--rbn-warn);stroke-dasharray:6 4}
+.wps-chart details{margin:var(--rbn-s3) 0 0}
+.wps-chart summary{display:flex;align-items:center;min-height:2.5rem;font-weight:600;cursor:pointer}
+.wps-chart summary:focus-visible{outline:2px solid var(--rbn-ac);outline-offset:2px}
+.wps-chart .rbn-tw{margin-top:var(--rbn-s2)}
+.wps-hbars{display:grid;gap:var(--rbn-s3);margin:0;padding:0;list-style:none}
+.wps-hbars li{display:grid;grid-template-columns:minmax(7rem,11rem) minmax(0,1fr) 4.5rem;gap:var(--rbn-s3);align-items:center}
+.wps-hbars__t{height:1rem;border:1px solid var(--rbn-line-strong);border-radius:999px;background:var(--rbn-surface-2);overflow:hidden}
+.wps-hbars__t i{display:block;height:100%;width:var(--w,0%);background:var(--rbn-ac);background-image:repeating-linear-gradient(135deg,transparent 0 6px,rgb(255 255 255/.35) 6px 9px)}
+.wps-hbars__v{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.wps-hbars li.is-2 .wps-hbars__t i{background-color:var(--rbn-ok);background-image:none}
+.wps-range{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--rbn-s3);margin:0 0 var(--rbn-s4)}
+.wps-range__act{display:flex;flex-wrap:wrap;gap:var(--rbn-s2)}
+.wps-range p{margin:0;color:var(--rbn-muted)}
+.wps-dot{display:inline-block;width:.75rem;height:.75rem;margin-right:var(--rbn-s2);border-radius:50%;background:var(--rbn-ac);flex:none}
+@media (max-width:1100px){.wps-reports{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:600px){
+	.wps-hbars li{grid-template-columns:minmax(0,1fr) 4rem;gap:var(--rbn-s1) var(--rbn-s3)}
+	.wps-hbars__t{grid-column:1/-1;grid-row:2}
+	.wps-chart__svg{height:8rem}
+}
+@media print{
+	#adminmenumain,#wpadminbar,#wpfooter,.wps-dash__top,.wps-tabs--sub,.wps-range__act,.rbn-head__act{display:none!important}
+	.wps-dpan[hidden]{display:none!important}
+}
+
+/* Genel bakış: skor özet kartı tek bağlantıdır (kartın tamamı tıklanır; bağlantı başlıktadır). */
+.wps-sum{position:relative}
+.wps-sum .wps-stretch{color:inherit;text-decoration:none}
+.wps-sum .wps-stretch::after{content:"";position:absolute;inset:0;border-radius:var(--rbn-r-lg)}
+.wps-sum .wps-stretch:focus-visible{outline:none}
+.wps-sum .wps-stretch:focus-visible::after{outline:2px solid var(--rbn-ac);outline-offset:2px}
+.wps-sum:hover{border-color:var(--rbn-ac)}
+.wps-sum__go{display:flex;align-items:center;gap:var(--rbn-s1);margin:var(--rbn-s3) 0 0;color:var(--rbn-ac);font-weight:600}
+.wps-sum .rbn-btn{position:relative;z-index:1}
+.wps-band .rbn-ico{vertical-align:-.2em}
+.wps-meta{margin:0 0 var(--rbn-s4)}
+.wps-hbars+.rbn-help{margin-top:var(--rbn-s4)}
+.wps-dpan code{white-space:normal;overflow-wrap:anywhere}
+
+/* WPRJ-586: Dashboard sekmeleri bağlantıdır (JS yokken de çalışır); yeni panelin başlığı odak alır. */
+.wps-dash__top a[role=tab],.wps-tabs--sub a[role=tab]{color:var(--rbn-muted);text-decoration:none}
+.wps-dash__top a[role=tab]:hover,.wps-tabs--sub a[role=tab]:hover,.wps-dash__top a[role=tab][aria-selected=true],.wps-tabs--sub a[role=tab][aria-selected=true]{color:var(--rbn-text)}
+.wps-dpan h2[tabindex="-1"]:focus{outline:none}
+.wps-dpan h2[tabindex="-1"]:focus-visible{outline:2px solid var(--rbn-ac);outline-offset:2px}
+.wps-dpan>.rbn-card+.rbn-card,.wps-dpan>.wps-tools{margin-top:var(--rbn-s4)}

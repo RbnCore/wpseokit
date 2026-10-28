@@ -2,7 +2,7 @@
 /**
  * Page shell of the plugin screen: tool registry, "← Dashboard" bar with the Tools menu, page head and inner tabs.
  *
- * The dashboard is the front page (`?page=wpseokit`); every tool has its own address (`&tool=<id>`) and its own
+ * The dashboard is the front page (`?page=wpseokit`, six tabs `&tab=` with sub-tabs `&sub=`); every tool has its own address (`&tool=<id>`) and its own
  * tabs (`&tab=<id>`). Tools register themselves with `Shell::register()`; `Admin::render()` hands the page over
  * through the `wpseokit_render_page` action.
  *
@@ -62,8 +62,14 @@ final class Shell {
 		return $tools;
 	}
 
-	/** Address of a tool (or the dashboard) and, optionally, one of its tabs. */
+	/** Address of a tool (or the dashboard) and, optionally, one of its tabs. Yoast import and Settings live in the dashboard tabs. */
 	public static function url( string $tool = '', string $tab = '' ): string {
+		if ( 'import' === $tool ) {
+			return self::dash_url( 'yoast', $tab );
+		}
+		if ( 'settings' === $tool ) {
+			return self::dash_url( 'settings', $tab );
+		}
 		$args = array();
 		if ( '' !== $tool && 'dashboard' !== $tool ) {
 			$args['tool'] = $tool;
@@ -74,21 +80,39 @@ final class Shell {
 		return Admin::page_url( $args );
 	}
 
+	/** Address of a dashboard tab (`tab`) and its sub-tab (`sub`); the Overview needs neither. */
+	public static function dash_url( string $tab = '', string $sub = '' ): string {
+		$args = array();
+		if ( '' !== $tab && 'overview' !== $tab ) {
+			$args['tab'] = $tab;
+			if ( '' !== $sub ) {
+				$args['sub'] = $sub;
+			}
+		}
+		return Admin::page_url( $args );
+	}
+
 	/** Page callback body: dashboard or the requested tool. */
 	public static function render(): void {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- reading page and tab names only; they are matched against the registry.
 		$tool = isset( $_GET['tool'] ) ? sanitize_key( wp_unslash( $_GET['tool'] ) ) : '';
 		$tab  = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '';
+		$sub  = isset( $_GET['sub'] ) ? sanitize_key( wp_unslash( $_GET['sub'] ) ) : '';
 		// phpcs:enable
 		if ( '' === $tool && 'status' === $tab ) { // Old address used by the update card redirect.
-			$tool = 'settings';
-			$tab  = 'advanced';
+			$tab = 'settings';
+			$sub = 'advanced';
+		}
+		if ( 'import' === $tool || 'settings' === $tool ) { // Old tool addresses now open the dashboard tab.
+			$sub  = $tab;
+			$tab  = 'import' === $tool ? 'yoast' : 'settings';
+			$tool = '';
 		}
 		echo '<div class="wrap rbn-wrap wpseokit-wrap">';
 		if ( isset( self::$tools[ $tool ] ) ) {
 			call_user_func( self::$tools[ $tool ]['render'] );
 		} else {
-			DashboardScreen::render();
+			DashboardScreen::render( $tab, $sub );
 		}
 		echo '</div>';
 	}
@@ -137,9 +161,6 @@ final class Shell {
 	public static function page( string $tool, string $title, array $tabs, array $o = array() ): void {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- reading a tab name only.
 		$wanted = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '';
-		if ( 'settings' === $tool && 'status' === $wanted ) {
-			$wanted = 'advanced';
-		}
 		$active = isset( $tabs[ $wanted ] ) ? $wanted : (string) array_key_first( $tabs );
 		$list   = '<div class="wps-tabs" role="tablist" aria-label="' . esc_attr( $o['aria'] ?? $title ) . '" data-tabs>';
 		$panels = '';

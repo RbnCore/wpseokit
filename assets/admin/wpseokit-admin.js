@@ -102,7 +102,11 @@
 	}
 
 	/** Opens a tab of the tool on this page, e.g. goTab( 'dry' ). */
-	function goTab( id ) { var list = $( '[data-tabs]' ); return list ? selectTab( list, id, false ) : false; }
+	function goTab( id ) {
+		if ( dashApi ) { return dashApi.showSub( 'yoast', id, false ); }
+		var list = $( '[data-tabs]' );
+		return list ? selectTab( list, id, false ) : false;
+	}
 
 	/* ---------- Tools menu ---------- */
 
@@ -274,6 +278,505 @@
 				say( 'err', '<b>' + esc( I.saveFailed ) + '</b>' );
 			} );
 		} );
+	}
+
+	/* ---------- Dashboard tabs: two levels, ?tab= and ?sub= in the address, no reload ---------- */
+
+	var dashApi = null;
+
+	function sp( s ) {
+		var a = Array.prototype.slice.call( arguments, 1 ), i = 0;
+		return String( s ).replace( /%(?:(\d+)\$)?[sd]/g, function ( m, n ) { var v = a[ n ? n - 1 : i++ ]; return v === undefined ? '' : v; } );
+	}
+
+	function dashTabs( screen ) {
+		var topList = $( '[data-dtabs]', screen );
+		if ( ! topList ) { return null; }
+		function tabsOf( list ) { return $$( '[role="tab"]', list ); }
+		function current( list ) {
+			return tabsOf( list ).filter( function ( t ) { return t.getAttribute( 'aria-selected' ) === 'true'; } )[ 0 ] || tabsOf( list )[ 0 ];
+		}
+		function pick( list, tab ) {
+			tabsOf( list ).forEach( function ( t ) {
+				var on = t === tab, p = doc.getElementById( t.getAttribute( 'aria-controls' ) );
+				t.setAttribute( 'aria-selected', on ? 'true' : 'false' );
+				t.tabIndex = on ? 0 : -1;
+				if ( p ) { p.hidden = ! on; }
+			} );
+		}
+		function subList( top ) { return $( '[data-subtabs="' + top + '"]', screen ); }
+		function sync() {
+			var top = current( topList ).getAttribute( 'data-top' ), sl = subList( top ), u = new URL( window.location.href );
+			u.searchParams.delete( 'tool' );
+			if ( top === 'overview' ) { u.searchParams.delete( 'tab' ); } else { u.searchParams.set( 'tab', top ); }
+			if ( sl && tabsOf( sl ).indexOf( current( sl ) ) > 0 ) { u.searchParams.set( 'sub', current( sl ).getAttribute( 'data-sub' ) ); } else { u.searchParams.delete( 'sub' ); }
+			if ( window.history && history.replaceState ) { history.replaceState( null, '', u.toString() ); }
+			screen.dispatchEvent( new CustomEvent( 'wps:tab', { detail: { top: top } } ) );
+		}
+		function showTop( id, focus ) {
+			var tab = $( '[data-top="' + id + '"]', topList );
+			if ( ! tab ) { return false; }
+			pick( topList, tab );
+			if ( focus ) { tab.focus(); }
+			sync();
+			return true;
+		}
+		function showSub( top, id, focus ) {
+			var sl = subList( top ), tab = sl ? $( '[data-sub="' + id + '"]', sl ) : null;
+			if ( ! showTop( top, false ) || ! tab ) { return false; }
+			pick( sl, tab );
+			if ( focus ) { tab.focus(); }
+			sync();
+			return true;
+		}
+		function go( spec, heading ) {
+			var p = String( spec ).split( ':' ), ok = p[ 1 ] ? showSub( p[ 0 ], p[ 1 ], false ) : showTop( p[ 0 ], false );
+			if ( ok && heading ) {
+				var top = doc.getElementById( 'dpan-' + p[ 0 ] ), sub = top && p[ 1 ] ? doc.getElementById( 'spn-' + p[ 0 ] + '-' + p[ 1 ] ) : null, h = $( 'h2', sub || top );
+				if ( h ) { h.setAttribute( 'tabindex', '-1' ); h.focus(); }
+			}
+			return ok;
+		}
+		screen.addEventListener( 'click', function ( e ) {
+			var g = e.target.closest ? e.target.closest( '[data-goto]' ) : null, t = e.target.closest ? e.target.closest( '[role="tab"]' ) : null;
+			if ( g && screen.contains( g ) ) { e.preventDefault(); go( g.getAttribute( 'data-goto' ), true ); return; }
+			if ( ! t || ! screen.contains( t ) ) { return; }
+			var list = t.closest( '[role="tablist"]' );
+			if ( list === topList ) { e.preventDefault(); showTop( t.getAttribute( 'data-top' ), false ); } else if ( list && list.hasAttribute( 'data-subtabs' ) ) { e.preventDefault(); showSub( list.getAttribute( 'data-subtabs' ), t.getAttribute( 'data-sub' ), false ); }
+		} );
+		screen.addEventListener( 'keydown', function ( e ) {
+			var t = e.target.closest ? e.target.closest( '[role="tab"]' ) : null, list = t ? t.closest( '[role="tablist"]' ) : null;
+			if ( ! t || ! list || ( list !== topList && ! list.hasAttribute( 'data-subtabs' ) ) ) { return; }
+			var tabs = tabsOf( list ), i = tabs.indexOf( t ), n = -1;
+			if ( e.key === 'ArrowRight' ) { n = ( i + 1 ) % tabs.length; } else if ( e.key === 'ArrowLeft' ) { n = ( i - 1 + tabs.length ) % tabs.length; } else if ( e.key === 'Home' ) { n = 0; } else if ( e.key === 'End' ) { n = tabs.length - 1; }
+			if ( n < 0 ) { return; }
+			e.preventDefault();
+			if ( list === topList ) { showTop( tabs[ n ].getAttribute( 'data-top' ), true ); } else { showSub( list.getAttribute( 'data-subtabs' ), tabs[ n ].getAttribute( 'data-sub' ), true ); }
+		} );
+		return { go: go, showTop: showTop, showSub: showSub, current: function () { return current( topList ).getAttribute( 'data-top' ); } };
+	}
+
+	function dashHref( top, sub ) {
+		var u = new URL( T.pageUrl, window.location.href );
+		if ( top && top !== 'overview' ) { u.searchParams.set( 'tab', top ); }
+		if ( sub ) { u.searchParams.set( 'sub', sub ); }
+		return u.toString();
+	}
+	function toolHref( tool ) {
+		var u = new URL( T.pageUrl, window.location.href );
+		u.searchParams.set( 'tool', tool );
+		return u.toString();
+	}
+
+	/** Date and time as the browser shows them; text the browser cannot read stays as it is. */
+	function when( s ) {
+		var d = new Date( /^\d+$/.test( String( s ) ) ? +s * 1000 : String( s ).replace( ' ', 'T' ) );
+		return isNaN( d.getTime() ) ? String( s ) : d.toLocaleString( undefined, { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' } );
+	}
+	function day( s ) {
+		var d = new Date( s + 'T00:00:00' );
+		return isNaN( d.getTime() ) ? String( s ) : d.toLocaleDateString( undefined, { day: 'numeric', month: 'short' } );
+	}
+	function busy( text ) { return '<p class="wps-busy" role="status"><span class="wps-spin" aria-hidden="true"></span>' + esc( text ) + '</p>'; }
+
+	/* ---------- SEO score: Overview, Recommendations, Posts, How it is calculated ---------- */
+
+	function score( screen ) {
+		var sum = $( '[data-score-summary]', screen ), S = { site: null, recs: null, posts: null, rules: null };
+		var BAND = { good: [ 'ok', 'check', 'bandGood' ], fair: [ 'warn', 'alert', 'bandFair' ], poor: [ 'crit', 'alert', 'bandPoor' ] };
+		var LEVEL = { critical: [ 'crit', 'lvCritical' ], warning: [ 'warn', 'lvWarning' ], info: [ 'mute', 'lvInfo' ] };
+		var ORDER = { critical: 0, warning: 1, info: 2 };
+		function view( name ) { return $( '[data-score-view="' + name + '"]', screen ); }
+		function bandOf( b ) { return BAND[ b ] || BAND.poor; }
+		function levelBadge( l ) { var m = LEVEL[ l ] || LEVEL.info; return '<span class="rbn-badge rbn-badge--' + m[ 0 ] + '">' + icon( l === 'critical' ? 'alert' : ( l === 'warning' ? 'info' : 'help' ) ) + esc( I[ m[ 1 ] ] ) + '</span>'; }
+		function paint( root ) {
+			$$( '[data-p]', root ).forEach( function ( c ) { c.style.setProperty( '--p', c.getAttribute( 'data-p' ) ); } );
+		}
+
+		function ring( site ) {
+			var b = bandOf( site.band && site.band.id ), label = ( site.band && site.band.label ) || I[ b[ 2 ] ];
+			return '<div class="wps-score__fig"><div class="rbn-ring rbn-ring--' + ( b[ 0 ] === 'crit' ? 'err' : b[ 0 ] ) + '"><div class="rbn-ring__svg" role="img" aria-label="' + esc( sp( I.scoreOutOf, site.score, label ) ) + '"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="rbn-ring__track" cx="60" cy="60" r="52"></circle><circle class="rbn-ring__val" cx="60" cy="60" r="52" data-p="' + esc( site.score ) + '"></circle></svg><div class="rbn-ring__n"><b>' + esc( site.score ) + '</b><span>/ 100</span></div></div></div><span class="rbn-badge rbn-badge--' + b[ 0 ] + '">' + icon( b[ 1 ] ) + esc( label ) + '</span></div>';
+		}
+		function breakdown( site ) {
+			var out = '<p class="wps-score__lead">' + esc( I.siteScore ) + ': <b>' + esc( site.config ? site.config.score : '–' ) + '</b>';
+			if ( site.posts && site.posts.mean !== null && site.posts.mean !== undefined ) { out += ' · ' + esc( I.postsScore ) + ': <b>' + esc( Math.round( site.posts.mean ) ) + '</b> (' + esc( sp( I.postsSampled, site.posts.scored || 0, site.posts.sampled || 0 ) ) + ')'; } else { out += ' · ' + esc( I.noPosts ); }
+			return out + '</p>';
+		}
+		function stamp( site ) {
+			var t = site.calculated_at ? when( site.calculated_at ) : '';
+			return '<p class="wps-score__when">' + esc( site.stale ? sp( I.calcStale, t ) : sp( I.calcOn, t ) ) + '</p>';
+		}
+
+		/** Summary card of the Overview tab: the whole card is one link to the score. */
+		function drawSummary( site ) {
+			if ( ! sum ) { return; }
+			sum.innerHTML = '<section class="rbn-card wps-score wps-sum"><div class="rbn-card__b rbn-card__b--pad"><div class="wps-score__grid">' + ring( site ) + '<div><h2 class="wps-score__h"><a class="wps-stretch" href="' + esc( dashHref( 'score' ) ) + '" data-goto="score">' + esc( I.scoreHead ) + '</a></h2>' + breakdown( site ) + stamp( site ) + '<p class="wps-sum__go">' + esc( I.details || 'Score details' ) + icon( 'chevr' ) + '</p></div></div></div></section>';
+			paint( sum );
+		}
+		function drawSummaryEmpty() {
+			if ( ! sum ) { return; }
+			sum.innerHTML = '<section class="rbn-card wps-score"><div class="rbn-card__b rbn-card__b--pad"><h2 class="wps-score__h">' + esc( I.scoreHead ) + '</h2><p class="rbn-p"><b>' + esc( I.scoreNone ) + '</b> ' + esc( I.scoreNoneText ) + '</p><p><button type="button" class="rbn-btn rbn-btn--pri" data-recalc>' + icon( 'scan' ) + esc( I.calcNow ) + '</button></p></div></section>';
+		}
+		function drawSummaryError() {
+			if ( ! sum ) { return; }
+			sum.innerHTML = '<section class="rbn-card wps-score"><div class="rbn-card__b rbn-card__b--pad"><h2 class="wps-score__h">' + esc( I.scoreHead ) + '</h2>' + note( 'err', '<b>' + esc( I.calcFailed ) + '</b> ' + esc( I.loadFailed ), 'alert' ) + '<p><button type="button" class="rbn-btn" data-recalc>' + icon( 'undo' ) + esc( I.retry ) + '</button></p></div></section>';
+		}
+
+		/* -- recommendations -- */
+
+		function fixTarget( it ) {
+			var t = it.target || '', n = I.toolNames || {};
+			if ( it.fix === 'external' || /^hosting/i.test( t ) ) { return null; }
+			if ( it.scope === 'post' ) { return { goto: 'score:posts', href: dashHref( 'score', 'posts' ), label: I.reviewPosts }; }
+			var tool = /404/.test( t ) ? 'log404' : /Redirects/.test( t ) ? 'redirects' : /Sitemap/.test( t ) ? 'sitemap' : /Feed/.test( t ) ? 'feed' : /llms/i.test( t ) ? 'llms' : /Schema/.test( t ) ? 'schema' : '';
+			if ( tool ) { return { href: toolHref( tool ), label: sp( I.fixIn, n[ tool ] || tool ) }; }
+			if ( /Settings|Social/.test( t ) ) { return { goto: 'settings:general', href: dashHref( 'settings', 'general' ), label: sp( I.fixIn, n.settings ) }; }
+			return null;
+		}
+		function recHtml( it ) {
+			var fx = fixTarget( it ), m = typeof it.measured === 'string' || typeof it.measured === 'number' ? String( it.measured ) : '';
+			if ( it.scope === 'post' ) { m = sp( I.failingOn, it.failing, it.applicable ); }
+			var out = '<li class="wps-rec" data-rule="' + esc( it.rule_id ) + '" data-scope="' + esc( it.scope ) + '" data-level="' + esc( it.level ) + '"><div class="wps-rec__main"><p class="wps-rec__top">' + levelBadge( it.level ) + '<span class="rbn-badge rbn-badge--mute">' + esc( it.scope === 'post' ? I.scopePosts : I.scopeSite ) + '</span><span class="rbn-badge rbn-badge--mute">' + esc( sp( I.weight, it.weight ) ) + '</span></p><h3 class="wps-rec__t">' + esc( it.title ) + '</h3>' + ( m ? '<p class="wps-rec__m">' + esc( m ) + '</p>' : '' ) + '<p class="wps-rec__d">' + esc( it.text ) + '</p></div><div class="wps-rec__act">';
+			if ( fx ) { out += '<a class="rbn-btn rbn-btn--pri" href="' + esc( fx.href ) + '"' + ( fx.goto ? ' data-goto="' + esc( fx.goto ) + '"' : '' ) + '>' + esc( fx.label ) + '<span class="rbn-sr"> ' + esc( sp( I.fixFor, it.title ) ) + '</span></a>'; }
+			if ( it.scope === 'site' ) {
+				if ( it.dismissible === false ) { out += '<p class="wps-rec__lock">' + icon( 'lock' ) + esc( I.noHide ) + '</p>'; } else if ( it.dismissed ) { out += '<button type="button" class="rbn-btn" data-rec-restore="' + esc( it.rule_id ) + '">' + icon( 'undo' ) + esc( I.restore ) + '<span class="rbn-sr"> ' + esc( sp( I.fixFor, it.title ) ) + '</span></button>'; } else { out += '<button type="button" class="rbn-btn" data-rec-hide="' + esc( it.rule_id ) + '">' + icon( 'eye' ) + esc( I.hide ) + '<span class="rbn-sr"> ' + esc( sp( I.fixFor, it.title ) ) + '</span></button>'; }
+			} else if ( it.level === 'critical' ) { out += '<p class="wps-rec__lock">' + icon( 'lock' ) + esc( I.noHide ) + '</p>'; }
+			return out + '</div></li>';
+		}
+		function allRecs() {
+			var items = ( S.recs && S.recs.items ? S.recs.items : [] ).slice();
+			( S.posts && S.posts.rules ? S.posts.rules : [] ).forEach( function ( r ) {
+				if ( r.failing > 0 ) { items.push( { rule_id: r.rule_id, scope: 'post', level: r.level, weight: r.weight, title: r.title, text: r.text, fix: r.fix, target: r.target, failing: r.failing, applicable: r.applicable, dismissible: false } ); }
+			} );
+			items.sort( function ( a, b ) { return ( ORDER[ a.level ] - ORDER[ b.level ] ) || ( b.weight - a.weight ); } );
+			return items;
+		}
+		function drawRecs() {
+			var box = view( 'recommendations' );
+			if ( ! box ) { return; }
+			if ( ! S.recs ) { return; }
+			var items = allRecs(), act = items.filter( function ( i ) { return ! i.dismissed; } ), hid = items.filter( function ( i ) { return i.dismissed; } );
+			var out = '';
+			if ( ! act.length ) {
+				out = '<section class="rbn-card"><div class="rbn-card__b"><div class="rbn-empty"><span class="rbn-empty__i">' + icon( 'check' ) + '</span><h3>' + esc( I.recsNone ) + '</h3><p>' + esc( I.recsNoneText ) + '</p></div></div></section>';
+			} else {
+				out = '<div class="wps-recbar"><p class="rbn-p">' + esc( sp( I.recsCount, act.length ) ) + '</p></div><ol class="wps-recs">' + act.map( recHtml ).join( '' ) + '</ol>';
+			}
+			if ( hid.length ) { out += '<details class="wps-hidden"><summary>' + icon( 'eye' ) + '<span>' + esc( sp( I.hiddenHead, hid.length ) ) + '</span></summary><ol class="wps-recs">' + hid.map( recHtml ).join( '' ) + '</ol></details>'; }
+			out += '<p class="rbn-help" role="status" data-rec-live></p>';
+			var open = $( '.wps-hidden', box ) && $( '.wps-hidden', box ).open;
+			box.innerHTML = out;
+			if ( open && $( '.wps-hidden', box ) ) { $( '.wps-hidden', box ).open = true; }
+		}
+
+		/* -- overview view -- */
+
+		function drawOverview() {
+			var box = view( 'overview' );
+			if ( ! box || ! S.site ) { return; }
+			var site = S.site, out = '<section class="rbn-card wps-score"><div class="rbn-card__b rbn-card__b--pad"><div class="wps-score__grid">' + ring( site ) + '<div><h2 class="wps-score__h">' + esc( I.scoreHead ) + '</h2>' + breakdown( site ) + stamp( site );
+			if ( site.cap_applied && site.cap_note ) { out += note( 'warn', esc( site.cap_note ) ); }
+			if ( site.environment_note ) { out += '<p class="rbn-help wps-score__note">' + esc( site.environment_note ) + '</p>'; }
+			out += '<p class="wps-score__note"><button type="button" class="rbn-btn" data-recalc>' + icon( 'undo' ) + esc( I.recalc ) + '</button></p></div></div></div></section>';
+			var top = allRecs().filter( function ( i ) { return ! i.dismissed; } ).slice( 0, 3 );
+			if ( top.length ) { out += '<h3 class="wps-score__sub">' + esc( sp( I.recsCount, top.length ) ) + '</h3><ol class="wps-recs wps-recs--mini">' + top.map( recHtml ).join( '' ) + '</ol>'; }
+			box.innerHTML = out;
+			paint( box );
+		}
+
+		/* -- posts view -- */
+
+		function drawPosts() {
+			var box = view( 'posts' );
+			if ( ! box || ! S.posts ) { return; }
+			var posts = S.posts.posts || [];
+			var sel = '<div class="wps-filterbar"><div><div class="rbn-field__l"><label for="wps-pb">' + esc( I.colBand ) + '</label></div><select class="rbn-select" id="wps-pb" data-post-band><option value="all">' + esc( I.allBands ) + '</option><option value="good">' + esc( I.bandGood ) + '</option><option value="fair">' + esc( I.bandFair ) + '</option><option value="poor">' + esc( I.bandPoor ) + '</option></select></div><p class="rbn-help" role="status" data-posts-live></p></div>';
+			if ( ! posts.length ) { box.innerHTML = '<section class="rbn-card"><div class="rbn-card__b"><div class="rbn-empty"><span class="rbn-empty__i">' + icon( 'doc' ) + '</span><h3>' + esc( I.noPosts ) + '</h3></div></div></section>'; return; }
+			var rows = posts.map( function ( p ) {
+				var b = bandOf( p.band );
+				return '<tr data-post-row data-band="' + esc( p.band ) + '"><th scope="row" data-l="' + esc( I.colPost ) + '">' + esc( p.title || '#' + p.id ) + '</th><td data-l="' + esc( I.colScore ) + '"><span class="wps-num">' + esc( p.score ) + '</span></td><td data-l="' + esc( I.colBand ) + '"><span class="rbn-badge rbn-badge--' + b[ 0 ] + '">' + icon( b[ 1 ] ) + esc( I[ b[ 2 ] ] ) + '</span></td><td data-l="' + esc( I.colFailing ) + '">' + ( p.failing.length ? esc( p.failing.join( ', ' ) ) : esc( I.noFailing ) ) + '</td><td data-l="' + esc( I.action || 'Action' ) + '">' + ( p.edit ? '<a class="rbn-btn rbn-btn--sm" href="' + esc( p.edit ) + '">' + esc( I.editPost ) + '<span class="rbn-sr"> ' + esc( sp( I.fixFor, p.title ) ) + '</span></a>' : '' ) + '</td></tr>';
+			} ).join( '' );
+			box.innerHTML = sel + '<section class="rbn-card"><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.colPost + ' / ' + I.colScore ) + '</caption><thead><tr><th scope="col">' + esc( I.colPost ) + '</th><th scope="col">' + esc( I.colScore ) + '</th><th scope="col">' + esc( I.colBand ) + '</th><th scope="col">' + esc( I.colFailing ) + '</th><th scope="col">' + esc( I.action || 'Action' ) + '</th></tr></thead><tbody>' + rows + '</tbody></table></div></div></section>';
+		}
+
+		/* -- how view: the rule catalogue comes from the server -- */
+
+		function drawHow() {
+			var box = view( 'how' );
+			if ( ! box || ! S.rules ) { return; }
+			var R = S.rules, rows = [];
+			[ 'site', 'post' ].forEach( function ( scope ) {
+				( R.rules && R.rules[ scope ] ? R.rules[ scope ] : [] ).forEach( function ( r ) {
+					var lv = LEVEL[ r.level ] || LEVEL.info, src = r.source ? '<a href="' + esc( r.source ) + '" target="_blank" rel="noopener noreferrer">' + esc( String( r.source ).replace( /^https?:\/\/([^/]+).*/, '$1' ) ) + '<span class="rbn-sr"> ' + esc( I.sourceNew ) + '</span></a>' : '';
+					rows.push( '<tr><th scope="row" data-l="' + esc( I.colRule ) + '">' + esc( r.title ) + '</th><td data-l="' + esc( I.colApplies ) + '">' + esc( scope === 'post' ? I.scopePosts : I.scopeSite ) + '</td><td data-l="' + esc( I.colLevel ) + '"><span class="rbn-badge rbn-badge--mute">' + esc( I[ lv[ 1 ] ] ) + '</span></td><td data-l="' + esc( I.colWeight ) + '" class="rbn-num">' + esc( r.weight ) + '</td><td data-l="' + esc( I.colSource ) + '">' + src + '</td></tr>' );
+				} );
+			} );
+			var bands = ( R.bands || [] ).map( function ( b ) { var m = bandOf( b.id ); return '<li><span class="rbn-badge rbn-badge--' + m[ 0 ] + '">' + icon( m[ 1 ] ) + esc( b.label ) + '</span> <span class="rbn-help">' + esc( b.min ) + '–' + esc( b.max ) + '</span></li>'; } ).join( '' );
+			box.innerHTML = '<div class="wps-how">' + ( R.formula ? '<pre class="rbn-code"><code>' + esc( R.formula ) + '</code></pre>' : '' ) + ( bands ? '<ul class="wps-bands" aria-label="' + esc( I.colBand ) + '">' + bands + '</ul>' : '' ) + '</div><section class="rbn-card wps-catalog"><div class="rbn-card__h"><h2>' + esc( I.rulesHead ) + '</h2></div><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.rulesHead ) + '</caption><thead><tr><th scope="col">' + esc( I.colRule ) + '</th><th scope="col">' + esc( I.colApplies ) + '</th><th scope="col">' + esc( I.colLevel ) + '</th><th scope="col" class="rbn-num">' + esc( I.colWeight ) + '</th><th scope="col">' + esc( I.colSource ) + '</th></tr></thead><tbody>' + rows.join( '' ) + '</tbody></table></div></div></section>';
+		}
+
+		function drawAll() { drawOverview(); drawRecs(); drawPosts(); drawHow(); }
+		function failAll() {
+			$$( '[data-score-view]', screen ).forEach( function ( b ) {
+				b.innerHTML = note( 'err', '<b>' + esc( I.loadFailed ) + '</b>', 'alert' ) + '<p><button type="button" class="rbn-btn" data-recalc="load">' + icon( 'undo' ) + esc( I.retry ) + '</button></p>';
+			} );
+		}
+		function emptyAll() {
+			$$( '[data-score-view]', screen ).forEach( function ( b ) {
+				if ( b.getAttribute( 'data-score-view' ) === 'how' ) { return; }
+				b.innerHTML = '<section class="rbn-card"><div class="rbn-card__b"><div class="rbn-empty"><span class="rbn-empty__i">' + icon( 'seo' ) + '</span><h3>' + esc( I.scoreNone ) + '</h3><p>' + esc( I.scoreNoneText ) + '</p><button type="button" class="rbn-btn rbn-btn--pri" data-recalc>' + icon( 'scan' ) + esc( I.calcNow ) + '</button></div></div></section>';
+			} );
+		}
+
+		function loadRest() {
+			return Promise.all( [
+				api( 'GET', 'score/recommendations?scope=site&include_dismissed=1' ),
+				api( 'GET', 'score/posts' ),
+				api( 'GET', 'score/rules' )
+			] ).then( function ( r ) {
+				if ( r[ 0 ].ok ) { S.recs = r[ 0 ].data; }
+				if ( r[ 1 ].ok ) { S.posts = r[ 1 ].data; }
+				if ( r[ 2 ].ok ) { S.rules = r[ 2 ].data; }
+				if ( ! r[ 0 ].ok || ! r[ 1 ].ok ) { failAll(); return; }
+				drawAll();
+			} );
+		}
+		function load() {
+			if ( sum && sum.getAttribute( 'data-calculated' ) === '0' && ! S.site ) { drawSummaryEmpty(); emptyAll(); api( 'GET', 'score/rules' ).then( function ( r ) { if ( r.ok ) { S.rules = r.data; drawHow(); } } ); return Promise.resolve(); }
+			return api( 'GET', 'score/site' ).then( function ( r ) {
+				if ( ! r.ok || ! r.data ) { drawSummaryError(); failAll(); return; }
+				S.site = r.data;
+				if ( sum ) { sum.setAttribute( 'data-calculated', '1' ); }
+				drawSummary( S.site );
+				return loadRest();
+			} );
+		}
+		function recalc( btn ) {
+			var live = $( '[data-score-error]', screen );
+			if ( btn ) { btn.disabled = true; btn.innerHTML = '<span class="wps-spin" aria-hidden="true"></span>' + esc( I.calculating ); }
+			if ( live ) { live.hidden = true; }
+			api( 'POST', 'score/site/recalculate' ).then( function ( r ) {
+				if ( ! r.ok || ! r.data ) {
+					if ( btn ) { btn.disabled = false; btn.innerHTML = icon( 'undo' ) + esc( I.retry ); }
+					if ( live ) { live.hidden = false; }
+					if ( ! S.site ) { drawSummaryError(); }
+					return;
+				}
+				S.site = r.data;
+				if ( sum ) { sum.setAttribute( 'data-calculated', '1' ); }
+				drawSummary( S.site );
+				loadRest();
+			} );
+		}
+
+		on( screen, 'click', '[data-recalc]', function ( e, b ) {
+			if ( b.getAttribute( 'data-recalc' ) === 'load' ) { load(); } else { recalc( b ); }
+		} );
+		on( screen, 'click', '[data-rec-hide]', function ( e, b ) {
+			var id = b.getAttribute( 'data-rec-hide' );
+			b.disabled = true;
+			api( 'POST', 'score/dismiss', { rule_id: id, post_id: 0 } ).then( function ( r ) {
+				if ( ! r.ok ) { b.disabled = false; return; }
+				api( 'GET', 'score/recommendations?scope=site&include_dismissed=1' ).then( function ( q ) {
+					if ( q.ok ) { S.recs = q.data; drawRecs(); drawOverview(); }
+					var live = $( '[data-rec-live]', screen ); if ( live ) { live.textContent = I.hidden; }
+				} );
+			} );
+		} );
+		on( screen, 'click', '[data-rec-restore]', function ( e, b ) {
+			var id = b.getAttribute( 'data-rec-restore' );
+			b.disabled = true;
+			api( 'DELETE', 'score/dismiss/' + encodeURIComponent( id ) ).then( function ( r ) {
+				if ( ! r.ok ) { b.disabled = false; return; }
+				api( 'GET', 'score/recommendations?scope=site&include_dismissed=1' ).then( function ( q ) {
+					if ( q.ok ) { S.recs = q.data; drawRecs(); drawOverview(); }
+				} );
+			} );
+		} );
+		on( screen, 'change', '[data-post-band]', function ( e, s ) {
+			var n = 0;
+			$$( '[data-post-row]', screen ).forEach( function ( row ) {
+				var show = s.value === 'all' || row.getAttribute( 'data-band' ) === s.value;
+				row.hidden = ! show;
+				if ( show ) { n++; }
+			} );
+			var live = $( '[data-posts-live]', screen ); if ( live ) { live.textContent = sp( I.postsSampled, n, ( S.posts.posts || [] ).length ); }
+		} );
+
+		load();
+	}
+
+	/* ---------- Reports: trend charts drawn as SVG from the stored snapshots ---------- */
+
+	function reports( screen ) {
+		var root = $( '[data-reports]', screen );
+		if ( ! root ) { return; }
+		var days = 30, started = false, busyPoll = 0;
+		var LABEL = {
+			'score.site': I.repScore, 'score.config': I.siteScore, 'score.posts': I.postsScore, 'redirects.active': I.repActive, 'redirects.hits': sp( I.repTotal, I.repRedirHits ),
+			'not_found.addresses': I.repAddresses, 'not_found.hits': sp( I.repTotal, I.repHits404 ), 'not_found.new_24h': I.repNew24, 'sitemap.total': I.repUrls, 'meta.title_pct': I.repTitles, 'meta.description_pct': I.repDescs,
+			'rules.total': I.repRulesTotal, 'rules.passed': I.repRulesPassed, 'rules.remaining': I.repRulesLeft, 'rules.na': I.repRulesNa, 'meta.posts': I.repPostsCount
+		};
+		function label( k ) {
+			if ( LABEL[ k ] ) { return LABEL[ k ]; }
+			if ( k.indexOf( 'sitemap.group.' ) === 0 ) { return sp( I.repSitemapOf, k.slice( 14 ) ); }
+			if ( k.indexOf( 'schema.' ) === 0 ) { return sp( I.repSchemaOf, k.slice( 7 ) ); }
+			return k.replace( /[._]/g, ' ' );
+		}
+		function state( name ) {
+			$$( '[data-rep]', root ).forEach( function ( b ) { b.hidden = b.getAttribute( 'data-rep' ) !== name; } );
+		}
+		function num( v ) { return v === null || v === undefined ? I.repNoValue : String( Math.round( v * 10 ) / 10 ); }
+
+		function geometry( d, keys, o ) {
+			var pts = d.points, span = Math.max( 1, d.range - 1 ), from = new Date( d.from + 'T00:00:00' ).getTime(), all = [];
+			keys.forEach( function ( k ) { pts.forEach( function ( p ) { if ( p.values[ k ] !== null && p.values[ k ] !== undefined ) { all.push( +p.values[ k ] ); } } ); } );
+			var lo = o.min !== undefined ? o.min : 0, hi = o.max !== undefined ? o.max : Math.max.apply( null, all.concat( [ 1 ] ) );
+			if ( hi <= lo ) { hi = lo + 1; }
+			function X( p ) { return Math.round( ( ( new Date( p.date + 'T00:00:00' ).getTime() - from ) / 864e5 ) / span * 600 * 10 ) / 10; }
+			function Y( v ) { return Math.round( ( 152 - ( ( v - lo ) / ( hi - lo ) ) * 144 ) * 10 ) / 10; }
+			return { X: X, Y: Y, lo: lo, hi: hi };
+		}
+		/** One polyline per run of consecutive days with a value: a missing day breaks the line instead of being guessed. */
+		function paths( d, key, g ) {
+			var line = '', dots = '', run = [], prev = null;
+			function flush() {
+				if ( run.length > 1 ) { line += 'M' + run.map( function ( q ) { return q[ 0 ] + ' ' + q[ 1 ]; } ).join( ' L' ); }
+				run = [];
+			}
+			d.points.forEach( function ( p ) {
+				var v = p.values[ key ];
+				if ( v === null || v === undefined ) { flush(); prev = null; return; }
+				var t = new Date( p.date + 'T00:00:00' ).getTime();
+				if ( prev !== null && Math.round( ( t - prev ) / 864e5 ) > 1 ) { flush(); }
+				prev = t;
+				var q = [ g.X( p ), g.Y( +v ) ];
+				run.push( q );
+				dots += 'M' + q[ 0 ] + ' ' + q[ 1 ] + ' l0 0';
+			} );
+			flush();
+			return { line: line, dots: dots };
+		}
+		function lastVal( d, key ) {
+			for ( var i = d.points.length - 1; i >= 0; i-- ) { var v = d.points[ i ].values[ key ]; if ( v !== null && v !== undefined ) { return v; } }
+			return null;
+		}
+		function hasData( d, key ) { return lastVal( d, key ) !== null; }
+		function changeText( d, key ) {
+			var s = d.summary && d.summary[ key ];
+			if ( ! s || s.change === null || s.change === undefined ) { return ''; }
+			return ( s.change > 0 ? '+' : '' ) + num( s.change ) + ' · ' + day( d.from ) + ' – ' + day( d.to );
+		}
+
+		function chart( d, o ) {
+			var keys = o.keys.filter( function ( k ) { return hasData( d, k ); } );
+			if ( ! keys.length ) { return ''; }
+			var g = geometry( d, keys, o ), svg = '<svg class="wps-chart__svg" viewBox="0 0 600 160" preserveAspectRatio="none" role="img" aria-label="' + esc( o.title ) + '">';
+			[ 8, 80, 152 ].forEach( function ( y ) { svg += '<line class="wps-chart__grid" x1="0" y1="' + y + '" x2="600" y2="' + y + '"></line>'; } );
+			var rows = '';
+			keys.forEach( function ( k, i ) {
+				var p = paths( d, k, g ), c = i ? ' wps-chart__ln--2' : '', pc = i ? ' wps-chart__pt--2' : '';
+				if ( i === 0 && p.line ) { svg += '<path class="wps-chart__area" d="' + p.line + ' L' + g.X( d.points[ d.points.length - 1 ] ) + ' 152 L' + g.X( d.points[ 0 ] ) + ' 152 Z"></path>'; }
+				svg += ( p.line ? '<path class="wps-chart__ln' + c + '" d="' + p.line + '"></path>' : '' ) + '<path class="wps-chart__pt' + pc + '" d="' + p.dots + '"></path>';
+			} );
+			svg += '</svg>';
+			var head = '<tr><th scope="col">' + esc( I.colDate ) + '</th>' + keys.map( function ( k ) { return '<th scope="col" class="rbn-num">' + esc( label( k ) ) + '</th>'; } ).join( '' ) + '</tr>';
+			d.points.forEach( function ( p ) { rows += '<tr><th scope="row" data-l="' + esc( I.colDate ) + '">' + esc( p.date ) + '</th>' + keys.map( function ( k ) { return '<td data-l="' + esc( label( k ) ) + '" class="rbn-num">' + esc( num( p.values[ k ] ) ) + '</td>'; } ).join( '' ) + '</tr>'; } );
+			var lead = keys.map( function ( k, i ) { return i ? '<span>' + esc( label( k ) + ': ' + num( lastVal( d, k ) ) ) + '</span>' : '<strong>' + esc( num( lastVal( d, k ) ) ) + '</strong><span>' + esc( label( k ) + ( o.suffix || '' ) ) + '</span>'; } ).join( '' );
+			var ch = changeText( d, keys[ 0 ] );
+			var lg = keys.length > 1 ? '<ul class="wps-chart__lg">' + keys.map( function ( k, i ) { return '<li' + ( i ? ' class="is-2"' : '' ) + '><svg viewBox="0 0 36 12" aria-hidden="true"><line x1="0" y1="6" x2="36" y2="6"></line></svg>' + esc( label( k ) + ' (' + ( i ? I.repDash : I.repLine ).toLowerCase() + ')' ) + '</li>'; } ).join( '' ) + '</ul>' : '';
+			return '<li' + ( o.wide ? ' class="wps-wide"' : '' ) + '><section class="rbn-card"><div class="rbn-card__h"><h2>' + esc( o.title ) + '</h2>' + ( o.text ? '<p>' + esc( o.text ) + '</p>' : '' ) + '</div><div class="rbn-card__b rbn-card__b--pad"><figure class="wps-chart"><figcaption class="rbn-sr">' + esc( o.title ) + '</figcaption><p class="wps-chart__k">' + lead + ( ch ? '<span>' + esc( ch ) + '</span>' : '' ) + '</p><div class="wps-chart__plot"><div class="wps-chart__y" aria-hidden="true"><span>' + esc( Math.round( g.hi ) ) + '</span><span>' + esc( Math.round( g.lo ) ) + '</span></div>' + svg + '<div class="wps-chart__x" aria-hidden="true"><span>' + esc( day( d.from ) ) + '</span><span>' + esc( day( d.to ) ) + '</span></div></div>' + lg + '<details><summary>' + esc( I.repTable ) + '</summary><div class="rbn-tw"><table class="rbn-table rbn-table--cols"><caption class="rbn-sr">' + esc( o.title ) + '</caption><thead>' + head + '</thead><tbody>' + rows + '</tbody></table></div></details></figure></div></section></li>';
+		}
+		function bars( d, o ) {
+			var items = o.keys.filter( function ( k ) { return hasData( d, k ); } );
+			if ( ! items.length ) { return ''; }
+			var max = o.pct ? 100 : Math.max.apply( null, items.map( function ( k ) { return +lastVal( d, k ); } ).concat( [ 1 ] ) );
+			return '<li><section class="rbn-card"><div class="rbn-card__h"><h2>' + esc( o.title ) + '</h2><p>' + esc( sp( I.repMeta, d.latest ? when( d.latest.taken_at ) : '' ) ) + '</p></div><div class="rbn-card__b rbn-card__b--pad"><ul class="wps-hbars">' + items.map( function ( k, i ) {
+				var v = +lastVal( d, k );
+				return '<li' + ( i % 2 ? ' class="is-2"' : '' ) + '><span>' + esc( o.names ? o.names( k ) : label( k ) ) + '</span><span class="wps-hbars__t" aria-hidden="true"><i data-w="' + esc( Math.max( 0, Math.min( 100, v / max * 100 ) ) ) + '"></i></span><span class="wps-hbars__v">' + esc( num( v ) + ( o.pct ? '%' : '' ) ) + '</span></li>';
+			} ).join( '' ) + '</ul></div></section></li>';
+		}
+		function summaryCard( d ) {
+			var keys = Object.keys( d.summary || {} ).filter( function ( k ) { var s = d.summary[ k ]; return s.start !== null || s.end !== null; } );
+			if ( ! keys.length ) { return ''; }
+			return '<li class="wps-wide"><section class="rbn-card"><div class="rbn-card__h"><h2>' + esc( I.repSummary ) + '</h2><p>' + esc( I.repGap ) + '</p></div><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.repSummary ) + '</caption><thead><tr><th scope="col">' + esc( I.colMetric ) + '</th><th scope="col" class="rbn-num">' + esc( I.colStart ) + '</th><th scope="col" class="rbn-num">' + esc( I.colEnd ) + '</th><th scope="col" class="rbn-num">' + esc( I.colChange ) + '</th></tr></thead><tbody>' + keys.map( function ( k ) {
+				var s = d.summary[ k ];
+				return '<tr><th scope="row" data-l="' + esc( I.colMetric ) + '">' + esc( label( k ) ) + '</th><td data-l="' + esc( I.colStart ) + '" class="rbn-num">' + esc( num( s.start ) ) + '</td><td data-l="' + esc( I.colEnd ) + '" class="rbn-num">' + esc( num( s.end ) ) + '</td><td data-l="' + esc( I.colChange ) + '" class="rbn-num">' + ( s.change === null ? esc( I.repNoValue ) : esc( ( s.change > 0 ? '+' : '' ) + num( s.change ) ) ) + '</td></tr>';
+			} ).join( '' ) + '</tbody></table></div></div></section></li>';
+		}
+
+		function valuesCard( d ) {
+			var keys = Object.keys( d.summary || {} ).filter( function ( k ) { return d.summary[ k ].end !== null; } );
+			if ( ! keys.length ) { return ''; }
+			return '<li class="wps-wide"><section class="rbn-card"><div class="rbn-card__h"><h2>' + esc( I.repSummary ) + '</h2></div><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.repSummary ) + '</caption><thead><tr><th scope="col">' + esc( I.colMetric ) + '</th><th scope="col" class="rbn-num">' + esc( I.repValue ) + '</th></tr></thead><tbody>' + keys.map( function ( k ) { return '<tr><th scope="row" data-l="' + esc( I.colMetric ) + '">' + esc( label( k ) ) + '</th><td data-l="' + esc( I.repValue ) + '" class="rbn-num">' + esc( num( d.summary[ k ].end ) ) + '</td></tr>'; } ).join( '' ) + '</tbody></table></div></div></section></li>';
+		}
+		function draw( d ) {
+			var meta = $( '[data-rep-meta]', root ), box = $( '[data-rep-charts]', root ), one = $( '[data-rep-one]', root ), main = $( '[data-rep-main]', root );
+			var meta_txt = [];
+			if ( d.latest ) { meta_txt.push( sp( I.repMeta, when( d.latest.taken_at ) ) ); }
+			if ( meta ) { meta.textContent = meta_txt.join( ' · ' ); }
+			var schemaKeys = ( d.columns || [] ).map( function ( c ) { return c.key; } ).filter( function ( k ) { return k.indexOf( 'schema.' ) === 0; } );
+			if ( d.points.length === 1 ) { box.innerHTML = '<ul class="wps-reports">' + bars( d, { keys: [ 'meta.title_pct', 'meta.description_pct' ], title: I.repCoverage, pct: true } ) + bars( d, { keys: schemaKeys, title: I.repSchema, names: function ( k ) { return k.replace( 'schema.', '' ); } } ) + valuesCard( d ) + '</ul>'; finish( d, box, one, main ); return; }
+			var html = chart( d, { keys: [ 'score.site' ], title: I.repScore, text: I.repGap, wide: true, min: 0, max: 100, suffix: ' / 100' } )
+				+ chart( d, { keys: [ 'redirects.active', 'not_found.hits' ], title: I.repRedirects, text: I.repGap } )
+				+ chart( d, { keys: [ 'sitemap.total' ], title: I.repSitemap, text: I.repGap } )
+				+ bars( d, { keys: [ 'meta.title_pct', 'meta.description_pct' ], title: I.repCoverage, pct: true } )
+				+ bars( d, { keys: schemaKeys, title: I.repSchema, names: function ( k ) { return k.replace( 'schema.', '' ); } } )
+				+ summaryCard( d );
+			box.innerHTML = '<ul class="wps-reports">' + html + '</ul>';
+			finish( d, box, one, main );
+		}
+		function finish( d, box, one, main ) {
+			$$( '[data-w]', box ).forEach( function ( i ) { i.style.setProperty( '--w', i.getAttribute( 'data-w' ) + '%' ); } );
+			one.hidden = d.points.length !== 1;
+			if ( d.points.length === 1 ) { one.innerHTML = note( 'info', esc( I.repOne ) ); }
+			main.hidden = false;
+			var csv = $( '[data-csv-link]', root );
+			if ( csv ) { csv.href = T.restUrl + 'reports/export?range=' + days + '&_wpnonce=' + encodeURIComponent( T.nonce ); csv.setAttribute( 'download', '' ); }
+			state( 'ok' );
+		}
+		function load() {
+			state( 'loading' );
+			return api( 'GET', 'reports?range=' + days ).then( function ( r ) {
+				if ( ! r.ok || ! r.data || r.data.status === 'error' ) { state( 'error' ); return; }
+				var d = r.data;
+				if ( d.status === 'preparing' || ( d.status === 'no_data' && d.snapshot_scheduled ) ) { state( 'preparing' ); poll(); return; }
+				if ( d.status === 'no_data' ) { state( 'nodata' ); return; }
+				draw( d );
+			} );
+		}
+		function poll() {
+			if ( busyPoll++ > 8 ) { busyPoll = 0; state( 'nodata' ); return; }
+			setTimeout( function () {
+				api( 'GET', 'reports?range=' + days ).then( function ( r ) {
+					if ( r.ok && r.data && r.data.status === 'ok' ) { busyPoll = 0; draw( r.data ); } else { poll(); }
+				} );
+			}, 3000 );
+		}
+		function snapshot( btn ) {
+			var old = btn.innerHTML;
+			btn.disabled = true;
+			btn.innerHTML = '<span class="wps-spin" aria-hidden="true"></span>' + esc( I.repTaking );
+			api( 'POST', 'reports/snapshot' ).then( function ( r ) {
+				btn.disabled = false;
+				btn.innerHTML = old;
+				if ( ! r.ok ) { state( 'error' ); return; }
+				if ( r.status === 202 ) { state( 'preparing' ); busyPoll = 0; poll(); return; }
+				load();
+			} );
+		}
+
+		on( root, 'click', '[data-snapshot]', function ( e, b ) { snapshot( b ); } );
+		on( root, 'click', '[data-rep-retry]', function () { load(); } );
+		on( root, 'click', '[data-print]', function () { window.print(); } );
+		on( root, 'change', 'input[name="rep-range"]', function ( e, r ) { days = parseInt( r.value, 10 ) || 30; load(); } );
+		function maybeStart() {
+			if ( started ) { return; }
+			var p = doc.getElementById( 'dpan-reports' );
+			if ( p && ! p.hidden ) { started = true; load(); }
+		}
+		screen.addEventListener( 'wps:tab', maybeStart );
+		maybeStart();
 	}
 
 	/* ---------- Dashboard ---------- */
@@ -1171,7 +1674,7 @@
 		initMenu();
 		var name = screen.getAttribute( 'data-screen' );
 		$$( '[data-settings-form]', screen ).forEach( function ( f ) { initVars( f ); initSettings( f ); } );
-		if ( name === 'dashboard' ) { dashboard( screen ); }
+		if ( name === 'dashboard' ) { dashApi = dashTabs( screen ); dashboard( screen ); score( screen ); reports( screen ); importer( screen ); }
 		if ( name === 'schema' ) { schema( screen ); }
 		if ( name === 'sitemap' ) { sitemap( screen ); }
 		if ( name === 'feed' ) { feed( screen ); }

@@ -1,6 +1,7 @@
 <?php
 /**
- * Dashboard: the front page of the plugin. Four counters, one card per tool, the setup checklist and recent activity.
+ * Dashboard: the front page of the plugin, two levels of tabs (`?tab=` and `?sub=`): Overview, SEO score, Reports, Logs, Yoast import, Settings.
+ * Panels are printed here; the score and the reports are drawn by the script from the REST routes. The tools keep their own pages.
  *
  * @package Wpseokit
  */
@@ -10,6 +11,7 @@ declare(strict_types=1);
 namespace Wpseokit\Screens;
 
 use Wpseokit\Plugin;
+use Wpseokit\Services\ScoreService;
 use Wpseokit\Settings;
 
 defined( 'ABSPATH' ) || exit;
@@ -18,6 +20,36 @@ final class DashboardScreen {
 
 	public static function init(): void {
 		Ui::boot();
+	}
+
+	/** Tabs: id => label, icon, sub-tabs (id => label). @return array<string, array{0:string,1:string,2:array<string,string>}> */
+	private static function tabs(): array {
+		return array(
+			'overview' => array( __( 'Overview', 'wpseokit' ), 'home', array() ),
+			'score'    => array(
+				__( 'SEO score', 'wpseokit' ),
+				'seo',
+				array(
+					'overview'        => __( 'Overview', 'wpseokit' ),
+					'recommendations' => __( 'Recommendations', 'wpseokit' ),
+					'posts'           => __( 'Posts', 'wpseokit' ),
+					'how'             => __( 'How it is calculated', 'wpseokit' ),
+				),
+			),
+			'reports'  => array( __( 'Reports', 'wpseokit' ), 'chart', array() ),
+			'logs'     => array(
+				__( 'Logs', 'wpseokit' ),
+				'list',
+				array(
+					'activity' => __( 'Activity', 'wpseokit' ),
+					'yoast'    => __( 'Yoast import log', 'wpseokit' ),
+					'updates'  => __( 'Update checks', 'wpseokit' ),
+					'errors'   => __( 'Errors', 'wpseokit' ),
+				),
+			),
+			'yoast'    => array( __( 'Yoast import', 'wpseokit' ), 'down', array() ),
+			'settings' => array( __( 'Settings', 'wpseokit' ), 'gear', array() ),
+		);
 	}
 
 	/** Published posts and pages that carry their own meta description. @return array{0:int,1:int} */
@@ -44,8 +76,8 @@ final class DashboardScreen {
 		return '<span class="rbn-badge rbn-badge--' . esc_attr( $type ) . '">' . Ui::icon( $icon ) . esc_html( $text ) . '</span>';
 	}
 
-	/** @return array<int, array{string,string,string,string,bool}> check, badge html, action label, action url, primary */
-	private static function checks(): array {
+	/** @return array<int, array{0:string,1:string,2:string,3:string,4:bool,5?:string}> check, badge html, action label, action url, primary, extra link attributes */
+	public static function checks(): array {
 		$defaults  = Settings::defaults();
 		$templates = (array) Ui::val( 'templates', array() ) === (array) ( $defaults['templates'] ?? array() );
 		$org       = '' !== trim( (string) Ui::val( 'schema.organization_name', '' ) ) || '' !== trim( (string) Ui::val( 'schema.person_name', '' ) );
@@ -85,8 +117,9 @@ final class DashboardScreen {
 				__( 'Primary categories', 'wpseokit' ),
 				$primary ? self::badge( 'ok', 'check', __( 'On', 'wpseokit' ) ) : self::badge( 'warn', 'alert', __( 'Off', 'wpseokit' ) ),
 				__( 'Open settings', 'wpseokit' ),
-				Shell::url( 'settings', 'advanced' ),
+				Shell::url( 'settings', 'general' ),
 				false,
+				' data-goto="settings:general"',
 			),
 			array(
 				__( 'Preferred address', 'wpseokit' ),
@@ -101,6 +134,7 @@ final class DashboardScreen {
 				__( 'Review import', 'wpseokit' ),
 				Shell::url( 'import' ),
 				false,
+				' data-goto="yoast"',
 			),
 		);
 	}
@@ -138,11 +172,8 @@ final class DashboardScreen {
 				return array( '<span data-card-badge="redirects">' . $ok( __( 'Active', 'wpseokit' ) ) . '</span>', __( 'Loading…', 'wpseokit' ), $link( 'redirects', 'pref', __( 'Check address', 'wpseokit' ) ) );
 			case 'log404':
 				return array( '<span data-card-badge="log404">' . $mute( __( 'Checking', 'wpseokit' ) ) . '</span>', __( 'Loading…', 'wpseokit' ), $link( 'log404', '', __( 'Fix top errors', 'wpseokit' ) ) );
-			case 'import':
-				return array( '<span data-import-state>' . self::badge( 'info', 'info', __( 'Not checked', 'wpseokit' ) ) . '</span>', Plugin::yoast_active() ? __( 'Yoast SEO is active on this site', 'wpseokit' ) : __( 'Yoast SEO is not active', 'wpseokit' ), $link( 'import', 'report', __( 'View report', 'wpseokit' ) ) );
 			default:
-				$verified = '' !== (string) Ui::val( 'general.verify_google', '' ) || '' !== (string) Ui::val( 'general.verify_bing', '' );
-				return array( Plugin::output_enabled() ? $ok( __( 'Output on', 'wpseokit' ) ) : $warn( __( 'Output paused', 'wpseokit' ) ), $verified ? __( 'Site verification codes are set', 'wpseokit' ) : __( 'No verification codes yet', 'wpseokit' ), $link( 'settings', 'verification', __( 'Verification', 'wpseokit' ) ) );
+				return array( '', '', '' );
 		}
 	}
 
@@ -151,7 +182,7 @@ final class DashboardScreen {
 		$yoast = Plugin::yoast_active();
 		foreach ( Shell::tools() as $id => $t ) {
 			[ $badge, $line, $more ] = self::card_state( $id );
-			if ( $yoast && ! in_array( $id, array( 'redirects', 'log404', 'import', 'settings' ), true ) ) {
+			if ( $yoast && ! in_array( $id, array( 'redirects', 'log404' ), true ) ) {
 				$badge = self::badge( 'warn', 'pause', __( 'Paused (Yoast active)', 'wpseokit' ) );
 			}
 			/* translators: %s: tool name. */
@@ -163,7 +194,39 @@ final class DashboardScreen {
 		return $out . '</ul>';
 	}
 
-	public static function render(): void {
+	/** Number of setup checks that still ask for attention. */
+	private static function missing(): int {
+		return count( array_filter( self::checks(), static fn( array $c ): bool => $c[4] ) );
+	}
+
+	/** Banner above the overview when setup items are missing. */
+	private static function band(): string {
+		$n = self::missing();
+		if ( $n < 1 ) {
+			return '';
+		}
+		/* translators: %d: number of setup items. */
+		$text = sprintf( _n( '%d setup item is missing.', '%d setup items are missing.', $n, 'wpseokit' ), $n );
+		return '<div class="wps-band" role="status"><p>' . Ui::icon( 'alert' ) . ' ' . esc_html( $text ) . '</p><a class="rbn-btn rbn-btn--pri" href="' . esc_url( Shell::dash_url( 'settings', 'setup' ) ) . '" data-goto="settings:setup">' . esc_html__( 'Go to Setup', 'wpseokit' ) . Ui::icon( 'chevr' ) . '</a></div>';
+	}
+
+	/** Whether a site score has been stored yet (the score route would measure the site on its first call). */
+	private static function calculated(): bool {
+		$stored = get_option( ScoreService::OPTION_SITE );
+		return is_array( $stored ) && isset( $stored['score'], $stored['config'] );
+	}
+
+	/** Card with the loading skeleton that the script replaces with the score summary. */
+	private static function score_summary(): string {
+		$h = '<h2 class="wps-score__h">' . esc_html__( 'SEO score', 'wpseokit' ) . '</h2>';
+		if ( Plugin::yoast_active() ) {
+			return '<section class="rbn-card wps-score wps-sum"><div class="rbn-card__b rbn-card__b--pad"><h2 class="wps-score__h"><a class="wps-stretch" href="' . esc_url( Shell::dash_url( 'score' ) ) . '" data-goto="score">' . esc_html__( 'SEO score', 'wpseokit' ) . '</a></h2>'
+				. Ui::note( 'info', '<b>' . esc_html__( 'The score is paused while Yoast SEO is active.', 'wpseokit' ) . '</b> ' . esc_html__( 'Import your Yoast data to continue.', 'wpseokit' ) ) . '</div></section>';
+		}
+		return '<div data-score-summary data-calculated="' . ( self::calculated() ? '1' : '0' ) . '"><section class="rbn-card wps-score" aria-busy="true"><div class="rbn-card__b rbn-card__b--pad">' . $h . '<p class="wps-busy" role="status"><span class="wps-spin" aria-hidden="true"></span>' . esc_html__( 'Loading…', 'wpseokit' ) . '</p><span class="wps-skel wps-skel--w50"></span></div></section></div>';
+	}
+
+	private static function stats(): string {
 		[ $done, $total ] = self::described();
 		$stats            = array(
 			array( 'sitemap', 'sitemap', __( 'URLs in the sitemap', 'wpseokit' ), '–', '', 'sitemap' ),
@@ -171,22 +234,155 @@ final class DashboardScreen {
 			array( 'log', 'alert', __( '404 errors logged', 'wpseokit' ), '–', '', 'log404' ),
 			array( 'described', 'doc', __( 'Posts with a description', 'wpseokit' ), (string) $done, '<small>/ ' . (int) $total . '</small>', 'templates' ),
 		);
-		$out              = Ui::open( 'dashboard' ) . '<div class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html__( 'WPSeoKit', 'wpseokit' ) . '</h1><span class="rbn-chip">' . esc_html( WPSEOKIT_VERSION ) . '</span>' . Shell::chip() . '</div><div class="rbn-head__act"></div></div>';
-		$out             .= Shell::yoast_note() . '<ul class="rbn-stats">';
+		$out              = '<ul class="rbn-stats">';
 		foreach ( $stats as $s ) {
 			$out .= '<li class="rbn-stat"><p class="rbn-stat__k">' . Ui::icon( $s[1] ) . '<a href="' . esc_url( Shell::url( $s[5] ) ) . '">' . esc_html( $s[2] ) . '</a></p><p class="rbn-stat__v" data-stat="' . esc_attr( $s[0] ) . '">' . esc_html( $s[3] ) . $s[4] . '</p><p class="rbn-stat__s" data-stat-sub="' . esc_attr( $s[0] ) . '"></p></li>';
 		}
-		$out .= '</ul>' . self::tool_cards();
+		return $out . '</ul>';
+	}
 
-		$rows = '';
-		foreach ( self::checks() as $c ) {
-			$rows .= '<tr><th scope="row" data-l="' . esc_attr__( 'Check', 'wpseokit' ) . '">' . esc_html( $c[0] ) . '</th><td data-l="' . esc_attr__( 'Status', 'wpseokit' ) . '">' . $c[1] . '</td><td data-l="' . esc_attr__( 'Action', 'wpseokit' ) . '" class="rbn-acts"><a class="rbn-btn rbn-btn--sm' . ( $c[4] ? ' rbn-btn--pri' : '' ) . '" href="' . esc_url( $c[3] ) . '">' . esc_html( $c[2] ) . '</a></td></tr>';
+	private static function overview(): string {
+		return '<h2 class="rbn-sr">' . esc_html__( 'Overview', 'wpseokit' ) . '</h2>' . self::band() . self::score_summary() . self::stats() . self::tool_cards();
+	}
+
+	/** Empty state card (icon, title, text, optional action html). */
+	private static function empty_state( string $icon, string $title, string $text, string $act = '' ): string {
+		return '<section class="rbn-card"><div class="rbn-card__b"><div class="rbn-empty"><span class="rbn-empty__i">' . Ui::icon( $icon ) . '</span><h2>' . esc_html( $title ) . '</h2><p>' . esc_html( $text ) . '</p>' . $act . '</div></div></section>';
+	}
+
+	private static function skeleton_cards(): string {
+		$card = '<li><section class="rbn-card"><div class="rbn-card__b rbn-card__b--pad"><span class="wps-skel wps-skel--w30"></span><span class="wps-skel wps-skel--tall"></span><span class="wps-skel wps-skel--w70"></span></div></section></li>';
+		return '<ul class="wps-reports">' . $card . $card . '</ul>';
+	}
+
+	private static function paused_card( string $text ): string {
+		return '<section class="rbn-card wps-score"><div class="rbn-card__b rbn-card__b--pad"><h2 class="wps-score__h">' . esc_html__( 'Paused', 'wpseokit' ) . '</h2>'
+			. Ui::note( 'info', '<b>' . esc_html__( 'Yoast SEO is active.', 'wpseokit' ) . '</b> ' . esc_html( $text ) )
+			. '<p><a class="rbn-btn rbn-btn--pri" href="' . esc_url( Shell::dash_url( 'yoast' ) ) . '" data-goto="yoast">' . esc_html__( 'Import Yoast data', 'wpseokit' ) . '</a></p></div></section>';
+	}
+
+	/** Loading placeholder of a score view; the script swaps the content in. */
+	private static function view( string $name ): string {
+		return '<div data-score-view="' . esc_attr( $name ) . '" aria-live="polite"><p class="wps-busy" role="status"><span class="wps-spin" aria-hidden="true"></span>' . esc_html__( 'Loading…', 'wpseokit' ) . '</p>' . self::skeleton_cards() . '</div>';
+	}
+
+	/** @return array<string, string> sub id => panel html */
+	private static function score_panels(): array {
+		if ( Plugin::yoast_active() ) {
+			return array();
 		}
-		$check = '<div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html__( 'Setup checklist', 'wpseokit' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Check', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Status', 'wpseokit' ) . '</th><th scope="col"><span class="rbn-sr">' . esc_html__( 'Action', 'wpseokit' ) . '</span></th></tr></thead><tbody>' . $rows . '</tbody></table></div></div>';
-		$act   = '<div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack" data-activity><caption class="rbn-sr">' . esc_html__( 'Recent activity', 'wpseokit' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Event', 'wpseokit' ) . '</th><th scope="col" class="rbn-num">' . esc_html__( 'Hits', 'wpseokit' ) . '</th><th scope="col"><span class="rbn-sr">' . esc_html__( 'Action', 'wpseokit' ) . '</span></th></tr></thead><tbody><tr><td colspan="3" data-empty>' . esc_html__( 'Loading…', 'wpseokit' ) . '</td></tr></tbody></table></div></div>';
+		$err = '<div data-score-error hidden><div class="rbn-note rbn-note--err" role="alert">' . Ui::icon( 'x' ) . '<div><p><b>' . esc_html__( 'The score could not be recalculated.', 'wpseokit' ) . '</b> ' . esc_html__( 'WPSeoKit could not finish checking the site. The results below are from the last successful calculation.', 'wpseokit' ) . '</p><p><button type="button" class="rbn-btn" data-recalc>' . Ui::icon( 'undo' ) . esc_html__( 'Try again', 'wpseokit' ) . '</button></p></div></div></div>';
+		return array(
+			'overview'        => $err . '<h2 class="rbn-sr">' . esc_html__( 'Score overview', 'wpseokit' ) . '</h2>' . self::view( 'overview' ),
+			'recommendations' => '<h2 class="rbn-sr">' . esc_html__( 'Recommendations', 'wpseokit' ) . '</h2>' . self::view( 'recommendations' ),
+			'posts'           => '<h2 class="rbn-sr">' . esc_html__( 'Posts', 'wpseokit' ) . '</h2>' . self::view( 'posts' ),
+			'how'             => '<h2 class="rbn-sr">' . esc_html__( 'How it is calculated', 'wpseokit' ) . '</h2>' . self::view( 'how' ),
+		);
+	}
 
-		$out .= '<div class="rbn-grid rbn-grid--2"><section class="rbn-card"><div class="rbn-card__h"><h2>' . esc_html__( 'Setup checklist', 'wpseokit' ) . '</h2><p>' . esc_html__( 'These checks decide whether your site is ready for search engines.', 'wpseokit' ) . '</p></div>' . $check . '</section>';
-		$out .= '<section class="rbn-card"><div class="rbn-card__h"><h2>' . esc_html__( 'Recent activity', 'wpseokit' ) . '</h2><p>' . esc_html__( 'Broken addresses visitors hit most, and the latest redirects.', 'wpseokit' ) . '</p></div>' . $act . '</section></div>';
-		echo $out . Ui::close(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- every fragment is escaped in Ui.
+	private static function reports(): string {
+		if ( Plugin::yoast_active() ) {
+			return '<h2 class="rbn-sr">' . esc_html__( 'Reports', 'wpseokit' ) . '</h2>' . self::paused_card( __( 'Reports are not recorded while WPSeoKit output is paused. Import your Yoast data to continue.', 'wpseokit' ) );
+		}
+		$snap = '<button type="button" class="rbn-btn rbn-btn--pri" data-snapshot>' . Ui::icon( 'scan' ) . esc_html__( 'Take snapshot now', 'wpseokit' ) . '</button>';
+		$busy = static fn( string $text ): string => '<p class="wps-busy" role="status"><span class="wps-spin" aria-hidden="true"></span>' . esc_html( $text ) . '</p>' . self::skeleton_cards();
+		return '<h2 class="rbn-sr">' . esc_html__( 'Reports', 'wpseokit' ) . '</h2><div data-reports data-csv="' . esc_url( rest_url( 'wpseokit/v1/reports/export' ) ) . '">'
+			. '<div data-rep="nodata" hidden>' . self::empty_state( 'chart', __( 'No report data yet', 'wpseokit' ), __( 'WPSeoKit saves one snapshot of your numbers each day. You can also take one now; it changes nothing on your site.', 'wpseokit' ), '<div class="rbn-row">' . $snap . '<a class="rbn-btn" href="' . esc_url( Shell::dash_url( 'settings', 'advanced' ) ) . '" data-goto="settings:advanced">' . esc_html__( 'Snapshot settings', 'wpseokit' ) . '</a></div>' ) . '</div>'
+			. '<div data-rep="preparing" aria-busy="true" hidden>' . $busy( __( 'Preparing your first snapshot… This usually takes a few seconds.', 'wpseokit' ) ) . '</div>'
+			. '<div data-rep="loading" aria-busy="true">' . $busy( __( 'Loading your reports…', 'wpseokit' ) ) . '</div>'
+			. '<div data-rep="error" hidden><div class="rbn-note rbn-note--err" role="alert">' . Ui::icon( 'alert' ) . '<div><p><b>' . esc_html__( 'WPSeoKit could not load the reports.', 'wpseokit' ) . '</b> ' . esc_html__( 'Your data is safe. Try again in a moment.', 'wpseokit' ) . '</p><div class="rbn-note__act"><button type="button" class="rbn-btn rbn-btn--pri" data-rep-retry>' . esc_html__( 'Try again', 'wpseokit' ) . '</button></div></div></div></div>'
+			. '<div data-rep="ok" hidden><div data-rep-one hidden></div><div data-rep-main>'
+			. '<div class="wps-range"><div class="rbn-seg" role="radiogroup" aria-label="' . esc_attr__( 'Report range', 'wpseokit' ) . '"><label><input type="radio" name="rep-range" value="7"><span>' . esc_html__( '7 days', 'wpseokit' ) . '</span></label><label><input type="radio" name="rep-range" value="30" checked><span>' . esc_html__( '30 days', 'wpseokit' ) . '</span></label><label><input type="radio" name="rep-range" value="90"><span>' . esc_html__( '90 days', 'wpseokit' ) . '</span></label></div>'
+			. '<div class="wps-range__act"><button type="button" class="rbn-btn" data-snapshot>' . Ui::icon( 'scan' ) . esc_html__( 'Take snapshot now', 'wpseokit' ) . '</button><a class="rbn-btn" href="' . esc_url( rest_url( 'wpseokit/v1/reports/export' ) ) . '" data-csv-link>' . Ui::icon( 'down' ) . esc_html__( 'Download CSV', 'wpseokit' ) . '</a><button type="button" class="rbn-btn" data-print>' . Ui::icon( 'doc' ) . esc_html__( 'Print', 'wpseokit' ) . '</button></div></div>'
+			. '<p class="rbn-help wps-meta" data-rep-meta></p><div data-rep-charts></div></div></div></div>';
+	}
+
+	/** Shell of one log type: the log is not connected to this panel yet, so it shows its empty state. */
+	private static function log_shell( string $title, string $text ): string {
+		return self::empty_state( 'list', $title, $text );
+	}
+
+	/** @return array<string, string> sub id => panel html */
+	private static function log_panels(): array {
+		return array(
+			'activity' => '<h2 class="rbn-sr">' . esc_html__( 'Activity', 'wpseokit' ) . '</h2>' . self::log_shell( __( 'No activity to show yet', 'wpseokit' ), __( 'Sitemap rebuilds, snapshots, score recalculations and setting changes will be listed here.', 'wpseokit' ) ),
+			'yoast'    => '<h2 class="rbn-sr">' . esc_html__( 'Yoast import log', 'wpseokit' ) . '</h2>' . self::log_shell( __( 'No Yoast import to show yet', 'wpseokit' ), __( 'Every dry run, import and undo of your Yoast data will be listed here.', 'wpseokit' ) ),
+			'updates'  => '<h2 class="rbn-sr">' . esc_html__( 'Update checks', 'wpseokit' ) . '</h2>' . self::log_shell( __( 'No update checks to show yet', 'wpseokit' ), __( 'Each time WPSeoKit looks for a new version, the result will be listed here.', 'wpseokit' ) ),
+			'errors'   => '<h2 class="rbn-sr">' . esc_html__( 'Errors', 'wpseokit' ) . '</h2>' . self::log_shell( __( 'No errors to show yet', 'wpseokit' ), __( 'Problems WPSeoKit meets while it works will be listed here, with what to do about them.', 'wpseokit' ) ),
+		);
+	}
+
+	/** Sub-tab bar of one tab. @param array<string, string> $subs sub id => label. */
+	private static function sub_bar( string $top, array $subs, string $active, string $label ): string {
+		$out = '<div class="wps-tabs wps-tabs--sub" role="tablist" aria-label="' . esc_attr( $label ) . '" data-subtabs="' . esc_attr( $top ) . '">';
+		foreach ( $subs as $id => $text ) {
+			$on   = (string) $id === $active;
+			$out .= '<a role="tab" id="stab-' . esc_attr( $top . '-' . $id ) . '" aria-controls="spn-' . esc_attr( $top . '-' . $id ) . '" aria-selected="' . ( $on ? 'true' : 'false' ) . '" tabindex="' . ( $on ? '0' : '-1' ) . '" href="' . esc_url( Shell::dash_url( $top, (string) $id ) ) . '" data-sub="' . esc_attr( (string) $id ) . '">' . esc_html( $text ) . '</a>';
+		}
+		return $out . '</div>';
+	}
+
+	/** @param array<string, string> $subs sub id => label. @param array<string, string> $bodies sub id => html. */
+	private static function sub_panels( string $top, array $subs, array $bodies, string $active, string $label ): string {
+		$out = self::sub_bar( $top, $subs, $active, $label );
+		foreach ( $subs as $id => $text ) {
+			$out .= '<div role="tabpanel" id="spn-' . esc_attr( $top . '-' . $id ) . '" aria-labelledby="stab-' . esc_attr( $top . '-' . $id ) . '" data-sub="' . esc_attr( (string) $id ) . '"' . ( (string) $id === $active ? '' : ' hidden' ) . '>' . ( $bodies[ $id ] ?? '' ) . '</div>';
+		}
+		return $out;
+	}
+
+	/**
+	 * Prints the dashboard.
+	 *
+	 * @param string $top Wanted tab id; unknown ids open the Overview.
+	 * @param string $sub Wanted sub-tab id; unknown ids open the first one.
+	 */
+	public static function render( string $top = '', string $sub = '' ): void {
+		$tabs = self::tabs();
+		$top  = isset( $tabs[ $top ] ) ? $top : 'overview';
+
+		$yoast = array();
+		foreach ( ImportScreen::panels() as $id => $p ) {
+			$yoast[ $id ] = array( $p[0], $p[1] );
+		}
+		$settings = SettingsScreen::panels();
+
+		$subs = array(
+			'score'    => $tabs['score'][2],
+			'logs'     => $tabs['logs'][2],
+			'yoast'    => array_map( static fn( array $p ): string => $p[0], $yoast ),
+			'settings' => array_map( static fn( array $p ): string => $p[0], $settings ),
+		);
+		$body = array(
+			'overview' => self::overview(),
+			'reports'  => self::reports(),
+		);
+		$deep = array(
+			'score'    => self::score_panels(),
+			'logs'     => self::log_panels(),
+			'yoast'    => array_map( static fn( array $p ): string => $p[1], $yoast ),
+			'settings' => array_map( static fn( array $p ): string => $p[1], $settings ),
+		);
+		if ( Plugin::yoast_active() ) { // The score is not measured while output is paused.
+			$body['score'] = '<h2 class="rbn-sr">' . esc_html__( 'SEO score', 'wpseokit' ) . '</h2>' . self::paused_card( __( 'WPSeoKit prints nothing now, so a score would not describe what search engines see. Import your Yoast data to continue.', 'wpseokit' ) );
+		}
+
+		$list   = '<div class="wps-dash__top" role="tablist" aria-label="' . esc_attr__( 'Dashboard sections', 'wpseokit' ) . '" data-dtabs>';
+		$panels = '';
+		foreach ( $tabs as $id => $t ) {
+			$on      = $id === $top;
+			$list   .= '<a role="tab" id="dtab-' . esc_attr( $id ) . '" aria-controls="dpan-' . esc_attr( $id ) . '" aria-selected="' . ( $on ? 'true' : 'false' ) . '" tabindex="' . ( $on ? '0' : '-1' ) . '" href="' . esc_url( Shell::dash_url( $id ) ) . '" data-top="' . esc_attr( $id ) . '">' . Ui::icon( $t[1] ) . esc_html( $t[0] ) . '</a>';
+			$inner   = $body[ $id ] ?? '';
+			if ( isset( $deep[ $id ] ) && $deep[ $id ] ) {
+				$active = isset( $subs[ $id ][ $sub ] ) && $on ? $sub : (string) array_key_first( $subs[ $id ] );
+				$inner  = self::sub_panels( $id, $subs[ $id ], $deep[ $id ], $active, $t[0] );
+			}
+			$panels .= '<div role="tabpanel" id="dpan-' . esc_attr( $id ) . '" aria-labelledby="dtab-' . esc_attr( $id ) . '" class="wps-dpan" data-top="' . esc_attr( $id ) . '"' . ( $on ? '' : ' hidden' ) . '>' . $inner . '</div>';
+		}
+		$list .= '</div>';
+
+		$out  = Ui::open( 'dashboard' ) . '<div class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html__( 'WPSeoKit', 'wpseokit' ) . '</h1><span class="rbn-chip">' . esc_html( WPSEOKIT_VERSION ) . '</span>' . Shell::chip() . '</div><div class="rbn-head__act"></div></div>';
+		$out .= Shell::yoast_note() . $list . $panels . ImportScreen::dialog();
+		echo $out . Ui::close(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- every fragment is escaped where it is built.
 	}
 }

@@ -35,6 +35,7 @@ final class Plugin {
 		'Services\\LlmsTxtService',
 		'Services\\FeedService',
 		'Services\\ScoreService',
+		'Services\\ScoreListService',
 		'Services\\PreferredAddressService',
 		'Services\\ReportService',
 		'Services\\EventLogService',
