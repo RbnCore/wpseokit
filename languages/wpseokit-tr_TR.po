@@ -2529,7 +2529,7 @@ msgstr "Yazının ya da sayfanın başlığı."
 
 #: src/includes/Screens
 msgid "Gentle Shadows"
-msgstr "Nazik Gölgeler"
+msgstr "Yumuşak Işıklar"
 
 #: src/includes/Screens
 msgid "The site title."
