@@ -32,7 +32,7 @@ final class ImportScreen {
 		$start  = '<div class="rbn-empty"><span class="rbn-empty__i">' . Ui::icon( 'down' ) . '</span><h2>' . esc_html__( 'Bring your Yoast SEO data over', 'wpseokit' ) . '</h2>';
 		$start .= '<p>' . esc_html__( 'First WPSeoKit only counts what it can import. Nothing is written until you confirm, and your Yoast data is never deleted.', 'wpseokit' ) . '</p>';
 		$start .= '<button type="button" class="rbn-btn rbn-btn--pri" data-import-check>' . Ui::icon( 'scan' ) . esc_html__( 'Check my Yoast data', 'wpseokit' ) . '</button></div>';
-		return '<section class="rbn-card" data-import-start><div class="rbn-card__b">' . $start . '</div></section>';
+		return '<div data-import-state></div><section class="rbn-card" data-import-start><div class="rbn-card__b">' . $start . '</div></section>';
 	}
 
 	private static function dry(): string {

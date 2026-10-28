@@ -483,7 +483,7 @@
 	.rbn-ev{max-width:none}
 }
 @media (max-width:480px){
-	.rbn-stats{gap:var(--rbn-s2)}.rbn-stat{padding:var(--rbn-s3)}.rbn-stat__v{font-size:1.5rem}
+	.rbn-stats{gap:var(--rbn-s3)}.rbn-stat{padding:var(--rbn-s3)}.rbn-stat__v{font-size:1.5rem}
 	.rbn-head__act .rbn-btn{flex:1}
 	.rbn-stepper span{display:none}.rbn-stepper li[aria-current=step] span{display:block}
 	.rbn-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
