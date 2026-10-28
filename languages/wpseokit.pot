@@ -584,3 +584,2283 @@ msgstr ""
 #: src/includes/Services/ScoreService.php
 msgid "A post scope needs a post_id you can edit."
 msgstr ""
+
+#: src/includes/Screens
+msgid "Title and description templates"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Using defaults"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Configured"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Edit templates"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Organization name and logo"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Added"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Missing"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Edit schema"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Add details"
+msgstr ""
+
+#: src/includes/Screens
+msgid "XML sitemap"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Off"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Open sitemap"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Search engine visibility"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Visible"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Search engines are discouraged"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Open Reading settings"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Primary categories"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Open settings"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Yoast SEO data"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Not checked"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Review import"
+msgstr ""
+
+#: src/includes/Screens
+msgid "%1$d of %2$d posts have a description"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Edit post template"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Publisher set"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Logo missing"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Publisher missing"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Article, WebSite and breadcrumb schema"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Add organization"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Reachable"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Address: /sitemap_index.xml"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Not published"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Rebuild now"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Full text"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Summary only"
+msgstr ""
+
+#: src/includes/Screens
+msgid "WordPress default"
+msgstr ""
+
+#: src/includes/Screens
+msgid "%1$s · %2$d items"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Main feed on"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Close extra feeds"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Published"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Address: /llms.txt"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Not published yet"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Preview"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Turn on"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Active"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Loading…"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Add redirect"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Checking"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Fix top errors"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Yoast SEO is active on this site"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Yoast SEO is not active"
+msgstr ""
+
+#: src/includes/Screens
+msgid "View report"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Output on"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Output paused"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Site verification codes are set"
+msgstr ""
+
+#: src/includes/Screens
+msgid "No verification codes yet"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Verification"
+msgstr ""
+
+#: src/includes/Screens
+msgid "SEO tools"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Paused (Yoast active)"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Open %s"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Open"
+msgstr ""
+
+#: src/includes/Screens
+msgid "URLs in the sitemap"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Active redirects"
+msgstr ""
+
+#: src/includes/Screens
+msgid "404 errors logged"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Posts with a description"
+msgstr ""
+
+#: src/includes/Screens
+msgid "WPSeoKit"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Check"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Action"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Setup checklist"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Recent activity"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Event"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Hits"
+msgstr ""
+
+#: src/includes/Screens
+msgid "These checks decide whether your site is ready for search engines."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Broken addresses visitors hit most, and the latest redirects."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Feed (RSS)"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Choose what your RSS feed shows and close the feeds nobody needs."
+msgstr ""
+
+#: src/includes/Screens
+msgid "The main feed is off."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Feed readers and aggregators cannot follow your new posts."
+msgstr ""
+
+#: src/includes/Screens
+msgid "General"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Content"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Cleanup"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Feed sections"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Publish the main feed"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Readers and some search tools use it to find new posts."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Feed address"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Copy"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Checking the feed…"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Each item shows"
+msgstr ""
+
+#: src/includes/Screens
+msgid "WordPress setting"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Summary"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Summary sends readers to your site to read the rest. Full text keeps them in their reader."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Items in the feed"
+msgstr ""
+
+#: src/includes/Screens
+msgid "items"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Between 1 and 50. Use 0 to keep the WordPress setting."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Main feed"
+msgstr ""
+
+#: src/includes/Screens
+msgid "The feed readers and aggregators subscribe to."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Source link"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Add a link back to the original post"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Scrapers that copy your feed also copy the link."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Footer text"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Copyright"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Add a copyright line"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Printed under the footer text."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Copyright text"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Featured image"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Include the featured image in each item"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Example item"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Example feed item"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Source link and copyright"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Added to the end of every item so copied text points back to you."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Comments feed"
+msgstr ""
+
+#: src/includes/Screens
+msgid "All comments of the site."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Comments feed of each post"
+msgstr ""
+
+#: src/includes/Screens
+msgid "One feed for every post."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Author feeds"
+msgstr ""
+
+#: src/includes/Screens
+msgid "One feed for each author."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Category and tag feeds"
+msgstr ""
+
+#: src/includes/Screens
+msgid "One feed for each category and tag."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Search result feeds"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Feeds of search queries."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Attachment feeds"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Feeds of media pages."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Close these feeds"
+msgstr ""
+
+#: src/includes/Screens
+msgid "WordPress opens many feeds by default. Most sites need one."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Closed feeds"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Send visitors of a closed feed to its page (301)"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Off = a closed feed answers 404."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Search engines"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Tell search engines not to index feeds"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Page head"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Remove extra feed links from the page head"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Feeds to close"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Turn on a switch to close that kind of feed."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Yoast import"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Bring your titles and descriptions over from Yoast SEO."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Dry run"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Run"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Report"
+msgstr ""
+
+#: src/includes/Screens
+msgid "No import has run yet. The report appears here when it finishes."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Yoast import steps"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Bring your Yoast SEO data over"
+msgstr ""
+
+#: src/includes/Screens
+msgid "First WPSeoKit only counts what it can import. Nothing is written until you confirm, and your Yoast data is never deleted."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Check my Yoast data"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Run the check on the Summary tab first. The result appears here."
+msgstr ""
+
+#: src/includes/Screens
+msgid "What the check found"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Data"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Found"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Will import"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Note"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Dry-run report"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Import options"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Choose how to handle values that exist in both plugins."
+msgstr ""
+
+#: src/includes/Screens
+msgid "When both have a value"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Keep WPSeoKit"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Use Yoast"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Keeping WPSeoKit never overwrites something you edited by hand."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Nothing has been imported yet."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Run the check again"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Import now"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Nothing to import yet."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Check your Yoast data first. The import options appear here after the check."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Close"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Import Yoast data?"
+msgstr ""
+
+#: src/includes/Screens
+msgid "WPSeoKit will write titles, descriptions, primary categories and settings. Your Yoast data stays where it is."
+msgstr ""
+
+#: src/includes/Screens
+msgid "I have a database backup and I want to import now."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Cancel"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Import"
+msgstr ""
+
+#: src/includes/Screens
+msgid "llms.txt"
+msgstr ""
+
+#: src/includes/Screens
+msgid "A plain-text guide to your site for AI assistants."
+msgstr ""
+
+#: src/includes/Screens
+msgid "llms.txt is off."
+msgstr ""
+
+#: src/includes/Screens
+msgid "AI assistants have no short guide to your site. Check the preview before you turn it on."
+msgstr ""
+
+#: src/includes/Screens
+msgid "llms.txt sections"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Publish llms.txt"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Off by default. Turn it on after you read the preview."
+msgstr ""
+
+#: src/includes/Screens
+msgid "File address"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Site summary"
+msgstr ""
+
+#: src/includes/Screens
+msgid "One or two sentences. Plain text, no markup. Leave empty to use the site tagline."
+msgstr ""
+
+#: src/includes/Screens
+msgid "llms.txt file"
+msgstr ""
+
+#: src/includes/Screens
+msgid "A plain-text page that summarizes your site for AI assistants."
+msgstr ""
+
+#: src/includes/Screens
+msgid "There are no published pages yet."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Pick the pages assistants should know about. Fewer, better links work best."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Latest content"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Items per type"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Between 0 and 200. Use 0 for no automatic list."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Categories and tags"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Most terms per section"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Leave out (IDs)"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Post or page IDs, one per line. They never appear in the file."
+msgstr ""
+
+#: src/includes/Screens
+msgid "What to list"
+msgstr ""
+
+#: src/includes/Screens
+msgid "File"
+msgstr ""
+
+#: src/includes/Screens
+msgid "llms.txt preview"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Refresh preview"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Built from the values on this page, even before you save. It works while the file is still off."
+msgstr ""
+
+#: src/includes/Screens
+msgid "This is what /llms.txt would return."
+msgstr ""
+
+#: src/includes/Screens
+msgid "404 log"
+msgstr ""
+
+#: src/includes/Screens
+msgid "See which broken addresses visitors hit."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Log"
+msgstr ""
+
+#: src/includes/Screens
+msgid "404 log sections"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Addresses that bots probe (such as wp-login.php) are hidden by default. Show them with the switch below the search."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Filter 404 log"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Search"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Path"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Show bot noise"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Apply"
+msgstr ""
+
+#: src/includes/Screens
+msgid "selected"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Redirect all to…"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Delete from log"
+msgstr ""
+
+#: src/includes/Screens
+msgid "404 errors, most hits first"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Select all"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Address"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Referrer"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Last seen"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Actions"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Most hit first"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Logging"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Record addresses that return 404"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Only the address, the referrer and a hit count are stored. No visitor data."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Bots"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Do not record search engine bots"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Keep entries for"
+msgstr ""
+
+#: src/includes/Screens
+msgid "days"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Most entries kept"
+msgstr ""
+
+#: src/includes/Screens
+msgid "entries"
+msgstr ""
+
+#: src/includes/Screens
+msgid "The oldest entries go first when the log is full."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Log settings"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Redirect the selected addresses"
+msgstr ""
+
+#: src/includes/Screens
+msgid "To (new address)"
+msgstr ""
+
+#: src/includes/Screens
+msgid "All selected addresses get a 301 redirect to this page."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Create redirects"
+msgstr ""
+
+#: src/includes/Screens
+msgid "SEO"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Social"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Schema"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Advanced"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Search preview"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Preview device"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Desktop"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Mobile"
+msgstr ""
+
+#: src/includes/Screens
+msgid "SEO title"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Title length"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Aim for 30 to 60 characters. Search engines cut by width, not by count."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Meta description"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Description length"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Aim for 70 to 155 characters. Empty falls back to the template, then the excerpt."
+msgstr ""
+
+#: src/includes/Screens
+msgid "URL:"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Changing the primary category changes this post’s URL."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Add a 301 redirect from the old URL"
+msgstr ""
+
+#: src/includes/Screens
+msgid "The primary category sets this post’s URL and breadcrumb."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Sharing title"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Same as the SEO title"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Leave empty to use the SEO title."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Sharing description"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Leave empty to use the meta description."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Choose image"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Remove"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Sharing image"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Empty: the featured image is used."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Article (default)"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Movie"
+msgstr ""
+
+#: src/includes/Screens
+msgid "TV series"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Schema type"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Movie and TVSeries need the details below. Without them the post stays an Article."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Director"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Cast"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Separate names with commas."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Year"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Hide this post from search results"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Adds noindex. The post also leaves the sitemap."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Do not follow links on this post"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Adds nofollow. Rarely needed."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Canonical URL"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Leave empty to use the post address. Only fill this when the same content lives elsewhere."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Redirects"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Send old addresses to the right place."
+msgstr ""
+
+#: src/includes/Screens
+msgid "List"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Add"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Import / export"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Redirects sections"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Filter redirects"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Path or target"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Type"
+msgstr ""
+
+#: src/includes/Screens
+msgid "All types"
+msgstr ""
+
+#: src/includes/Screens
+msgid "All"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Turn off"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Delete"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Select all redirects"
+msgstr ""
+
+#: src/includes/Screens
+msgid "From"
+msgstr ""
+
+#: src/includes/Screens
+msgid "To"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Last hit"
+msgstr ""
+
+#: src/includes/Screens
+msgid "All redirects"
+msgstr ""
+
+#: src/includes/Screens
+msgid "From (old path)"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Start with a slash. Use <code>*</code> at the end to match everything below that path."
+msgstr ""
+
+#: src/includes/Screens
+msgid "A path on this site or a full address. Leave empty for type 410."
+msgstr ""
+
+#: src/includes/Screens
+msgid "301 moves a page for good and passes its ranking. Use 302 or 307 only for short-term moves."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Add a redirect"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Takes effect the moment you save."
+msgstr ""
+
+#: src/includes/Screens
+msgid "One redirect per line: <code>from,to,type</code>. The check runs before anything is saved, and existing “from” addresses are never overwritten."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Choose CSV file"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Every redirect, UTF-8, one per line."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Export CSV"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Add many redirects at once from a CSV file."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Export"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Download every redirect as a CSV file, for a backup or another site."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Run the redirects on the live site"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Off = every redirect pauses and visitors see the old address. Nothing is deleted."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Redirect behavior"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Import redirects from CSV"
+msgstr ""
+
+#: src/includes/Screens
+msgid "One redirect per line: <code>from,to,type</code>. The first line may be a header. Existing redirects with the same “from” are skipped, never overwritten."
+msgstr ""
+
+#: src/includes/Screens
+msgid "CSV file"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Up to 1 MB, UTF-8."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Keep them"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Edit redirect"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Save"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Tell search engines who runs the site and what each page is."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Organization name and logo are empty."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Search engines get an incomplete publisher until you add them."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Organization"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Website"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Content types"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Breadcrumbs"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Schema sections"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Person"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Organization name"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Your site or company name"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Shown to search engines as the publisher of every page."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Person name"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Used instead of the organization name when the site is a person."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Logo"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Square or wide, at least 112 × 112 px."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Describes who publishes this site."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Social profiles"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Full addresses of your official profiles. Empty ones are left out."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Site name"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Used for the WebSite schema and the site name in search results."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Alternate name"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Optional. A shorter or spaced-out spelling people also use."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Article type"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Blog post"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Article"
+msgstr ""
+
+#: src/includes/Screens
+msgid "News article"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Used for every post that is not a film or a series."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Schema type for %s"
+msgstr ""
+
+#: src/includes/Screens
+msgid "TVSeries"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Category"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Default type"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Default schema type per category"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Showing %1$d of %2$d categories, the busiest first."
+msgstr ""
+
+#: src/includes/Screens
+msgid "A post gets Movie or TVSeries schema only when its SEO box has the details filled in (director, cast, year). Without them it stays a plain Article. Nothing is guessed."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Articles"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Category mapping"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Sets the starting point for the post SEO box. Each post can still choose its own type."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Use the primary category for posts"
+msgstr ""
+
+#: src/includes/Screens
+msgid "The primary category sets the post URL and the last step before the title."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Theme function"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Your theme draws the visible breadcrumb; WPSeoKit sends the same path to search engines as BreadcrumbList data."
+msgstr ""
+
+#: src/includes/Screens
+msgid "The path shown above a result in search: Home › Movies › Title."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Home page"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Show the schema for"
+msgstr ""
+
+#: src/includes/Screens
+msgid "JSON-LD"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Schema JSON-LD of the chosen page"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Copy JSON-LD"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Open Google Rich Results Test (opens in a new tab)"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Read-only. Reads the live page, so it reflects the settings you saved."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Sharing, verification codes, access and data."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Access"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Settings sections"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Paused while Yoast SEO is active"
+msgstr ""
+
+#: src/includes/Screens
+msgid "WPSeoKit prints titles, descriptions and schema only when no other SEO plugin does."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Let editors pick a primary category"
+msgstr ""
+
+#: src/includes/Screens
+msgid "The primary category sets the post URL and the breadcrumb."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Author pages"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Turn off author archives"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Visitors are redirected to the home page."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Attachment pages"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Redirect attachment pages to the file"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Open Graph"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Print Open Graph tags"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Used by Facebook, LinkedIn, WhatsApp and most chat apps."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Twitter / X cards"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Print Twitter card tags"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Card type"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Small image"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Large image"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Default sharing image"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Used when a post has no sharing image and no featured image. 1200 × 630 px works best."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Facebook page"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Twitter / X username"
+msgstr ""
+
+#: src/includes/Screens
+msgid "WordPress is set to discourage search engines."
+msgstr ""
+
+#: src/includes/Screens
+msgid "WPSeoKit does not change this."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Social sharing"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Google Search Console"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Bing Webmaster Tools"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Yandex Webmaster"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Baidu Webmaster"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Leave empty to print nothing."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Site verification"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Paste only the code from each meta tag’s content, not the whole tag."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Change settings, redirects and the 404 log"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Administrators"
+msgstr ""
+
+#: src/includes/Screens
+msgid "A wrong setting or redirect affects every visitor, so these stay with administrators."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Edit the SEO box of a post"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Anyone who can edit that post"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Follows the WordPress permission to edit the post."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Who"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Why"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Who can use WPSeoKit"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Access follows WordPress roles. Administrators always keep full access."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Uninstall"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Delete all WPSeoKit data when the plugin is deleted"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Settings, redirects, the 404 log and per-post SEO fields. Leave off to keep them for a later reinstall."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Item"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Value"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Plugin status"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Data and uninstall"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Update status"
+msgstr ""
+
+#: src/includes/Screens
+msgid "The package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Automatic updates are turned on or off with the “Enable auto-updates” link on the Plugins page."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Tool navigation"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Dashboard"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Tools"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Yoast SEO is active."
+msgstr ""
+
+#: src/includes/Screens
+msgid "WPSeoKit prints nothing on your site while Yoast is on, so search engines never see duplicate tags."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Import Yoast data"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Sitemap"
+msgstr ""
+
+#: src/includes/Screens
+msgid "A list of your pages that search engines read first."
+msgstr ""
+
+#: src/includes/Screens
+msgid "The XML sitemap is off."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Search engines have no list of your pages."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Files"
+msgstr ""
+
+#: src/includes/Screens
+msgid "robots.txt"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Sitemap sections"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Enable the XML sitemap"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Keeps the same addresses Yoast used, so search engines see no change."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Sitemap address"
+msgstr ""
+
+#: src/includes/Screens
+msgid "The sitemap rebuilds by itself on a schedule and when you publish."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Post types"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Taxonomies"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Images"
+msgstr ""
+
+#: src/includes/Screens
+msgid "List featured images with each post"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Helps image search find your posters and stills."
+msgstr ""
+
+#: src/includes/Screens
+msgid "URLs per file"
+msgstr ""
+
+#: src/includes/Screens
+msgid "URLs"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Between 100 and 2,000. Lower this if your server times out."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Rebuild every"
+msgstr ""
+
+#: src/includes/Screens
+msgid "hours"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Content in the sitemap"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Sitemap files"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Last modified"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Generated files"
+msgstr ""
+
+#: src/includes/Screens
+msgid "What search engines download from your site."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Line in robots.txt"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Sitemap line in robots.txt"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Added by itself while the sitemap is on, unless the site asks search engines not to index it."
+msgstr ""
+
+#: src/includes/Screens
+msgid "WordPress sitemap"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Turned off"
+msgstr ""
+
+#: src/includes/Screens
+msgid "WordPress ships its own /wp-sitemap.xml. WPSeoKit turns it off so search engines see one sitemap, not two."
+msgstr ""
+
+#: src/includes/Screens
+msgid "robots.txt and WordPress sitemap"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Titles & descriptions"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Write the title and description pattern for each kind of page."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Home"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Categories & tags"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Archives & search"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Separator & variables"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Titles and descriptions sections"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Title template"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Shown under the title in search results. Aim for 70–155 characters. Leave empty to use the tagline."
+msgstr ""
+
+#: src/includes/Screens
+msgid "How the front page looks in search results."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Used when an item has no description of its own. An empty template falls back to the excerpt, then to the first 155 characters of the content."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Search results"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Show %s in search results"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Turn off to add noindex to every item of this type."
+msgstr ""
+
+#: src/includes/Screens
+msgid "%s title"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Switched on = the archive asks search engines not to list it, and it leaves the sitemap."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Category descriptions are edited on each category."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Author archives"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Used for pages that list one author’s posts."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Empty author pages"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Add noindex to authors without posts"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Date archives"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Add noindex to date archives"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Search results page"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Always noindex, so this only sets the browser tab text."
+msgstr ""
+
+#: src/includes/Screens
+msgid "404 page"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Archives and search"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Pages WordPress makes by itself."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Used between the page title and the site name."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Title separator"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Replaces %sep% in every template."
+msgstr ""
+
+#: src/includes/Screens
+msgid "The title of the post or page."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Gentle Shadows"
+msgstr ""
+
+#: src/includes/Screens
+msgid "The site title."
+msgstr ""
+
+#: src/includes/Screens
+msgid "The site tagline."
+msgstr ""
+
+#: src/includes/Screens
+msgid "The separator chosen above."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Page number on paged lists, empty on page one."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Page 2"
+msgstr ""
+
+#: src/includes/Screens
+msgid "The excerpt of the post."
+msgstr ""
+
+#: src/includes/Screens
+msgid "A short summary…"
+msgstr ""
+
+#: src/includes/Screens
+msgid "The categories of the post."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Crime"
+msgstr ""
+
+#: src/includes/Screens
+msgid "The primary category of the post."
+msgstr ""
+
+#: src/includes/Screens
+msgid "The publish date."
+msgstr ""
+
+#: src/includes/Screens
+msgid "The author name."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Jane Doe"
+msgstr ""
+
+#: src/includes/Screens
+msgid "The name of the category or tag."
+msgstr ""
+
+#: src/includes/Screens
+msgid "What the visitor searched for."
+msgstr ""
+
+#: src/includes/Screens
+msgid "gentle"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Variable"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Meaning"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Example"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Template variables"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Variables"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Use these in any template. Click “Insert a variable” in a field to add one."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Settings saved."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Settings were not saved."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Saving…"
+msgstr ""
+
+#: src/includes/Screens
+msgid "This list could not be loaded."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Try again"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Demo data: the server part of this screen is not installed yet, so nothing here is saved."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Edit"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Today"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Never"
+msgstr ""
+
+#: src/includes/Screens
+msgid "No redirects yet. Add the first one on the Add tab."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Nothing matches this search."
+msgstr ""
+
+#: src/includes/Screens
+msgid "No 404 errors logged. Visitors are finding your pages."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Redirect added."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Redirect updated."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Redirect deleted."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Redirect created."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Undo"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Enter the old path, starting with a slash."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Enter the new address, or choose type 410."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Delete %d redirects?"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Delete %d redirects"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Visitors who use these old addresses will see a 404 page again. This cannot be undone, but you can add the redirects back."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Import %d redirects"
+msgstr ""
+
+#: src/includes/Screens
+msgid "checked"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Choose a CSV file first."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Line"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Redirect to…"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Best match"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Redirect"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Sitemap rebuilt."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Rebuilding the sitemap…"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Copied"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Replace image"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Source: written here"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Source: title template"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Source: excerpt"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Source: start of the content"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Good length"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Too short"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Getting long"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Too long: it will be cut"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Checking your Yoast data…"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Importing…"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Import finished."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Import undone."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Skipped"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Conflicts"
+msgstr ""
+
+#: src/includes/Screens
+msgid "%d active redirects"
+msgstr ""
+
+#: src/includes/Screens
+msgid "%d errors logged"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Needs a look"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Clean"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Fix"
+msgstr ""
+
+#: src/includes/Screens
+msgid "This page prints no schema."
+msgstr ""
+
+#: src/includes/Screens
+msgid "The feed is on and answers at this address."
+msgstr ""
+
+#: src/includes/Screens
+msgid "The feed is off."
+msgstr ""
+
+#: src/includes/Screens
+msgid "There is no published post to show."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Verify"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Verified."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Insert a variable"
+msgstr ""
+
+#: src/includes/Screens
+msgid "You have unsaved changes."
+msgstr ""
+
+#: src/includes/Screens
+msgid "Discard"
+msgstr ""
+
+#: src/includes/Screens
+msgid "Save changes"
+msgstr ""

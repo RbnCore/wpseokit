@@ -1,0 +1,161 @@
+<?php
+/**
+ * Settings tool: general (sharing, author and attachment pages), verification codes, access and advanced (data, status, updates).
+ * Each tab that holds settings has its own save bar, so the updates card can keep its own forms.
+ *
+ * @package Wpseokit
+ */
+
+declare(strict_types=1);
+
+namespace Wpseokit\Screens;
+
+use Wpseokit\Admin;
+use Wpseokit\Db;
+use Wpseokit\Plugin;
+use Wpseokit\Updater;
+
+defined( 'ABSPATH' ) || exit;
+
+final class SettingsScreen {
+
+	public static function init(): void {
+		Shell::register(
+			'settings',
+			static fn(): string => __( 'Settings', 'wpseokit' ),
+			'gear',
+			static fn(): string => __( 'Sharing, verification codes, access and data.', 'wpseokit' ),
+			90,
+			array( self::class, 'render' )
+		);
+	}
+
+	public static function render(): void {
+		Shell::page(
+			'settings',
+			__( 'Settings', 'wpseokit' ),
+			array(
+				'general'      => array( __( 'General', 'wpseokit' ), self::general() ),
+				'verification' => array( __( 'Verification', 'wpseokit' ), self::verification() ),
+				'access'       => array( __( 'Access', 'wpseokit' ), self::access() ),
+				'advanced'     => array( __( 'Advanced', 'wpseokit' ), self::advanced() ),
+			),
+			array( 'aria' => __( 'Settings sections', 'wpseokit' ) )
+		);
+	}
+
+	private static function general(): string {
+		$state  = Plugin::output_enabled()
+			? '<span class="rbn-badge rbn-badge--ok">' . Ui::icon( 'check' ) . esc_html__( 'On', 'wpseokit' ) . '</span>'
+			: '<span class="rbn-badge rbn-badge--warn">' . Ui::icon( 'alert' ) . esc_html__( 'Paused while Yoast SEO is active', 'wpseokit' ) . '</span>';
+		$output = Ui::row( esc_html__( 'Output', 'wpseokit' ), $state, esc_html__( 'WPSeoKit prints titles, descriptions and schema only when no other SEO plugin does.', 'wpseokit' ) );
+
+		$pages  = Ui::toggle_row( __( 'Primary category', 'wpseokit' ), 'general.primary_category', 'st-pc', __( 'Let editors pick a primary category', 'wpseokit' ), __( 'The primary category sets the post URL and the breadcrumb.', 'wpseokit' ) );
+		$pages .= Ui::toggle_row( __( 'Author pages', 'wpseokit' ), 'general.disable_author_archive', 'st-auth', __( 'Turn off author archives', 'wpseokit' ), __( 'Visitors are redirected to the home page.', 'wpseokit' ) );
+		$pages .= Ui::toggle_row( __( 'Attachment pages', 'wpseokit' ), 'general.disable_attachment_pages', 'st-att', __( 'Redirect attachment pages to the file', 'wpseokit' ) );
+
+		$social  = Ui::toggle_row( __( 'Open Graph', 'wpseokit' ), 'social.opengraph', 'st-og', __( 'Print Open Graph tags', 'wpseokit' ), __( 'Used by Facebook, LinkedIn, WhatsApp and most chat apps.', 'wpseokit' ) );
+		$social .= Ui::toggle_row( __( 'Twitter / X cards', 'wpseokit' ), 'social.twitter', 'st-tw', __( 'Print Twitter card tags', 'wpseokit' ) );
+		$social .= Ui::seg(
+			'social.twitter_card_type',
+			'st-card',
+			__( 'Card type', 'wpseokit' ),
+			array(
+				'summary'             => __( 'Small image', 'wpseokit' ),
+				'summary_large_image' => __( 'Large image', 'wpseokit' ),
+			)
+		);
+		$social .= Ui::row( '<span id="st-img-l">' . esc_html__( 'Default sharing image', 'wpseokit' ) . '</span>', Ui::media( 'social.default_image_id', 'social.default_image_url', 'st-img' ), esc_html__( 'Used when a post has no sharing image and no featured image. 1200 × 630 px works best.', 'wpseokit' ) );
+		$social .= Ui::text( 'social.facebook_site', 'st-fb', __( 'Facebook page', 'wpseokit' ), array( 'type' => 'url', 'mono' => true ) );
+		$social .= Ui::text( 'social.twitter_site', 'st-tws', __( 'Twitter / X username', 'wpseokit' ), array( 'mono' => true, 'placeholder' => '@yourname' ) );
+
+		$top = '';
+		if ( '0' === (string) get_option( 'blog_public', '1' ) ) {
+			$top = Ui::note( 'warn', '<b>' . esc_html__( 'WordPress is set to discourage search engines.', 'wpseokit' ) . '</b> ' . esc_html__( 'WPSeoKit does not change this.', 'wpseokit' ) . ' <a href="' . esc_url( admin_url( 'options-reading.php' ) ) . '">' . esc_html__( 'Open Reading settings', 'wpseokit' ) . '</a>', 'status' );
+		}
+		return $top . Ui::form(
+			'settings',
+			Ui::card( __( 'Output', 'wpseokit' ), '', $output )
+			. Ui::card( __( 'Pages', 'wpseokit' ), '', $pages )
+			. Ui::card( __( 'Social sharing', 'wpseokit' ), '', $social )
+		);
+	}
+
+	private static function verification(): string {
+		$verify = '';
+		foreach ( array(
+			'verify_google' => __( 'Google Search Console', 'wpseokit' ),
+			'verify_bing'   => __( 'Bing Webmaster Tools', 'wpseokit' ),
+			'verify_yandex' => __( 'Yandex Webmaster', 'wpseokit' ),
+			'verify_baidu'  => __( 'Baidu Webmaster', 'wpseokit' ),
+		) as $key => $label ) {
+			$verify .= Ui::text( 'general.' . $key, 'st-' . $key, $label, array( 'mono' => true, 'help' => __( 'Leave empty to print nothing.', 'wpseokit' ) ) );
+		}
+		return Ui::form( 'settings', Ui::card( __( 'Site verification', 'wpseokit' ), __( 'Paste only the code from each meta tag’s content, not the whole tag.', 'wpseokit' ), $verify ) );
+	}
+
+	private static function access(): string {
+		$rows = '';
+		foreach ( array(
+			array( __( 'Change settings, redirects and the 404 log', 'wpseokit' ), __( 'Administrators', 'wpseokit' ), __( 'A wrong setting or redirect affects every visitor, so these stay with administrators.', 'wpseokit' ) ),
+			array( __( 'Edit the SEO box of a post', 'wpseokit' ), __( 'Anyone who can edit that post', 'wpseokit' ), __( 'Follows the WordPress permission to edit the post.', 'wpseokit' ) ),
+		) as $r ) {
+			$rows .= '<tr><th scope="row" data-l="' . esc_attr__( 'Action', 'wpseokit' ) . '">' . esc_html( $r[0] ) . '</th><td data-l="' . esc_attr__( 'Who', 'wpseokit' ) . '">' . esc_html( $r[1] ) . '</td><td data-l="' . esc_attr__( 'Why', 'wpseokit' ) . '">' . esc_html( $r[2] ) . '</td></tr>';
+		}
+		$table = '<div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html__( 'Who can use WPSeoKit', 'wpseokit' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Action', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Who', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Why', 'wpseokit' ) . '</th></tr></thead><tbody>' . $rows . '</tbody></table></div></div>';
+		return '<section class="rbn-card"><div class="rbn-card__h"><h2>' . esc_html__( 'Who can use WPSeoKit', 'wpseokit' ) . '</h2><p>' . esc_html__( 'Access follows WordPress roles. Administrators always keep full access.', 'wpseokit' ) . '</p></div>' . $table . '</section>';
+	}
+
+	private static function advanced(): string {
+		$data = Ui::toggle_row( __( 'Uninstall', 'wpseokit' ), 'general.delete_on_uninstall', 'st-del', __( 'Delete all WPSeoKit data when the plugin is deleted', 'wpseokit' ), __( 'Settings, redirects, the 404 log and per-post SEO fields. Leave off to keep them for a later reinstall.', 'wpseokit' ) );
+
+		$status = '';
+		foreach ( array(
+			__( 'Plugin version', 'wpseokit' )  => WPSEOKIT_VERSION,
+			__( 'Database schema', 'wpseokit' ) => (string) (int) get_option( Db::OPTION, 0 ),
+			__( 'Output', 'wpseokit' )          => Plugin::output_enabled() ? __( 'On', 'wpseokit' ) : __( 'Off (Yoast SEO is active)', 'wpseokit' ),
+		) as $label => $value ) {
+			$status .= '<tr><th scope="row" data-l="' . esc_attr__( 'Item', 'wpseokit' ) . '">' . esc_html( $label ) . '</th><td data-l="' . esc_attr__( 'Value', 'wpseokit' ) . '">' . esc_html( $value ) . '</td></tr>';
+		}
+		$status = '<section class="rbn-card"><div class="rbn-card__h"><h2>' . esc_html__( 'Status', 'wpseokit' ) . '</h2></div><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html__( 'Plugin status', 'wpseokit' ) . '</caption><tbody>' . $status . '</tbody></table></div></div></section>';
+
+		return Admin::note_html()
+			. Ui::form( 'settings', Ui::card( __( 'Data and uninstall', 'wpseokit' ), '', $data ) )
+			. $status
+			. self::updates();
+	}
+
+	/** Update check card; its buttons post to admin-post.php, so it sits outside the settings form. */
+	private static function updates(): string {
+		$on      = Updater::enabled();
+		$checked = (int) get_option( Updater::OPT_CHECKED, 0 );
+		$cached  = $on ? get_transient( Updater::CACHE ) : false;
+		if ( ! $on ) {
+			$state = esc_html__( 'The update check is off; GitHub is never contacted.', 'wpseokit' );
+		} elseif ( ! is_array( $cached ) ) {
+			$state = esc_html__( 'Not checked yet.', 'wpseokit' );
+		} elseif ( 'none' === $cached['status'] ) {
+			$state = esc_html__( 'There is no published version yet.', 'wpseokit' );
+		} elseif ( 'ok' !== $cached['status'] || ! is_array( $cached['release'] ) ) {
+			$state = esc_html__( 'Could not check; it will be tried again later. The plugin works normally.', 'wpseokit' );
+		} elseif ( version_compare( $cached['release']['version'], WPSEOKIT_VERSION, '>' ) ) {
+			/* translators: %s: version number. */
+			$state = sprintf( esc_html__( 'A new version is available: %s. Click “Update” on the Plugins page.', 'wpseokit' ), '<b>' . esc_html( $cached['release']['version'] ) . '</b>' );
+		} else {
+			$state = esc_html__( 'The plugin is up to date.', 'wpseokit' );
+		}
+		$last = $checked > 0 ? esc_html( wp_date( 'd.m.Y H:i', $checked ) ) : esc_html__( 'never', 'wpseokit' );
+		$post = esc_url( admin_url( 'admin-post.php' ) );
+
+		$body  = Ui::row( esc_html__( 'Installed version', 'wpseokit' ), '<b>' . esc_html( WPSEOKIT_VERSION ) . '</b>' );
+		$body .= Ui::row( esc_html__( 'Update status', 'wpseokit' ), '<p class="rbn-p">' . $state . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
+		$body .= Ui::row( esc_html__( 'Last check', 'wpseokit' ), '<span>' . $last . '</span>', esc_html__( 'The package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Automatic updates are turned on or off with the “Enable auto-updates” link on the Plugins page.', 'wpseokit' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$act   = '';
+		if ( $on ) {
+			$act .= '<form method="post" action="' . $post . '"><input type="hidden" name="action" value="wpseokit_update_check">' . wp_nonce_field( 'wpseokit_update_check', '_wpnonce', true, false ) . '<button type="submit" class="rbn-btn">' . Ui::icon( 'scan' ) . esc_html__( 'Check now', 'wpseokit' ) . '</button></form>';
+		}
+		$act .= '<form method="post" action="' . $post . '"><input type="hidden" name="action" value="wpseokit_update_toggle">' . wp_nonce_field( 'wpseokit_update_toggle', '_wpnonce', true, false ) . '<button type="submit" class="rbn-btn">' . esc_html( $on ? __( 'Turn off the update check', 'wpseokit' ) : __( 'Turn on the update check', 'wpseokit' ) ) . '</button></form>';
+		$body .= '<div class="rbn-row">' . $act . '</div>';
+		return Ui::card( __( 'Updates', 'wpseokit' ), '', $body );
+	}
+}

@@ -586,3 +586,2283 @@ msgstr "Yazı kuralı için post_id gerekir."
 #: src/includes/Services/ScoreService.php
 msgid "A post scope needs a post_id you can edit."
 msgstr "Yazı kapsamı için düzenleyebildiğiniz bir post_id gerekir."
+
+#: src/includes/Screens
+msgid "Title and description templates"
+msgstr "Başlık ve açıklama şablonları"
+
+#: src/includes/Screens
+msgid "Using defaults"
+msgstr "Varsayılanlar kullanılıyor"
+
+#: src/includes/Screens
+msgid "Configured"
+msgstr "Ayarlandı"
+
+#: src/includes/Screens
+msgid "Edit templates"
+msgstr "Şablonları düzenle"
+
+#: src/includes/Screens
+msgid "Organization name and logo"
+msgstr "Kuruluş adı ve logo"
+
+#: src/includes/Screens
+msgid "Added"
+msgstr "Eklendi"
+
+#: src/includes/Screens
+msgid "Missing"
+msgstr "Eksik"
+
+#: src/includes/Screens
+msgid "Edit schema"
+msgstr "Schema'yı düzenle"
+
+#: src/includes/Screens
+msgid "Add details"
+msgstr "Bilgi ekle"
+
+#: src/includes/Screens
+msgid "XML sitemap"
+msgstr "XML site haritası"
+
+#: src/includes/Screens
+msgid "Off"
+msgstr "Kapalı"
+
+#: src/includes/Screens
+msgid "Open sitemap"
+msgstr "Site haritasını aç"
+
+#: src/includes/Screens
+msgid "Search engine visibility"
+msgstr "Arama motoru görünürlüğü"
+
+#: src/includes/Screens
+msgid "Visible"
+msgstr "Görünür"
+
+#: src/includes/Screens
+msgid "Search engines are discouraged"
+msgstr "Arama motorları engellenmiş"
+
+#: src/includes/Screens
+msgid "Open Reading settings"
+msgstr "Okuma ayarlarını aç"
+
+#: src/includes/Screens
+msgid "Primary categories"
+msgstr "Ana kategoriler"
+
+#: src/includes/Screens
+msgid "Open settings"
+msgstr "Ayarları aç"
+
+#: src/includes/Screens
+msgid "Yoast SEO data"
+msgstr "Yoast SEO verisi"
+
+#: src/includes/Screens
+msgid "Not checked"
+msgstr "Denetlenmedi"
+
+#: src/includes/Screens
+msgid "Review import"
+msgstr "İçe aktarmayı incele"
+
+#: src/includes/Screens
+msgid "%1$d of %2$d posts have a description"
+msgstr "%2$d yazının %1$d tanesinde açıklama var"
+
+#: src/includes/Screens
+msgid "Edit post template"
+msgstr "Yazı şablonunu düzenle"
+
+#: src/includes/Screens
+msgid "Publisher set"
+msgstr "Yayıncı tanımlı"
+
+#: src/includes/Screens
+msgid "Logo missing"
+msgstr "Logo eksik"
+
+#: src/includes/Screens
+msgid "Publisher missing"
+msgstr "Yayıncı eksik"
+
+#: src/includes/Screens
+msgid "Article, WebSite and breadcrumb schema"
+msgstr "Makale, WebSite ve ekmek kırıntısı şeması"
+
+#: src/includes/Screens
+msgid "Add organization"
+msgstr "Kuruluş ekle"
+
+#: src/includes/Screens
+msgid "Reachable"
+msgstr "Erişilebilir"
+
+#: src/includes/Screens
+msgid "Address: /sitemap_index.xml"
+msgstr "Adres: /sitemap_index.xml"
+
+#: src/includes/Screens
+msgid "Not published"
+msgstr "Yayında değil"
+
+#: src/includes/Screens
+msgid "Rebuild now"
+msgstr "Şimdi yeniden oluştur"
+
+#: src/includes/Screens
+msgid "Full text"
+msgstr "Tam metin"
+
+#: src/includes/Screens
+msgid "Summary only"
+msgstr "Yalnız özet"
+
+#: src/includes/Screens
+msgid "WordPress default"
+msgstr "WordPress varsayılanı"
+
+#: src/includes/Screens
+msgid "%1$s · %2$d items"
+msgstr "%1$s · %2$d öğe"
+
+#: src/includes/Screens
+msgid "Main feed on"
+msgstr "Ana besleme açık"
+
+#: src/includes/Screens
+msgid "Close extra feeds"
+msgstr "Fazla beslemeleri kapat"
+
+#: src/includes/Screens
+msgid "Published"
+msgstr "Yayında"
+
+#: src/includes/Screens
+msgid "Address: /llms.txt"
+msgstr "Adres: /llms.txt"
+
+#: src/includes/Screens
+msgid "Not published yet"
+msgstr "Henüz yayında değil"
+
+#: src/includes/Screens
+msgid "Preview"
+msgstr "Önizleme"
+
+#: src/includes/Screens
+msgid "Turn on"
+msgstr "Aç"
+
+#: src/includes/Screens
+msgid "Active"
+msgstr "Etkin"
+
+#: src/includes/Screens
+msgid "Loading…"
+msgstr "Yükleniyor…"
+
+#: src/includes/Screens
+msgid "Add redirect"
+msgstr "Yönlendirme ekle"
+
+#: src/includes/Screens
+msgid "Checking"
+msgstr "Denetleniyor"
+
+#: src/includes/Screens
+msgid "Fix top errors"
+msgstr "Başlıca hataları düzelt"
+
+#: src/includes/Screens
+msgid "Yoast SEO is active on this site"
+msgstr "Bu sitede Yoast SEO etkin"
+
+#: src/includes/Screens
+msgid "Yoast SEO is not active"
+msgstr "Yoast SEO etkin değil"
+
+#: src/includes/Screens
+msgid "View report"
+msgstr "Raporu gör"
+
+#: src/includes/Screens
+msgid "Output on"
+msgstr "Çıktı açık"
+
+#: src/includes/Screens
+msgid "Output paused"
+msgstr "Çıktı duraklatıldı"
+
+#: src/includes/Screens
+msgid "Site verification codes are set"
+msgstr "Site doğrulama kodları girilmiş"
+
+#: src/includes/Screens
+msgid "No verification codes yet"
+msgstr "Henüz doğrulama kodu yok"
+
+#: src/includes/Screens
+msgid "Verification"
+msgstr "Doğrulama"
+
+#: src/includes/Screens
+msgid "SEO tools"
+msgstr "SEO araçları"
+
+#: src/includes/Screens
+msgid "Paused (Yoast active)"
+msgstr "Duraklatıldı (Yoast etkin)"
+
+#: src/includes/Screens
+msgid "Open %s"
+msgstr "%s aracını aç"
+
+#: src/includes/Screens
+msgid "Open"
+msgstr "Aç"
+
+#: src/includes/Screens
+msgid "URLs in the sitemap"
+msgstr "Site haritasındaki adresler"
+
+#: src/includes/Screens
+msgid "Active redirects"
+msgstr "Etkin yönlendirmeler"
+
+#: src/includes/Screens
+msgid "404 errors logged"
+msgstr "Kaydedilen 404 hataları"
+
+#: src/includes/Screens
+msgid "Posts with a description"
+msgstr "Açıklaması olan yazılar"
+
+#: src/includes/Screens
+msgid "WPSeoKit"
+msgstr "WPSeoKit"
+
+#: src/includes/Screens
+msgid "Check"
+msgstr "Kontrol"
+
+#: src/includes/Screens
+msgid "Action"
+msgstr "İşlem"
+
+#: src/includes/Screens
+msgid "Setup checklist"
+msgstr "Kurulum kontrol listesi"
+
+#: src/includes/Screens
+msgid "Recent activity"
+msgstr "Son etkinlik"
+
+#: src/includes/Screens
+msgid "Event"
+msgstr "Olay"
+
+#: src/includes/Screens
+msgid "Hits"
+msgstr "Ziyaret"
+
+#: src/includes/Screens
+msgid "These checks decide whether your site is ready for search engines."
+msgstr "Bu kontroller sitenizin arama motorlarına hazır olup olmadığını belirler."
+
+#: src/includes/Screens
+msgid "Broken addresses visitors hit most, and the latest redirects."
+msgstr "Ziyaretçilerin en çok karşılaştığı bozuk adresler ve son yönlendirmeler."
+
+#: src/includes/Screens
+msgid "Feed (RSS)"
+msgstr "Besleme (RSS)"
+
+#: src/includes/Screens
+msgid "Choose what your RSS feed shows and close the feeds nobody needs."
+msgstr "RSS beslemenizin neyi gösterdiğini seçin, kimsenin kullanmadığı beslemeleri kapatın."
+
+#: src/includes/Screens
+msgid "The main feed is off."
+msgstr "Ana besleme kapalı."
+
+#: src/includes/Screens
+msgid "Feed readers and aggregators cannot follow your new posts."
+msgstr "Besleme okuyucuları ve toplayıcılar yeni yazılarınızı takip edemez."
+
+#: src/includes/Screens
+msgid "General"
+msgstr "Genel"
+
+#: src/includes/Screens
+msgid "Content"
+msgstr "İçerik"
+
+#: src/includes/Screens
+msgid "Cleanup"
+msgstr "Temizlik"
+
+#: src/includes/Screens
+msgid "Feed sections"
+msgstr "Besleme bölümleri"
+
+#: src/includes/Screens
+msgid "Publish the main feed"
+msgstr "Ana beslemeyi yayınla"
+
+#: src/includes/Screens
+msgid "Readers and some search tools use it to find new posts."
+msgstr "Okuyucular ve bazı arama araçları yeni yazıları bulmak için kullanır."
+
+#: src/includes/Screens
+msgid "Feed address"
+msgstr "Besleme adresi"
+
+#: src/includes/Screens
+msgid "Copy"
+msgstr "Kopyala"
+
+#: src/includes/Screens
+msgid "Checking the feed…"
+msgstr "Besleme denetleniyor…"
+
+#: src/includes/Screens
+msgid "Each item shows"
+msgstr "Her öğe şunu gösterir"
+
+#: src/includes/Screens
+msgid "WordPress setting"
+msgstr "WordPress ayarı"
+
+#: src/includes/Screens
+msgid "Summary"
+msgstr "Özet"
+
+#: src/includes/Screens
+msgid "Summary sends readers to your site to read the rest. Full text keeps them in their reader."
+msgstr "Özet, okuyucuyu devamı için sitenize getirir. Tam metin onları okuyucularında tutar."
+
+#: src/includes/Screens
+msgid "Items in the feed"
+msgstr "Beslemedeki öğe sayısı"
+
+#: src/includes/Screens
+msgid "items"
+msgstr "öğe"
+
+#: src/includes/Screens
+msgid "Between 1 and 50. Use 0 to keep the WordPress setting."
+msgstr "1 ile 50 arası. WordPress ayarını korumak için 0 yazın."
+
+#: src/includes/Screens
+msgid "Main feed"
+msgstr "Ana besleme"
+
+#: src/includes/Screens
+msgid "The feed readers and aggregators subscribe to."
+msgstr "Besleme okuyucularının ve toplayıcıların abone olduğu besleme."
+
+#: src/includes/Screens
+msgid "Source link"
+msgstr "Kaynak bağlantısı"
+
+#: src/includes/Screens
+msgid "Add a link back to the original post"
+msgstr "Özgün yazıya geri bağlantı ekle"
+
+#: src/includes/Screens
+msgid "Scrapers that copy your feed also copy the link."
+msgstr "Beslemenizi kopyalayan botlar bağlantıyı da kopyalar."
+
+#: src/includes/Screens
+msgid "Footer text"
+msgstr "Alt metin"
+
+#: src/includes/Screens
+msgid "Copyright"
+msgstr "Telif hakkı"
+
+#: src/includes/Screens
+msgid "Add a copyright line"
+msgstr "Telif hakkı satırı ekle"
+
+#: src/includes/Screens
+msgid "Printed under the footer text."
+msgstr "Alt metnin altına basılır."
+
+#: src/includes/Screens
+msgid "Copyright text"
+msgstr "Telif hakkı metni"
+
+#: src/includes/Screens
+msgid "Featured image"
+msgstr "Öne çıkan görsel"
+
+#: src/includes/Screens
+msgid "Include the featured image in each item"
+msgstr "Her öğeye öne çıkan görseli ekle"
+
+#: src/includes/Screens
+msgid "Example item"
+msgstr "Örnek öğe"
+
+#: src/includes/Screens
+msgid "Example feed item"
+msgstr "Örnek besleme öğesi"
+
+#: src/includes/Screens
+msgid "Source link and copyright"
+msgstr "Kaynak bağlantısı ve telif hakkı"
+
+#: src/includes/Screens
+msgid "Added to the end of every item so copied text points back to you."
+msgstr "Kopyalanan metin size geri işaret etsin diye her öğenin sonuna eklenir."
+
+#: src/includes/Screens
+msgid "Comments feed"
+msgstr "Yorum beslemesi"
+
+#: src/includes/Screens
+msgid "All comments of the site."
+msgstr "Sitedeki tüm yorumlar."
+
+#: src/includes/Screens
+msgid "Comments feed of each post"
+msgstr "Her yazının yorum beslemesi"
+
+#: src/includes/Screens
+msgid "One feed for every post."
+msgstr "Her yazı için bir besleme."
+
+#: src/includes/Screens
+msgid "Author feeds"
+msgstr "Yazar beslemeleri"
+
+#: src/includes/Screens
+msgid "One feed for each author."
+msgstr "Her yazar için bir besleme."
+
+#: src/includes/Screens
+msgid "Category and tag feeds"
+msgstr "Kategori ve etiket beslemeleri"
+
+#: src/includes/Screens
+msgid "One feed for each category and tag."
+msgstr "Her kategori ve etiket için bir besleme."
+
+#: src/includes/Screens
+msgid "Search result feeds"
+msgstr "Arama sonucu beslemeleri"
+
+#: src/includes/Screens
+msgid "Feeds of search queries."
+msgstr "Arama sorgularının beslemeleri."
+
+#: src/includes/Screens
+msgid "Attachment feeds"
+msgstr "Ek dosya beslemeleri"
+
+#: src/includes/Screens
+msgid "Feeds of media pages."
+msgstr "Ortam sayfalarının beslemeleri."
+
+#: src/includes/Screens
+msgid "Close these feeds"
+msgstr "Bu beslemeleri kapat"
+
+#: src/includes/Screens
+msgid "WordPress opens many feeds by default. Most sites need one."
+msgstr "WordPress varsayılan olarak çok sayıda besleme açar. Çoğu site için biri yeter."
+
+#: src/includes/Screens
+msgid "Closed feeds"
+msgstr "Kapatılan beslemeler"
+
+#: src/includes/Screens
+msgid "Send visitors of a closed feed to its page (301)"
+msgstr "Kapalı beslemeye gelen ziyaretçiyi sayfasına yönlendir (301)"
+
+#: src/includes/Screens
+msgid "Off = a closed feed answers 404."
+msgstr "Kapalıysa kapatılan besleme 404 döner."
+
+#: src/includes/Screens
+msgid "Search engines"
+msgstr "Arama motorları"
+
+#: src/includes/Screens
+msgid "Tell search engines not to index feeds"
+msgstr "Arama motorlarına beslemeleri dizinlememelerini söyle"
+
+#: src/includes/Screens
+msgid "Page head"
+msgstr "Sayfa başlığı (head)"
+
+#: src/includes/Screens
+msgid "Remove extra feed links from the page head"
+msgstr "Sayfa başlığındaki fazla besleme bağlantılarını kaldır"
+
+#: src/includes/Screens
+msgid "Feeds to close"
+msgstr "Kapatılacak beslemeler"
+
+#: src/includes/Screens
+msgid "Turn on a switch to close that kind of feed."
+msgstr "O türden beslemeyi kapatmak için anahtarı açın."
+
+#: src/includes/Screens
+msgid "Yoast import"
+msgstr "Yoast aktarımı"
+
+#: src/includes/Screens
+msgid "Bring your titles and descriptions over from Yoast SEO."
+msgstr "Başlıklarınızı ve açıklamalarınızı Yoast SEO’dan taşıyın."
+
+#: src/includes/Screens
+msgid "Dry run"
+msgstr "Deneme çalıştırması"
+
+#: src/includes/Screens
+msgid "Run"
+msgstr "Çalıştır"
+
+#: src/includes/Screens
+msgid "Report"
+msgstr "Rapor"
+
+#: src/includes/Screens
+msgid "No import has run yet. The report appears here when it finishes."
+msgstr "Henüz aktarım yapılmadı. Rapor, aktarım bitince burada görünür."
+
+#: src/includes/Screens
+msgid "Yoast import steps"
+msgstr "Yoast aktarım adımları"
+
+#: src/includes/Screens
+msgid "Bring your Yoast SEO data over"
+msgstr "Yoast SEO verinizi taşıyın"
+
+#: src/includes/Screens
+msgid "First WPSeoKit only counts what it can import. Nothing is written until you confirm, and your Yoast data is never deleted."
+msgstr "WPSeoKit önce yalnızca neyi aktarabileceğini sayar. Siz onaylayana kadar hiçbir şey yazılmaz ve Yoast verileriniz asla silinmez."
+
+#: src/includes/Screens
+msgid "Check my Yoast data"
+msgstr "Yoast verilerimi denetle"
+
+#: src/includes/Screens
+msgid "Run the check on the Summary tab first. The result appears here."
+msgstr "Önce Özet sekmesinde denetimi çalıştırın. Sonuç burada görünür."
+
+#: src/includes/Screens
+msgid "What the check found"
+msgstr "Denetimin bulduğu"
+
+#: src/includes/Screens
+msgid "Data"
+msgstr "Veri"
+
+#: src/includes/Screens
+msgid "Found"
+msgstr "Bulunan"
+
+#: src/includes/Screens
+msgid "Will import"
+msgstr "Aktarılacak"
+
+#: src/includes/Screens
+msgid "Note"
+msgstr "Not"
+
+#: src/includes/Screens
+msgid "Dry-run report"
+msgstr "Deneme çalıştırması raporu"
+
+#: src/includes/Screens
+msgid "Import options"
+msgstr "Aktarım seçenekleri"
+
+#: src/includes/Screens
+msgid "Choose how to handle values that exist in both plugins."
+msgstr "Her iki eklentide de bulunan değerlerin nasıl işleneceğini seçin."
+
+#: src/includes/Screens
+msgid "When both have a value"
+msgstr "İkisinde de değer varsa"
+
+#: src/includes/Screens
+msgid "Keep WPSeoKit"
+msgstr "WPSeoKit'i koru"
+
+#: src/includes/Screens
+msgid "Use Yoast"
+msgstr "Yoast'u kullan"
+
+#: src/includes/Screens
+msgid "Keeping WPSeoKit never overwrites something you edited by hand."
+msgstr "WPSeoKit'i korumak elle düzenlediğiniz hiçbir şeyin üzerine yazmaz."
+
+#: src/includes/Screens
+msgid "Nothing has been imported yet."
+msgstr "Henüz hiçbir şey içe aktarılmadı."
+
+#: src/includes/Screens
+msgid "Run the check again"
+msgstr "Denetimi yeniden çalıştır"
+
+#: src/includes/Screens
+msgid "Import now"
+msgstr "Şimdi içe aktar"
+
+#: src/includes/Screens
+msgid "Nothing to import yet."
+msgstr "Henüz aktarılacak bir şey yok."
+
+#: src/includes/Screens
+msgid "Check your Yoast data first. The import options appear here after the check."
+msgstr "Önce Yoast verilerinizi denetleyin. Aktarım seçenekleri denetimden sonra burada görünür."
+
+#: src/includes/Screens
+msgid "Close"
+msgstr "Kapat"
+
+#: src/includes/Screens
+msgid "Import Yoast data?"
+msgstr "Yoast verisi içe aktarılsın mı?"
+
+#: src/includes/Screens
+msgid "WPSeoKit will write titles, descriptions, primary categories and settings. Your Yoast data stays where it is."
+msgstr "WPSeoKit başlıkları, açıklamaları, ana kategorileri ve ayarları yazacak. Yoast verileriniz olduğu yerde kalır."
+
+#: src/includes/Screens
+msgid "I have a database backup and I want to import now."
+msgstr "Veritabanı yedeğim var ve şimdi içe aktarmak istiyorum."
+
+#: src/includes/Screens
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#: src/includes/Screens
+msgid "Import"
+msgstr "İçe aktar"
+
+#: src/includes/Screens
+msgid "llms.txt"
+msgstr "llms.txt"
+
+#: src/includes/Screens
+msgid "A plain-text guide to your site for AI assistants."
+msgstr "Yapay zekâ asistanları için sitenize düz metin bir rehber."
+
+#: src/includes/Screens
+msgid "llms.txt is off."
+msgstr "llms.txt kapalı."
+
+#: src/includes/Screens
+msgid "AI assistants have no short guide to your site. Check the preview before you turn it on."
+msgstr "Yapay zekâ asistanlarının sitenize dair kısa bir rehberi yok. Açmadan önce önizlemeye bakın."
+
+#: src/includes/Screens
+msgid "llms.txt sections"
+msgstr "llms.txt bölümleri"
+
+#: src/includes/Screens
+msgid "Publish llms.txt"
+msgstr "llms.txt yayınla"
+
+#: src/includes/Screens
+msgid "Off by default. Turn it on after you read the preview."
+msgstr "Varsayılan olarak kapalı. Önizlemeyi okuduktan sonra açın."
+
+#: src/includes/Screens
+msgid "File address"
+msgstr "Dosya adresi"
+
+#: src/includes/Screens
+msgid "Site summary"
+msgstr "Site özeti"
+
+#: src/includes/Screens
+msgid "One or two sentences. Plain text, no markup. Leave empty to use the site tagline."
+msgstr "Bir iki cümle. Düz metin, işaretleme yok. Site sloganını kullanmak için boş bırakın."
+
+#: src/includes/Screens
+msgid "llms.txt file"
+msgstr "llms.txt dosyası"
+
+#: src/includes/Screens
+msgid "A plain-text page that summarizes your site for AI assistants."
+msgstr "Sitenizi yapay zekâ asistanlarına özetleyen düz metin bir sayfa."
+
+#: src/includes/Screens
+msgid "There are no published pages yet."
+msgstr "Henüz yayınlanmış sayfa yok."
+
+#: src/includes/Screens
+msgid "Pick the pages assistants should know about. Fewer, better links work best."
+msgstr "Asistanların bilmesi gereken sayfaları seçin. Az ama iyi bağlantı en iyisidir."
+
+#: src/includes/Screens
+msgid "Latest content"
+msgstr "Son içerik"
+
+#: src/includes/Screens
+msgid "Items per type"
+msgstr "Tür başına öğe"
+
+#: src/includes/Screens
+msgid "Between 0 and 200. Use 0 for no automatic list."
+msgstr "0 ile 200 arası. Otomatik liste istemiyorsanız 0 yazın."
+
+#: src/includes/Screens
+msgid "Categories and tags"
+msgstr "Kategoriler ve etiketler"
+
+#: src/includes/Screens
+msgid "Most terms per section"
+msgstr "Bölüm başına en çok terim"
+
+#: src/includes/Screens
+msgid "Leave out (IDs)"
+msgstr "Hariç tut (kimlikler)"
+
+#: src/includes/Screens
+msgid "Post or page IDs, one per line. They never appear in the file."
+msgstr "Yazı veya sayfa kimlikleri, her satıra bir tane. Dosyada hiç görünmezler."
+
+#: src/includes/Screens
+msgid "What to list"
+msgstr "Neler listelensin"
+
+#: src/includes/Screens
+msgid "File"
+msgstr "Dosya"
+
+#: src/includes/Screens
+msgid "llms.txt preview"
+msgstr "llms.txt önizlemesi"
+
+#: src/includes/Screens
+msgid "Refresh preview"
+msgstr "Önizlemeyi yenile"
+
+#: src/includes/Screens
+msgid "Built from the values on this page, even before you save. It works while the file is still off."
+msgstr "Bu sayfadaki değerlerle, kaydetmeden önce bile oluşturulur. Dosya kapalıyken de çalışır."
+
+#: src/includes/Screens
+msgid "This is what /llms.txt would return."
+msgstr "/llms.txt adresinin döndüreceği içerik budur."
+
+#: src/includes/Screens
+msgid "404 log"
+msgstr "404 günlüğü"
+
+#: src/includes/Screens
+msgid "See which broken addresses visitors hit."
+msgstr "Ziyaretçilerin hangi bozuk adreslerle karşılaştığını görün."
+
+#: src/includes/Screens
+msgid "Log"
+msgstr "Günlük"
+
+#: src/includes/Screens
+msgid "404 log sections"
+msgstr "404 günlüğü bölümleri"
+
+#: src/includes/Screens
+msgid "Addresses that bots probe (such as wp-login.php) are hidden by default. Show them with the switch below the search."
+msgstr "Botların yokladığı adresler (wp-login.php gibi) varsayılan olarak gizlidir. Aramanın altındaki anahtarla gösterebilirsiniz."
+
+#: src/includes/Screens
+msgid "Filter 404 log"
+msgstr "404 günlüğünü süz"
+
+#: src/includes/Screens
+msgid "Search"
+msgstr "Ara"
+
+#: src/includes/Screens
+msgid "Path"
+msgstr "Yol"
+
+#: src/includes/Screens
+msgid "Show bot noise"
+msgstr "Bot gürültüsünü göster"
+
+#: src/includes/Screens
+msgid "Apply"
+msgstr "Uygula"
+
+#: src/includes/Screens
+msgid "selected"
+msgstr "seçili"
+
+#: src/includes/Screens
+msgid "Redirect all to…"
+msgstr "Hepsini şuraya yönlendir…"
+
+#: src/includes/Screens
+msgid "Delete from log"
+msgstr "Günlükten sil"
+
+#: src/includes/Screens
+msgid "404 errors, most hits first"
+msgstr "404 hataları, en çok alan önce"
+
+#: src/includes/Screens
+msgid "Select all"
+msgstr "Tümünü seç"
+
+#: src/includes/Screens
+msgid "Address"
+msgstr "Adres"
+
+#: src/includes/Screens
+msgid "Referrer"
+msgstr "Yönlendiren"
+
+#: src/includes/Screens
+msgid "Last seen"
+msgstr "Son görülme"
+
+#: src/includes/Screens
+msgid "Actions"
+msgstr "İşlemler"
+
+#: src/includes/Screens
+msgid "Most hit first"
+msgstr "En çok alan önce"
+
+#: src/includes/Screens
+msgid "Logging"
+msgstr "Kayıt"
+
+#: src/includes/Screens
+msgid "Record addresses that return 404"
+msgstr "404 dönen adresleri kaydet"
+
+#: src/includes/Screens
+msgid "Only the address, the referrer and a hit count are stored. No visitor data."
+msgstr "Yalnız adres, yönlendiren ve ziyaret sayısı saklanır. Ziyaretçi verisi yok."
+
+#: src/includes/Screens
+msgid "Bots"
+msgstr "Botlar"
+
+#: src/includes/Screens
+msgid "Do not record search engine bots"
+msgstr "Arama motoru botlarını kaydetme"
+
+#: src/includes/Screens
+msgid "Keep entries for"
+msgstr "Kayıtları şu kadar sakla"
+
+#: src/includes/Screens
+msgid "days"
+msgstr "gün"
+
+#: src/includes/Screens
+msgid "Most entries kept"
+msgstr "En çok saklanan kayıt"
+
+#: src/includes/Screens
+msgid "entries"
+msgstr "kayıt"
+
+#: src/includes/Screens
+msgid "The oldest entries go first when the log is full."
+msgstr "Günlük dolunca en eski kayıtlar silinir."
+
+#: src/includes/Screens
+msgid "Log settings"
+msgstr "Günlük ayarları"
+
+#: src/includes/Screens
+msgid "Redirect the selected addresses"
+msgstr "Seçili adresleri yönlendir"
+
+#: src/includes/Screens
+msgid "To (new address)"
+msgstr "Hedef (yeni adres)"
+
+#: src/includes/Screens
+msgid "All selected addresses get a 301 redirect to this page."
+msgstr "Seçili tüm adresler bu sayfaya 301 ile yönlendirilir."
+
+#: src/includes/Screens
+msgid "Create redirects"
+msgstr "Yönlendirmeleri oluştur"
+
+#: src/includes/Screens
+msgid "SEO"
+msgstr "SEO"
+
+#: src/includes/Screens
+msgid "Social"
+msgstr "Sosyal"
+
+#: src/includes/Screens
+msgid "Schema"
+msgstr "Schema"
+
+#: src/includes/Screens
+msgid "Advanced"
+msgstr "Gelişmiş"
+
+#: src/includes/Screens
+msgid "Search preview"
+msgstr "Arama önizlemesi"
+
+#: src/includes/Screens
+msgid "Preview device"
+msgstr "Önizleme cihazı"
+
+#: src/includes/Screens
+msgid "Desktop"
+msgstr "Masaüstü"
+
+#: src/includes/Screens
+msgid "Mobile"
+msgstr "Mobil"
+
+#: src/includes/Screens
+msgid "SEO title"
+msgstr "SEO başlığı"
+
+#: src/includes/Screens
+msgid "Title length"
+msgstr "Başlık uzunluğu"
+
+#: src/includes/Screens
+msgid "Aim for 30 to 60 characters. Search engines cut by width, not by count."
+msgstr "30 ile 60 karakter arası hedefleyin. Arama motorları karakter sayısına değil genişliğe göre keser."
+
+#: src/includes/Screens
+msgid "Meta description"
+msgstr "Meta açıklaması"
+
+#: src/includes/Screens
+msgid "Description length"
+msgstr "Açıklama uzunluğu"
+
+#: src/includes/Screens
+msgid "Aim for 70 to 155 characters. Empty falls back to the template, then the excerpt."
+msgstr "70 ile 155 karakter arası hedefleyin. Boşsa önce şablon, sonra özet kullanılır."
+
+#: src/includes/Screens
+msgid "URL:"
+msgstr "Adres:"
+
+#: src/includes/Screens
+msgid "Changing the primary category changes this post’s URL."
+msgstr "Ana kategoriyi değiştirmek bu yazının adresini değiştirir."
+
+#: src/includes/Screens
+msgid "Add a 301 redirect from the old URL"
+msgstr "Eski adresten 301 yönlendirmesi ekle"
+
+#: src/includes/Screens
+msgid "The primary category sets this post’s URL and breadcrumb."
+msgstr "Ana kategori bu yazının adresini ve ekmek kırıntısını belirler."
+
+#: src/includes/Screens
+msgid "Sharing title"
+msgstr "Paylaşım başlığı"
+
+#: src/includes/Screens
+msgid "Same as the SEO title"
+msgstr "SEO başlığıyla aynı"
+
+#: src/includes/Screens
+msgid "Leave empty to use the SEO title."
+msgstr "SEO başlığını kullanmak için boş bırakın."
+
+#: src/includes/Screens
+msgid "Sharing description"
+msgstr "Paylaşım açıklaması"
+
+#: src/includes/Screens
+msgid "Leave empty to use the meta description."
+msgstr "Meta açıklamasını kullanmak için boş bırakın."
+
+#: src/includes/Screens
+msgid "Choose image"
+msgstr "Görsel seç"
+
+#: src/includes/Screens
+msgid "Remove"
+msgstr "Kaldır"
+
+#: src/includes/Screens
+msgid "Sharing image"
+msgstr "Paylaşım görseli"
+
+#: src/includes/Screens
+msgid "Empty: the featured image is used."
+msgstr "Boşsa öne çıkan görsel kullanılır."
+
+#: src/includes/Screens
+msgid "Article (default)"
+msgstr "Makale (varsayılan)"
+
+#: src/includes/Screens
+msgid "Movie"
+msgstr "Film"
+
+#: src/includes/Screens
+msgid "TV series"
+msgstr "Dizi"
+
+#: src/includes/Screens
+msgid "Schema type"
+msgstr "Schema türü"
+
+#: src/includes/Screens
+msgid "Movie and TVSeries need the details below. Without them the post stays an Article."
+msgstr "Film ve Dizi için aşağıdaki bilgiler gerekir. Bunlar olmadan yazı Makale olarak kalır."
+
+#: src/includes/Screens
+msgid "Director"
+msgstr "Yönetmen"
+
+#: src/includes/Screens
+msgid "Cast"
+msgstr "Oyuncular"
+
+#: src/includes/Screens
+msgid "Separate names with commas."
+msgstr "İsimleri virgülle ayırın."
+
+#: src/includes/Screens
+msgid "Year"
+msgstr "Yıl"
+
+#: src/includes/Screens
+msgid "Hide this post from search results"
+msgstr "Bu yazıyı arama sonuçlarından gizle"
+
+#: src/includes/Screens
+msgid "Adds noindex. The post also leaves the sitemap."
+msgstr "noindex ekler. Yazı site haritasından da çıkar."
+
+#: src/includes/Screens
+msgid "Do not follow links on this post"
+msgstr "Bu yazıdaki bağlantıları izletme"
+
+#: src/includes/Screens
+msgid "Adds nofollow. Rarely needed."
+msgstr "nofollow ekler. Nadiren gerekir."
+
+#: src/includes/Screens
+msgid "Canonical URL"
+msgstr "Kanonik adres"
+
+#: src/includes/Screens
+msgid "Leave empty to use the post address. Only fill this when the same content lives elsewhere."
+msgstr "Yazının kendi adresini kullanmak için boş bırakın. Yalnızca aynı içerik başka yerde de varsa doldurun."
+
+#: src/includes/Screens
+msgid "Redirects"
+msgstr "Yönlendirmeler"
+
+#: src/includes/Screens
+msgid "Send old addresses to the right place."
+msgstr "Eski adresleri doğru yere gönderin."
+
+#: src/includes/Screens
+msgid "List"
+msgstr "Liste"
+
+#: src/includes/Screens
+msgid "Add"
+msgstr "Ekle"
+
+#: src/includes/Screens
+msgid "Import / export"
+msgstr "İçe / dışa aktar"
+
+#: src/includes/Screens
+msgid "Redirects sections"
+msgstr "Yönlendirme bölümleri"
+
+#: src/includes/Screens
+msgid "Filter redirects"
+msgstr "Yönlendirmeleri süz"
+
+#: src/includes/Screens
+msgid "Path or target"
+msgstr "Yol veya hedef"
+
+#: src/includes/Screens
+msgid "Type"
+msgstr "Tür"
+
+#: src/includes/Screens
+msgid "All types"
+msgstr "Tüm türler"
+
+#: src/includes/Screens
+msgid "All"
+msgstr "Tümü"
+
+#: src/includes/Screens
+msgid "Turn off"
+msgstr "Kapat"
+
+#: src/includes/Screens
+msgid "Delete"
+msgstr "Sil"
+
+#: src/includes/Screens
+msgid "Select all redirects"
+msgstr "Tüm yönlendirmeleri seç"
+
+#: src/includes/Screens
+msgid "From"
+msgstr "Kaynak"
+
+#: src/includes/Screens
+msgid "To"
+msgstr "Hedef"
+
+#: src/includes/Screens
+msgid "Last hit"
+msgstr "Son ziyaret"
+
+#: src/includes/Screens
+msgid "All redirects"
+msgstr "Tüm yönlendirmeler"
+
+#: src/includes/Screens
+msgid "From (old path)"
+msgstr "Kaynak (eski yol)"
+
+#: src/includes/Screens
+msgid "Start with a slash. Use <code>*</code> at the end to match everything below that path."
+msgstr "Eğik çizgiyle başlayın. O yolun altındaki her şeyi yakalamak için sonuna <code>*</code> koyun."
+
+#: src/includes/Screens
+msgid "A path on this site or a full address. Leave empty for type 410."
+msgstr "Bu sitede bir yol ya da tam adres. 410 türü için boş bırakın."
+
+#: src/includes/Screens
+msgid "301 moves a page for good and passes its ranking. Use 302 or 307 only for short-term moves."
+msgstr "301 sayfayı kalıcı taşır ve sıralamasını aktarır. 302 veya 307'yi yalnızca kısa süreli taşımalarda kullanın."
+
+#: src/includes/Screens
+msgid "Add a redirect"
+msgstr "Yönlendirme ekle"
+
+#: src/includes/Screens
+msgid "Takes effect the moment you save."
+msgstr "Kaydettiğiniz anda geçerli olur."
+
+#: src/includes/Screens
+msgid "One redirect per line: <code>from,to,type</code>. The check runs before anything is saved, and existing “from” addresses are never overwritten."
+msgstr "Her satıra bir yönlendirme: <code>nereden,nereye,tür</code>. Hiçbir şey kaydedilmeden önce denetim çalışır; mevcut “nereden” adreslerinin üzerine hiç yazılmaz."
+
+#: src/includes/Screens
+msgid "Choose CSV file"
+msgstr "CSV dosyası seç"
+
+#: src/includes/Screens
+msgid "Every redirect, UTF-8, one per line."
+msgstr "Tüm yönlendirmeler, UTF-8, her satıra bir tane."
+
+#: src/includes/Screens
+msgid "Export CSV"
+msgstr "CSV dışa aktar"
+
+#: src/includes/Screens
+msgid "Add many redirects at once from a CSV file."
+msgstr "Bir CSV dosyasından çok sayıda yönlendirmeyi tek seferde ekleyin."
+
+#: src/includes/Screens
+msgid "Export"
+msgstr "Dışa aktar"
+
+#: src/includes/Screens
+msgid "Download every redirect as a CSV file, for a backup or another site."
+msgstr "Yedek ya da başka bir site için tüm yönlendirmeleri CSV dosyası olarak indirin."
+
+#: src/includes/Screens
+msgid "Run the redirects on the live site"
+msgstr "Yönlendirmeleri canlı sitede çalıştır"
+
+#: src/includes/Screens
+msgid "Off = every redirect pauses and visitors see the old address. Nothing is deleted."
+msgstr "Kapalıysa tüm yönlendirmeler durur ve ziyaretçi eski adresi görür. Hiçbir şey silinmez."
+
+#: src/includes/Screens
+msgid "Redirect behavior"
+msgstr "Yönlendirme davranışı"
+
+#: src/includes/Screens
+msgid "Import redirects from CSV"
+msgstr "Yönlendirmeleri CSV'den içe aktar"
+
+#: src/includes/Screens
+msgid "One redirect per line: <code>from,to,type</code>. The first line may be a header. Existing redirects with the same “from” are skipped, never overwritten."
+msgstr "Satır başına bir yönlendirme: <code>kaynak,hedef,tür</code>. İlk satır başlık olabilir. Aynı kaynağa sahip mevcut yönlendirmeler atlanır, üzerine yazılmaz."
+
+#: src/includes/Screens
+msgid "CSV file"
+msgstr "CSV dosyası"
+
+#: src/includes/Screens
+msgid "Up to 1 MB, UTF-8."
+msgstr "En fazla 1 MB, UTF-8."
+
+#: src/includes/Screens
+msgid "Keep them"
+msgstr "Vazgeç"
+
+#: src/includes/Screens
+msgid "Edit redirect"
+msgstr "Yönlendirmeyi düzenle"
+
+#: src/includes/Screens
+msgid "Save"
+msgstr "Kaydet"
+
+#: src/includes/Screens
+msgid "Tell search engines who runs the site and what each page is."
+msgstr "Arama motorlarına siteyi kimin yönettiğini ve her sayfanın ne olduğunu söyleyin."
+
+#: src/includes/Screens
+msgid "Organization name and logo are empty."
+msgstr "Kuruluş adı ve logo boş."
+
+#: src/includes/Screens
+msgid "Search engines get an incomplete publisher until you add them."
+msgstr "Siz ekleyene kadar arama motorları eksik bir yayıncı bilgisi alır."
+
+#: src/includes/Screens
+msgid "Organization"
+msgstr "Kuruluş"
+
+#: src/includes/Screens
+msgid "Website"
+msgstr "Web sitesi"
+
+#: src/includes/Screens
+msgid "Content types"
+msgstr "İçerik türleri"
+
+#: src/includes/Screens
+msgid "Breadcrumbs"
+msgstr "Ekmek kırıntısı"
+
+#: src/includes/Screens
+msgid "Schema sections"
+msgstr "Schema bölümleri"
+
+#: src/includes/Screens
+msgid "Person"
+msgstr "Kişi"
+
+#: src/includes/Screens
+msgid "Organization name"
+msgstr "Kuruluş adı"
+
+#: src/includes/Screens
+msgid "Your site or company name"
+msgstr "Site veya şirket adınız"
+
+#: src/includes/Screens
+msgid "Shown to search engines as the publisher of every page."
+msgstr "Arama motorlarına her sayfanın yayıncısı olarak gösterilir."
+
+#: src/includes/Screens
+msgid "Person name"
+msgstr "Kişi adı"
+
+#: src/includes/Screens
+msgid "Used instead of the organization name when the site is a person."
+msgstr "Site bir kişiye aitse kuruluş adı yerine kullanılır."
+
+#: src/includes/Screens
+msgid "Logo"
+msgstr "Logo"
+
+#: src/includes/Screens
+msgid "Square or wide, at least 112 × 112 px."
+msgstr "Kare ya da geniş, en az 112 × 112 px."
+
+#: src/includes/Screens
+msgid "Describes who publishes this site."
+msgstr "Bu siteyi kimin yayımladığını anlatır."
+
+#: src/includes/Screens
+msgid "Social profiles"
+msgstr "Sosyal profiller"
+
+#: src/includes/Screens
+msgid "Full addresses of your official profiles. Empty ones are left out."
+msgstr "Resmî profillerinizin tam adresleri. Boş olanlar dışarıda bırakılır."
+
+#: src/includes/Screens
+msgid "Site name"
+msgstr "Site adı"
+
+#: src/includes/Screens
+msgid "Used for the WebSite schema and the site name in search results."
+msgstr "WebSite schema'sı ve arama sonuçlarındaki site adı için kullanılır."
+
+#: src/includes/Screens
+msgid "Alternate name"
+msgstr "Alternatif ad"
+
+#: src/includes/Screens
+msgid "Optional. A shorter or spaced-out spelling people also use."
+msgstr "İsteğe bağlı. İnsanların kullandığı daha kısa ya da boşluklu yazım."
+
+#: src/includes/Screens
+msgid "Article type"
+msgstr "Makale türü"
+
+#: src/includes/Screens
+msgid "Blog post"
+msgstr "Blog yazısı"
+
+#: src/includes/Screens
+msgid "Article"
+msgstr "Makale"
+
+#: src/includes/Screens
+msgid "News article"
+msgstr "Haber makalesi"
+
+#: src/includes/Screens
+msgid "Used for every post that is not a film or a series."
+msgstr "Film ya da dizi olmayan her yazı için kullanılır."
+
+#: src/includes/Screens
+msgid "Schema type for %s"
+msgstr "%s için schema türü"
+
+#: src/includes/Screens
+msgid "TVSeries"
+msgstr "TVSeries (dizi)"
+
+#: src/includes/Screens
+msgid "Category"
+msgstr "Kategori"
+
+#: src/includes/Screens
+msgid "Default type"
+msgstr "Varsayılan tür"
+
+#: src/includes/Screens
+msgid "Default schema type per category"
+msgstr "Kategori başına varsayılan schema türü"
+
+#: src/includes/Screens
+msgid "Showing %1$d of %2$d categories, the busiest first."
+msgstr "%2$d kategoriden %1$d tanesi gösteriliyor, en yoğunlar önce."
+
+#: src/includes/Screens
+msgid "A post gets Movie or TVSeries schema only when its SEO box has the details filled in (director, cast, year). Without them it stays a plain Article. Nothing is guessed."
+msgstr "Bir yazı, yalnızca SEO kutusundaki bilgiler (yönetmen, oyuncular, yıl) doldurulmuşsa Film ya da Dizi schema'sı alır. Doldurulmazsa düz Makale kalır. Hiçbir şey tahmin edilmez."
+
+#: src/includes/Screens
+msgid "Articles"
+msgstr "Makaleler"
+
+#: src/includes/Screens
+msgid "Category mapping"
+msgstr "Kategori eşlemesi"
+
+#: src/includes/Screens
+msgid "Sets the starting point for the post SEO box. Each post can still choose its own type."
+msgstr "Yazı SEO kutusu için başlangıç noktasını belirler. Her yazı yine kendi türünü seçebilir."
+
+#: src/includes/Screens
+msgid "Use the primary category for posts"
+msgstr "Yazılarda ana kategoriyi kullan"
+
+#: src/includes/Screens
+msgid "The primary category sets the post URL and the last step before the title."
+msgstr "Ana kategori, yazı adresini ve başlıktan önceki son adımı belirler."
+
+#: src/includes/Screens
+msgid "Theme function"
+msgstr "Tema işlevi"
+
+#: src/includes/Screens
+msgid "Your theme draws the visible breadcrumb; WPSeoKit sends the same path to search engines as BreadcrumbList data."
+msgstr "Görünen ekmek kırıntısını temanız çizer; WPSeoKit aynı yolu arama motorlarına BreadcrumbList verisi olarak gönderir."
+
+#: src/includes/Screens
+msgid "The path shown above a result in search: Home › Movies › Title."
+msgstr "Aramada sonucun üstünde görünen yol: Ana sayfa › Filmler › Başlık."
+
+#: src/includes/Screens
+msgid "Home page"
+msgstr "Ana sayfa"
+
+#: src/includes/Screens
+msgid "Show the schema for"
+msgstr "Şemayı göster:"
+
+#: src/includes/Screens
+msgid "JSON-LD"
+msgstr "JSON-LD"
+
+#: src/includes/Screens
+msgid "Schema JSON-LD of the chosen page"
+msgstr "Seçilen sayfanın schema JSON-LD’si"
+
+#: src/includes/Screens
+msgid "Copy JSON-LD"
+msgstr "JSON-LD’yi kopyala"
+
+#: src/includes/Screens
+msgid "Open Google Rich Results Test (opens in a new tab)"
+msgstr "Google Zengin Sonuç Testi’ni aç (yeni sekmede açılır)"
+
+#: src/includes/Screens
+msgid "Read-only. Reads the live page, so it reflects the settings you saved."
+msgstr "Salt okunur. Canlı sayfayı okur, bu yüzden kaydettiğiniz ayarları yansıtır."
+
+#: src/includes/Screens
+msgid "Sharing, verification codes, access and data."
+msgstr "Paylaşım, doğrulama kodları, erişim ve veri."
+
+#: src/includes/Screens
+msgid "Access"
+msgstr "Erişim"
+
+#: src/includes/Screens
+msgid "Settings sections"
+msgstr "Ayar bölümleri"
+
+#: src/includes/Screens
+msgid "Paused while Yoast SEO is active"
+msgstr "Yoast SEO etkinken duraklatıldı"
+
+#: src/includes/Screens
+msgid "WPSeoKit prints titles, descriptions and schema only when no other SEO plugin does."
+msgstr "WPSeoKit başlık, açıklama ve schema'yı yalnızca başka bir SEO eklentisi basmıyorsa basar."
+
+#: src/includes/Screens
+msgid "Let editors pick a primary category"
+msgstr "Editörler ana kategori seçebilsin"
+
+#: src/includes/Screens
+msgid "The primary category sets the post URL and the breadcrumb."
+msgstr "Ana kategori yazı adresini ve ekmek kırıntısını belirler."
+
+#: src/includes/Screens
+msgid "Author pages"
+msgstr "Yazar sayfaları"
+
+#: src/includes/Screens
+msgid "Turn off author archives"
+msgstr "Yazar arşivlerini kapat"
+
+#: src/includes/Screens
+msgid "Visitors are redirected to the home page."
+msgstr "Ziyaretçiler ana sayfaya yönlendirilir."
+
+#: src/includes/Screens
+msgid "Attachment pages"
+msgstr "Ek sayfaları"
+
+#: src/includes/Screens
+msgid "Redirect attachment pages to the file"
+msgstr "Ek sayfalarını dosyaya yönlendir"
+
+#: src/includes/Screens
+msgid "Open Graph"
+msgstr "Open Graph"
+
+#: src/includes/Screens
+msgid "Print Open Graph tags"
+msgstr "Open Graph etiketlerini bas"
+
+#: src/includes/Screens
+msgid "Used by Facebook, LinkedIn, WhatsApp and most chat apps."
+msgstr "Facebook, LinkedIn, WhatsApp ve çoğu mesajlaşma uygulaması kullanır."
+
+#: src/includes/Screens
+msgid "Twitter / X cards"
+msgstr "Twitter / X kartları"
+
+#: src/includes/Screens
+msgid "Print Twitter card tags"
+msgstr "Twitter kart etiketlerini bas"
+
+#: src/includes/Screens
+msgid "Card type"
+msgstr "Kart türü"
+
+#: src/includes/Screens
+msgid "Small image"
+msgstr "Küçük görsel"
+
+#: src/includes/Screens
+msgid "Large image"
+msgstr "Büyük görsel"
+
+#: src/includes/Screens
+msgid "Default sharing image"
+msgstr "Varsayılan paylaşım görseli"
+
+#: src/includes/Screens
+msgid "Used when a post has no sharing image and no featured image. 1200 × 630 px works best."
+msgstr "Yazının paylaşım görseli ve öne çıkan görseli yoksa kullanılır. En iyi sonuç 1200 × 630 px ile alınır."
+
+#: src/includes/Screens
+msgid "Facebook page"
+msgstr "Facebook sayfası"
+
+#: src/includes/Screens
+msgid "Twitter / X username"
+msgstr "Twitter / X kullanıcı adı"
+
+#: src/includes/Screens
+msgid "WordPress is set to discourage search engines."
+msgstr "WordPress, arama motorlarını caydıracak şekilde ayarlı."
+
+#: src/includes/Screens
+msgid "WPSeoKit does not change this."
+msgstr "WPSeoKit bunu değiştirmez."
+
+#: src/includes/Screens
+msgid "Social sharing"
+msgstr "Sosyal paylaşım"
+
+#: src/includes/Screens
+msgid "Google Search Console"
+msgstr "Google Search Console"
+
+#: src/includes/Screens
+msgid "Bing Webmaster Tools"
+msgstr "Bing Webmaster Tools"
+
+#: src/includes/Screens
+msgid "Yandex Webmaster"
+msgstr "Yandex Webmaster"
+
+#: src/includes/Screens
+msgid "Baidu Webmaster"
+msgstr "Baidu Webmaster"
+
+#: src/includes/Screens
+msgid "Leave empty to print nothing."
+msgstr "Hiçbir şey basmamak için boş bırakın."
+
+#: src/includes/Screens
+msgid "Site verification"
+msgstr "Site doğrulama"
+
+#: src/includes/Screens
+msgid "Paste only the code from each meta tag’s content, not the whole tag."
+msgstr "Etiketin tamamını değil, her meta etiketinin content değerindeki kodu yapıştırın."
+
+#: src/includes/Screens
+msgid "Change settings, redirects and the 404 log"
+msgstr "Ayarları, yönlendirmeleri ve 404 günlüğünü değiştir"
+
+#: src/includes/Screens
+msgid "Administrators"
+msgstr "Yöneticiler"
+
+#: src/includes/Screens
+msgid "A wrong setting or redirect affects every visitor, so these stay with administrators."
+msgstr "Yanlış bir ayar ya da yönlendirme tüm ziyaretçileri etkiler; bu yüzden bunlar yöneticilerde kalır."
+
+#: src/includes/Screens
+msgid "Edit the SEO box of a post"
+msgstr "Bir yazının SEO kutusunu düzenle"
+
+#: src/includes/Screens
+msgid "Anyone who can edit that post"
+msgstr "O yazıyı düzenleyebilen herkes"
+
+#: src/includes/Screens
+msgid "Follows the WordPress permission to edit the post."
+msgstr "WordPress’in yazı düzenleme iznini izler."
+
+#: src/includes/Screens
+msgid "Who"
+msgstr "Kim"
+
+#: src/includes/Screens
+msgid "Why"
+msgstr "Neden"
+
+#: src/includes/Screens
+msgid "Who can use WPSeoKit"
+msgstr "WPSeoKit’i kimler kullanabilir"
+
+#: src/includes/Screens
+msgid "Access follows WordPress roles. Administrators always keep full access."
+msgstr "Erişim WordPress rollerini izler. Yöneticiler her zaman tam erişimi korur."
+
+#: src/includes/Screens
+msgid "Uninstall"
+msgstr "Kaldırma"
+
+#: src/includes/Screens
+msgid "Delete all WPSeoKit data when the plugin is deleted"
+msgstr "Eklenti silinirken tüm WPSeoKit verisini sil"
+
+#: src/includes/Screens
+msgid "Settings, redirects, the 404 log and per-post SEO fields. Leave off to keep them for a later reinstall."
+msgstr "Ayarlar, yönlendirmeler, 404 günlüğü ve yazı başına SEO alanları. Daha sonra yeniden kurmak için kapalı bırakın."
+
+#: src/includes/Screens
+msgid "Item"
+msgstr "Öğe"
+
+#: src/includes/Screens
+msgid "Value"
+msgstr "Değer"
+
+#: src/includes/Screens
+msgid "Plugin status"
+msgstr "Eklenti durumu"
+
+#: src/includes/Screens
+msgid "Data and uninstall"
+msgstr "Veri ve kaldırma"
+
+#: src/includes/Screens
+msgid "Update status"
+msgstr "Güncelleme durumu"
+
+#: src/includes/Screens
+msgid "The package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Automatic updates are turned on or off with the “Enable auto-updates” link on the Plugins page."
+msgstr "Paket kurulumdan önce SHA-256 özeti ve Ed25519 imzasıyla doğrulanır; doğrulanamayan paket kurulmaz. Otomatik güncellemeler Eklentiler sayfasındaki “Otomatik güncellemeleri etkinleştir” bağlantısıyla açılır ya da kapatılır."
+
+#: src/includes/Screens
+msgid "Tool navigation"
+msgstr "Araç gezintisi"
+
+#: src/includes/Screens
+msgid "Dashboard"
+msgstr "Pano"
+
+#: src/includes/Screens
+msgid "Tools"
+msgstr "Araçlar"
+
+#: src/includes/Screens
+msgid "Yoast SEO is active."
+msgstr "Yoast SEO etkin."
+
+#: src/includes/Screens
+msgid "WPSeoKit prints nothing on your site while Yoast is on, so search engines never see duplicate tags."
+msgstr "Yoast açıkken WPSeoKit sitenize hiçbir şey basmaz; böylece arama motorları yinelenen etiketleri hiç görmez."
+
+#: src/includes/Screens
+msgid "Import Yoast data"
+msgstr "Yoast verilerini aktar"
+
+#: src/includes/Screens
+msgid "Sitemap"
+msgstr "Site haritası"
+
+#: src/includes/Screens
+msgid "A list of your pages that search engines read first."
+msgstr "Arama motorlarının ilk okuduğu sayfa listeniz."
+
+#: src/includes/Screens
+msgid "The XML sitemap is off."
+msgstr "XML site haritası kapalı."
+
+#: src/includes/Screens
+msgid "Search engines have no list of your pages."
+msgstr "Arama motorlarının sayfalarınızın listesi yok."
+
+#: src/includes/Screens
+msgid "Files"
+msgstr "Dosyalar"
+
+#: src/includes/Screens
+msgid "robots.txt"
+msgstr "robots.txt"
+
+#: src/includes/Screens
+msgid "Sitemap sections"
+msgstr "Site haritası bölümleri"
+
+#: src/includes/Screens
+msgid "Enable the XML sitemap"
+msgstr "XML site haritasını etkinleştir"
+
+#: src/includes/Screens
+msgid "Keeps the same addresses Yoast used, so search engines see no change."
+msgstr "Yoast'un kullandığı adresleri korur; arama motorları bir değişiklik görmez."
+
+#: src/includes/Screens
+msgid "Sitemap address"
+msgstr "Site haritası adresi"
+
+#: src/includes/Screens
+msgid "The sitemap rebuilds by itself on a schedule and when you publish."
+msgstr "Site haritası zamanlanmış olarak ve yayın yaptığınızda kendiliğinden yenilenir."
+
+#: src/includes/Screens
+msgid "Post types"
+msgstr "Yazı türleri"
+
+#: src/includes/Screens
+msgid "Taxonomies"
+msgstr "Sınıflandırmalar"
+
+#: src/includes/Screens
+msgid "Images"
+msgstr "Görseller"
+
+#: src/includes/Screens
+msgid "List featured images with each post"
+msgstr "Öne çıkan görselleri her yazıyla listele"
+
+#: src/includes/Screens
+msgid "Helps image search find your posters and stills."
+msgstr "Görsel aramanın afiş ve karelerinizi bulmasına yardım eder."
+
+#: src/includes/Screens
+msgid "URLs per file"
+msgstr "Dosya başına adres"
+
+#: src/includes/Screens
+msgid "URLs"
+msgstr "Adres"
+
+#: src/includes/Screens
+msgid "Between 100 and 2,000. Lower this if your server times out."
+msgstr "100 ile 2.000 arasında. Sunucunuz zaman aşımına uğruyorsa düşürün."
+
+#: src/includes/Screens
+msgid "Rebuild every"
+msgstr "Şu sürede bir yenile"
+
+#: src/includes/Screens
+msgid "hours"
+msgstr "saat"
+
+#: src/includes/Screens
+msgid "Content in the sitemap"
+msgstr "Site haritasındaki içerik"
+
+#: src/includes/Screens
+msgid "Sitemap files"
+msgstr "Site haritası dosyaları"
+
+#: src/includes/Screens
+msgid "Last modified"
+msgstr "Son değişiklik"
+
+#: src/includes/Screens
+msgid "Generated files"
+msgstr "Üretilen dosyalar"
+
+#: src/includes/Screens
+msgid "What search engines download from your site."
+msgstr "Arama motorlarının sitenizden indirdikleri."
+
+#: src/includes/Screens
+msgid "Line in robots.txt"
+msgstr "robots.txt’deki satır"
+
+#: src/includes/Screens
+msgid "Sitemap line in robots.txt"
+msgstr "robots.txt’deki site haritası satırı"
+
+#: src/includes/Screens
+msgid "Added by itself while the sitemap is on, unless the site asks search engines not to index it."
+msgstr "Site haritası açıkken, site arama motorlarından dizinlememelerini istemediği sürece kendiliğinden eklenir."
+
+#: src/includes/Screens
+msgid "WordPress sitemap"
+msgstr "WordPress site haritası"
+
+#: src/includes/Screens
+msgid "Turned off"
+msgstr "Kapatıldı"
+
+#: src/includes/Screens
+msgid "WordPress ships its own /wp-sitemap.xml. WPSeoKit turns it off so search engines see one sitemap, not two."
+msgstr "WordPress kendi /wp-sitemap.xml dosyasını getirir. WPSeoKit onu kapatır; böylece arama motorları iki değil tek site haritası görür."
+
+#: src/includes/Screens
+msgid "robots.txt and WordPress sitemap"
+msgstr "robots.txt ve WordPress site haritası"
+
+#: src/includes/Screens
+msgid "Titles & descriptions"
+msgstr "Başlıklar ve açıklamalar"
+
+#: src/includes/Screens
+msgid "Write the title and description pattern for each kind of page."
+msgstr "Her sayfa türü için başlık ve açıklama kalıbını yazın."
+
+#: src/includes/Screens
+msgid "Home"
+msgstr "Ana sayfa"
+
+#: src/includes/Screens
+msgid "Categories & tags"
+msgstr "Kategoriler ve etiketler"
+
+#: src/includes/Screens
+msgid "Archives & search"
+msgstr "Arşivler ve arama"
+
+#: src/includes/Screens
+msgid "Separator & variables"
+msgstr "Ayırıcı ve değişkenler"
+
+#: src/includes/Screens
+msgid "Titles and descriptions sections"
+msgstr "Başlık ve açıklama bölümleri"
+
+#: src/includes/Screens
+msgid "Title template"
+msgstr "Başlık şablonu"
+
+#: src/includes/Screens
+msgid "Shown under the title in search results. Aim for 70–155 characters. Leave empty to use the tagline."
+msgstr "Arama sonuçlarında başlığın altında görünür. 70–155 karakter hedefleyin. Sloganı kullanmak için boş bırakın."
+
+#: src/includes/Screens
+msgid "How the front page looks in search results."
+msgstr "Ana sayfanın arama sonuçlarında nasıl göründüğü."
+
+#: src/includes/Screens
+msgid "Used when an item has no description of its own. An empty template falls back to the excerpt, then to the first 155 characters of the content."
+msgstr "Bir öğenin kendi açıklaması yoksa kullanılır. Şablon boşsa önce özet, sonra içeriğin ilk 155 karakteri kullanılır."
+
+#: src/includes/Screens
+msgid "Search results"
+msgstr "Arama sonuçları"
+
+#: src/includes/Screens
+msgid "Show %s in search results"
+msgstr "%s arama sonuçlarında gösterilsin"
+
+#: src/includes/Screens
+msgid "Turn off to add noindex to every item of this type."
+msgstr "Bu türdeki her öğeye noindex eklemek için kapatın."
+
+#: src/includes/Screens
+msgid "%s title"
+msgstr "%s başlığı"
+
+#: src/includes/Screens
+msgid "Switched on = the archive asks search engines not to list it, and it leaves the sitemap."
+msgstr "Açıkken arşiv, arama motorlarından kendisini listelememelerini ister ve site haritasından çıkar."
+
+#: src/includes/Screens
+msgid "Category descriptions are edited on each category."
+msgstr "Kategori açıklamaları her kategorinin kendi sayfasında düzenlenir."
+
+#: src/includes/Screens
+msgid "Author archives"
+msgstr "Yazar arşivleri"
+
+#: src/includes/Screens
+msgid "Used for pages that list one author’s posts."
+msgstr "Tek bir yazarın yazılarını listeleyen sayfalar için kullanılır."
+
+#: src/includes/Screens
+msgid "Empty author pages"
+msgstr "Boş yazar sayfaları"
+
+#: src/includes/Screens
+msgid "Add noindex to authors without posts"
+msgstr "Yazısı olmayan yazarlara noindex ekle"
+
+#: src/includes/Screens
+msgid "Date archives"
+msgstr "Tarih arşivleri"
+
+#: src/includes/Screens
+msgid "Add noindex to date archives"
+msgstr "Tarih arşivlerine noindex ekle"
+
+#: src/includes/Screens
+msgid "Search results page"
+msgstr "Arama sonuçları sayfası"
+
+#: src/includes/Screens
+msgid "Always noindex, so this only sets the browser tab text."
+msgstr "Her zaman noindex’tir; bu yalnız tarayıcı sekmesi metnini belirler."
+
+#: src/includes/Screens
+msgid "404 page"
+msgstr "404 sayfası"
+
+#: src/includes/Screens
+msgid "Archives and search"
+msgstr "Arşivler ve arama"
+
+#: src/includes/Screens
+msgid "Pages WordPress makes by itself."
+msgstr "WordPress’in kendiliğinden oluşturduğu sayfalar."
+
+#: src/includes/Screens
+msgid "Used between the page title and the site name."
+msgstr "Sayfa başlığı ile site adı arasında kullanılır."
+
+#: src/includes/Screens
+msgid "Title separator"
+msgstr "Başlık ayracı"
+
+#: src/includes/Screens
+msgid "Replaces %sep% in every template."
+msgstr "Her şablondaki %sep% yerine geçer."
+
+#: src/includes/Screens
+msgid "The title of the post or page."
+msgstr "Yazının ya da sayfanın başlığı."
+
+#: src/includes/Screens
+msgid "Gentle Shadows"
+msgstr "Nazik Gölgeler"
+
+#: src/includes/Screens
+msgid "The site title."
+msgstr "Site başlığı."
+
+#: src/includes/Screens
+msgid "The site tagline."
+msgstr "Site sloganı."
+
+#: src/includes/Screens
+msgid "The separator chosen above."
+msgstr "Yukarıda seçilen ayırıcı."
+
+#: src/includes/Screens
+msgid "Page number on paged lists, empty on page one."
+msgstr "Sayfalı listelerde sayfa numarası, ilk sayfada boş."
+
+#: src/includes/Screens
+msgid "Page 2"
+msgstr "Sayfa 2"
+
+#: src/includes/Screens
+msgid "The excerpt of the post."
+msgstr "Yazının özeti."
+
+#: src/includes/Screens
+msgid "A short summary…"
+msgstr "Kısa bir özet…"
+
+#: src/includes/Screens
+msgid "The categories of the post."
+msgstr "Yazının kategorileri."
+
+#: src/includes/Screens
+msgid "Crime"
+msgstr "Suç"
+
+#: src/includes/Screens
+msgid "The primary category of the post."
+msgstr "Yazının ana kategorisi."
+
+#: src/includes/Screens
+msgid "The publish date."
+msgstr "Yayın tarihi."
+
+#: src/includes/Screens
+msgid "The author name."
+msgstr "Yazar adı."
+
+#: src/includes/Screens
+msgid "Jane Doe"
+msgstr "Ayşe Yılmaz"
+
+#: src/includes/Screens
+msgid "The name of the category or tag."
+msgstr "Kategorinin ya da etiketin adı."
+
+#: src/includes/Screens
+msgid "What the visitor searched for."
+msgstr "Ziyaretçinin aradığı ifade."
+
+#: src/includes/Screens
+msgid "gentle"
+msgstr "sakin"
+
+#: src/includes/Screens
+msgid "Variable"
+msgstr "Değişken"
+
+#: src/includes/Screens
+msgid "Meaning"
+msgstr "Anlamı"
+
+#: src/includes/Screens
+msgid "Example"
+msgstr "Örnek"
+
+#: src/includes/Screens
+msgid "Template variables"
+msgstr "Şablon değişkenleri"
+
+#: src/includes/Screens
+msgid "Variables"
+msgstr "Değişkenler"
+
+#: src/includes/Screens
+msgid "Use these in any template. Click “Insert a variable” in a field to add one."
+msgstr "Bunları her şablonda kullanın. Eklemek için bir alandaki “Değişken ekle” bağlantısına tıklayın."
+
+#: src/includes/Screens
+msgid "Settings saved."
+msgstr "Ayarlar kaydedildi."
+
+#: src/includes/Screens
+msgid "Settings were not saved."
+msgstr "Ayarlar kaydedilemedi."
+
+#: src/includes/Screens
+msgid "Saving…"
+msgstr "Kaydediliyor…"
+
+#: src/includes/Screens
+msgid "This list could not be loaded."
+msgstr "Bu liste yüklenemedi."
+
+#: src/includes/Screens
+msgid "Try again"
+msgstr "Yeniden dene"
+
+#: src/includes/Screens
+msgid "Demo data: the server part of this screen is not installed yet, so nothing here is saved."
+msgstr "Örnek veri: bu ekranın sunucu tarafı henüz kurulu değil, bu yüzden burada hiçbir şey kaydedilmez."
+
+#: src/includes/Screens
+msgid "Edit"
+msgstr "Düzenle"
+
+#: src/includes/Screens
+msgid "Today"
+msgstr "Bugün"
+
+#: src/includes/Screens
+msgid "Never"
+msgstr "Hiç"
+
+#: src/includes/Screens
+msgid "No redirects yet. Add the first one on the Add tab."
+msgstr "Henüz yönlendirme yok. İlkini Ekle sekmesinden ekleyin."
+
+#: src/includes/Screens
+msgid "Nothing matches this search."
+msgstr "Bu aramayla eşleşen bir şey yok."
+
+#: src/includes/Screens
+msgid "No 404 errors logged. Visitors are finding your pages."
+msgstr "Kayıtlı 404 hatası yok. Ziyaretçiler sayfalarınızı buluyor."
+
+#: src/includes/Screens
+msgid "Redirect added."
+msgstr "Yönlendirme eklendi."
+
+#: src/includes/Screens
+msgid "Redirect updated."
+msgstr "Yönlendirme güncellendi."
+
+#: src/includes/Screens
+msgid "Redirect deleted."
+msgstr "Yönlendirme silindi."
+
+#: src/includes/Screens
+msgid "Redirect created."
+msgstr "Yönlendirme oluşturuldu."
+
+#: src/includes/Screens
+msgid "Undo"
+msgstr "Geri al"
+
+#: src/includes/Screens
+msgid "Enter the old path, starting with a slash."
+msgstr "Eski yolu eğik çizgiyle başlayarak girin."
+
+#: src/includes/Screens
+msgid "Enter the new address, or choose type 410."
+msgstr "Yeni adresi girin ya da 410 türünü seçin."
+
+#: src/includes/Screens
+msgid "Delete %d redirects?"
+msgstr "%d yönlendirme silinsin mi?"
+
+#: src/includes/Screens
+msgid "Delete %d redirects"
+msgstr "%d yönlendirmeyi sil"
+
+#: src/includes/Screens
+msgid "Visitors who use these old addresses will see a 404 page again. This cannot be undone, but you can add the redirects back."
+msgstr "Bu eski adresleri kullanan ziyaretçiler yeniden 404 sayfası görür. Geri alınamaz, ama yönlendirmeleri tekrar ekleyebilirsiniz."
+
+#: src/includes/Screens
+msgid "Import %d redirects"
+msgstr "%d yönlendirmeyi içe aktar"
+
+#: src/includes/Screens
+msgid "checked"
+msgstr "denetlendi"
+
+#: src/includes/Screens
+msgid "Choose a CSV file first."
+msgstr "Önce bir CSV dosyası seçin."
+
+#: src/includes/Screens
+msgid "Line"
+msgstr "Satır"
+
+#: src/includes/Screens
+msgid "Redirect to…"
+msgstr "Şuraya yönlendir…"
+
+#: src/includes/Screens
+msgid "Best match"
+msgstr "En iyi eşleşme"
+
+#: src/includes/Screens
+msgid "Redirect"
+msgstr "Yönlendir"
+
+#: src/includes/Screens
+msgid "Sitemap rebuilt."
+msgstr "Site haritası yenilendi."
+
+#: src/includes/Screens
+msgid "Rebuilding the sitemap…"
+msgstr "Site haritası yenileniyor…"
+
+#: src/includes/Screens
+msgid "Copied"
+msgstr "Kopyalandı"
+
+#: src/includes/Screens
+msgid "Replace image"
+msgstr "Görseli değiştir"
+
+#: src/includes/Screens
+msgid "Source: written here"
+msgstr "Kaynak: burada yazıldı"
+
+#: src/includes/Screens
+msgid "Source: title template"
+msgstr "Kaynak: başlık şablonu"
+
+#: src/includes/Screens
+msgid "Source: excerpt"
+msgstr "Kaynak: özet"
+
+#: src/includes/Screens
+msgid "Source: start of the content"
+msgstr "Kaynak: içeriğin başı"
+
+#: src/includes/Screens
+msgid "Good length"
+msgstr "İyi uzunluk"
+
+#: src/includes/Screens
+msgid "Too short"
+msgstr "Çok kısa"
+
+#: src/includes/Screens
+msgid "Getting long"
+msgstr "Uzuyor"
+
+#: src/includes/Screens
+msgid "Too long: it will be cut"
+msgstr "Çok uzun: kesilecek"
+
+#: src/includes/Screens
+msgid "Checking your Yoast data…"
+msgstr "Yoast verileriniz denetleniyor…"
+
+#: src/includes/Screens
+msgid "Importing…"
+msgstr "İçe aktarılıyor…"
+
+#: src/includes/Screens
+msgid "Import finished."
+msgstr "İçe aktarma bitti."
+
+#: src/includes/Screens
+msgid "Import undone."
+msgstr "İçe aktarma geri alındı."
+
+#: src/includes/Screens
+msgid "Skipped"
+msgstr "Atlanan"
+
+#: src/includes/Screens
+msgid "Conflicts"
+msgstr "Çakışma"
+
+#: src/includes/Screens
+msgid "%d active redirects"
+msgstr "%d etkin yönlendirme"
+
+#: src/includes/Screens
+msgid "%d errors logged"
+msgstr "%d hata kaydedildi"
+
+#: src/includes/Screens
+msgid "Needs a look"
+msgstr "Göz atmak gerek"
+
+#: src/includes/Screens
+msgid "Clean"
+msgstr "Temiz"
+
+#: src/includes/Screens
+msgid "Fix"
+msgstr "Düzelt"
+
+#: src/includes/Screens
+msgid "This page prints no schema."
+msgstr "Bu sayfa hiç schema basmıyor."
+
+#: src/includes/Screens
+msgid "The feed is on and answers at this address."
+msgstr "Besleme açık ve bu adreste yanıt veriyor."
+
+#: src/includes/Screens
+msgid "The feed is off."
+msgstr "Besleme kapalı."
+
+#: src/includes/Screens
+msgid "There is no published post to show."
+msgstr "Gösterilecek yayınlanmış yazı yok."
+
+#: src/includes/Screens
+msgid "Verify"
+msgstr "Doğrula"
+
+#: src/includes/Screens
+msgid "Verified."
+msgstr "Doğrulandı."
+
+#: src/includes/Screens
+msgid "Insert a variable"
+msgstr "Değişken ekle"
+
+#: src/includes/Screens
+msgid "You have unsaved changes."
+msgstr "Kaydedilmemiş değişiklikleriniz var."
+
+#: src/includes/Screens
+msgid "Discard"
+msgstr "Vazgeç"
+
+#: src/includes/Screens
+msgid "Save changes"
+msgstr "Değişiklikleri kaydet"

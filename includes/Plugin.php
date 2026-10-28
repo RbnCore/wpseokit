@@ -42,6 +42,8 @@ final class Plugin {
 		'Screens\\TemplatesScreen',
 		'Screens\\SchemaScreen',
 		'Screens\\SitemapScreen',
+		'Screens\\FeedScreen',
+		'Screens\\LlmsScreen',
 		'Screens\\RedirectsScreen',
 		'Screens\\Log404Screen',
 		'Screens\\ImportScreen',

@@ -179,6 +179,10 @@ final class Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( esc_html__( 'You do not have permission to open this page.', 'wpseokit' ), '', array( 'response' => 403 ) );
 		}
+		if ( has_action( 'wpseokit_render_page' ) ) { // The dashboard and tool pages (Screens\Shell) draw their own shell.
+			do_action( 'wpseokit_render_page' );
+			return;
+		}
 		$tabs = self::tabs();
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- reading a tab name only.
 		$wanted = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '';
@@ -211,6 +215,11 @@ final class Admin {
 
 	/** Shows the result message after an update action (`wk_note`). */
 	private static function print_note(): void {
+		echo self::note_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the message is escaped below.
+	}
+
+	/** Result message after an update action (`wk_note`) as a notice, or an empty string. */
+	public static function note_html(): string {
 		$messages = array(
 			'update_checked' => array( 'success', __( 'Update check finished.', 'wpseokit' ) ),
 			'update_is_off'  => array( 'warning', __( 'The update check is off; nothing was checked.', 'wpseokit' ) ),
@@ -219,9 +228,10 @@ final class Admin {
 		);
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- reading a message key only; it is matched against the list above.
 		$key = isset( $_GET['wk_note'] ) ? sanitize_key( wp_unslash( $_GET['wk_note'] ) ) : '';
-		if ( isset( $messages[ $key ] ) ) {
-			echo '<div class="notice notice-' . esc_attr( $messages[ $key ][0] ) . ' inline"><p>' . esc_html( $messages[ $key ][1] ) . '</p></div>';
+		if ( ! isset( $messages[ $key ] ) ) {
+			return '';
 		}
+		return '<div class="notice notice-' . esc_attr( $messages[ $key ][0] ) . ' inline" role="status"><p>' . esc_html( $messages[ $key ][1] ) . '</p></div>';
 	}
 
 	/** The Status tab: version, schema, Yoast state and the updates card. */
