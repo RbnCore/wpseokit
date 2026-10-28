@@ -280,3 +280,35 @@ msgstr ""
 #: src/includes/Services/Variables.php
 msgid "Primary category"
 msgstr ""
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "Pages"
+msgstr ""
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "Posts"
+msgstr ""
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "Topics"
+msgstr ""
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "Send the llms settings as an object."
+msgstr ""
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "The tool is off, so the address answers 404 until you turn it on."
+msgstr ""
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "This site asks search engines not to index it (Settings > Reading)."
+msgstr ""
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "There is no summary: write one, or set the site tagline."
+msgstr ""
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "No page or post is listed yet."
+msgstr ""

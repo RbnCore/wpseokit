@@ -557,6 +557,7 @@ final class YoastImportService {
 				array( 'wpseo', 'msverify', 'general.verify_bing', 'text' ),
 				array( 'wpseo', 'yandexverify', 'general.verify_yandex', 'text' ),
 				array( 'wpseo', 'baiduverify', 'general.verify_baidu', 'text' ),
+				array( 'wpseo', 'enable_llms_txt', 'llms.enabled', 'bool' ),
 				array( 'wpseo', 'enable_xml_sitemap', 'sitemap.enabled', 'bool' ),
 			),
 			'cfg_schema'    => array(

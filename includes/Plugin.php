@@ -31,6 +31,7 @@ final class Plugin {
 		'Services\\Log404Service',
 		'Services\\CsvService',
 		'Services\\YoastImportService',
+		'Services\\LlmsTxtService',
 	);
 
 	/** Started in the admin only. */

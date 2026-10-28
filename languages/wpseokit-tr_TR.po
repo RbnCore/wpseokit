@@ -282,3 +282,35 @@ msgstr "Kategoriler"
 #: src/includes/Services/Variables.php
 msgid "Primary category"
 msgstr "Birincil kategori"
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "Pages"
+msgstr "Sayfalar"
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "Posts"
+msgstr "Yazılar"
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "Topics"
+msgstr "Konular"
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "Send the llms settings as an object."
+msgstr "llms ayarlarını bir nesne olarak gönderin."
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "The tool is off, so the address answers 404 until you turn it on."
+msgstr "Araç kapalı; açana kadar adres 404 döndürür."
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "This site asks search engines not to index it (Settings > Reading)."
+msgstr "Bu site arama motorlarından dizinlenmemesini istiyor (Ayarlar > Okuma)."
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "There is no summary: write one, or set the site tagline."
+msgstr "Özet yok: bir özet yazın ya da site sloganını belirleyin."
+
+#: src/includes/Services/LlmsTxtService.php
+msgid "No page or post is listed yet."
+msgstr "Henüz listelenen sayfa ya da yazı yok."

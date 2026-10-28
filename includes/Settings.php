@@ -110,6 +110,17 @@ final class Settings {
 				'delete_on_uninstall'      => array( 'bool', false ),
 				'primary_category'         => array( 'bool', true ),
 			),
+			'llms'      => array(
+				'enabled'    => array( 'bool', false ),
+				'summary'    => array( 'text', '' ),
+				'pages'      => array( 'list', array() ),
+				'posts'      => array( 'list', array() ),
+				'post_types' => array( 'list', array( 'post' ) ),
+				'latest'     => array( 'int', 20, 0, 200 ),
+				'exclude'    => array( 'list', array() ),
+				'taxonomies' => array( 'list', array( 'category' ) ),
+				'max_terms'  => array( 'int', 50, 0, 200 ),
+			),
 		);
 	}
 
