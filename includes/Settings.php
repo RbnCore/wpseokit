@@ -31,7 +31,7 @@ final class Settings {
 
 	/**
 	 * Schema: section => key => array( type, default[, min, max | values] ).
-	 * Types: bool, int, text, url, enum, list, tpl_map, url_map, type_map.
+	 * Types: bool, int, text, url, host, enum, list, tpl_map, url_map, type_map.
 	 *
 	 * @return array<string, array<string, array<int, mixed>>>
 	 */
@@ -101,6 +101,11 @@ final class Settings {
 				'log_retention_days' => array( 'int', 30, 1, 365 ),
 				'log_max_rows'       => array( 'int', 5000, 100, 50000 ),
 				'ignore_bots'        => array( 'bool', true ),
+				// Preferred address (docs/kapsam-ve-mimari.md §3.11). 'auto' / '' follow home_url(); nothing changes until edited.
+				'preferred_scheme'    => array( 'enum', 'auto', array( 'auto', 'https', 'http' ) ),
+				'preferred_host'      => array( 'host', '' ),
+				'php_fallback'        => array( 'bool', false ),
+				'trust_proxy_headers' => array( 'bool', false ),
 			),
 			'general'   => array(
 				'disable_author_archive'   => array( 'bool', false ),
@@ -204,6 +209,7 @@ final class Settings {
 				return ( is_int( $value ) || ( is_string( $value ) && 1 === preg_match( '/^-?\d{1,15}$/', $value ) ) ) ? '' : 'Expected an integer.';
 			case 'text':
 			case 'url':
+			case 'host':
 				return is_string( $value ) ? '' : 'Expected a string.';
 			case 'enum':
 				return ( is_string( $value ) && in_array( $value, $def[2], true ) ) ? '' : 'Value is not one of the allowed options.';
@@ -251,6 +257,8 @@ final class Settings {
 				return self::text( $raw );
 			case 'url':
 				return self::url( $raw );
+			case 'host':
+				return self::host( $raw );
 			case 'enum':
 				return ( is_string( $raw ) && in_array( $raw, $def[2], true ) ) ? $raw : $def[1];
 			case 'list':
@@ -319,6 +327,22 @@ final class Settings {
 		$text = wp_strip_all_tags( wp_check_invalid_utf8( (string) $value ) );
 		$text = trim( (string) preg_replace( '/[\x00-\x1F\x7F]+/', ' ', $text ) );
 		return function_exists( 'mb_substr' ) ? mb_substr( $text, 0, 300 ) : substr( $text, 0, 300 );
+	}
+
+	/**
+	 * A bare host name (letters, digits, dots, hyphens; lower case; no scheme, path, port or user), or an empty string.
+	 *
+	 * @param mixed $value Value.
+	 */
+	public static function host( $value ): string {
+		if ( ! is_string( $value ) ) {
+			return '';
+		}
+		$host = strtolower( trim( $value ) );
+		if ( strlen( $host ) > 253 || 1 !== preg_match( '/^(?=.{1,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/', $host ) ) {
+			return '';
+		}
+		return $host;
 	}
 
 	/**

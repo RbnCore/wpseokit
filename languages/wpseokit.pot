@@ -2864,3 +2864,80 @@ msgstr ""
 #: src/includes/Screens
 msgid "Save changes"
 msgstr ""
+
+#: src/includes/Services/SitemapView.php
+msgid "Site owner: open WPSeoKit › Sitemap and switch on at least one content type."
+msgstr ""
+#: src/includes/Services/PreferredAddressService.php
+msgid "Correct: this address is the preferred address, or it sends visitors to it with one permanent redirect."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "Redirect chain: visitors make two or more hops. Redirect straight to the preferred address in one hop."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "The redirect is temporary (302, 303 or 307). Use a permanent redirect (301 or 308)."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "This address answers with its own page. It is a copy of the preferred address; redirect it."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "This address does not lead to the preferred address."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "A step leaves HTTPS for HTTP. Remove it; never redirect from HTTPS to HTTP."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "Redirect loop, or more hops than are followed. Turn off the PHP fallback and check the server rule."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "The preferred address itself does not answer with a normal page (it redirects or returns an error)."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "Could not be reached (no DNS record, no connection or an invalid certificate)."
+msgstr ""
+
+#. translators: %s: address
+#: src/includes/Services/PreferredAddressService.php
+msgid "The certificate of %s is not valid. Do not make HTTPS the preferred address until it is."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "The server (or a CDN) already redirects some variants. The PHP fallback is not needed; leave it off."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "The PHP fallback is on while the server also redirects: this can make a chain. Turn the fallback off."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "The preferred address is HTTP. Google prefers HTTPS pages as the canonical address."
+msgstr ""
+
+#. translators: 1: preferred address, 2: bare host name
+#: src/includes/Services/PreferredAddressService.php
+msgid "Hosting panel without file access: create ONE permanent (301) redirect for the domain, with the \"redirect with or without www\" option set to %1$s, and switch on \"force HTTPS\" if your host offers it. Do not stack two panel redirects, and do not turn on the plugin PHP fallback next to them. Make sure the certificate covers %2$s and www.%2$s."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "A server rule and the PHP fallback (or another redirect plugin) on top of each other make a redirect chain. Use one of them."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "Check that the certificate is valid for both host names before you make HTTPS the preferred address."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "A multisite network is outside the scope of the PHP fallback; it stays inactive. Use a server rule."
+msgstr ""
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "WordPress Address and Site Address do not match the preferred address. Set both to the preferred address in Settings > General."
+msgstr ""

@@ -2866,3 +2866,80 @@ msgstr "Vazgeç"
 #: src/includes/Screens
 msgid "Save changes"
 msgstr "Değişiklikleri kaydet"
+
+#: src/includes/Services/SitemapView.php
+msgid "Site owner: open WPSeoKit › Sitemap and switch on at least one content type."
+msgstr "Site sahibi: WPSeoKit › Site haritası bölümünü açıp en az bir içerik türünü etkinleştirin."
+#: src/includes/Services/PreferredAddressService.php
+msgid "Correct: this address is the preferred address, or it sends visitors to it with one permanent redirect."
+msgstr "Doğru: bu adres tercih edilen adrestir ya da ziyaretçileri tek bir kalıcı yönlendirmeyle ona gönderir."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "Redirect chain: visitors make two or more hops. Redirect straight to the preferred address in one hop."
+msgstr "Yönlendirme zinciri: ziyaretçi iki ya da daha fazla sıçrama yapıyor. Doğrudan tercih edilen adrese tek sıçramayla yönlendirin."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "The redirect is temporary (302, 303 or 307). Use a permanent redirect (301 or 308)."
+msgstr "Yönlendirme geçici (302, 303 veya 307). Kalıcı yönlendirme (301 veya 308) kullanın."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "This address answers with its own page. It is a copy of the preferred address; redirect it."
+msgstr "Bu adres kendi sayfasıyla yanıt veriyor. Tercih edilen adresin kopyasıdır; yönlendirin."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "This address does not lead to the preferred address."
+msgstr "Bu adres tercih edilen adrese çıkmıyor."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "A step leaves HTTPS for HTTP. Remove it; never redirect from HTTPS to HTTP."
+msgstr "Bir adım HTTPS'ten HTTP'ye düşüyor. Kaldırın; HTTPS'ten HTTP'ye asla yönlendirmeyin."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "Redirect loop, or more hops than are followed. Turn off the PHP fallback and check the server rule."
+msgstr "Yönlendirme döngüsü ya da izlenenden fazla sıçrama. PHP yedeğini kapatın ve sunucu kuralını kontrol edin."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "The preferred address itself does not answer with a normal page (it redirects or returns an error)."
+msgstr "Tercih edilen adres normal bir sayfayla yanıt vermiyor (yönlendiriyor ya da hata döndürüyor)."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "Could not be reached (no DNS record, no connection or an invalid certificate)."
+msgstr "Ulaşılamadı (DNS kaydı yok, bağlantı kurulamadı ya da sertifika geçersiz)."
+
+#. translators: %s: address
+#: src/includes/Services/PreferredAddressService.php
+msgid "The certificate of %s is not valid. Do not make HTTPS the preferred address until it is."
+msgstr "%s adresinin sertifikası geçerli değil. Geçerli olana dek HTTPS'i tercih edilen adres yapmayın."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "The server (or a CDN) already redirects some variants. The PHP fallback is not needed; leave it off."
+msgstr "Sunucu (ya da bir CDN) bazı varyantları zaten yönlendiriyor. PHP yedeği gerekmez; kapalı bırakın."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "The PHP fallback is on while the server also redirects: this can make a chain. Turn the fallback off."
+msgstr "PHP yedeği açıkken sunucu da yönlendiriyor: bu zincir oluşturabilir. Yedeği kapatın."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "The preferred address is HTTP. Google prefers HTTPS pages as the canonical address."
+msgstr "Tercih edilen adres HTTP. Google, kanonik adres olarak HTTPS sayfaları tercih eder."
+
+#. translators: 1: preferred address, 2: bare host name
+#: src/includes/Services/PreferredAddressService.php
+msgid "Hosting panel without file access: create ONE permanent (301) redirect for the domain, with the \"redirect with or without www\" option set to %1$s, and switch on \"force HTTPS\" if your host offers it. Do not stack two panel redirects, and do not turn on the plugin PHP fallback next to them. Make sure the certificate covers %2$s and www.%2$s."
+msgstr "Dosya erişimi olmayan barındırma paneli: alan adı için TEK bir kalıcı (301) yönlendirme oluşturun, \"www'lu ya da www'suz yönlendir\" seçeneğini %1$s olarak ayarlayın ve barındırıcınız sunuyorsa \"HTTPS'i zorla\" seçeneğini açın. İki panel yönlendirmesini üst üste koymayın, yanlarında eklentinin PHP yedeğini açmayın. Sertifikanın %2$s ve www.%2$s adreslerini kapsadığından emin olun."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "A server rule and the PHP fallback (or another redirect plugin) on top of each other make a redirect chain. Use one of them."
+msgstr "Sunucu kuralı ile PHP yedeği (ya da başka bir yönlendirme eklentisi) üst üste binerse yönlendirme zinciri oluşur. Yalnız birini kullanın."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "Check that the certificate is valid for both host names before you make HTTPS the preferred address."
+msgstr "HTTPS'i tercih edilen adres yapmadan önce sertifikanın iki host adı için de geçerli olduğunu kontrol edin."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "A multisite network is outside the scope of the PHP fallback; it stays inactive. Use a server rule."
+msgstr "Çoklu site ağı PHP yedeğinin kapsamı dışındadır; devre dışı kalır. Sunucu kuralı kullanın."
+
+#: src/includes/Services/PreferredAddressService.php
+msgid "WordPress Address and Site Address do not match the preferred address. Set both to the preferred address in Settings > General."
+msgstr "WordPress Adresi ve Site Adresi tercih edilen adresle uyuşmuyor. Ayarlar > Genel bölümünde ikisini de tercih edilen adrese ayarlayın."

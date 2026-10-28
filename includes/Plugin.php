@@ -34,6 +34,7 @@ final class Plugin {
 		'Services\\LlmsTxtService',
 		'Services\\FeedService',
 		'Services\\ScoreService',
+		'Services\\PreferredAddressService',
 	);
 
 	/** Started in the admin only. */
