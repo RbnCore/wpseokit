@@ -123,6 +123,25 @@ final class Settings {
 				'taxonomies' => array( 'list', array( 'category' ) ),
 				'max_terms'  => array( 'int', 50, 0, 200 ),
 			),
+			'feed'      => array(
+				'main_enabled'               => array( 'bool', true ),
+				'content_mode'               => array( 'enum', 'inherit', array( 'inherit', 'full', 'summary' ) ),
+				'items_count'                => array( 'int', 0, 0, 50 ),
+				'source_link_enabled'        => array( 'bool', false ),
+				'footer_text'                => array( 'text', 'The post %title% first appeared on %sitename%.' ),
+				'copyright_enabled'          => array( 'bool', false ),
+				'copyright_text'             => array( 'text', '' ),
+				'featured_image_enabled'     => array( 'bool', false ),
+				'disable_comments_feed'      => array( 'bool', false ),
+				'disable_post_comments_feed' => array( 'bool', false ),
+				'disable_author_feed'        => array( 'bool', false ),
+				'disable_taxonomy_feed'      => array( 'bool', false ),
+				'disable_search_feed'        => array( 'bool', false ),
+				'disable_attachment_feed'    => array( 'bool', false ),
+				'redirect_closed'            => array( 'bool', false ),
+				'noindex_feed'               => array( 'bool', false ),
+				'clean_head_links'           => array( 'bool', false ),
+			),
 		);
 	}
 

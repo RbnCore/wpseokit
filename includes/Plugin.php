@@ -32,6 +32,7 @@ final class Plugin {
 		'Services\\CsvService',
 		'Services\\YoastImportService',
 		'Services\\LlmsTxtService',
+		'Services\\FeedService',
 	);
 
 	/** Started in the admin only. */
