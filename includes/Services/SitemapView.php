@@ -103,7 +103,7 @@ final class SitemapView {
 		header( 'Content-Type: text/html; charset=UTF-8' );
 		header( 'X-Content-Type-Options: nosniff' );
 		header( 'X-Robots-Tag: noindex, follow' );
-		header( 'Cache-Control: public, max-age=3600' );
+		header( 'Cache-Control: no-cache' );
 		header( 'ETag: ' . $etag );
 		if ( isset( $_SERVER['HTTP_IF_NONE_MATCH'] ) && trim( (string) $_SERVER['HTTP_IF_NONE_MATCH'] ) === $etag ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
 			status_header( 304 );
