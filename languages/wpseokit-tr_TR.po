@@ -205,3 +205,80 @@ msgstr "Güncelleme denetimini kapat"
 msgid "Turn on the update check"
 msgstr "Güncelleme denetimini aç"
 
+#: src/includes/Services/Variables.php
+msgid "Page %1$d of %2$d"
+msgstr "Sayfa %1$d / %2$d"
+
+#: src/includes/Services/SocialService.php
+msgid "Written by"
+msgstr "Yazan:"
+
+#: src/includes/Services/SocialService.php
+msgid "Estimated reading time"
+msgstr "Tahmini okuma süresi"
+
+#: src/includes/Services/SocialService.php
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d dakika"
+msgstr[1] "%d dakika"
+
+#: src/includes/Services/PrimaryTermService.php
+msgid "Post not found."
+msgstr "Yazı bulunamadı."
+
+#: src/includes/Services/PrimaryTermService.php
+msgid "The category is not assigned to this post."
+msgstr "Bu kategori yazıya atanmamış."
+
+#: src/includes/Services/MetaService.php
+msgid "Term not found."
+msgstr "Terim bulunamadı."
+
+#: src/includes/Services/Variables.php
+msgid "Post title"
+msgstr "Yazı başlığı"
+
+#: src/includes/Services/Variables.php
+msgid "Site title"
+msgstr "Site başlığı"
+
+#: src/includes/Services/Variables.php
+msgid "Tagline"
+msgstr "Slogan"
+
+#: src/includes/Services/Variables.php
+msgid "Separator"
+msgstr "Ayraç"
+
+#: src/includes/Services/Variables.php
+msgid "Page number (empty on the first page)"
+msgstr "Sayfa numarası (ilk sayfada boş)"
+
+#: src/includes/Services/Variables.php
+msgid "Term name"
+msgstr "Terim adı"
+
+#: src/includes/Services/Variables.php
+msgid "Search phrase"
+msgstr "Arama ifadesi"
+
+#: src/includes/Services/Variables.php
+msgid "Author name"
+msgstr "Yazar adı"
+
+#: src/includes/Services/Variables.php
+msgid "Date"
+msgstr "Tarih"
+
+#: src/includes/Services/Variables.php
+msgid "Excerpt"
+msgstr "Özet"
+
+#: src/includes/Services/Variables.php
+msgid "Categories"
+msgstr "Kategoriler"
+
+#: src/includes/Services/Variables.php
+msgid "Primary category"
+msgstr "Birincil kategori"

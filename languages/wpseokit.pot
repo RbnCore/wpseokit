@@ -203,3 +203,80 @@ msgstr ""
 msgid "Turn on the update check"
 msgstr ""
 
+#: src/includes/Services/Variables.php
+msgid "Page %1$d of %2$d"
+msgstr ""
+
+#: src/includes/Services/SocialService.php
+msgid "Written by"
+msgstr ""
+
+#: src/includes/Services/SocialService.php
+msgid "Estimated reading time"
+msgstr ""
+
+#: src/includes/Services/SocialService.php
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/includes/Services/PrimaryTermService.php
+msgid "Post not found."
+msgstr ""
+
+#: src/includes/Services/PrimaryTermService.php
+msgid "The category is not assigned to this post."
+msgstr ""
+
+#: src/includes/Services/MetaService.php
+msgid "Term not found."
+msgstr ""
+
+#: src/includes/Services/Variables.php
+msgid "Post title"
+msgstr ""
+
+#: src/includes/Services/Variables.php
+msgid "Site title"
+msgstr ""
+
+#: src/includes/Services/Variables.php
+msgid "Tagline"
+msgstr ""
+
+#: src/includes/Services/Variables.php
+msgid "Separator"
+msgstr ""
+
+#: src/includes/Services/Variables.php
+msgid "Page number (empty on the first page)"
+msgstr ""
+
+#: src/includes/Services/Variables.php
+msgid "Term name"
+msgstr ""
+
+#: src/includes/Services/Variables.php
+msgid "Search phrase"
+msgstr ""
+
+#: src/includes/Services/Variables.php
+msgid "Author name"
+msgstr ""
+
+#: src/includes/Services/Variables.php
+msgid "Date"
+msgstr ""
+
+#: src/includes/Services/Variables.php
+msgid "Excerpt"
+msgstr ""
+
+#: src/includes/Services/Variables.php
+msgid "Categories"
+msgstr ""
+
+#: src/includes/Services/Variables.php
+msgid "Primary category"
+msgstr ""
