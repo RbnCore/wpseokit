@@ -22,21 +22,12 @@ final class TVSeries extends Piece {
 			return false;
 		}
 
-		$schema_type = get_post_meta( $post->ID, '_wpseokit_schema_type', true );
-		if ( 'Article' === $schema_type || 'Movie' === $schema_type ) {
-			return false;
-		}
-
 		$data = Movie::get_schema_data( $post->ID );
 		if ( empty( $data ) ) {
 			return false;
 		}
 
-		if ( 'TVSeries' === $schema_type ) {
-			return true;
-		}
-
-		return Movie::is_tv_series_post( $post );
+		return 'TVSeries' === Movie::resolve_post_schema_type( $post );
 	}
 
 	public function generate(): ?array {

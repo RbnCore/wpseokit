@@ -31,7 +31,7 @@ final class Settings {
 
 	/**
 	 * Schema: section => key => array( type, default[, min, max | values] ).
-	 * Types: bool, int, text, url, enum, list, tpl_map, url_map.
+	 * Types: bool, int, text, url, enum, list, tpl_map, url_map, type_map.
 	 *
 	 * @return array<string, array<string, array<int, mixed>>>
 	 */
@@ -84,6 +84,7 @@ final class Settings {
 				'website_name'           => array( 'text', '' ),
 				'alternate_website_name' => array( 'text', '' ),
 				'person_name'            => array( 'text', '' ),
+				'type_map'               => array( 'type_map', array() ),
 			),
 			'sitemap'   => array(
 				'enabled'        => array( 'bool', true ),
@@ -184,6 +185,7 @@ final class Settings {
 				return is_array( $value ) ? '' : 'Expected a list.';
 			case 'tpl_map':
 			case 'url_map':
+			case 'type_map':
 				return is_array( $value ) ? '' : 'Expected an object.';
 		}
 		return '';
@@ -253,6 +255,24 @@ final class Settings {
 					$value = is_array( $raw ) && isset( $raw[ $name ] ) ? self::url( $raw[ $name ] ) : '';
 					if ( '' !== $value ) {
 						$map[ $name ] = $value;
+					}
+				}
+				return $map;
+			case 'type_map':
+				$map = array();
+				if ( is_array( $raw ) ) {
+					foreach ( $raw as $term_id => $type ) {
+						$term_id = (int) $term_id;
+						if ( $term_id <= 0 ) {
+							continue;
+						}
+						if ( ! is_string( $type ) || ! in_array( $type, array( 'Movie', 'TVSeries' ), true ) ) {
+							continue;
+						}
+						if ( function_exists( 'term_exists' ) && ! term_exists( $term_id, 'category' ) ) {
+							continue;
+						}
+						$map[ $term_id ] = $type;
 					}
 				}
 				return $map;

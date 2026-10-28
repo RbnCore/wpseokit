@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Schema;
 
+use Wpseokit\Repositories\SettingsRepository;
+
 defined( 'ABSPATH' ) || exit;
 
 final class Movie extends Piece {
@@ -22,26 +24,12 @@ final class Movie extends Piece {
 			return false;
 		}
 
-		$schema_type = get_post_meta( $post->ID, '_wpseokit_schema_type', true );
-		if ( 'Article' === $schema_type ) {
-			return false;
-		}
-
 		$data = self::get_schema_data( $post->ID );
 		if ( empty( $data ) ) {
 			return false;
 		}
 
-		if ( 'Movie' === $schema_type ) {
-			return true;
-		}
-
-		if ( 'TVSeries' === $schema_type ) {
-			return false;
-		}
-
-		// Auto category mapping: "Yabancı Dizi" / "Dizi" -> TVSeries, others -> Movie.
-		return ! self::is_tv_series_post( $post );
+		return 'Movie' === self::resolve_post_schema_type( $post );
 	}
 
 	public function generate(): ?array {
@@ -150,23 +138,43 @@ final class Movie extends Piece {
 	}
 
 	/**
-	 * Check whether a post belongs to a TV series category.
+	 * Resolve effective schema type for a post: 'Movie', 'TVSeries', or 'Article'.
+	 *
+	 * Post meta `_wpseokit_schema_type` takes highest precedence when set to 'Movie', 'TVSeries', or 'Article'.
+	 * When 'auto' or empty, `schema.type_map` (term_id => 'Movie'|'TVSeries') is checked against the post's categories.
+	 * If no mapping matches, returns 'Article'.
 	 */
-	public static function is_tv_series_post( \WP_Post $post ): bool {
-		$terms = get_the_terms( $post->ID, 'category' );
-		if ( ! is_array( $terms ) ) {
-			return false;
+	public static function resolve_post_schema_type( \WP_Post $post ): string {
+		$meta = (string) get_post_meta( $post->ID, '_wpseokit_schema_type', true );
+		if ( in_array( $meta, array( 'Movie', 'TVSeries', 'Article' ), true ) ) {
+			return $meta;
 		}
-		foreach ( $terms as $term ) {
-			if ( ! $term instanceof \WP_Term ) {
-				continue;
-			}
-			$name = mb_strtolower( (string) $term->name );
-			$slug = (string) $term->slug;
-			if ( 'yabancı dizi' === $name || 'dizi' === $name || 'yabanci-dizi' === $slug || 'dizi' === $slug ) {
-				return true;
+
+		$type_map = SettingsRepository::get( 'schema.type_map', array() );
+		if ( ! is_array( $type_map ) || array() === $type_map ) {
+			return 'Article';
+		}
+
+		// Check primary category first if present.
+		$primary = (int) get_post_meta( $post->ID, '_wpseokit_primary_category', true );
+		if ( $primary > 0 ) {
+			$matched = $type_map[ $primary ] ?? ( $type_map[ (string) $primary ] ?? null );
+			if ( is_string( $matched ) && in_array( $matched, array( 'Movie', 'TVSeries' ), true ) ) {
+				return $matched;
 			}
 		}
-		return false;
+
+		$cats = wp_get_post_categories( (int) $post->ID );
+		if ( is_array( $cats ) ) {
+			foreach ( $cats as $cat_id ) {
+				$cat_id  = (int) $cat_id;
+				$matched = $type_map[ $cat_id ] ?? ( $type_map[ (string) $cat_id ] ?? null );
+				if ( is_string( $matched ) && in_array( $matched, array( 'Movie', 'TVSeries' ), true ) ) {
+					return $matched;
+				}
+			}
+		}
+
+		return 'Article';
 	}
 }
