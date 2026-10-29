@@ -4431,3 +4431,7 @@ msgstr "WPSeoKit kapalı: kurulu AdminKit çok eski. Yeniden açmak için AdminK
 #: src/includes/Gate.php
 msgid "WPSeoKit is switched off: it needs the AdminKit plugin (cache, logs and the RBN Kit menu)."
 msgstr "WPSeoKit kapalı: AdminKit eklentisine (önbellek, günlükler ve RBN Kit menüsü) ihtiyaç duyar."
+
+#: includes/Screens/DashboardScreen.php:326
+msgid "A check that cannot reach the release list is expected until the first release is published. WPSeoKit tries again later."
+msgstr "İlk sürüm yayımlanana kadar sürüm listesine ulaşamayan bir denetim beklenen durumdur. WPSeoKit daha sonra yeniden dener."

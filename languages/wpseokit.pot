@@ -2,3104 +2,4280 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WPSeoKit 0.1.1\n"
 "Report-Msgid-Bugs-To: https://github.com/RbnCore/wpseokit/issues\n"
-"POT-Creation-Date: 2026-10-28 12:00+0000\n"
+"POT-Creation-Date: 2026-10-29 07:58+0300\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Domain: wpseokit\n"
 
-#: src/includes/Admin.php
-msgid "Settings"
-msgstr ""
-
-#: src/includes/Admin.php
-msgid "WPSeoKit — SEO Toolkit"
-msgstr ""
-
-#: src/includes/Admin.php
-#: src/includes/Updater.php
-msgid "SEO Toolkit"
-msgstr ""
-
-#: src/includes/Admin.php
-msgid "Yoast SEO is active. WPSeoKit prints nothing while it is active, so the two never output duplicate tags. Remove Yoast SEO first, then use WPSeoKit."
-msgstr ""
-
-#: src/includes/Admin.php
-#: src/includes/Updater.php
-msgid "Status"
-msgstr ""
-
-#: src/includes/Admin.php
-msgid "You do not have permission to open this page."
-msgstr ""
-
-#: src/includes/Admin.php
-msgid "WPSeoKit sections"
-msgstr ""
-
-#: src/includes/Admin.php
-msgid "Update check finished."
-msgstr ""
-
-#: src/includes/Admin.php
-msgid "The update check is off; nothing was checked."
-msgstr ""
-
-#: src/includes/Admin.php
-msgid "Plugin version"
-msgstr ""
-
-#: src/includes/Admin.php
-msgid "Database schema"
-msgstr ""
-
-#: src/includes/Admin.php
-msgid "Output"
-msgstr ""
-
-#: src/includes/Admin.php
-msgid "On"
-msgstr ""
-
-#: src/includes/Admin.php
-msgid "Off (Yoast SEO is active)"
-msgstr ""
-
-#: src/includes/Admin.php
-msgid "Updates"
-msgstr ""
-
-#: src/includes/Rest.php
-msgid "Send the settings to change as a JSON object."
-msgstr ""
-
-#: src/includes/Rest.php
-msgid "Some settings have the wrong type."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Update rejected: signature verification (sodium) is missing on the server. The old version was kept."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Update rejected: the plugin has no valid signature key. The old version was kept."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Update rejected: the package signature is invalid. The old version was kept."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Update rejected: the package size is not in the expected range. The old version was kept."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Update rejected: the digest (SHA-256) file could not be read. The old version was kept."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Update rejected: the SHA-256 digest of the package does not match. The old version was kept."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Update rejected: the root folder of the package is not “wpseokit” or wpseokit.php is missing. The old version was kept."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Update rejected: the version inside the package does not match the published version. The old version was kept."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "SEO titles and meta descriptions, canonical and robots, Open Graph, XML sitemap, schema graph, redirects and a 404 log."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "There are no release notes for this version."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Update rejected: the package address is not in the expected format. The old version was kept."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Update stopped: the digest or signature file could not be downloaded. The old version was kept."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Update rejected: the package did not pass the WPSeoKit verification. The old version was kept."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "You do not have permission for this action."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "The update check is off; GitHub is never contacted."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Not checked yet."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "There is no published version yet."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Could not check; it will be tried again later. The plugin works normally."
-msgstr ""
-
-#: src/includes/Updater.php
+#: includes/Screens/Ui.php:365
 #, php-format
-msgid "A new version is available: %s. Click “Update” on the Plugins page."
+msgid "%1$d of %2$d links point to another host"
 msgstr ""
 
-#: src/includes/Updater.php
-msgid "The plugin is up to date."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "never"
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Installed version"
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Last check"
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Automatic updates"
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Turned on or off with the “Enable auto-updates” link on the WPSeoKit row in the Plugins page."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "The update package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Only a standard GET request is sent; your site address or user information is not sent."
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Check now"
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Update checks follow the RBN Kit network setting."
-msgstr ""
-
-#: src/includes/Services/Variables.php
-msgid "Page %1$d of %2$d"
-msgstr ""
-
-#: src/includes/Services/SocialService.php
-msgid "Written by"
-msgstr ""
-
-#: src/includes/Services/SocialService.php
-msgid "Estimated reading time"
-msgstr ""
-
-#: src/includes/Services/SocialService.php
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/includes/Services/PrimaryTermService.php
-msgid "Post not found."
-msgstr ""
-
-#: src/includes/Services/PrimaryTermService.php
-msgid "The category is not assigned to this post."
-msgstr ""
-
-#: src/includes/Services/MetaService.php
-msgid "Term not found."
-msgstr ""
-
-#: src/includes/Services/Variables.php
-msgid "Post title"
-msgstr ""
-
-#: src/includes/Services/Variables.php
-msgid "Site title"
-msgstr ""
-
-#: src/includes/Services/Variables.php
-msgid "Tagline"
-msgstr ""
-
-#: src/includes/Services/Variables.php
-msgid "Separator"
-msgstr ""
-
-#: src/includes/Services/Variables.php
-msgid "Page number (empty on the first page)"
-msgstr ""
-
-#: src/includes/Services/Variables.php
-msgid "Term name"
-msgstr ""
-
-#: src/includes/Services/Variables.php
-msgid "Search phrase"
-msgstr ""
-
-#: src/includes/Services/Variables.php
-msgid "Author name"
-msgstr ""
-
-#: src/includes/Services/Variables.php
-msgid "Date"
-msgstr ""
-
-#: src/includes/Services/Variables.php
-msgid "Excerpt"
-msgstr ""
-
-#: src/includes/Services/Variables.php
-msgid "Categories"
-msgstr ""
-
-#: src/includes/Services/Variables.php
-msgid "Primary category"
-msgstr ""
-
-#: src/includes/Services/LlmsTxtService.php
-msgid "Pages"
-msgstr ""
-
-#: src/includes/Services/LlmsTxtService.php
-msgid "Posts"
-msgstr ""
-
-#: src/includes/Services/LlmsTxtService.php
-msgid "Topics"
-msgstr ""
-
-#: src/includes/Services/LlmsTxtService.php
-msgid "Send the llms settings as an object."
-msgstr ""
-
-#: src/includes/Services/LlmsTxtService.php
-msgid "The tool is off, so the address answers 404 until you turn it on."
-msgstr ""
-
-#: src/includes/Services/LlmsTxtService.php
-msgid "This site asks search engines not to index it (Settings > Reading)."
-msgstr ""
-
-#: src/includes/Services/LlmsTxtService.php
-msgid "There is no summary: write one, or set the site tagline."
-msgstr ""
-
-#: src/includes/Services/LlmsTxtService.php
-msgid "No page or post is listed yet."
-msgstr ""
-
-#: src/includes/Services/SitemapService.php
-msgid "XML Sitemap"
-msgstr ""
-
-#: src/includes/Services/SitemapService.php
-msgid "URL"
-msgstr ""
-
-#: src/includes/Services/SitemapService.php
-msgid "Generated by WPSeoKit"
-msgstr ""
-
-#: src/includes/Services/FeedService.php
-msgid "No post found"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Site is open to search engines"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Turn search engine visibility back on. The site currently sends noindex on every page, so nothing can be indexed until this is fixed."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "robots.txt reachable and within limits"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Serve a valid robots.txt: plain text, from the site root, under 500 KiB."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "robots.txt declares the sitemap"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Add a Sitemap line with the full sitemap URL to robots.txt."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Sitemap reachable and parseable"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Regenerate the sitemap and confirm it answers with XML and absolute URLs."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Sitemap URLs answer 200"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Fix the sitemap URLs that return a redirect or an error; list only URLs that answer 200."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "lastmod carries the content date"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Write each URL's real content-modification date into lastmod instead of the generation time."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "HTTPS with a valid certificate"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Serve the site over HTTPS with a valid certificate and redirect HTTP to HTTPS once, without going back to HTTP."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Every page outputs its own canonical"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Emit rel=canonical on every page with the page's own absolute URL."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Home page Open Graph set is complete"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Add the missing Open Graph tags; a homepage needs og:title, og:type, og:image and og:url."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Organization node is complete"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Fill the organization name, URL and logo in the schema settings."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "No unsupported or wrong schema nodes"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Remove the structured-data nodes Google no longer supports here and keep ratings off your own organization."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Missing pages return HTTP 404"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Return HTTP 404 for missing pages instead of a page that says 'not found' with a 200 status."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Feed is valid"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Keep the feed valid: absolute item links that answer 200 and RFC 822 pubDate."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "llms.txt is consistent (when enabled)"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "If llms.txt is on, serve it as UTF-8 plain text with an H1 on the first line and links that answer 200; otherwise leave it off."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Resolved page title is not empty"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Give the post a title; the resolved page title is empty."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Self-referencing canonical"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Output a self-referencing canonical with the post's absolute URL."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "One canonical method only"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Use one canonical method only: the head tag or the HTTP header, never both, and never two different URLs."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Post is indexable"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Make the post indexable again: it is currently excluded by a robots directive."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Article/BlogPosting markup present"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Mark the post up with one Article, BlogPosting or NewsArticle node."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Article fields are complete"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Complete the Article markup with headline, image, author and publisher."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Dates are ISO 8601 with a time zone"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Write datePublished and dateModified in ISO 8601 with a time zone."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Primary category set and used in the URL"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Pick a primary category; it decides the post URL and the breadcrumb."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Post Open Graph set is complete"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Complete the post's Open Graph set: type, title, description, image and the canonical URL."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Breadcrumb markup is valid"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Add a BreadcrumbList whose items link to pages that answer 200."
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Post is in the sitemap"
-msgstr ""
-
-#: src/includes/Rules/score-rules.json
-msgid "Add the post's canonical URL to the sitemap."
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
-msgid "Poor"
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
-msgid "Needs improvement"
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
-msgid "Good"
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
-msgid "A critical rule is failing, so the score is capped at 79 until it is fixed."
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
-msgid "This score is not a ranking guarantee."
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
-msgid "Not applicable on this site, so it is left out of the calculation."
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
-msgid "Only published posts have an SEO score."
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
-msgid "The page did not answer 200, so it could not be measured."
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
-msgid "This is a local site: the HTTPS, certificate and public-access rules may fail here and pass on the live site."
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
-msgid "Unknown rule."
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
-msgid "A critical rule cannot be dismissed."
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
-msgid "A post rule needs a post_id."
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
-msgid "A post scope needs a post_id you can edit."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Title and description templates"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Using defaults"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Configured"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Edit templates"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Organization name and logo"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Added"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Missing"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Edit schema"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Add details"
-msgstr ""
-
-#: src/includes/Screens
-msgid "XML sitemap"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Off"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Open sitemap"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Search engine visibility"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Visible"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Search engines are discouraged"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Open Reading settings"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Primary categories"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Open settings"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Yoast SEO data"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Not checked"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Review import"
-msgstr ""
-
-#: src/includes/Screens
+#: includes/Screens/DashboardScreen.php:153
+#, php-format
 msgid "%1$d of %2$d posts have a description"
 msgstr ""
 
-#: src/includes/Screens
-msgid "Edit post template"
+#: includes/Screens/Ui.php:99
+#, php-format
+msgid "%1$d of %2$d recent posts scored"
 msgstr ""
 
-#: src/includes/Screens
-msgid "Publisher set"
+#: includes/Screens/Ui.php:363
+#, php-format
+msgid "%1$s (preferred is %2$s)"
 msgstr ""
 
-#: src/includes/Screens
-msgid "Logo missing"
+#: includes/Services/RedirectService.php:331
+#, php-format
+msgid "%1$s already redirects back to %2$s. That is a loop."
 msgstr ""
 
-#: src/includes/Screens
-msgid "Publisher missing"
+#: includes/Services/RedirectService.php:341
+#, php-format
+msgid "%1$s already redirects to %2$s. Change that rule to the final address first, so visitors make one hop only."
 msgstr ""
 
-#: src/includes/Screens
-msgid "Article, WebSite and breadcrumb schema"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Add organization"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Reachable"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Address: /sitemap_index.xml"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Not published"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Rebuild now"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Full text"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Summary only"
-msgstr ""
-
-#: src/includes/Screens
-msgid "WordPress default"
-msgstr ""
-
-#: src/includes/Screens
-msgid "%1$s · %2$d items"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Main feed on"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Close extra feeds"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Published"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Address: /llms.txt"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Not published yet"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Preview"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Turn on"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Active"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Loading…"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Add redirect"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Checking"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Fix top errors"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Yoast SEO is active on this site"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Yoast SEO is not active"
-msgstr ""
-
-#: src/includes/Screens
-msgid "View report"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Output on"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Output paused"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Site verification codes are set"
-msgstr ""
-
-#: src/includes/Screens
-msgid "No verification codes yet"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Verification"
-msgstr ""
-
-#: src/includes/Screens
-msgid "SEO tools"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Paused (Yoast active)"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Open %s"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Open"
-msgstr ""
-
-#: src/includes/Screens
-msgid "URLs in the sitemap"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Active redirects"
-msgstr ""
-
-#: src/includes/Screens
-msgid "404 errors logged"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Posts with a description"
-msgstr ""
-
-#: src/includes/Screens
-msgid "WPSeoKit"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Check"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Action"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Setup checklist"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Recent activity"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Event"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Hits"
-msgstr ""
-
-#: src/includes/Screens
-msgid "These checks decide whether your site is ready for search engines."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Broken addresses visitors hit most, and the latest redirects."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Feed (RSS)"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Choose what your RSS feed shows and close the feeds nobody needs."
-msgstr ""
-
-#: src/includes/Screens
-msgid "The main feed is off."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Feed readers and aggregators cannot follow your new posts."
-msgstr ""
-
-#: src/includes/Screens
-msgid "General"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Content"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Cleanup"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Feed sections"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Publish the main feed"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Readers and some search tools use it to find new posts."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Feed address"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Copy"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Checking the feed…"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Each item shows"
-msgstr ""
-
-#: src/includes/Screens
-msgid "WordPress setting"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Summary"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Summary sends readers to your site to read the rest. Full text keeps them in their reader."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Items in the feed"
-msgstr ""
-
-#: src/includes/Screens
-msgid "items"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Between 1 and 50. Use 0 to keep the WordPress setting."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Main feed"
-msgstr ""
-
-#: src/includes/Screens
-msgid "The feed readers and aggregators subscribe to."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Source link"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Add a link back to the original post"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Scrapers that copy your feed also copy the link."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Footer text"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Copyright"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Add a copyright line"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Printed under the footer text."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Copyright text"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Featured image"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Include the featured image in each item"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Example item"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Example feed item"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Source link and copyright"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Added to the end of every item so copied text points back to you."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Comments feed"
-msgstr ""
-
-#: src/includes/Screens
-msgid "All comments of the site."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Comments feed of each post"
-msgstr ""
-
-#: src/includes/Screens
-msgid "One feed for every post."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Author feeds"
-msgstr ""
-
-#: src/includes/Screens
-msgid "One feed for each author."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Category and tag feeds"
-msgstr ""
-
-#: src/includes/Screens
-msgid "One feed for each category and tag."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Search result feeds"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Feeds of search queries."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Attachment feeds"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Feeds of media pages."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Close these feeds"
-msgstr ""
-
-#: src/includes/Screens
-msgid "WordPress opens many feeds by default. Most sites need one."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Closed feeds"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Send visitors of a closed feed to its page (301)"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Off = a closed feed answers 404."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Search engines"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Tell search engines not to index feeds"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Page head"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Remove extra feed links from the page head"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Feeds to close"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Turn on a switch to close that kind of feed."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Yoast import"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Bring your titles and descriptions over from Yoast SEO."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Dry run"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Run"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Report"
-msgstr ""
-
-#: src/includes/Screens
-msgid "No import has run yet. The report appears here when it finishes."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Yoast import steps"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Bring your Yoast SEO data over"
-msgstr ""
-
-#: src/includes/Screens
-msgid "First WPSeoKit only counts what it can import. Nothing is written until you confirm, and your Yoast data is never deleted."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Check my Yoast data"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Run the check on the Summary tab first. The result appears here."
-msgstr ""
-
-#: src/includes/Screens
-msgid "What the check found"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Data"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Found"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Will import"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Note"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Dry-run report"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Import options"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Choose how to handle values that exist in both plugins."
-msgstr ""
-
-#: src/includes/Screens
-msgid "When both have a value"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Keep WPSeoKit"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Use Yoast"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Keeping WPSeoKit never overwrites something you edited by hand."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Nothing has been imported yet."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Run the check again"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Import now"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Nothing to import yet."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Check your Yoast data first. The import options appear here after the check."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Close"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Import Yoast data?"
-msgstr ""
-
-#: src/includes/Screens
-msgid "WPSeoKit will write titles, descriptions, primary categories and settings. Your Yoast data stays where it is."
-msgstr ""
-
-#: src/includes/Screens
-msgid "I have a database backup and I want to import now."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Cancel"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Import"
-msgstr ""
-
-#: src/includes/Screens
-msgid "llms.txt"
-msgstr ""
-
-#: src/includes/Screens
-msgid "A plain-text guide to your site for AI assistants."
-msgstr ""
-
-#: src/includes/Screens
-msgid "llms.txt is off."
-msgstr ""
-
-#: src/includes/Screens
-msgid "AI assistants have no short guide to your site. Check the preview before you turn it on."
-msgstr ""
-
-#: src/includes/Screens
-msgid "llms.txt sections"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Publish llms.txt"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Off by default. Turn it on after you read the preview."
-msgstr ""
-
-#: src/includes/Screens
-msgid "File address"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Site summary"
-msgstr ""
-
-#: src/includes/Screens
-msgid "One or two sentences. Plain text, no markup. Leave empty to use the site tagline."
-msgstr ""
-
-#: src/includes/Screens
-msgid "llms.txt file"
-msgstr ""
-
-#: src/includes/Screens
-msgid "A plain-text page that summarizes your site for AI assistants."
-msgstr ""
-
-#: src/includes/Screens
-msgid "There are no published pages yet."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Pick the pages assistants should know about. Fewer, better links work best."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Latest content"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Items per type"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Between 0 and 200. Use 0 for no automatic list."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Categories and tags"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Most terms per section"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Leave out (IDs)"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Post or page IDs, one per line. They never appear in the file."
-msgstr ""
-
-#: src/includes/Screens
-msgid "What to list"
-msgstr ""
-
-#: src/includes/Screens
-msgid "File"
-msgstr ""
-
-#: src/includes/Screens
-msgid "llms.txt preview"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Refresh preview"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Built from the values on this page, even before you save. It works while the file is still off."
-msgstr ""
-
-#: src/includes/Screens
-msgid "This is what /llms.txt would return."
-msgstr ""
-
-#: src/includes/Screens
-msgid "404 log"
-msgstr ""
-
-#: src/includes/Screens
-msgid "See which broken addresses visitors hit."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Log"
-msgstr ""
-
-#: src/includes/Screens
-msgid "404 log sections"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Addresses that bots probe (such as wp-login.php) are hidden by default. Show them with the switch below the search."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Filter 404 log"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Search"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Path"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Show bot noise"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Apply"
-msgstr ""
-
-#: src/includes/Screens
-msgid "selected"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Redirect all to…"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Delete from log"
-msgstr ""
-
-#: src/includes/Screens
-msgid "404 errors, most hits first"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Select all"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Address"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Referrer"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Last seen"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Actions"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Most hit first"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Logging"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Record addresses that return 404"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Only the address, the referrer and a hit count are stored. No visitor data."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Bots"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Do not record search engine bots"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Keep entries for"
-msgstr ""
-
-#: src/includes/Screens
-msgid "days"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Most entries kept"
-msgstr ""
-
-#: src/includes/Screens
-msgid "entries"
-msgstr ""
-
-#: src/includes/Screens
-msgid "The oldest entries go first when the log is full."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Log settings"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Redirect the selected addresses"
-msgstr ""
-
-#: src/includes/Screens
-msgid "To (new address)"
-msgstr ""
-
-#: src/includes/Screens
-msgid "All selected addresses get a 301 redirect to this page."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Create redirects"
-msgstr ""
-
-#: src/includes/Screens
-msgid "SEO"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Social"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Schema"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Advanced"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Search preview"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Preview device"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Desktop"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Mobile"
-msgstr ""
-
-#: src/includes/Screens
-msgid "SEO title"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Title length"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Aim for 30 to 60 characters. Search engines cut by width, not by count."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Meta description"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Description length"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Aim for 70 to 155 characters. Empty falls back to the template, then the excerpt."
-msgstr ""
-
-#: src/includes/Screens
-msgid "URL:"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Changing the primary category changes this post’s URL."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Add a 301 redirect from the old URL"
-msgstr ""
-
-#: src/includes/Screens
-msgid "The primary category sets this post’s URL and breadcrumb."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Sharing title"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Same as the SEO title"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Leave empty to use the SEO title."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Sharing description"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Leave empty to use the meta description."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Choose image"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Remove"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Sharing image"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Empty: the featured image is used."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Article (default)"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Movie"
-msgstr ""
-
-#: src/includes/Screens
-msgid "TV series"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Schema type"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Movie and TVSeries need the details below. Without them the post stays an Article."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Director"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Cast"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Separate names with commas."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Year"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Hide this post from search results"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Adds noindex. The post also leaves the sitemap."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Do not follow links on this post"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Adds nofollow. Rarely needed."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Canonical URL"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Leave empty to use the post address. Only fill this when the same content lives elsewhere."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Redirects"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Send old addresses to the right place."
-msgstr ""
-
-#: src/includes/Screens
-msgid "List"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Add"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Import / export"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Redirects sections"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Filter redirects"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Path or target"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Type"
-msgstr ""
-
-#: src/includes/Screens
-msgid "All types"
-msgstr ""
-
-#: src/includes/Screens
-msgid "All"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Turn off"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Delete"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Select all redirects"
-msgstr ""
-
-#: src/includes/Screens
-msgid "From"
-msgstr ""
-
-#: src/includes/Screens
-msgid "To"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Last hit"
-msgstr ""
-
-#: src/includes/Screens
-msgid "All redirects"
-msgstr ""
-
-#: src/includes/Screens
-msgid "From (old path)"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Start with a slash. Use <code>*</code> at the end to match everything below that path."
-msgstr ""
-
-#: src/includes/Screens
-msgid "A path on this site or a full address. Leave empty for type 410."
-msgstr ""
-
-#: src/includes/Screens
-msgid "301 moves a page for good and passes its ranking. Use 302 or 307 only for short-term moves."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Add a redirect"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Takes effect the moment you save."
-msgstr ""
-
-#: src/includes/Screens
-msgid "One redirect per line: <code>from,to,type</code>. The check runs before anything is saved, and existing “from” addresses are never overwritten."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Choose CSV file"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Every redirect, UTF-8, one per line."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Export CSV"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Add many redirects at once from a CSV file."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Export"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Download every redirect as a CSV file, for a backup or another site."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Run the redirects on the live site"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Off = every redirect pauses and visitors see the old address. Nothing is deleted."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Redirect behavior"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Import redirects from CSV"
-msgstr ""
-
-#: src/includes/Screens
-msgid "One redirect per line: <code>from,to,type</code>. The first line may be a header. Existing redirects with the same “from” are skipped, never overwritten."
-msgstr ""
-
-#: src/includes/Screens
-msgid "CSV file"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Up to 1 MB, UTF-8."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Keep them"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Edit redirect"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Save"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Tell search engines who runs the site and what each page is."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Organization name and logo are empty."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Search engines get an incomplete publisher until you add them."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Organization"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Website"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Content types"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Breadcrumbs"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Schema sections"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Person"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Organization name"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Your site or company name"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Shown to search engines as the publisher of every page."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Person name"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Used instead of the organization name when the site is a person."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Logo"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Square or wide, at least 112 × 112 px."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Describes who publishes this site."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Social profiles"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Full addresses of your official profiles. Empty ones are left out."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Site name"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Used for the WebSite schema and the site name in search results."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Alternate name"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Optional. A shorter or spaced-out spelling people also use."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Article type"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Blog post"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Article"
-msgstr ""
-
-#: src/includes/Screens
-msgid "News article"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Used for every post that is not a film or a series."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Schema type for %s"
-msgstr ""
-
-#: src/includes/Screens
-msgid "TVSeries"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Category"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Default type"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Default schema type per category"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Showing %1$d of %2$d categories, the busiest first."
-msgstr ""
-
-#: src/includes/Screens
-msgid "A post gets Movie or TVSeries schema only when its SEO box has the details filled in (director, cast, year). Without them it stays a plain Article. Nothing is guessed."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Articles"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Category mapping"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Sets the starting point for the post SEO box. Each post can still choose its own type."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Use the primary category for posts"
-msgstr ""
-
-#: src/includes/Screens
-msgid "The primary category sets the post URL and the last step before the title."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Theme function"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Your theme draws the visible breadcrumb; WPSeoKit sends the same path to search engines as BreadcrumbList data."
-msgstr ""
-
-#: src/includes/Screens
-msgid "The path shown above a result in search: Home › Movies › Title."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Home page"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Show the schema for"
-msgstr ""
-
-#: src/includes/Screens
-msgid "JSON-LD"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Schema JSON-LD of the chosen page"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Copy JSON-LD"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Open Google Rich Results Test (opens in a new tab)"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Read-only. Reads the live page, so it reflects the settings you saved."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Sharing, verification codes, access and data."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Access"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Settings sections"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Paused while Yoast SEO is active"
-msgstr ""
-
-#: src/includes/Screens
-msgid "WPSeoKit prints titles, descriptions and schema only when no other SEO plugin does."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Let editors pick a primary category"
-msgstr ""
-
-#: src/includes/Screens
-msgid "The primary category sets the post URL and the breadcrumb."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Author pages"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Turn off author archives"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Visitors are redirected to the home page."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Attachment pages"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Redirect attachment pages to the file"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Open Graph"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Print Open Graph tags"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Used by Facebook, LinkedIn, WhatsApp and most chat apps."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Twitter / X cards"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Print Twitter card tags"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Card type"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Small image"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Large image"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Default sharing image"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Used when a post has no sharing image and no featured image. 1200 × 630 px works best."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Facebook page"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Twitter / X username"
-msgstr ""
-
-#: src/includes/Screens
-msgid "WordPress is set to discourage search engines."
-msgstr ""
-
-#: src/includes/Screens
-msgid "WPSeoKit does not change this."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Social sharing"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Google Search Console"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Bing Webmaster Tools"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Yandex Webmaster"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Baidu Webmaster"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Leave empty to print nothing."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Site verification"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Paste only the code from each meta tag’s content, not the whole tag."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Change settings, redirects and the 404 log"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Administrators"
-msgstr ""
-
-#: src/includes/Screens
-msgid "A wrong setting or redirect affects every visitor, so these stay with administrators."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Edit the SEO box of a post"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Anyone who can edit that post"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Follows the WordPress permission to edit the post."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Who"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Why"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Who can use WPSeoKit"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Access follows WordPress roles. Administrators always keep full access."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Uninstall"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Delete all WPSeoKit data when the plugin is deleted"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Settings, redirects, the 404 log and per-post SEO fields. Leave off to keep them for a later reinstall."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Item"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Value"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Plugin status"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Data and uninstall"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Update status"
-msgstr ""
-
-#: src/includes/Screens
-msgid "The package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Automatic updates are turned on or off with the “Enable auto-updates” link on the Plugins page."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Tool navigation"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Dashboard"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Tools"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Yoast SEO is active."
-msgstr ""
-
-#: src/includes/Screens
-msgid "WPSeoKit prints nothing on your site while Yoast is on, so search engines never see duplicate tags."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Import Yoast data"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Sitemap"
-msgstr ""
-
-#: src/includes/Screens
-msgid "A list of your pages that search engines read first."
-msgstr ""
-
-#: src/includes/Screens
-msgid "The XML sitemap is off."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Search engines have no list of your pages."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Files"
-msgstr ""
-
-#: src/includes/Screens
-msgid "robots.txt"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Sitemap sections"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Enable the XML sitemap"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Keeps the same addresses Yoast used, so search engines see no change."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Sitemap address"
-msgstr ""
-
-#: src/includes/Screens
-msgid "The sitemap rebuilds by itself on a schedule and when you publish."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Post types"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Taxonomies"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Images"
-msgstr ""
-
-#: src/includes/Screens
-msgid "List featured images with each post"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Helps image search find your posters and stills."
-msgstr ""
-
-#: src/includes/Screens
-msgid "URLs per file"
-msgstr ""
-
-#: src/includes/Screens
-msgid "URLs"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Between 100 and 2,000. Lower this if your server times out."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Rebuild every"
-msgstr ""
-
-#: src/includes/Screens
-msgid "hours"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Content in the sitemap"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Sitemap files"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Last modified"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Generated files"
-msgstr ""
-
-#: src/includes/Screens
-msgid "What search engines download from your site."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Line in robots.txt"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Sitemap line in robots.txt"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Added by itself while the sitemap is on, unless the site asks search engines not to index it."
-msgstr ""
-
-#: src/includes/Screens
-msgid "WordPress sitemap"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Turned off"
-msgstr ""
-
-#: src/includes/Screens
-msgid "WordPress ships its own /wp-sitemap.xml. WPSeoKit turns it off so search engines see one sitemap, not two."
-msgstr ""
-
-#: src/includes/Screens
-msgid "robots.txt and WordPress sitemap"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Titles & descriptions"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Write the title and description pattern for each kind of page."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Home"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Categories & tags"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Archives & search"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Separator & variables"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Titles and descriptions sections"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Title template"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Shown under the title in search results. Aim for 70–155 characters. Leave empty to use the tagline."
-msgstr ""
-
-#: src/includes/Screens
-msgid "How the front page looks in search results."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Used when an item has no description of its own. An empty template falls back to the excerpt, then to the first 155 characters of the content."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Search results"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Show %s in search results"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Turn off to add noindex to every item of this type."
-msgstr ""
-
-#: src/includes/Screens
-msgid "%s title"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Switched on = the archive asks search engines not to list it, and it leaves the sitemap."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Category descriptions are edited on each category."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Author archives"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Used for pages that list one author’s posts."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Empty author pages"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Add noindex to authors without posts"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Date archives"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Add noindex to date archives"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Search results page"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Always noindex, so this only sets the browser tab text."
-msgstr ""
-
-#: src/includes/Screens
-msgid "404 page"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Archives and search"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Pages WordPress makes by itself."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Used between the page title and the site name."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Title separator"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Replaces %sep% in every template."
-msgstr ""
-
-#: src/includes/Screens
-msgid "The title of the post or page."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Gentle Shadows"
-msgstr ""
-
-#: src/includes/Screens
-msgid "The site title."
-msgstr ""
-
-#: src/includes/Screens
-msgid "The site tagline."
-msgstr ""
-
-#: src/includes/Screens
-msgid "The separator chosen above."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Page number on paged lists, empty on page one."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Page 2"
-msgstr ""
-
-#: src/includes/Screens
-msgid "The excerpt of the post."
-msgstr ""
-
-#: src/includes/Screens
-msgid "A short summary…"
-msgstr ""
-
-#: src/includes/Screens
-msgid "The categories of the post."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Crime"
-msgstr ""
-
-#: src/includes/Screens
-msgid "The primary category of the post."
-msgstr ""
-
-#: src/includes/Screens
-msgid "The publish date."
-msgstr ""
-
-#: src/includes/Screens
-msgid "The author name."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Jane Doe"
-msgstr ""
-
-#: src/includes/Screens
-msgid "The name of the category or tag."
-msgstr ""
-
-#: src/includes/Screens
-msgid "What the visitor searched for."
-msgstr ""
-
-#: src/includes/Screens
-msgid "gentle"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Variable"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Meaning"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Example"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Template variables"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Variables"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Use these in any template. Click “Insert a variable” in a field to add one."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Settings saved."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Settings were not saved."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Saving…"
-msgstr ""
-
-#: src/includes/Screens
-msgid "This list could not be loaded."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Try again"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Demo data: the server part of this screen is not installed yet, so nothing here is saved."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Edit"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Today"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Never"
-msgstr ""
-
-#: src/includes/Screens
-msgid "No redirects yet. Add the first one on the Add tab."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Nothing matches this search."
-msgstr ""
-
-#: src/includes/Screens
-msgid "No 404 errors logged. Visitors are finding your pages."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Redirect added."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Redirect updated."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Redirect deleted."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Redirect created."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Undo"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Enter the old path, starting with a slash."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Enter the new address, or choose type 410."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Delete %d redirects?"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Delete %d redirects"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Visitors who use these old addresses will see a 404 page again. This cannot be undone, but you can add the redirects back."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Import %d redirects"
-msgstr ""
-
-#: src/includes/Screens
-msgid "checked"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Choose a CSV file first."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Line"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Redirect to…"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Best match"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Redirect"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Sitemap rebuilt."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Rebuilding the sitemap…"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Copied"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Replace image"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Source: written here"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Source: title template"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Source: excerpt"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Source: start of the content"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Good length"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Too short"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Getting long"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Too long: it will be cut"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Checking your Yoast data…"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Importing…"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Import finished."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Import undone."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Skipped"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Conflicts"
-msgstr ""
-
-#: src/includes/Screens
-msgid "%d active redirects"
-msgstr ""
-
-#: src/includes/Screens
-msgid "%d errors logged"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Needs a look"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Clean"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Fix"
-msgstr ""
-
-#: src/includes/Screens
-msgid "This page prints no schema."
-msgstr ""
-
-#: src/includes/Screens
-msgid "The feed is on and answers at this address."
-msgstr ""
-
-#: src/includes/Screens
-msgid "The feed is off."
-msgstr ""
-
-#: src/includes/Screens
-msgid "There is no published post to show."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Verify"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Verified."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Insert a variable"
-msgstr ""
-
-#: src/includes/Screens
-msgid "You have unsaved changes."
-msgstr ""
-
-#: src/includes/Screens
-msgid "Discard"
-msgstr ""
-
-#: src/includes/Screens
-msgid "Save changes"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Generated by WPSeoKit. This page is only a view of the XML sitemap; search engines read the XML."
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Sitemap index"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Open the XML"
-msgstr ""
-
-#: src/includes/Screens/SitemapScreen.php
-msgid "Open the human view"
-msgstr ""
-
-#: src/includes/Screens/SitemapScreen.php
-msgid "Bots read this address."
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Skip to the list"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Skip to the URL list"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "This is the list of pages on %s that search engines such as Google can read. You can browse it here; the plain XML behind this page is what the bots use."
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "%s group"
-msgid_plural "%s groups"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/includes/Services/SitemapView.php
-msgid "%s file"
-msgid_plural "%s files"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/includes/Services/SitemapView.php
-msgid "%s URL"
-msgid_plural "%s URLs"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/includes/Services/SitemapView.php
-msgid "No sitemap files yet"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "The index is empty: no content type is switched on for the sitemap, or nothing is published yet. Search engines will find nothing to read here."
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "URLs in %s file"
-msgid_plural "URLs in %s files"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Last updated"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "%1$s, file %2$s of %3$s, %4$s URLs"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "File %s"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "View %s"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "File %1$s of %2$s"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "%s URL in this file"
-msgid_plural "%s URLs in this file"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/includes/Services/SitemapView.php
-msgid "%s URL in the group"
-msgid_plural "%s URLs in the group"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Newest change"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Jump within this file"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Jump within this file, bottom"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Back to top"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Sitemap groups"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Files of %s"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Previous"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Next"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
-msgid "Jump to rows"
-msgstr ""
-
-#: src/includes/Services/SitemapView.php
+#: includes/Services/SitemapView.php:368
+#, php-format
 msgid "%1$s URL in %2$s"
 msgid_plural "%1$s URLs in %2$s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/includes/Services/SitemapView.php
-msgid "No."
+#: includes/Screens/DashboardScreen.php:167
+#, php-format
+msgid "%1$s · %2$d items"
 msgstr ""
 
-#: src/includes/Services/SitemapView.php
-msgid "This group has no URLs"
+#: includes/Services/SitemapView.php:262
+#, php-format
+msgid "%1$s, file %2$s of %3$s, %4$s URLs"
 msgstr ""
 
-#: src/includes/Services/SitemapView.php
-msgid "No published items are listed in this file, so there is nothing to show. Search engines see an empty list."
+#: includes/Screens/Ui.php:255
+#, php-format
+msgid "%d active redirects"
 msgstr ""
 
-#: src/includes/Services/SitemapView.php
-msgid "Back to the sitemap index"
+#: includes/Screens/Ui.php:257
+#, php-format
+msgid "%d errors logged"
 msgstr ""
 
-#: src/includes/Services/SitemapView.php
-msgid "Site owner: open WPSeoKit › Sitemap and switch on at least one content type."
-msgstr ""
-#: src/includes/Services/PreferredAddressService.php
-msgid "Correct: this address is the preferred address, or it sends visitors to it with one permanent redirect."
+#: includes/Services/SocialService.php:125
+#, php-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Screens/Ui.php:181
+#, php-format
+msgid "%d new 404 error"
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "Redirect chain: visitors make two or more hops. Redirect straight to the preferred address in one hop."
+#: includes/Screens/Ui.php:179
+#, php-format
+msgid "%d new 404 errors"
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "The redirect is temporary (302, 303 or 307). Use a permanent redirect (301 or 308)."
+#: includes/Screens/Ui.php:322
+#, php-format
+msgid "%d OK"
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "This address answers with its own page. It is a copy of the preferred address; redirect it."
+#: includes/Screens/TemplatesScreen.php:71
+#, php-format
+msgid "%d published item."
+msgid_plural "%d published items."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Screens/Ui.php:102
+#, php-format
+msgid "%d recommendations to review"
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "This address does not lead to the preferred address."
+#: includes/Screens/DashboardScreen.php:210
+#, php-format
+msgid "%d setup item is missing."
+msgid_plural "%d setup items are missing."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Screens/Ui.php:324
+#, php-format
+msgid "%d to fix"
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "A step leaves HTTPS for HTTP. Remove it; never redirect from HTTPS to HTTP."
+#: includes/Screens/Ui.php:326
+#, php-format
+msgid "%d unreachable"
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "Redirect loop, or more hops than are followed. Turn off the PHP fallback and check the server rule."
+#: includes/Screens/Ui.php:151
+#, php-format
+msgid "%s (total)"
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "The preferred address itself does not answer with a normal page (it redirects or returns an error)."
+#: includes/Services/SitemapView.php:228
+#, php-format
+msgid "%s file"
+msgid_plural "%s files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Services/SitemapView.php:228
+#, php-format
+msgid "%s group"
+msgid_plural "%s groups"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Services/RedirectService.php:334
+#, php-format
+msgid "%s is itself redirected. Point to its final address so visitors make one hop only."
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "Could not be reached (no DNS record, no connection or an invalid certificate)."
+#: includes/Screens/TemplatesScreen.php:95
+#, php-format
+msgid "%s title"
 msgstr ""
 
-#. translators: %s: address
-#: src/includes/Services/PreferredAddressService.php
-msgid "The certificate of %s is not valid. Do not make HTTPS the preferred address until it is."
+#: includes/Services/SitemapView.php:251
+#, php-format
+msgid "%s URL"
+msgid_plural "%s URLs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Services/SitemapView.php:287
+#, php-format
+msgid "%s URL in the group"
+msgid_plural "%s URLs in the group"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Services/SitemapView.php:286
+#, php-format
+msgid "%s URL in this file"
+msgid_plural "%s URLs in this file"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Screens/Ui.php:143
+msgid "(opens in a new tab)"
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "The server (or a CDN) already redirects some variants. The PHP fallback is not needed; leave it off."
+#: includes/Screens/DashboardScreen.php:296
+msgid "30 days"
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "The PHP fallback is on while the server also redirects: this can make a chain. Turn the fallback off."
+#: includes/Screens/RedirectsScreen.php:71
+msgid "301 moves a page for good and passes its ranking. Use 302 or 307 only for short-term moves."
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "The preferred address is HTTP. Google prefers HTTPS pages as the canonical address."
+#: includes/Screens/RedirectsScreen.php:149
+msgid "302, 303 or 307. Search engines may keep the old address. Use 301."
 msgstr ""
 
-#. translators: 1: preferred address, 2: bare host name
-#: src/includes/Services/PreferredAddressService.php
-msgid "Hosting panel without file access: create ONE permanent (301) redirect for the domain, with the \"redirect with or without www\" option set to %1$s, and switch on \"force HTTPS\" if your host offers it. Do not stack two panel redirects, and do not turn on the plugin PHP fallback next to them. Make sure the certificate covers %2$s and www.%2$s."
+#: includes/Screens/DashboardScreen.php:235
+msgid "404 errors logged"
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "A server rule and the PHP fallback (or another redirect plugin) on top of each other make a redirect chain. Use one of them."
+#: includes/Screens/Log404Screen.php:52
+msgid "404 errors, most hits first"
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "Check that the certificate is valid for both host names before you make HTTPS the preferred address."
+#: includes/Screens/Ui.php:155
+msgid "404 hits"
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
+#: includes/Screens/Ui.php:190
+msgid "404 log"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:35
+msgid "404 log sections"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:107
+msgid "404 page"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:296
+msgid "7 days"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:296
+msgid "90 days"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:93
+msgid "<code>http</code>, <code>https</code>, <code>www</code> and no <code>www</code> make four different addresses. If all four answer, search engines see four copies of your site. One answers, the other three redirect to it."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:326
+msgid "A check that cannot reach the release list is expected until the first release is published. WPSeoKit tries again later."
+msgstr ""
+
+#: includes/Services/ScoreService.php:541
+msgid "A critical rule cannot be dismissed."
+msgstr ""
+
+#: includes/Screens/Ui.php:101
+msgid "A critical rule fails, so the score cannot go above 79 until it is fixed."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "A critical rule is failing, so the score is capped at 79 until it is fixed."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:23
+msgid "A list of your pages that search engines read first."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:866
 msgid "A multisite network is outside the scope of the PHP fallback; it stays inactive. Use a server rule."
 msgstr ""
 
-#: src/includes/Services/PreferredAddressService.php
-msgid "WordPress Address and Site Address do not match the preferred address. Set both to the preferred address in Settings > General."
+#: includes/Updater.php:438
+#, php-format
+msgid "A new version is available: %s. Click “Update” on the Plugins page."
 msgstr ""
 
-#: src/includes/Services/ReportService.php
-msgid "The snapshot could not be saved."
+#: includes/Screens/RedirectsScreen.php:70
+msgid "A path on this site or a full address. Leave empty for type 410."
 msgstr ""
 
-#: src/includes/Services/ReportService.php
-msgid "The snapshot is being prepared in the background. Check again in a few minutes."
+#: includes/Screens/LlmsScreen.php:21
+msgid "A plain-text guide to your site for AI assistants."
 msgstr ""
 
-#: src/includes/Gate.php
+#: includes/Screens/LlmsScreen.php:56
+msgid "A plain-text page that summarizes your site for AI assistants."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:131
+msgid "A post gets Movie or TVSeries schema only when its SEO box has the details filled in (director, cast, year). Without them it stays a plain Article. Nothing is guessed."
+msgstr ""
+
+#: includes/Services/ScoreService.php:545
+msgid "A post rule needs a post_id."
+msgstr ""
+
+#: includes/Services/ScoreService.php:764
+msgid "A post scope needs a post_id you can edit."
+msgstr ""
+
+#: includes/Services/RedirectService.php:267
+#, php-format
+msgid "A redirect for %s already exists."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:692
+msgid "A server rule and the PHP fallback (or another redirect plugin) on top of each other make a redirect chain. Use one of them."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:126
+msgid "A short summary…"
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:363
+msgid "A step leaves HTTPS for HTTP. Remove it; never redirect from HTTPS to HTTP."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:152
+msgid "A step moves visitors from https to http. Remove it."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:102
+msgid "A wrong setting or redirect affects every visitor, so these stay with administrators."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:34
+msgid "Access"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:108
+msgid "Access follows WordPress roles. Administrators always keep full access."
+msgstr ""
+
+#: includes/Screens/Ui.php:262
+msgid "Action"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:57
+msgid "Actions"
+msgstr ""
+
+#: includes/Gate.php:42
 msgid "Activate AdminKit"
 msgstr ""
 
-#: src/includes/Gate.php
+#: includes/Screens/DashboardScreen.php:173
+msgid "Active"
+msgstr ""
+
+#: includes/Screens/Ui.php:154
+msgid "Active redirects"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:319
+msgid "Activity"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:34
+msgid "Add"
+msgstr ""
+
+#: includes/Screens/Ui.php:245
+msgid "Add a 301 redirect from the old URL"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Add a BreadcrumbList whose items link to pages that answer 200."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:74
+msgid "Add a copyright line"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:72
+msgid "Add a link back to the original post"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:74
+msgid "Add a redirect"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Add a Sitemap line with the full sitemap URL to robots.txt."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:99
+msgid "Add details"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:81
+msgid "Add many redirects at once from a CSV file."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:103
+msgid "Add noindex to authors without posts"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:105
+msgid "Add noindex to date archives"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:159
+msgid "Add organization"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:73
+msgid "Add redirect"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Add the missing Open Graph tags; a homepage needs og:title, og:type, og:image and og:url."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Add the post's canonical URL to the sitemap."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:98
+msgid "Added"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:82
+msgid "Added by itself while the sitemap is on, unless the site asks search engines not to index it."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:78
+msgid "Added to the end of every item so copied text points back to you."
+msgstr ""
+
+#: includes/Screens/Ui.php:332
+msgid "Address"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:125
+msgid "Address check"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:171
+msgid "Address: /llms.txt"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:162
+msgid "Address: /sitemap_index.xml"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:41
+msgid "Addresses that bots probe (such as wp-login.php) are hidden by default. Show them with the switch below the search."
+msgstr ""
+
+#: includes/Screens/MetaBox.php:171
+msgid "Adds nofollow. Rarely needed."
+msgstr ""
+
+#: includes/Screens/MetaBox.php:170
+msgid "Adds noindex. The post also leaves the sitemap."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:102
+msgid "Administrators"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:35
+msgid "Advanced"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:30
+msgid "AI assistants have no short guide to your site. Check the preview before you turn it on."
+msgstr ""
+
+#: includes/Screens/MetaBox.php:103
+msgid "Aim for 30 to 60 characters. Search engines cut by width, not by count."
+msgstr ""
+
+#: includes/Screens/MetaBox.php:108
+msgid "Aim for 70 to 155 characters. Empty falls back to the template, then the excerpt."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:48
+msgid "All"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:84
+msgid "All comments of the site."
+msgstr ""
+
+#: includes/Screens/Ui.php:329
+msgid "All four versions end at the preferred address in one step."
+msgstr ""
+
+#: includes/Screens/Ui.php:366
+msgid "All links match"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:60
+msgid "All redirects"
+msgstr ""
+
+#: includes/Screens/Ui.php:125
+msgid "All scores"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:71
+msgid "All selected addresses get a 301 redirect to this page."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:47
+msgid "All types"
+msgstr ""
+
+#: includes/Screens/Ui.php:272
+msgid "Already the same"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:82
+msgid "Alternate name"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:106
+msgid "Always noindex, so this only sets the browser tab text."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:103
+msgid "Anyone who can edit that post"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:105
+msgid "Apache (.htaccess)"
+msgstr ""
+
+#: includes/Screens/Ui.php:375
+msgid "Apache rule copied."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:111
+msgid "Apache rule, scrolls sideways"
+msgstr ""
+
+#: includes/Screens/Ui.php:131
+msgid "Applies to"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:49
+msgid "Apply"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:46
+msgid "Archives & search"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:108
+msgid "Archives and search"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:120
+msgid "Article"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:152
+msgid "Article (default)"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Article fields are complete"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:90
+msgid "Article type"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:159
+msgid "Article, WebSite and breadcrumb schema"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Article/BlogPosting markup present"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:132
+msgid "Articles"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:125
+msgid "Asks your site for each of the four versions and follows the redirects, up to 5 steps. It changes nothing."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:89
+msgid "Attachment feeds"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:57
+msgid "Attachment pages"
+msgstr ""
+
+#: includes/Screens/Ui.php:320
+#, php-format
+msgid "Audit finished: %s"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:102
+msgid "Author archives"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:86
+msgid "Author feeds"
+msgstr ""
+
+#: includes/Services/Variables.php:107
+msgid "Author name"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:56
+msgid "Author pages"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:89
+msgid "Automatic"
+msgstr ""
+
+#: includes/Screens/Ui.php:309
+#, php-format
+msgid "Automatic (%s)"
+msgstr ""
+
+#: includes/Screens/Ui.php:307
+#, php-format
+msgid "Automatic follows your WordPress address, which is %s now. Google prefers https pages."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:94
+msgid "Automatic follows your WordPress address. Google prefers https pages."
+msgstr ""
+
+#: includes/Updater.php:448
+msgid "Automatic updates"
+msgstr ""
+
+#: includes/Screens/Ui.php:98
+msgid "Average of posts"
+msgstr ""
+
+#: includes/Services/SitemapView.php:396
+msgid "Back to the sitemap index"
+msgstr ""
+
+#: includes/Services/SitemapView.php:296
+msgid "Back to top"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:328
+msgid "Background problems, newest first."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:92
+msgid "Baidu Webmaster"
+msgstr ""
+
+#: includes/Screens/Ui.php:128
+msgid "Band"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:107
+msgid "Before you paste it"
+msgstr ""
+
+#: includes/Screens/Ui.php:224
+msgid "Best match"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:66
+msgid "Between 0 and 200. Use 0 for no automatic list."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:67
+msgid "Between 1 and 50. Use 0 to keep the WordPress setting."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:67
+msgid "Between 100 and 2,000. Lower this if your server times out."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:90
+msgid "Bing Webmaster Tools"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:92
+msgid "Blog post"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:62
+msgid "Bots"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:59
+msgid "Bots read this address."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Breadcrumb markup is valid"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:143
+msgid "Breadcrumbs"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:32
+msgid "Bring your Yoast SEO data over"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:77
+msgid "Built from the values on this page, even before you save. It works while the file is still off."
+msgstr ""
+
+#: includes/Screens/Ui.php:346
+#, php-format
+msgid "by %s"
+msgstr ""
+
+#: includes/Screens/Ui.php:344
+msgid "by server"
+msgstr ""
+
+#: includes/Screens/Ui.php:91
+msgid "Calculate now"
+msgstr ""
+
+#: includes/Screens/Ui.php:94
+#, php-format
+msgid "Calculated %s"
+msgstr ""
+
+#: includes/Screens/Ui.php:93
+msgid "Calculating…"
+msgstr ""
+
+#: includes/Screens/Ui.php:198
+msgid "Cancel"
+msgstr ""
+
+#: includes/Screens/Ui.php:112
+msgid "Cannot be hidden."
+msgstr ""
+
+#: includes/Screens/Ui.php:353
+msgid "Canonical tag"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:173
+msgid "Canonical URL"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:64
+msgid "Card type"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:160
+msgid "Cast"
+msgstr ""
+
+#: includes/Services/Variables.php:119
+msgid "Categories"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:45
+msgid "Categories & tags"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:98
+msgid "Categories and tags"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:128
+msgid "Category"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:87
+msgid "Category and tag feeds"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:98
+msgid "Category descriptions are edited on each category."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:133
+msgid "Category mapping"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:148
+msgid "Chain"
+msgstr ""
+
+#: includes/Screens/Ui.php:137
+msgid "Change"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:102
+msgid "Change settings, redirects and the 404 log"
+msgstr ""
+
+#: includes/Screens/Ui.php:244
+msgid "Changing the primary category changes this post’s URL."
+msgstr ""
+
+#: includes/Screens/Ui.php:349
+msgid "Check"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:173
+msgid "Check address"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:128
+msgid "Check addresses"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:55
+msgid "Check my Yoast data"
+msgstr ""
+
+#: includes/Updater.php:453
+msgid "Check now"
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:693
+msgid "Check that the certificate is valid for both host names before you make HTTPS the preferred address."
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:55
+msgid "Check your Yoast data first. The import options appear here after the check."
+msgstr ""
+
+#: includes/Screens/Ui.php:220
+msgid "checked"
+msgstr ""
+
+#: includes/Screens/Ui.php:318
+#, php-format
+msgid "Checked at %s"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:175
+msgid "Checking"
+msgstr ""
+
+#: includes/Screens/Ui.php:313
+msgid "Checking 4 addresses. This can take a few seconds."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:54
+msgid "Checking the feed…"
+msgstr ""
+
+#: includes/Screens/Ui.php:246
+msgid "Checking your Yoast data…"
+msgstr ""
+
+#: includes/Screens/Ui.php:221
+msgid "Choose a CSV file first."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:79
+msgid "Choose CSV file"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:47
+msgid "Choose how to handle values that exist in both plugins."
+msgstr ""
+
+#: includes/Screens/Ui.php:550
+msgid "Choose image"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:21
+msgid "Choose what your RSS feed shows and close the feeds nobody needs."
+msgstr ""
+
+#: includes/Screens/Ui.php:259
+msgid "Clean"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:38
+msgid "Cleanup"
+msgstr ""
+
+#: includes/Screens/Ui.php:199
+msgid "Close"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:168
+msgid "Close extra feeds"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:94
+msgid "Close these feeds"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:95
+msgid "Closed feeds"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:84
+msgid "Comments feed"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:85
+msgid "Comments feed of each post"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Complete the Article markup with headline, image, author and publisher."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Complete the post's Open Graph set: type, title, description, image and the canonical URL."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:154
+msgid "Configured"
+msgstr ""
+
+#: includes/Screens/Ui.php:253
+msgid "Conflicts"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:37
+msgid "Content"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:69
+msgid "Content in the sitemap"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:39
+msgid "Content types"
+msgstr ""
+
+#: includes/Screens/Ui.php:228
+msgid "Copied"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:55
+msgid "Copy"
+msgstr ""
+
+#: includes/Screens/Ui.php:373
+msgid "Copy Apache rule"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:159
+msgid "Copy JSON-LD"
+msgstr ""
+
+#: includes/Screens/Ui.php:374
+msgid "Copy nginx rule"
+msgstr ""
+
+#: includes/Screens/Ui.php:377
+msgid "Copying is blocked here. The rule is selected: press Ctrl+C."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:74
+msgid "Copyright"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:75
+msgid "Copyright text"
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:358
+msgid "Correct: this address is the preferred address, or it sends visitors to it with one permanent redirect."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:366
+msgid "Could not be reached (no DNS record, no connection or an invalid certificate)."
+msgstr ""
+
+#: includes/Screens/Ui.php:360
+msgid "Could not be read"
+msgstr ""
+
+#: includes/Updater.php:435
+msgid "Could not check; it will be tried again later. The plugin works normally."
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:72
+msgid "Create redirects"
+msgstr ""
+
+#: includes/Screens/Ui.php:371
+msgid "Creating the rule…"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:131
+msgid "Crime"
+msgstr ""
+
+#: includes/Screens/Ui.php:117
+msgid "Critical"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:168
+msgid "CSV file"
+msgstr ""
+
+#: includes/Screens/Shell.php:134
+msgid "Dashboard"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:387
+msgid "Dashboard sections"
+msgstr ""
+
+#: includes/Screens/Ui.php:164
+msgid "Dashed line"
+msgstr ""
+
+#: includes/Screens/Ui.php:270
+msgid "Data"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:125
+msgid "Data and uninstall"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:117
+msgid "Database schema"
+msgstr ""
+
+#: includes/Services/Variables.php:111
+msgid "Date"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:105
+msgid "Date archives"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Dates are ISO 8601 with a time zone"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:63
+msgid "days"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:128
+msgid "Default schema type per category"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:70
+msgid "Default sharing image"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:128
+msgid "Default type"
+msgstr ""
+
+#: includes/Screens/Ui.php:196
+msgid "Delete"
+msgstr ""
+
+#: includes/Screens/Ui.php:215
+#, php-format
+msgid "Delete %d redirects"
+msgstr ""
+
+#: includes/Screens/Ui.php:213
+#, php-format
+msgid "Delete %d redirects?"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:112
+msgid "Delete all WPSeoKit data when the plugin is deleted"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:50
+msgid "Delete from log"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:76
+msgid "Describes who publishes this site."
+msgstr ""
+
+#: includes/Screens/MetaBox.php:107
+msgid "Description length"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:95
+msgid "Desktop"
+msgstr ""
+
+#: includes/Screens/Ui.php:358
+msgid "Differs"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:159
+msgid "Director"
+msgstr ""
+
+#: includes/Screens/Ui.php:559
+msgid "Discard"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:171
+msgid "Do not follow links on this post"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:62
+msgid "Do not record search engine bots"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:297
+msgid "Download CSV"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:82
+msgid "Download every redirect as a CSV file, for a backup or another site."
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:25
+msgid "Dry run"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:42
+msgid "Dry-run report"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:150
+msgid "Duplicate page (200)"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:59
+msgid "Each item shows"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:324
+msgid "Each time WPSeoKit looks for a new version, newest first."
+msgstr ""
+
+#: includes/Screens/Ui.php:195
+msgid "Edit"
+msgstr ""
+
+#: includes/Screens/Ui.php:141
+msgid "Edit post"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:154
+msgid "Edit post template"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:175
+msgid "Edit redirect"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:99
+msgid "Edit schema"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:92
+msgid "Edit templates"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:103
+msgid "Edit the SEO box of a post"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Emit rel=canonical on every page with the page's own absolute URL."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:103
+msgid "Empty author pages"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:146
+msgid "Empty: the featured image is used."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:53
+msgid "Enable the XML sitemap"
+msgstr ""
+
+#: includes/Screens/Ui.php:136
+msgid "End"
+msgstr ""
+
+#: includes/Screens/Ui.php:370
+msgid "Enter a valid host name above to create the rule."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:95
+msgid "Enter the host name only, such as <code>example.com</code>. Leave out <code>https://</code> and any path."
+msgstr ""
+
+#: includes/Services/RedirectService.php:293
+msgid "Enter the new address, or choose 410 if the page is gone."
+msgstr ""
+
+#: includes/Screens/Ui.php:211
+msgid "Enter the new address, or choose type 410."
+msgstr ""
+
+#: includes/Screens/Ui.php:210
+msgid "Enter the old path, starting with a slash."
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:64
+msgid "entries"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:328
+msgid "Errors"
+msgstr ""
+
+#: includes/Services/SocialService.php:125
+msgid "Estimated reading time"
+msgstr ""
+
+#: includes/Screens/Ui.php:260
+msgid "Event"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:320
+msgid "Every check and import step, newest first."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Every page outputs its own canonical"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:80
+msgid "Every redirect, UTF-8, one per line."
+msgstr ""
+
+#: includes/Screens/Ui.php:104
+msgid "Every rule WPSeoKit checks is in place."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:138
+msgid "Example"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:77
+msgid "Example feed item"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:77
+msgid "Example item"
+msgstr ""
+
+#: includes/Services/Variables.php:115
+msgid "Excerpt"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:82
+msgid "Export"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:80
+msgid "Export CSV"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:71
+msgid "Facebook page"
+msgstr ""
+
+#: includes/Screens/Ui.php:105
+#, php-format
+msgid "Failing on %1$d of %2$d sampled posts."
+msgstr ""
+
+#: includes/Screens/Ui.php:129
+msgid "Failing rules"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:76
+msgid "Featured image"
+msgstr ""
+
+#: includes/Screens/Ui.php:187
+msgid "Feed"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:34
+msgid "Feed (RSS)"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:55
+msgid "Feed address"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Feed is valid"
+msgstr ""
+
+#: includes/Screens/Ui.php:355
+msgid "Feed links"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:30
+msgid "Feed readers and aggregators cannot follow your new posts."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:42
+msgid "Feed sections"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:89
+msgid "Feeds of media pages."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:88
+msgid "Feeds of search queries."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:98
+msgid "Feeds to close"
+msgstr ""
+
+#: includes/Services/SitemapView.php:285
+msgid "File"
+msgstr ""
+
+#: includes/Services/SitemapView.php:340
+#, php-format
+msgid "File %1$s of %2$s"
+msgstr ""
+
+#: includes/Services/SitemapView.php:268
+#, php-format
+msgid "File %s"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:54
+msgid "File address"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:40
+msgid "Files"
+msgstr ""
+
+#: includes/Services/SitemapView.php:325
+#, php-format
+msgid "Files of %s"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Fill the organization name, URL and logo in the schema settings."
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:43
+msgid "Filter 404 log"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:45
+msgid "Filter redirects"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:33
+msgid "First WPSeoKit only counts what it can import. Nothing is written until you confirm, and your Yoast data is never deleted."
+msgstr ""
+
+#: includes/Screens/Ui.php:263
+msgid "Fix"
+msgstr ""
+
+#: includes/Screens/Ui.php:113
+#, php-format
+msgid "Fix in %s"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Fix the sitemap URLs that return a redirect or an error; list only URLs that answer 200."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:175
+msgid "Fix top errors"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:103
+msgid "Follows the WordPress permission to edit the post."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:73
+msgid "Footer text"
+msgstr ""
+
+#: includes/Screens/Ui.php:116
+#, php-format
+msgid "for: %s"
+msgstr ""
+
+#: includes/Screens/Ui.php:250
+msgid "Found"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:176
+msgid "From"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:69
+msgid "From (old path)"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:77
+msgid "Full addresses of your official profiles. Empty ones are left out."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:62
+msgid "Full text"
+msgstr ""
+
+#: includes/Screens/Ui.php:150
+msgid "Gaps in a line are days without a snapshot."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:38
+msgid "General"
+msgstr ""
+
+#: includes/Services/SitemapView.php:206
+msgid "Generated by WPSeoKit. This page is only a view of the XML sitemap; search engines read the XML."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:74
+msgid "Generated files"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:132
+msgid "gentle"
+msgstr ""
+
+#: includes/Screens/Ui.php:233
+msgid "Gentle Shadows"
+msgstr ""
+
+#: includes/Gate.php:44
 msgid "Get AdminKit"
 msgstr ""
 
-#: src/includes/Gate.php
+#: includes/Screens/Ui.php:242
+msgid "Getting long"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Give the post a title; the resolved page title is empty."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:211
+msgid "Go to Setup"
+msgstr ""
+
+#: includes/Screens/Ui.php:334
+msgid "Goes to"
+msgstr ""
+
+#: includes/Services/RedirectService.php:214
+msgid "Gone"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+#: includes/Screens/Ui.php:122
+msgid "Good"
+msgstr ""
+
+#: includes/Screens/Ui.php:240
+msgid "Good length"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:89
+msgid "Google Search Console"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:66
+msgid "Helps image search find your posters and stills."
+msgstr ""
+
+#: includes/Screens/Ui.php:110
+msgid "Hidden"
+msgstr ""
+
+#: includes/Screens/Ui.php:111
+#, php-format
+msgid "Hidden recommendations (%d)"
+msgstr ""
+
+#: includes/Screens/Ui.php:108
+msgid "Hide"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:170
+msgid "Hide this post from search results"
+msgstr ""
+
+#: includes/Screens/Ui.php:261
+msgid "Hits"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:42
+msgid "Home"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:59
+msgid "Home page"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Home page Open Graph set is complete"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:95
+msgid "Host name"
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:640
+#, php-format
+msgid "Hosting panel without file access: create ONE permanent (301) redirect for the domain, with the \"redirect with or without www\" option set to %1$s, and switch on \"force HTTPS\" if your host offers it. Do not stack two panel redirects, and do not turn on the plugin PHP fallback next to them. Make sure the certificate covers %2$s and www.%2$s."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:68
+msgid "hours"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:280
+msgid "How it is calculated"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:59
+msgid "How the front page looks in search results."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "How this score is calculated"
+msgstr ""
+
+#: includes/Screens/Ui.php:356
+msgid "HSTS header"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:152
+msgid "HTTPS to HTTP"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "HTTPS with a valid certificate"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:63
+msgid "I have a database backup and I want to import now."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "If llms.txt is on, serve it as UTF-8 plain text with an H1 on the first line and links that answer 200; otherwise leave it off."
+msgstr ""
+
+#: includes/Screens/Ui.php:386
+msgid "If you cannot edit the server, this fallback can send the copies to the preferred address. A server rule is still faster."
+msgstr ""
+
+#: includes/Services/SitemapView.php:377
+msgid "Images"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:170
+msgid "Import"
+msgstr ""
+
+#: includes/Screens/Ui.php:219
+#, php-format
+msgid "Import %d redirects"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:35
+msgid "Import / export"
+msgstr ""
+
+#: includes/Screens/Ui.php:248
+msgid "Import finished."
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:54
+msgid "Import now"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:47
+msgid "Import options"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:166
+msgid "Import redirects from CSV"
+msgstr ""
+
+#: includes/Screens/Ui.php:249
+msgid "Import undone."
+msgstr ""
+
+#: includes/Screens/Shell.php:150
+msgid "Import Yoast data"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:62
+msgid "Import Yoast data?"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:225
+msgid "Import your Yoast data to continue."
+msgstr ""
+
+#: includes/Screens/Ui.php:271
+msgid "Imported"
+msgstr ""
+
+#: includes/Screens/Ui.php:247
+msgid "Importing…"
+msgstr ""
+
+#: includes/Screens/Ui.php:182
+msgid "in the last 24 hours. Visits are counted in the 404 log, not here."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:96
+msgid "In use:"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:76
+msgid "Include the featured image in each item"
+msgstr ""
+
+#: includes/Screens/Ui.php:119
+msgid "Info"
+msgstr ""
+
+#: includes/Screens/Ui.php:359
+msgid "Information"
+msgstr ""
+
+#: includes/Screens/Ui.php:496
+msgid "Insert a variable"
+msgstr ""
+
+#: includes/Updater.php:445
+msgid "Installed version"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:151
+msgid "It redirects, but not to the preferred address."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:120
+msgid "Item"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:67
+msgid "items"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:67
+msgid "Items in the feed"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:66
+msgid "Items per type"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:130
+msgid "Jane Doe"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:159
+msgid "JSON-LD"
+msgstr ""
+
+#: includes/Services/SitemapView.php:350
+msgid "Jump to rows"
+msgstr ""
+
+#: includes/Services/SitemapView.php:294
+msgid "Jump within this file"
+msgstr ""
+
+#: includes/Services/SitemapView.php:297
+msgid "Jump within this file, bottom"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:63
+msgid "Keep entries for"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Keep the feed valid: absolute item links that answer 200 and RFC 822 pubDate."
+msgstr ""
+
+#: includes/Screens/Ui.php:217
+msgid "Keep them"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:50
+msgid "Keep WPSeoKit"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:51
+msgid "Keeping WPSeoKit never overwrites something you edited by hand."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:53
+msgid "Keeps the same addresses Yoast used, so search engines see no change."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:67
+msgid "Large image"
+msgstr ""
+
+#: includes/Updater.php:447
+msgid "Last check"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:57
+msgid "Last hit"
+msgstr ""
+
+#: includes/Services/SitemapView.php:379
+msgid "Last modified"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:54
+msgid "Last seen"
+msgstr ""
+
+#: includes/Screens/Ui.php:145
+#, php-format
+msgid "Last snapshot: %s"
+msgstr ""
+
+#: includes/Services/SitemapView.php:254
+msgid "Last updated"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "lastmod carries the content date"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:65
+msgid "Latest content"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:94
+msgid "Leave empty to print nothing."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:95
+msgid "Leave empty to use the host of your WordPress address. Choose with or without <code>www</code>, and keep it. Changing it later means new redirects for every address."
+msgstr ""
+
+#: includes/Screens/MetaBox.php:142
+msgid "Leave empty to use the meta description."
+msgstr ""
+
+#: includes/Screens/MetaBox.php:173
+msgid "Leave empty to use the post address. Only fill this when the same content lives elsewhere."
+msgstr ""
+
+#: includes/Screens/MetaBox.php:141
+msgid "Leave empty to use the SEO title."
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:69
+msgid "Leave out (IDs)"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:55
+msgid "Let editors pick a primary category"
+msgstr ""
+
+#: includes/Screens/Ui.php:132
+msgid "Level"
+msgstr ""
+
+#: includes/Screens/Ui.php:222
+msgid "Line"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:80
+msgid "Line in robots.txt"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:33
+msgid "List"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:66
+msgid "List featured images with each post"
+msgstr ""
+
+#: includes/Screens/Ui.php:188
+msgid "llms.txt"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:56
+msgid "llms.txt file"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "llms.txt is consistent (when enabled)"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:30
+msgid "llms.txt is off."
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:76
+msgid "llms.txt preview"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:42
+msgid "llms.txt sections"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:293
+msgid "Loading your reports…"
+msgstr ""
+
+#: includes/Screens/Ui.php:570
+msgid "Loading…"
+msgstr ""
+
+#: includes/Screens/Ui.php:379
+msgid "Locked for now."
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:32
+msgid "Log"
+msgstr ""
+
+#: includes/Services/Log404Service.php:187
+msgid "Log entry not found."
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:65
+msgid "Log settings"
+msgstr ""
+
+#: includes/Screens/Ui.php:167
+msgid "Logged 404 addresses"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:61
+msgid "Logging"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:63
+msgid "Logo"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:158
+msgid "Logo missing"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:42
+msgid "Logs"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:68
+msgid "Main feed"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:168
+msgid "Main feed on"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Make the post indexable again: it is currently excluded by a robots directive."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Mark the post up with one Article, BlogPosting or NewsArticle node."
+msgstr ""
+
+#: includes/Screens/Ui.php:357
+msgid "Matches"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:138
+msgid "Meaning"
+msgstr ""
+
+#: includes/Screens/Ui.php:139
+msgid "Measure"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:76
+msgid "Meta description"
+msgstr ""
+
+#: includes/Screens/Ui.php:361
+msgid "Missing"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Missing pages return HTTP 404"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:95
+msgid "Mobile"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:64
+msgid "Most entries kept"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:57
+msgid "Most hit first"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:68
+msgid "Most terms per section"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:121
+msgid "Movie"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:157
+msgid "Movie and TVSeries need the details below. Without them the post stays an Article."
+msgstr ""
+
+#: includes/Screens/Ui.php:258
+msgid "Needs a look"
+msgstr ""
+
+#: includes/Screens/Ui.php:327
+msgid "Needs attention"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+#: includes/Screens/Ui.php:123
+msgid "Needs improvement"
+msgstr ""
+
+#: includes/Updater.php:442
+msgid "never"
+msgstr ""
+
+#: includes/Screens/Ui.php:201
+msgid "Never"
+msgstr ""
+
+#: includes/Screens/Ui.php:168
+msgid "New 404 addresses (24 h)"
+msgstr ""
+
+#: includes/Services/SitemapView.php:288
+msgid "Newest change"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:94
+msgid "News article"
+msgstr ""
+
+#: includes/Services/SitemapView.php:345
+msgid "Next"
+msgstr ""
+
+#: includes/Screens/Ui.php:230
+msgid "Next page"
+msgstr ""
+
+#: includes/Screens/Ui.php:376
+msgid "nginx rule copied."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:112
+msgid "nginx rule, scrolls sideways"
+msgstr ""
+
+#: includes/Screens/Ui.php:204
+msgid "No 404 errors logged. Visitors are finding your pages."
+msgstr ""
+
+#: includes/Screens/Ui.php:165
+msgid "No data"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:155
+msgid "No DNS record, refused connection, certificate error or timeout. The reason is shown."
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:27
+msgid "No import has run yet. The report appears here when it finishes."
+msgstr ""
+
+#: includes/Services/LlmsTxtService.php:530
+msgid "No page or post is listed yet."
+msgstr ""
+
+#: includes/Services/FeedService.php:504
+msgid "No post found"
+msgstr ""
+
+#: includes/Services/SitemapView.php:364
+msgid "No published items are listed in this file, so there is nothing to show. Search engines see an empty list."
+msgstr ""
+
+#: includes/Screens/Ui.php:202
+msgid "No redirects yet. Add the first one on the Add tab."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:291
+msgid "No report data yet"
+msgstr ""
+
+#: includes/Screens/Ui.php:369
+msgid "No rule yet."
+msgstr ""
+
+#: includes/Screens/Ui.php:100
+msgid "No scored posts yet."
+msgstr ""
+
+#: includes/Services/SitemapView.php:232
+msgid "No sitemap files yet"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "No unsupported or wrong schema nodes"
+msgstr ""
+
+#: includes/Services/SitemapView.php:374
+msgid "No."
+msgstr ""
+
+#: includes/Screens/Ui.php:140
+msgid "None"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Not applicable on this site, so it is left out of the calculation."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:134
+msgid "Not checked"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:102
+msgid "Not checked yet"
+msgstr ""
+
+#: includes/Updater.php:431
+msgid "Not checked yet."
+msgstr ""
+
+#: includes/Screens/Ui.php:384
+msgid "Not needed."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:162
+msgid "Not published"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:171
+msgid "Not published yet"
+msgstr ""
+
+#: includes/Screens/Ui.php:368
+msgid "Not set. Optional: consider it only after the redirects are stable."
+msgstr ""
+
+#: includes/Screens/Ui.php:273
+msgid "Note"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:54
+msgid "Nothing has been imported yet."
+msgstr ""
+
+#: includes/Screens/Ui.php:203
+msgid "Nothing matches this search."
+msgstr ""
+
+#: includes/Screens/Ui.php:330
+msgid "Nothing to change."
+msgstr ""
+
+#: includes/Screens/Ui.php:103
+msgid "Nothing to fix"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:55
+msgid "Nothing to import yet."
+msgstr ""
+
+#: includes/Screens/Ui.php:194
+msgid "Off"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:118
+msgid "Off (Yoast SEO is active)"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:95
+msgid "Off = a closed feed answers 404."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:160
+msgid "Off = every redirect pauses and visitors see the old address. Nothing is deleted."
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:50
+msgid "Off by default. Turn it on after you read the preview."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:147
+msgid "OK"
+msgstr ""
+
+#: includes/Screens/Ui.php:193
+msgid "On"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "One canonical method only"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:86
+msgid "One feed for each author."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:87
+msgid "One feed for each category and tag."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:85
+msgid "One feed for every post."
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:55
+msgid "One or two sentences. Plain text, no markup. Leave empty to use the site tagline."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:78
+msgid "One redirect per line: <code>from,to,type</code>. The check runs before anything is saved, and existing “from” addresses are never overwritten."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:167
+msgid "One redirect per line: <code>from,to,type</code>. The first line may be a header. Existing redirects with the same “from” are skipped, never overwritten."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:126
+msgid "One rule that sends every other version straight to the preferred address. Copy it into your server settings or ask your host to add it."
+msgstr ""
+
+#: includes/Screens/Ui.php:144
+msgid "One snapshot so far. A trend needs at least two days; the numbers of that day are below."
+msgstr ""
+
+#: includes/Screens/Ui.php:328
+msgid "One thing to know"
+msgstr ""
+
+#: includes/Services/RedirectService.php:245
+msgid "Only exact paths are supported."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:127
+msgid "Only for sites where you cannot add a server rule. Off by default."
+msgstr ""
+
+#: includes/Services/ScoreService.php:236
+msgid "Only published posts have an SEO score."
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:61
+msgid "Only the address, the referrer and a hit count are stored. No visitor data."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:56
+msgid "Open"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:190
+#, php-format
+msgid "Open %s"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:159
+msgid "Open Google Rich Results Test (opens in a new tab)"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:59
+msgid "Open Graph"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:76
+msgid "Open Reading settings"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:120
+msgid "Open settings"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:106
+msgid "Open sitemap"
+msgstr ""
+
+#: includes/Screens/Ui.php:183
+msgid "Open the 404 log"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:58
+msgid "Open the human view"
+msgstr ""
+
+#: includes/Services/SitemapView.php:214
+msgid "Open the XML"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:82
+msgid "Optional. A shorter or spaced-out spelling people also use."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:76
+msgid "Organization"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:61
+msgid "Organization name"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:97
+msgid "Organization name and logo"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:32
+msgid "Organization name and logo are empty."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Organization node is complete"
+msgstr ""
+
+#: includes/Screens/Ui.php:348
+msgid "Other address checks"
+msgstr ""
+
+#: includes/Screens/Ui.php:347
+msgid "Other checks"
+msgstr ""
+
+#: includes/Screens/Ui.php:95
+#, php-format
+msgid "Out of date: calculated %s. Recalculate to refresh it."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:118
+msgid "Output"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Output a self-referencing canonical with the post's absolute URL."
+msgstr ""
+
+#: includes/Screens/Shell.php:125
+msgid "Output on"
+msgstr ""
+
+#: includes/Screens/Shell.php:124
+msgid "Output paused"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:246
+msgid "Overview"
+msgstr ""
+
+#: includes/Services/Variables.php:262
+#, php-format
+msgid "Page %1$d of %2$d"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:125
+msgid "Page 2"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:97
+msgid "Page head"
+msgstr ""
+
+#: includes/Services/Variables.php:95
+msgid "Page number (empty on the first page)"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:125
+msgid "Page number on paged lists, empty on page one."
+msgstr ""
+
+#: includes/Services/LlmsTxtService.php:170
+msgid "Pages"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:108
+msgid "Pages WordPress makes by itself."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:96
+msgid "Paste only the code from each meta tag’s content, not the whole tag."
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:44
+msgid "Path"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:46
+msgid "Path or target"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:260
+msgid "Paused"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:187
+msgid "Paused (Yoast active)"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:52
+msgid "Paused while Yoast SEO is active"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:58
+msgid "Person"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:62
+msgid "Person name"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:127
+msgid "PHP fallback"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Pick a primary category; it decides the post URL and the breadcrumb."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:124
+msgid "Pick the one address your site answers on. Every other version should send visitors there in a single step."
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:70
+msgid "Pick the pages assistants should know about. Fewer, better links work best."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:122
+msgid "Plugin status"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:116
+msgid "Plugin version"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+#: includes/Screens/Ui.php:124
+msgid "Poor"
+msgstr ""
+
+#: includes/Screens/Ui.php:126
+msgid "Post"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Post is in the sitemap"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Post is indexable"
+msgstr ""
+
+#: includes/Services/ScoreService.php:233
+msgid "Post not found."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Post Open Graph set is complete"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:69
+msgid "Post or page IDs, one per line. They never appear in the file."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Post SEO score"
+msgstr ""
+
+#: includes/Services/Variables.php:79
+msgid "Post title"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:64
+msgid "Post types"
+msgstr ""
+
+#: includes/Services/LlmsTxtService.php:175
+msgid "Posts"
+msgstr ""
+
+#: includes/Screens/Ui.php:173
+msgid "Posts counted"
+msgstr ""
+
+#: includes/Screens/Ui.php:160
+msgid "Posts with a description"
+msgstr ""
+
+#: includes/Screens/Ui.php:159
+msgid "Posts with a title"
+msgstr ""
+
+#: includes/Screens/Ui.php:310
+msgid "Preference saved."
+msgstr ""
+
+#: includes/Screens/Ui.php:337
+msgid "Preferred"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:124
+msgid "Preferred address"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:154
+msgid "Preferred address not OK"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:292
+msgid "Preparing your first snapshot… This usually takes a few seconds."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:160
+msgid "Preview"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:95
+msgid "Preview device"
+msgstr ""
+
+#: includes/Services/SitemapView.php:328
+msgid "Previous"
+msgstr ""
+
+#: includes/Screens/Ui.php:229
+msgid "Previous page"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:118
+msgid "Primary categories"
+msgstr ""
+
+#: includes/Services/Variables.php:123
+msgid "Primary category"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Primary category set and used in the URL"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:297
+msgid "Print"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:59
+msgid "Print Open Graph tags"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:60
+msgid "Print Twitter card tags"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:74
+msgid "Printed under the footer text."
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:50
+msgid "Publish llms.txt"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:50
+msgid "Publish the main feed"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:171
+msgid "Published"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:158
+msgid "Publisher missing"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:158
+msgid "Publisher set"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:162
+msgid "Reachable"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:160
+msgid "Read-only. Reads the live page, so it reflects the settings you saved."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:50
+msgid "Readers and some search tools use it to find new posts."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:68
+msgid "Rebuild every"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:57
+msgid "Rebuild now"
+msgstr ""
+
+#: includes/Screens/Ui.php:227
+msgid "Rebuilding the sitemap…"
+msgstr ""
+
+#: includes/Screens/Ui.php:92
+msgid "Recalculate"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:278
+msgid "Recommendations"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:61
+msgid "Record addresses that return 404"
+msgstr ""
+
+#: includes/Screens/Ui.php:225
+msgid "Redirect"
+msgstr ""
+
+#: includes/Screens/Ui.php:205
+msgid "Redirect added."
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:49
+msgid "Redirect all to…"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:57
+msgid "Redirect attachment pages to the file"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:161
+msgid "Redirect behavior"
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:359
+msgid "Redirect chain: visitors make two or more hops. Redirect straight to the preferred address in one hop."
+msgstr ""
+
+#: includes/Screens/Ui.php:208
+msgid "Redirect created."
+msgstr ""
+
+#: includes/Screens/Ui.php:207
+msgid "Redirect deleted."
+msgstr ""
+
+#: includes/Screens/Ui.php:166
+msgid "Redirect hits"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:153
+msgid "Redirect loop"
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:364
+msgid "Redirect loop, or more hops than are followed. Turn off the PHP fallback and check the server rule."
+msgstr ""
+
+#: includes/Services/RedirectService.php:514
+msgid "Redirect not found."
+msgstr ""
+
+#: includes/Screens/Ui.php:339
+msgid "Redirect step"
+msgstr ""
+
+#: includes/Screens/Ui.php:340
+msgid "Redirect steps"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:70
+msgid "Redirect the selected addresses"
+msgstr ""
+
+#: includes/Screens/Ui.php:223
+msgid "Redirect to…"
+msgstr ""
+
+#: includes/Screens/Ui.php:206
+msgid "Redirect updated."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:119
+msgid "Redirect with PHP when the server does not"
+msgstr ""
+
+#: includes/Screens/Ui.php:335
+msgid "Redirects"
+msgstr ""
+
+#: includes/Screens/Ui.php:153
+msgid "Redirects and 404 errors"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:39
+msgid "Redirects sections"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:54
+msgid "Referrer"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:76
+msgid "Refresh preview"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Regenerate the sitemap and confirm it answers with XML and absolute URLs."
+msgstr ""
+
+#: includes/Screens/Ui.php:551
+msgid "Remove"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:97
+msgid "Remove extra feed links from the page head"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Remove the structured-data nodes Google no longer supports here and keep ratings off your own organization."
+msgstr ""
+
+#: includes/Screens/Ui.php:550
+msgid "Replace image"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:119
+#, php-format
+msgid "Replaces %sep% in every template."
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:27
+msgid "Report"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:296
+msgid "Report range"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:290
+msgid "Reports"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:286
+msgid "Reports are not recorded while WPSeoKit output is paused. Import your Yoast data to continue."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Resolved page title is not empty"
+msgstr ""
+
+#: includes/Screens/Ui.php:109
+msgid "Restore"
+msgstr ""
+
+#: includes/Screens/Ui.php:350
+msgid "Result"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Return HTTP 404 for missing pages instead of a page that says 'not found' with a 200 status."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:135
+msgid "Review import"
+msgstr ""
+
+#: includes/Screens/Ui.php:177
+msgid "Review posts"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:41
+msgid "robots.txt"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:85
+msgid "robots.txt and WordPress sitemap"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "robots.txt declares the sitemap"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "robots.txt reachable and within limits"
+msgstr ""
+
+#: includes/Screens/Ui.php:130
+msgid "Rule"
+msgstr ""
+
+#: includes/Screens/Ui.php:142
+msgid "Rules"
+msgstr ""
+
+#: includes/Screens/Ui.php:169
+msgid "Rules checked"
+msgstr ""
+
+#: includes/Screens/Ui.php:172
+msgid "Rules not applicable"
+msgstr ""
+
+#: includes/Screens/Ui.php:170
+msgid "Rules passed"
+msgstr ""
+
+#: includes/Screens/Ui.php:171
+msgid "Rules to fix"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:26
+msgid "Run"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:100
+msgid "Run audit"
+msgstr ""
+
+#: includes/Screens/Ui.php:314
+msgid "Run audit again"
+msgstr ""
+
+#: includes/Screens/Ui.php:387
+msgid "Run the audit first. It shows whether your server already redirects."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:102
+msgid "Run the audit to see how each version of your address behaves. The result is not saved. It also checks canonical tags, sitemap, feed and HSTS."
+msgstr ""
+
+#: includes/Screens/Ui.php:282
+msgid "Run the check again"
+msgstr ""
+
+#: includes/Screens/Ui.php:284
+msgid "Run the check again to see whether anything new is left to import."
+msgstr ""
+
+#: includes/Services/YoastImportService.php:125
+msgid "Run the check first: nothing is written before you have seen the report."
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:40
+msgid "Run the check on the Summary tab first. The result appears here."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:160
+msgid "Run the redirects on the live site"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:141
+msgid "Same as the SEO title"
+msgstr ""
+
+#: includes/Screens/Ui.php:197
+msgid "Save"
+msgstr ""
+
+#: includes/Screens/Ui.php:559
+msgid "Save changes"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:98
+msgid "Save preference"
+msgstr ""
+
+#: includes/Screens/Ui.php:388
+msgid "Saved."
+msgstr ""
+
+#: includes/Screens/Ui.php:83
+msgid "Saving…"
+msgstr ""
+
+#: includes/Screens/Ui.php:185
+msgid "Schema"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:159
+msgid "Schema JSON-LD of the chosen page"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:45
+msgid "Schema sections"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:157
+msgid "Schema type"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:118
+#, php-format
+msgid "Schema type for %s"
+msgstr ""
+
+#: includes/Screens/Ui.php:161
+msgid "Schema types"
+msgstr ""
+
+#: includes/Screens/Ui.php:175
+#, php-format
+msgid "Schema: %s"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:94
+msgid "Scheme"
+msgstr ""
+
+#: includes/Screens/Ui.php:127
+msgid "Score"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:277
+msgid "Score overview"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:72
+msgid "Scrapers that copy your feed also copy the link."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:46
+msgid "Search"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:111
+msgid "Search engine visibility"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:174
+msgid "Search engines"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:112
+msgid "Search engines are discouraged"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:32
+msgid "Search engines get an incomplete publisher until you add them."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:32
+msgid "Search engines have no list of your pages."
+msgstr ""
+
+#: includes/Services/Variables.php:103
+msgid "Search phrase"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:94
+msgid "Search preview"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:88
+msgid "Search result feeds"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:97
+msgid "Search results"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:106
+msgid "Search results page"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:21
+msgid "See which broken addresses visitors hit."
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:53
+msgid "Select all"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:56
+msgid "Select all redirects"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:51
+msgid "selected"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Self-referencing canonical"
+msgstr ""
+
+#: includes/Services/CsvService.php:200
+msgid "Send a CSV file or a csv text."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:22
+msgid "Send old addresses to the right place."
+msgstr ""
+
+#: includes/Services/LlmsTxtService.php:502
+msgid "Send the llms settings as an object."
+msgstr ""
+
+#: includes/Rest.php:108
+msgid "Send the settings to change as a JSON object."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:95
+msgid "Send visitors of a closed feed to its page (301)"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:71
+msgid "SEO"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+#: includes/Screens/Ui.php:152
+msgid "SEO score"
+msgstr ""
+
+#: includes/Screens/Ui.php:87
+#, php-format
+msgid "SEO score: %1$d out of 100, %2$s"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:100
+msgid "SEO title"
+msgstr ""
+
+#: includes/Updater.php:316
+msgid "SEO titles and meta descriptions, canonical and robots, Open Graph, XML sitemap, schema graph, redirects and a 404 log."
+msgstr ""
+
+#: includes/Updater.php:306
+msgid "SEO Toolkit"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:182
+msgid "SEO tools"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:160
+msgid "Separate names with commas."
+msgstr ""
+
+#: includes/Services/Variables.php:91
+msgid "Separator"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:47
+msgid "Separator & variables"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Serve a valid robots.txt: plain text, from the site root, under 500 KiB."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Serve the site over HTTPS with a valid certificate and redirect HTTP to HTTPS once, without going back to HTTP."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:110
+msgid "Server"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:126
+msgid "Server rule"
+msgstr ""
+
+#: includes/Screens/Ui.php:367
+msgid "Set:"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:133
+msgid "Sets the starting point for the post SEO box. Each post can still choose its own type."
+msgstr ""
+
+#: includes/Screens/Ui.php:191
+msgid "Settings"
+msgstr ""
+
+#: includes/Screens/Ui.php:81
+msgid "Settings saved."
+msgstr ""
+
+#: includes/Screens/Ui.php:82
+msgid "Settings were not saved."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:112
+msgid "Settings, redirects, the 404 log and per-post SEO fields. Leave off to keep them for a later reinstall."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:31
+msgid "Setup"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:46
+msgid "Setup checklist"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:142
+msgid "Sharing description"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:146
+msgid "Sharing image"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:141
+msgid "Sharing title"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:85
+#, php-format
+msgid "Show %s in search results"
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:45
+msgid "Show bot noise"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:158
+msgid "Show the schema for"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:130
+#, php-format
+msgid "Showing %1$d of %2$d categories, the busiest first."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:61
+msgid "Shown to search engines as the publisher of every page."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:58
+msgid "Shown under the title in search results. Aim for 70–155 characters. Leave empty to use the tagline."
+msgstr ""
+
+#: includes/Screens/Ui.php:120
+msgid "Site"
+msgstr ""
+
+#: includes/Screens/Ui.php:352
+msgid "Site address (siteurl)"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Site is open to search engines"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:81
+msgid "Site name"
+msgstr ""
+
+#: includes/Services/SitemapView.php:398
+msgid "Site owner: open WPSeoKit › Sitemap and switch on at least one content type."
+msgstr ""
+
+#: includes/Screens/Ui.php:97
+msgid "Site settings"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:55
+msgid "Site summary"
+msgstr ""
+
+#: includes/Services/Variables.php:83
+msgid "Site title"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:96
+msgid "Site verification"
+msgstr ""
+
+#: includes/Screens/Ui.php:186
+msgid "Sitemap"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:59
+msgid "Sitemap address"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:73
+msgid "Sitemap files"
+msgstr ""
+
+#: includes/Services/SitemapView.php:304
+msgid "Sitemap groups"
+msgstr ""
+
+#: includes/Services/SitemapView.php:305
+msgid "Sitemap index"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:81
+msgid "Sitemap line in robots.txt"
+msgstr ""
+
+#: includes/Screens/Ui.php:354
+msgid "Sitemap links"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Sitemap reachable and parseable"
+msgstr ""
+
+#: includes/Screens/Ui.php:226
+msgid "Sitemap rebuilt."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:45
+msgid "Sitemap sections"
+msgstr ""
+
+#: includes/Screens/Ui.php:156
+msgid "Sitemap size"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Sitemap URLs answer 200"
+msgstr ""
+
+#: includes/Screens/Ui.php:174
+#, php-format
+msgid "Sitemap: %s"
+msgstr ""
+
+#: includes/Services/SitemapView.php:218
+msgid "Skip to the list"
+msgstr ""
+
+#: includes/Services/SitemapView.php:282
+msgid "Skip to the URL list"
+msgstr ""
+
+#: includes/Screens/Ui.php:252
+msgid "Skipped"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:119
+msgid "Slower than a server rule"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:66
+msgid "Small image"
+msgstr ""
+
+#: includes/Screens/Ui.php:148
+msgid "Snapshot saved."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:291
+msgid "Snapshot settings"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:72
+msgid "Social"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:77
+msgid "Social profiles"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:82
+msgid "Social sharing"
+msgstr ""
+
+#: includes/Screens/Ui.php:163
+msgid "Solid line"
+msgstr ""
+
+#: includes/Services/LlmsTxtService.php:508
+msgid "Some settings have the wrong type."
+msgstr ""
+
+#: includes/Screens/Ui.php:134
+msgid "Source"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:72
+msgid "Source link"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:78
+msgid "Source link and copyright"
+msgstr ""
+
+#: includes/Screens/Ui.php:238
+msgid "Source: excerpt"
+msgstr ""
+
+#: includes/Screens/Ui.php:239
+msgid "Source: start of the content"
+msgstr ""
+
+#: includes/Screens/Ui.php:237
+msgid "Source: title template"
+msgstr ""
+
+#: includes/Screens/Ui.php:236
+msgid "Source: written here"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:63
+msgid "Square or wide, at least 112 × 112 px."
+msgstr ""
+
+#: includes/Screens/Ui.php:135
+msgid "Start"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:69
+msgid "Start with a slash. Use <code>*</code> at the end to match everything below that path."
+msgstr ""
+
+#: includes/Updater.php:446
+msgid "Status"
+msgstr ""
+
+#: includes/Screens/Ui.php:333
+msgid "Status code"
+msgstr ""
+
+#: includes/Screens/Ui.php:338
+msgid "Stays here"
+msgstr ""
+
+#: includes/Screens/Ui.php:342
+#, php-format
+msgid "Step %d:"
+msgstr ""
+
+#: includes/Screens/Ui.php:162
+msgid "Summary"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:165
+msgid "Summary only"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:65
+msgid "Summary sends readers to your site to read the rest. Full text keeps them in their reader."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:97
+msgid "Switched on = the archive asks search engines not to list it, and it leaves the sitemap."
+msgstr ""
+
+#: includes/Services/Variables.php:87
+msgid "Tagline"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:297
+msgid "Take snapshot now"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:74
+msgid "Takes effect the moment you save."
+msgstr ""
+
+#: includes/Screens/Ui.php:147
+msgid "Taking a snapshot…"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:65
+msgid "Taxonomies"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:96
+msgid "Tell search engines not to index feeds"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:24
+msgid "Tell search engines who runs the site and what each page is."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:138
+msgid "Template variables"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:149
+msgid "Temporary redirect"
+msgstr ""
+
+#: includes/Services/Variables.php:99
+msgid "Term name"
+msgstr ""
+
+#: includes/Services/MetaService.php:222
+msgid "Term not found."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:96
+msgid "The audit and the rules use what you see here, even before you save."
+msgstr ""
+
+#: includes/Screens/Ui.php:380
+msgid "The audit found a chain or a loop. A PHP redirect would add one more step. Fix the server rule, run the audit again, then come back."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:130
+msgid "The author name."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:127
+msgid "The categories of the post."
+msgstr ""
+
+#: includes/Services/PrimaryTermService.php:141
+msgid "The category is not assigned to this post."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:427
+#, php-format
+msgid "The certificate of %s is not valid. Do not make HTTPS the preferred address until it is."
+msgstr ""
+
+#: includes/Screens/Ui.php:315
+msgid "The check could not run."
+msgstr ""
+
+#: includes/Screens/Ui.php:280
+#, php-format
+msgid "The check on %s found a difference. Verify again from the Report tab."
+msgstr ""
+
+#: includes/Services/CsvService.php:106
+msgid "The CSV could not be read."
+msgstr ""
+
+#: includes/Services/CsvService.php:192
+msgid "The CSV is larger than 1 MB."
+msgstr ""
+
+#: includes/Services/CsvService.php:101
+msgid "The CSV must be UTF-8."
+msgstr ""
+
+#: includes/Screens/Ui.php:312
+msgid "The current settings could not be loaded."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:126
+msgid "The excerpt of the post."
+msgstr ""
+
+#: includes/Screens/Ui.php:266
+msgid "The feed is off."
+msgstr ""
+
+#: includes/Screens/Ui.php:265
+msgid "The feed is on and answers at this address."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:68
+msgid "The feed readers and aggregators subscribe to."
+msgstr ""
+
+#: includes/Screens/Ui.php:331
+msgid "The four versions of your address"
+msgstr ""
+
+#: includes/Screens/Ui.php:283
+msgid "The import is already applied."
+msgstr ""
+
+#: includes/Screens/Ui.php:285
+msgid "The import was applied, so there is no current check. Run it again to see what would change now."
+msgstr ""
+
+#: includes/Services/SitemapView.php:232
+msgid "The index is empty: no content type is switched on for the sitemap, or nothing is published yet. Search engines will find nothing to read here."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:30
+msgid "The main feed is off."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:131
+msgid "The name of the category or tag."
+msgstr ""
+
+#: includes/Services/RedirectService.php:296
+msgid "The new address is not valid. Encode spaces and special characters."
+msgstr ""
+
+#: includes/Services/RedirectService.php:303
+msgid "The new address must be a path on this site or a full http(s) address."
+msgstr ""
+
+#: includes/Services/RedirectService.php:249
+msgid "The old address must be a path on this site, such as /old-page/."
+msgstr ""
+
+#: includes/Services/RedirectService.php:324
+msgid "The old and the new address are the same page. That is a loop."
+msgstr ""
+
+#: includes/Screens/Log404Screen.php:64
+msgid "The oldest entries go first when the log is full."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:154
+msgid "The package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Automatic updates are turned on or off with the “Enable auto-updates” link on the Plugins page."
+msgstr ""
+
+#: includes/Services/ScoreService.php:243
+msgid "The page did not answer 200, so it could not be measured."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:143
+msgid "The path shown above a result in search: Home › Movies › Title."
+msgstr ""
+
+#: includes/Screens/Ui.php:381
+msgid "The PHP fallback is on and a chain exists."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:436
+msgid "The PHP fallback is on while the server also redirects: this can make a chain. Turn the fallback off."
+msgstr ""
+
+#: includes/Updater.php:440
+msgid "The plugin is up to date."
+msgstr ""
+
+#: includes/Screens/Ui.php:115
+msgid "the post editor"
+msgstr ""
+
+#: includes/Screens/Ui.php:311
+msgid "The preference was not saved."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:147
+msgid "The preferred address answers with 200, or another version reaches it with one 301 or 308."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:869
+msgid "The preferred address is HTTP. Google prefers HTTPS pages as the canonical address."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:154
+msgid "The preferred address itself does not answer with 200."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:365
+msgid "The preferred address itself does not answer with a normal page (it redirects or returns an error)."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:128
+msgid "The primary category of the post."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:55
+msgid "The primary category sets the post URL and the breadcrumb."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:137
+msgid "The primary category sets the post URL and the last step before the title."
+msgstr ""
+
+#: includes/Screens/MetaBox.php:133
+msgid "The primary category sets this post’s URL and breadcrumb."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:129
+msgid "The publish date."
+msgstr ""
+
+#: includes/Services/RedirectService.php:363
+msgid "The redirect could not be saved."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:360
+msgid "The redirect is temporary (302, 303 or 307). Use a permanent redirect (301 or 308)."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:153
+msgid "The redirects return to an address already visited, or pass 5 steps."
+msgstr ""
+
+#: includes/Screens/Ui.php:372
+msgid "The rule could not be created."
+msgstr ""
+
+#: includes/Screens/Ui.php:96
+msgid "The score could not be calculated."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:275
+msgid "The score could not be recalculated."
+msgstr ""
+
+#: includes/Screens/Ui.php:89
+msgid "The score has not been calculated yet."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:225
+msgid "The score is paused while Yoast SEO is active."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:124
+msgid "The separator chosen above."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:433
+msgid "The server (or a CDN) already redirects some variants. The PHP fallback is not needed; leave it off."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:123
+msgid "The site tagline."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:122
+msgid "The site title."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:59
+msgid "The sitemap rebuilds by itself on a schedule and when you publish."
+msgstr ""
+
+#: includes/Services/ReportService.php:130
+msgid "The snapshot could not be saved."
+msgstr ""
+
+#: includes/Screens/Ui.php:149
+msgid "The snapshot could not be taken."
+msgstr ""
+
+#: includes/Services/ReportService.php:150
+msgid "The snapshot is being prepared in the background. Check again in a few minutes."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:121
+msgid "The title of the post or page."
+msgstr ""
+
+#: includes/Services/LlmsTxtService.php:521
+msgid "The tool is off, so the address answers 404 until you turn it on."
+msgstr ""
+
+#: includes/Updater.php:429
+msgid "The update check is off; GitHub is never contacted."
+msgstr ""
+
+#: includes/Admin.php:225
+msgid "The update check is off; nothing was checked."
+msgstr ""
+
+#: includes/Updater.php:449
+msgid "The update package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Only a standard GET request is sent; your site address or user information is not sent."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:150
+msgid "The version answers with 200. It is a second copy of your site."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:32
+msgid "The XML sitemap is off."
+msgstr ""
+
+#: includes/Screens/Ui.php:276
+#, php-format
+msgid "The Yoast import was applied on %s."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:139
+msgid "Theme function"
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:64
+msgid "There are no published pages yet."
+msgstr ""
+
+#: includes/Updater.php:317
+msgid "There are no release notes for this version."
+msgstr ""
+
+#: includes/Screens/Ui.php:267
+msgid "There is no published post to show."
+msgstr ""
+
+#: includes/Updater.php:433
+msgid "There is no published version yet."
+msgstr ""
+
+#: includes/Services/LlmsTxtService.php:527
+msgid "There is no summary: write one, or set the site tagline."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:46
+msgid "These checks decide whether your site is ready for search engines."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:361
+msgid "This address answers with its own page. It is a copy of the preferred address; redirect it."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:362
+msgid "This address does not lead to the preferred address."
+msgstr ""
+
+#: includes/Services/SitemapView.php:364
+msgid "This group has no URLs"
+msgstr ""
+
+#: includes/Services/ScoreService.php:445
+msgid "This is a local site: the HTTPS, certificate and public-access rules may fail here and pass on the live site."
+msgstr ""
+
+#: includes/Screens/Ui.php:378
+msgid "This is a multisite network. The PHP fallback never runs here. Use the server rule."
+msgstr ""
+
+#: includes/Services/SitemapView.php:227
+#, php-format
+msgid "This is the list of pages on %s that search engines such as Google can read. You can browse it here; the plain XML behind this page is what the bots use."
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:79
+msgid "This is what /llms.txt would return."
+msgstr ""
+
+#: includes/Screens/Ui.php:85
+msgid "This list could not be loaded."
+msgstr ""
+
+#: includes/Services/RedirectService.php:214
+msgid "This page has been removed for good."
+msgstr ""
+
+#: includes/Screens/Ui.php:264
+msgid "This page prints no schema."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "This score is not a ranking guarantee."
+msgstr ""
+
+#: includes/Services/LlmsTxtService.php:524
+msgid "This site asks search engines not to index it (Settings > Reading)."
+msgstr ""
+
+#: includes/Services/RedirectService.php:306
+msgid "This site uses HTTPS. Do not redirect to an HTTP address."
+msgstr ""
+
+#: includes/Screens/Ui.php:158
+msgid "Title and description coverage"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:90
+msgid "Title and description templates"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:102
+msgid "Title length"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:119
+msgid "Title separator"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:72
+msgid "Title template"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:40
+msgid "Titles & descriptions"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:51
+msgid "Titles and descriptions sections"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:177
+msgid "To"
+msgstr ""
+
+#: includes/Screens/Ui.php:343
+msgid "to"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:70
+msgid "To (new address)"
+msgstr ""
+
+#: includes/Screens/Ui.php:200
+msgid "Today"
+msgstr ""
+
+#: includes/Screens/Ui.php:243
+msgid "Too long: it will be cut"
+msgstr ""
+
+#: includes/Screens/Ui.php:241
+msgid "Too short"
+msgstr ""
+
+#: includes/Screens/Shell.php:134
+msgid "Tool navigation"
+msgstr ""
+
+#: includes/Screens/Shell.php:135
+msgid "Tools"
+msgstr ""
+
+#: includes/Services/LlmsTxtService.php:180
+msgid "Topics"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:120
+msgid "Trust proxy headers"
+msgstr ""
+
+#: includes/Screens/Ui.php:86
+msgid "Try again"
+msgstr ""
+
+#: includes/Screens/Ui.php:382
+msgid "Turn it off, then rely on the server rule."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:52
+msgid "Turn off"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:56
+msgid "Turn off author archives"
+msgstr ""
+
+#: includes/Screens/Ui.php:383
+msgid "Turn off PHP fallback"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:85
+msgid "Turn off to add noindex to every item of this type."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:52
+msgid "Turn on"
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:98
+msgid "Turn on a switch to close that kind of feed."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:120
+msgid "Turn on only if a proxy or CDN sits in front of your site and hides https from WordPress. It then reads <code>X-Forwarded-Proto</code> and <code>X-Forwarded-Host</code>. Off: when a proxy header says the visitor used https, no redirect happens, so it cannot loop. Available when the PHP fallback is on."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Turn search engine visibility back on. The site currently sends noindex on every page, so nothing can be indexed until this is fixed."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:84
+msgid "Turned off"
+msgstr ""
+
+#: includes/Updater.php:448
+msgid "Turned on or off with the “Enable auto-updates” link on the WPSeoKit row in the Plugins page."
+msgstr ""
+
+#: includes/Screens/MetaBox.php:153
+msgid "TV series"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:122
+msgid "TVSeries"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:60
+msgid "Twitter / X cards"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:72
+msgid "Twitter / X username"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:148
+msgid "Two or more redirects in a row. Send the version straight to the preferred address."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:55
+msgid "Type"
+msgstr ""
+
+#: includes/Screens/Ui.php:209
+msgid "Undo"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:112
+msgid "Uninstall"
+msgstr ""
+
+#: includes/Services/YoastImportService.php:139
+msgid "Unknown import mode."
+msgstr ""
+
+#: includes/Services/ScoreService.php:566
+msgid "Unknown rule."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:155
+msgid "Unreachable"
+msgstr ""
+
+#: includes/Screens/Ui.php:107
+#, php-format
+msgid "Up to +%s points"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:168
+msgid "Up to 1 MB, UTF-8."
+msgstr ""
+
+#: includes/Admin.php:224
+msgid "Update check finished."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:323
+msgid "Update checks"
+msgstr ""
+
+#: includes/Updater.php:450
+msgid "Update checks follow the RBN Kit network setting."
+msgstr ""
+
+#: includes/Updater.php:126
+msgid "Update rejected: signature verification (sodium) is missing on the server. The old version was kept."
+msgstr ""
+
+#: includes/Updater.php:150
+msgid "Update rejected: the digest (SHA-256) file could not be read. The old version was kept."
+msgstr ""
+
+#: includes/Updater.php:335
+msgid "Update rejected: the package address is not in the expected format. The old version was kept."
+msgstr ""
+
+#: includes/Updater.php:391
+msgid "Update rejected: the package did not pass the WPSeoKit verification. The old version was kept."
+msgstr ""
+
+#: includes/Updater.php:134
+msgid "Update rejected: the package signature is invalid. The old version was kept."
+msgstr ""
+
+#: includes/Updater.php:147
+msgid "Update rejected: the package size is not in the expected range. The old version was kept."
+msgstr ""
+
+#: includes/Updater.php:131
+msgid "Update rejected: the plugin has no valid signature key. The old version was kept."
+msgstr ""
+
+#: includes/Updater.php:168
+msgid "Update rejected: the root folder of the package is not “wpseokit” or wpseokit.php is missing. The old version was kept."
+msgstr ""
+
+#: includes/Updater.php:154
+msgid "Update rejected: the SHA-256 digest of the package does not match. The old version was kept."
+msgstr ""
+
+#: includes/Updater.php:172
+msgid "Update rejected: the version inside the package does not match the published version. The old version was kept."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:153
+msgid "Update status"
+msgstr ""
+
+#: includes/Updater.php:370
+msgid "Update stopped: the digest or signature file could not be downloaded. The old version was kept."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:160
+msgid "Updates"
+msgstr ""
+
+#: includes/Services/SitemapView.php:369
+msgid "URL"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:131
+msgid "URL:"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:73
+msgid "URLs"
+msgstr ""
+
+#: includes/Services/SitemapView.php:251
+#, php-format
+msgid "URLs in %s file"
+msgid_plural "URLs in %s files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Screens/Ui.php:157
+msgid "URLs in the sitemap"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:67
+msgid "URLs per file"
+msgstr ""
+
+#: includes/Services/RedirectService.php:242
+msgid "Use 301, 302, 307 or 410."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Use one canonical method only: the head tag or the HTTP header, never both, and never two different URLs."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:137
+msgid "Use the primary category for posts"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:139
+msgid "Use these in any template. Click “Insert a variable” in a field to add one."
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:50
+msgid "Use Yoast"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:119
+msgid "Used between the page title and the site name."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:59
+msgid "Used by Facebook, LinkedIn, WhatsApp and most chat apps."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:96
+msgid "Used for every post that is not a film or a series."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:102
+msgid "Used for pages that list one author’s posts."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:81
+msgid "Used for the WebSite schema and the site name in search results."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:62
+msgid "Used instead of the organization name when the site is a person."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:70
+msgid "Used when a post has no sharing image and no featured image. 1200 × 630 px works best."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:80
+msgid "Used when an item has no description of its own. An empty template falls back to the excerpt, then to the first 155 characters of the content."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:91
+msgid "Using defaults"
+msgstr ""
+
+#: includes/Screens/Ui.php:176
+msgid "Value"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:138
+msgid "Variable"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:139
+msgid "Variables"
+msgstr ""
+
+#: includes/Screens/Ui.php:336
+msgid "Verdict"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:137
+msgid "Verdicts"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:33
+msgid "Verification"
+msgstr ""
+
+#: includes/Screens/Ui.php:278
+#, php-format
+msgid "Verified on %s."
+msgstr ""
+
+#: includes/Screens/Ui.php:269
+msgid "Verified."
+msgstr ""
+
+#: includes/Screens/Ui.php:268
+msgid "Verify"
+msgstr ""
+
+#: includes/Services/SitemapView.php:271
+#, php-format
+msgid "View %s"
+msgstr ""
+
+#: includes/Screens/Ui.php:146
+msgid "View as table"
+msgstr ""
+
+#: includes/Screens/Ui.php:281
+msgid "View report"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:112
+msgid "Visible"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:56
+msgid "Visitors are redirected to the home page."
+msgstr ""
+
+#: includes/Screens/Ui.php:216
+msgid "Visitors who use these old addresses will see a 404 page again. This cannot be undone, but you can add the redirects back."
+msgstr ""
+
+#: includes/Screens/Ui.php:118
+msgid "Warning"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:83
+msgid "Website"
+msgstr ""
+
+#: includes/Screens/Ui.php:133
+msgid "Weight"
+msgstr ""
+
+#: includes/Screens/Ui.php:106
+#, php-format
+msgid "Weight %s"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:137
+msgid "What each verdict means"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:74
+msgid "What search engines download from your site."
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:41
+msgid "What the check found"
+msgstr ""
+
+#: includes/Screens/Ui.php:274
+msgid "What the import did"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:114
+msgid "What the rule does"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:115
+msgid "What the rule does for each version"
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:132
+msgid "What the visitor searched for."
+msgstr ""
+
+#: includes/Screens/LlmsScreen.php:70
+msgid "What to list"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:319
+msgid "What WPSeoKit and you changed on this site."
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:49
+msgid "When both have a value"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:107
+msgid "Who"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:108
+msgid "Who can use WPSeoKit"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:107
+msgid "Why"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:93
+msgid "Why only one address?"
+msgstr ""
+
+#: includes/Screens/Ui.php:251
+msgid "Will import"
+msgstr ""
+
+#: includes/Screens/Ui.php:351
+msgid "WordPress address (home)"
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:872
+msgid "WordPress Address and Site Address do not match the preferred address. Set both to the preferred address in Settings > General."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:119
+msgid "WordPress answers first, so every redirect takes longer than a server rule. Sends one 301 to the preferred address and keeps the path and query. Never touches wp-admin, the REST API, cron, XML-RPC, <code>/.well-known/</code> or requests that are not GET or HEAD."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:165
+msgid "WordPress default"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:76
+msgid "WordPress is set to discourage search engines."
+msgstr ""
+
+#: includes/Services/RedirectService.php:253
+msgid "WordPress needs this path; it cannot be redirected."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:94
+msgid "WordPress opens many feeds by default. Most sites need one."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:61
+msgid "WordPress setting"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:84
+msgid "WordPress ships its own /wp-sitemap.xml. WPSeoKit turns it off so search engines see one sitemap, not two."
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:84
+msgid "WordPress sitemap"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:401
+msgid "WPSeoKit"
+msgstr ""
+
+#: includes/Screens/Ui.php:90
+msgid "WPSeoKit checks the site settings and your recent posts. It changes nothing on your site."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:275
+msgid "WPSeoKit could not finish checking the site. The results below are from the last successful calculation."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:294
+msgid "WPSeoKit could not load the reports."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:76
+msgid "WPSeoKit does not change this."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:108
+msgid "WPSeoKit does not edit your server files."
+msgstr ""
+
+#: includes/Gate.php:48
+msgid "WPSeoKit is switched off: it needs the AdminKit plugin (cache, logs and the RBN Kit menu)."
+msgstr ""
+
+#: includes/Gate.php:47
 msgid "WPSeoKit is switched off: the installed AdminKit is too old. Update AdminKit to turn it back on."
 msgstr ""
 
-#: src/includes/Gate.php
-msgid "WPSeoKit is switched off: it needs the AdminKit plugin (cache, logs and the RBN Kit menu)."
+#: includes/Screens/DashboardScreen.php:384
+msgid "WPSeoKit prints nothing now, so a score would not describe what search engines see. Import your Yoast data to continue."
+msgstr ""
+
+#: includes/Screens/Shell.php:149
+msgid "WPSeoKit prints nothing on your site while Yoast is on, so search engines never see duplicate tags."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:53
+msgid "WPSeoKit prints titles, descriptions and schema only when no other SEO plugin does."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:291
+msgid "WPSeoKit saves one snapshot of your numbers each day. You can also take one now; it changes nothing on your site."
+msgstr ""
+
+#: includes/Screens/MetaBox.php:76
+msgid "WPSeoKit sections"
+msgstr ""
+
+#: includes/Screens/ImportScreen.php:62
+msgid "WPSeoKit will write titles, descriptions, primary categories and settings. Your Yoast data stays where it is."
+msgstr ""
+
+#: includes/Admin.php:192
+msgid "WPSeoKit — SEO Toolkit"
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Write datePublished and dateModified in ISO 8601 with a time zone."
+msgstr ""
+
+#: includes/Rules/score-rules.json
+msgid "Write each URL's real content-modification date into lastmod instead of the generation time."
+msgstr ""
+
+#: includes/Screens/TemplatesScreen.php:21
+msgid "Write the title and description pattern for each kind of page."
+msgstr ""
+
+#: includes/Services/SocialService.php:122
+msgid "Written by"
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:151
+msgid "Wrong target"
+msgstr ""
+
+#: includes/Screens/SitemapScreen.php:60
+msgid "XML sitemap"
+msgstr ""
+
+#: includes/Services/SitemapView.php:210
+msgid "XML Sitemap"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php:91
+msgid "Yandex Webmaster"
+msgstr ""
+
+#: includes/Screens/MetaBox.php:161
+msgid "Year"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:51
+msgid "Yoast import"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:320
+msgid "Yoast import log"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:133
+msgid "Yoast SEO data"
+msgstr ""
+
+#: includes/Screens/Shell.php:149
+msgid "Yoast SEO is active."
+msgstr ""
+
+#: includes/Admin.php:145
+msgid "Yoast SEO is active. WPSeoKit prints nothing while it is active, so the two never output duplicate tags. Remove Yoast SEO first, then use WPSeoKit."
+msgstr ""
+
+#: includes/Updater.php:412
+msgid "You do not have permission for this action."
+msgstr ""
+
+#: includes/Admin.php:180
+msgid "You do not have permission to open this page."
+msgstr ""
+
+#: includes/Screens/Ui.php:559
+msgid "You have unsaved changes."
+msgstr ""
+
+#: includes/Screens/RedirectsScreen.php:108
+msgid "You paste the rule yourself. After that, run the audit again: every version should show 301 and 1 redirect."
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:294
+msgid "Your data is safe. Try again in a moment."
+msgstr ""
+
+#: includes/Screens/Ui.php:385
+msgid "Your server already redirects every version in one step."
+msgstr ""
+
+#: includes/Screens/Ui.php:316
+msgid "Your settings are unchanged. Wait a moment and try again."
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:61
+msgid "Your site or company name"
+msgstr ""
+
+#: includes/Screens/SchemaScreen.php:141
+msgid "Your theme draws the visible breadcrumb; WPSeoKit sends the same path to search engines as BreadcrumbList data."
 msgstr ""
