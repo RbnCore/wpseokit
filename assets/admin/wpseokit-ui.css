@@ -82,7 +82,9 @@
 .wps-media{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s3)}
 .wps-media__img{display:flex;align-items:center;justify-content:center;width:6rem;height:6rem;border:var(--rbn-bw) dashed var(--rbn-line-strong);border-radius:var(--rbn-r);background:var(--rbn-surface-2);color:var(--rbn-muted)}
 .wps-media__img .rbn-ico{width:2rem;height:2rem}
-.wps-media__img--filled{border-style:solid;background:var(--rbn-ac-soft);color:var(--rbn-ac)}
+.wps-media__img--filled{border-style:solid;background:var(--rbn-surface-2);color:var(--rbn-ac)}
+.wps-media__img{flex:none;overflow:hidden}
+.wps-media__img img{display:block;width:100%;height:100%;object-fit:contain}
 
 /* ── 13. Sosyal kart önizlemesi ── */
 .wps-og{max-width:28rem;border:var(--rbn-bw) solid var(--rbn-line);border-radius:var(--rbn-r-lg);overflow:hidden;background:var(--rbn-surface)}
@@ -416,3 +418,13 @@
 /* Tip ölçeği: kit "küçük" öğeyi tarayıcı varsayılanına (smaller) bırakır, mobil h1'i 24 px yapar; WPSeoKit 15/17/18/20/28/32 ölçeğinde kalır (kit boşluğu). */
 .rbn-stat__v small{font-size:var(--rbn-fs-sm);font-weight:var(--rbn-fw)}
 @media (max-width:48.875rem){.wpseokit-wrap .rbn-head h1{font-size:var(--rbn-fs-h1)}}
+
+/* ── Kit boşlukları (WPRJ-623): kit bunları tanımlamıyor; AdminKit'e dokunulmadı ── */
+/* İstatistik kartı başlığı: ikon ile metin arasında token boşluğu, ikon metne yapışmaz */
+.rbn-stat__k{display:flex;align-items:center;gap:var(--rbn-s2)}
+/* Eylem hücresi: kit display:flex veriyor ve tablo hücresinin satır çizgisini koparıyor; masaüstünde hücre kalır, yığılmış (mobil) düzende kit kuralı geçerli */
+@media (min-width:48.9375rem){.rbn-table td.rbn-acts{display:table-cell;text-align:right}.rbn-table td.rbn-acts>*{margin-left:var(--rbn-s1)}.rbn-table td.rbn-acts>*:first-child{margin-left:0}}
+/* Anahtar doğrudan .rbn-field içindeyken kitin `.rbn-field>label{display:block}` kuralı (özgüllük 0,1,1) `.rbn-switch` kuralını (0,1,0) eziyor: anahtar kutusu 0 genişlik alıp metnin üstüne biniyordu */
+.rbn-field>.rbn-switch{display:inline-flex}
+/* Yığılmış (mobil) tablo: satır başlığı (th scope=row) etiket sütunu olmadan tam genişlik alır (kit 7rem etiket sütununu th için de açıyor, ad dar sütuna sıkışıyordu); uzun durum rozeti kart dışına taşıp kırpılmasın */
+@media (max-width:48.875rem){.rbn-table--stack th[scope=row]{grid-template-columns:minmax(0,1fr)}.rbn-table--stack td .rbn-badge{max-width:100%;white-space:normal}}

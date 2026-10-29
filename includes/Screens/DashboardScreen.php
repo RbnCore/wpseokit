@@ -233,7 +233,7 @@ final class DashboardScreen {
 			array( 'sitemap', 'sitemap', __( 'URLs in the sitemap', 'wpseokit' ), '–', '', 'sitemap' ),
 			array( 'redirects', 'arrows', __( 'Active redirects', 'wpseokit' ), '–', '', 'redirects' ),
 			array( 'log', 'alert', __( '404 errors logged', 'wpseokit' ), '–', '', 'log404' ),
-			array( 'described', 'doc', __( 'Posts with a description', 'wpseokit' ), (string) $done, '<small>/ ' . (int) $total . '</small>', 'templates' ),
+			array( 'described', 'doc', __( 'Posts with a description', 'wpseokit' ), (string) $done, ' <small>/ ' . (int) $total . '</small>', 'templates' ),
 		);
 		$out              = '<ul class="rbn-stats">';
 		foreach ( $stats as $s ) {
