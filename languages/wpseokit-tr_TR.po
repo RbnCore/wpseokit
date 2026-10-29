@@ -51,14 +51,6 @@ msgid "The update check is off; nothing was checked."
 msgstr "Güncelleme denetimi kapalı; hiçbir şey denetlenmedi."
 
 #: src/includes/Admin.php
-msgid "The update check was turned off."
-msgstr "Güncelleme denetimi kapatıldı."
-
-#: src/includes/Admin.php
-msgid "The update check was turned on."
-msgstr "Güncelleme denetimi açıldı."
-
-#: src/includes/Admin.php
 msgid "Plugin version"
 msgstr "Eklenti sürümü"
 
@@ -200,12 +192,8 @@ msgid "Check now"
 msgstr "Şimdi denetle"
 
 #: src/includes/Updater.php
-msgid "Turn off the update check"
-msgstr "Güncelleme denetimini kapat"
-
-#: src/includes/Updater.php
-msgid "Turn on the update check"
-msgstr "Güncelleme denetimini aç"
+msgid "Update checks follow the RBN Kit network setting."
+msgstr "Güncelleme kontrolleri RBN Kit ağ ayarını izler."
 
 #: src/includes/Services/Variables.php
 msgid "Page %1$d of %2$d"

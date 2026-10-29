@@ -223,8 +223,6 @@ final class Admin {
 		$messages = array(
 			'update_checked' => array( 'success', __( 'Update check finished.', 'wpseokit' ) ),
 			'update_is_off'  => array( 'warning', __( 'The update check is off; nothing was checked.', 'wpseokit' ) ),
-			'update_off'     => array( 'info', __( 'The update check was turned off.', 'wpseokit' ) ),
-			'update_on'      => array( 'success', __( 'The update check was turned on.', 'wpseokit' ) ),
 		);
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- reading a message key only; it is matched against the list above.
 		$key = isset( $_GET['wk_note'] ) ? sanitize_key( wp_unslash( $_GET['wk_note'] ) ) : '';

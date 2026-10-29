@@ -47,14 +47,6 @@ msgid "The update check is off; nothing was checked."
 msgstr ""
 
 #: src/includes/Admin.php
-msgid "The update check was turned off."
-msgstr ""
-
-#: src/includes/Admin.php
-msgid "The update check was turned on."
-msgstr ""
-
-#: src/includes/Admin.php
 msgid "Plugin version"
 msgstr ""
 
@@ -196,11 +188,7 @@ msgid "Check now"
 msgstr ""
 
 #: src/includes/Updater.php
-msgid "Turn off the update check"
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "Turn on the update check"
+msgid "Update checks follow the RBN Kit network setting."
 msgstr ""
 
 #: src/includes/Services/Variables.php

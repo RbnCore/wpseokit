@@ -14,7 +14,6 @@ if ( class_exists( 'AdminKit\Core\Cache' ) ) {
 	\AdminKit\Core\Cache::purge_plugin( 'wpseokit' );
 }
 delete_option( 'wpseokit_update_checked' );
-delete_option( 'wpseokit_update_off' );
 
 $wpseokit_settings = get_option( 'wpseokit_settings', array() );
 if ( is_array( $wpseokit_settings ) && ! empty( $wpseokit_settings['general']['delete_on_uninstall'] ) ) {

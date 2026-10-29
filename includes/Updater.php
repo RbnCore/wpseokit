@@ -5,7 +5,7 @@
  * - The network call is made only during WordPress's own update check (`update_plugins_github.com`); never on the front end.
  * - No token, account or site information is sent: only a token-less GET with the User-Agent `WPSeoKit/<version>`.
  * - The SHA-256 digest and the Ed25519 signature are verified before install; this check cannot be turned off.
- * - When the off switch (`wpseokit_update_off`) is on, no network call is made.
+ * - When the central network setting is off, no network call is made.
  *
  * Standalone class: when copied to another plugin only the constants (REPO, PLUGIN, SLUG, prefix) change.
  *
@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Wpseokit;
 
 use AdminKit\Core\Cache;
+use AdminKit\Core\Network;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -25,7 +26,6 @@ final class Updater {
 	public const REPO         = 'RbnCore/wpseokit';
 	public const PLUGIN       = 'wpseokit/wpseokit.php';
 	public const SLUG         = 'wpseokit';
-	public const OPT_OFF      = 'wpseokit_update_off';
 	public const OPT_CHECKED  = 'wpseokit_update_checked';
 	public const CACHE_KEY    = 'release';
 	public const MAX_ZIP      = 8388608; // 8 MB.
@@ -43,11 +43,13 @@ final class Updater {
 		add_filter( 'upgrader_pre_download', array( self::class, 'pre_download' ), 10, 3 );
 		add_filter( 'upgrader_source_selection', array( self::class, 'source_selection' ), 10, 4 );
 		add_action( 'admin_post_wpseokit_update_check', array( self::class, 'action_check' ) );
-		add_action( 'admin_post_wpseokit_update_toggle', array( self::class, 'action_toggle' ) );
 	}
 
 	public static function enabled(): bool {
-		return '1' !== (string) get_option( self::OPT_OFF, '' );
+		if ( ! defined( 'ADMINKIT_CORE_API' ) || ADMINKIT_CORE_API < 2 || ! class_exists( 'AdminKit\Core\Network', false ) ) {
+			return false;
+		}
+		return Network::github_allowed( 'updates:wpseokit' );
 	}
 
 	// ───────────────────────── Pure helpers ─────────────────────────
@@ -405,21 +407,6 @@ final class Updater {
 		self::redirect( 'update_is_off' );
 	}
 
-	public static function action_toggle(): void {
-		self::guard( 'wpseokit_update_toggle' );
-		$off = self::enabled(); // If on now, it will be turned off.
-		update_option( self::OPT_OFF, $off ? '1' : '0', false );
-		Cache::delete( Registry::UPDATES, self::CACHE_KEY );
-		if ( $off ) {
-			$cur = get_site_transient( 'update_plugins' );
-			if ( is_object( $cur ) ) {
-				unset( $cur->response[ self::PLUGIN ], $cur->no_update[ self::PLUGIN ] );
-				set_site_transient( 'update_plugins', $cur );
-			}
-		}
-		self::redirect( $off ? 'update_off' : 'update_on' );
-	}
-
 	private static function guard( string $nonce_action ): void {
 		if ( ! current_user_can( 'update_plugins' ) ) {
 			wp_die( esc_html__( 'You do not have permission for this action.', 'wpseokit' ), '', array( 'response' => 403 ) );
@@ -460,11 +447,12 @@ final class Updater {
 			. '<dt>' . esc_html__( 'Last check', 'wpseokit' ) . '</dt><dd>' . $last . '</dd>' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			. '<dt>' . esc_html__( 'Automatic updates', 'wpseokit' ) . '</dt><dd>' . esc_html__( 'Turned on or off with the “Enable auto-updates” link on the WPSeoKit row in the Plugins page.', 'wpseokit' ) . '</dd></dl>'
 			. '<p class="wpseokit-help">' . esc_html__( 'The update package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Only a standard GET request is sent; your site address or user information is not sent.', 'wpseokit' ) . '</p>'
-			. '<div class="wpseokit-actions">';
+			. '<p class="wpseokit-help"><a href="' . esc_url( admin_url( 'admin.php?page=adminkit#adminkit-network' ) ) . '">' . esc_html__( 'Update checks follow the RBN Kit network setting.', 'wpseokit' ) . '</a></p>';
 		if ( $on ) {
-			$html .= '<form method="post" action="' . $post . '"><input type="hidden" name="action" value="wpseokit_update_check">' . wp_nonce_field( 'wpseokit_update_check', '_wpnonce', true, false ) . '<button type="submit" class="button">' . esc_html__( 'Check now', 'wpseokit' ) . '</button></form>';
+			$html .= '<div class="wpseokit-actions">'
+				. '<form method="post" action="' . $post . '"><input type="hidden" name="action" value="wpseokit_update_check">' . wp_nonce_field( 'wpseokit_update_check', '_wpnonce', true, false ) . '<button type="submit" class="button">' . esc_html__( 'Check now', 'wpseokit' ) . '</button></form>'
+				. '</div>';
 		}
-		$html .= '<form method="post" action="' . $post . '"><input type="hidden" name="action" value="wpseokit_update_toggle">' . wp_nonce_field( 'wpseokit_update_toggle', '_wpnonce', true, false ) . '<button type="submit" class="button">' . esc_html( $on ? __( 'Turn off the update check', 'wpseokit' ) : __( 'Turn on the update check', 'wpseokit' ) ) . '</button></form></div>';
 		return $html;
 	}
 }

@@ -152,12 +152,11 @@ final class SettingsScreen {
 		$body  = Ui::row( esc_html__( 'Installed version', 'wpseokit' ), '<b>' . esc_html( WPSEOKIT_VERSION ) . '</b>' );
 		$body .= Ui::row( esc_html__( 'Update status', 'wpseokit' ), '<p>' . $state . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
 		$body .= Ui::row( esc_html__( 'Last check', 'wpseokit' ), '<span>' . $last . '</span>', esc_html__( 'The package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Automatic updates are turned on or off with the “Enable auto-updates” link on the Plugins page.', 'wpseokit' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		$act   = '';
+		$body .= '<p class="rbn-help"><a href="' . esc_url( admin_url( 'admin.php?page=adminkit#adminkit-network' ) ) . '">' . esc_html__( 'Update checks follow the RBN Kit network setting.', 'wpseokit' ) . '</a></p>';
 		if ( $on ) {
-			$act .= '<form method="post" action="' . $post . '"><input type="hidden" name="action" value="wpseokit_update_check">' . wp_nonce_field( 'wpseokit_update_check', '_wpnonce', true, false ) . '<button type="submit" class="rbn-btn">' . Ui::icon( 'scan' ) . esc_html__( 'Check now', 'wpseokit' ) . '</button></form>';
+			$act   = '<form method="post" action="' . $post . '"><input type="hidden" name="action" value="wpseokit_update_check">' . wp_nonce_field( 'wpseokit_update_check', '_wpnonce', true, false ) . '<button type="submit" class="rbn-btn">' . Ui::icon( 'scan' ) . esc_html__( 'Check now', 'wpseokit' ) . '</button></form>';
+			$body .= '<div class="wps-row">' . $act . '</div>';
 		}
-		$act .= '<form method="post" action="' . $post . '"><input type="hidden" name="action" value="wpseokit_update_toggle">' . wp_nonce_field( 'wpseokit_update_toggle', '_wpnonce', true, false ) . '<button type="submit" class="rbn-btn">' . esc_html( $on ? __( 'Turn off the update check', 'wpseokit' ) : __( 'Turn on the update check', 'wpseokit' ) ) . '</button></form>';
-		$body .= '<div class="wps-row">' . $act . '</div>';
 		return Ui::card( __( 'Updates', 'wpseokit' ), '', $body );
 	}
 }
