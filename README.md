@@ -23,7 +23,7 @@ Site owners and editors who need SEO titles, descriptions, canonicals, a sitemap
 - **Open Graph and Twitter.** `og:*` tags with image size and type and the article times, plus a Twitter card with author and reading time. A default social image can be set.
 - **Primary category.** A post keeps one primary category; the permalink and the breadcrumb follow it through the `post_link_category` hook, and the schema lists the post's categories in `articleSection`.
 - **XML sitemap.** `/sitemap_index.xml` with post, page and category sitemaps, `lastmod` from the content date and image entries. WordPress's own `/wp-sitemap.xml` is switched off so no page is listed twice, and robots.txt gets the `Sitemap:` line. A plain HTML view of each sitemap is served under `/sitemap/` for people; it is noindex, and the XML stays pure for search engines.
-- **Schema graph.** One `@graph` with WebSite, Organization (or Person), WebPage, Article, BreadcrumbList, ImageObject and Person nodes linked by `@id`. The post editor can add a Movie or TVSeries node by hand.
+- **Schema graph.** One `@graph` with WebSite, WebPage, Article, BreadcrumbList, ImageObject, the site's representative (Organization, or Person when the site represents a person) and the post author as Person, linked by `@id`. The post editor can add a Movie or TVSeries node by hand.
 - **Redirects.** 301, 302, 307 and 410 by exact path, with loop and chain checks, a hit counter, and CSV import and export. Wildcards, regular expressions and 451 are not supported.
 - **404 log.** The path, the referrer and a salted SHA-256 of the visitor's address — the address itself is never stored — with a hit counter, pruning by age and row count, and a one-click redirect from a logged address. Requests for scanner paths such as `/wp-login.php` are skipped by default.
 - **SEO score and recommendations.** A site score and a post score from a fixed rule table, with the weight of every rule, what it measured and how the score is calculated. Rules you do not want to see can be hidden; critical failures cap the score.
@@ -65,9 +65,9 @@ Updates come from GitHub and appear on the Plugins page like any WordPress updat
 
 ## Privacy and external requests
 
-- The plugin sends nothing to a third-party service and no telemetry. There is no account, no API key and no tracking.
+- The plugin sends no telemetry, no account data and no site address anywhere. There is no account, no API key and no tracking.
 - The only external host it contacts is GitHub, for the update check described above, and that follows the central RBN Kit network setting.
-- The score, the preferred address check and the 404 log look at **your own site only**: robots.txt, the sitemap and page addresses are requested over HTTP with a timeout and the answers are cached. No other host is contacted.
+- The score and the preferred address check look at **your own site only**: robots.txt, the sitemap and page addresses are requested over HTTP with a timeout and the answers are cached. The 404 log only records requests that already reached your site. No other host is contacted.
 - The 404 log stores no raw IP address, only a salted SHA-256; the path and referrer are stored without their query string. Old rows are removed by age and row count.
 - On uninstall the data is kept by default. If "Delete all WPSeoKit data when the plugin is deleted" is ticked first, the tables, the settings, the post and term meta and the plugin's log lines are removed.
 
