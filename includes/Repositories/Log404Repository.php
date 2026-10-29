@@ -28,12 +28,6 @@ final class Log404Repository {
 		return is_array( $row ) ? Log404::from_row( $row ) : null;
 	}
 
-	public static function find_by_path( string $url_path ): ?Log404 {
-		global $wpdb;
-		$row = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . self::table() . ' WHERE url_path = %s', $url_path ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
-		return is_array( $row ) ? Log404::from_row( $row ) : null;
-	}
-
 	/**
 	 * @param array<string, mixed> $args search, orderby, order, page, per_page.
 	 * @return array{items: Log404[], total: int}

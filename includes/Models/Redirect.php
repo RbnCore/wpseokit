@@ -48,10 +48,6 @@ final class Redirect {
 		);
 	}
 
-	public function is_gone(): bool {
-		return 410 === $this->status_code;
-	}
-
 	/**
 	 * REST form (docs/sozlesme.md §4.5). Dates are ISO-8601 UTC.
 	 *

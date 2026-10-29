@@ -20,8 +20,7 @@ msgstr "Ayarlar"
 msgid "WPSeoKit — SEO Toolkit"
 msgstr "WPSeoKit — SEO Araç Seti"
 
-#: src/includes/Admin.php
-#: src/includes/Updater.php
+#: src/includes/Admin.php src/includes/Updater.php
 msgid "SEO Toolkit"
 msgstr "SEO Araç Seti"
 
@@ -29,8 +28,7 @@ msgstr "SEO Araç Seti"
 msgid "Yoast SEO is active. WPSeoKit prints nothing while it is active, so the two never output duplicate tags. Remove Yoast SEO first, then use WPSeoKit."
 msgstr "Yoast SEO etkin. O etkinken WPSeoKit hiçbir çıktı üretmez; böylece ikisi çift etiket basmaz. Önce Yoast SEO'yu kaldırın, sonra WPSeoKit'i kullanın."
 
-#: src/includes/Admin.php
-#: src/includes/Updater.php
+#: src/includes/Admin.php src/includes/Updater.php
 msgid "Status"
 msgstr "Durum"
 
@@ -83,87 +81,6 @@ msgid "Some settings have the wrong type."
 msgstr "Bazı ayarların türü yanlış."
 
 #: src/includes/Updater.php
-msgid "Update rejected: signature verification (sodium) is missing on the server. The old version was kept."
-msgstr "Güncelleme reddedildi: sunucuda imza doğrulaması (sodium) yok. Eski sürüm korundu."
-
-#: src/includes/Updater.php
-msgid "Update rejected: the plugin has no valid signature key. The old version was kept."
-msgstr "Güncelleme reddedildi: eklentide geçerli bir imza anahtarı yok. Eski sürüm korundu."
-
-#: src/includes/Updater.php
-msgid "Update rejected: the package signature is invalid. The old version was kept."
-msgstr "Güncelleme reddedildi: paket imzası geçersiz. Eski sürüm korundu."
-
-#: src/includes/Updater.php
-msgid "Update rejected: the package size is not in the expected range. The old version was kept."
-msgstr "Güncelleme reddedildi: paket boyutu beklenen aralıkta değil. Eski sürüm korundu."
-
-#: src/includes/Updater.php
-msgid "Update rejected: the digest (SHA-256) file could not be read. The old version was kept."
-msgstr "Güncelleme reddedildi: özet (SHA-256) dosyası okunamadı. Eski sürüm korundu."
-
-#: src/includes/Updater.php
-msgid "Update rejected: the SHA-256 digest of the package does not match. The old version was kept."
-msgstr "Güncelleme reddedildi: paketin SHA-256 özeti eşleşmiyor. Eski sürüm korundu."
-
-#: src/includes/Updater.php
-msgid "Update rejected: the root folder of the package is not “wpseokit” or wpseokit.php is missing. The old version was kept."
-msgstr "Güncelleme reddedildi: paketin kök klasörü “wpseokit” değil ya da wpseokit.php eksik. Eski sürüm korundu."
-
-#: src/includes/Updater.php
-msgid "Update rejected: the version inside the package does not match the published version. The old version was kept."
-msgstr "Güncelleme reddedildi: paketin içindeki sürüm yayınlanan sürümle eşleşmiyor. Eski sürüm korundu."
-
-#: src/includes/Updater.php
-msgid "SEO titles and meta descriptions, canonical and robots, Open Graph, XML sitemap, schema graph, redirects and a 404 log."
-msgstr "SEO başlıkları ve meta açıklamaları, kanonik ve robots, Open Graph, XML site haritası, şema grafiği, yönlendirmeler ve 404 kaydı."
-
-#: src/includes/Updater.php
-msgid "There are no release notes for this version."
-msgstr "Bu sürüm için sürüm notu yok."
-
-#: src/includes/Updater.php
-msgid "Update rejected: the package address is not in the expected format. The old version was kept."
-msgstr "Güncelleme reddedildi: paket adresi beklenen biçimde değil. Eski sürüm korundu."
-
-#: src/includes/Updater.php
-msgid "Update stopped: the digest or signature file could not be downloaded. The old version was kept."
-msgstr "Güncelleme durduruldu: özet ya da imza dosyası indirilemedi. Eski sürüm korundu."
-
-#: src/includes/Updater.php
-msgid "Update rejected: the package did not pass the WPSeoKit verification. The old version was kept."
-msgstr "Güncelleme reddedildi: paket WPSeoKit doğrulamasından geçmedi. Eski sürüm korundu."
-
-#: src/includes/Updater.php
-msgid "You do not have permission for this action."
-msgstr "Bu işlem için yetkiniz yok."
-
-#: src/includes/Updater.php
-msgid "The update check is off; GitHub is never contacted."
-msgstr "Güncelleme denetimi kapalı; GitHub'a hiç bağlanılmaz."
-
-#: src/includes/Updater.php
-msgid "Not checked yet."
-msgstr "Henüz denetlenmedi."
-
-#: src/includes/Updater.php
-msgid "There is no published version yet."
-msgstr "Henüz yayınlanmış bir sürüm yok."
-
-#: src/includes/Updater.php
-msgid "Could not check; it will be tried again later. The plugin works normally."
-msgstr "Denetlenemedi; daha sonra yeniden denenecek. Eklenti normal çalışır."
-
-#: src/includes/Updater.php
-#, php-format
-msgid "A new version is available: %s. Click “Update” on the Plugins page."
-msgstr "Yeni sürüm var: %s. Eklentiler sayfasında “Güncelle”ye tıklayın."
-
-#: src/includes/Updater.php
-msgid "The plugin is up to date."
-msgstr "Eklenti güncel."
-
-#: src/includes/Updater.php
 msgid "never"
 msgstr "hiç"
 
@@ -174,18 +91,6 @@ msgstr "Kurulu sürüm"
 #: src/includes/Updater.php
 msgid "Last check"
 msgstr "Son denetim"
-
-#: src/includes/Updater.php
-msgid "Automatic updates"
-msgstr "Otomatik güncellemeler"
-
-#: src/includes/Updater.php
-msgid "Turned on or off with the “Enable auto-updates” link on the WPSeoKit row in the Plugins page."
-msgstr "Eklentiler sayfasında WPSeoKit satırındaki “Otomatik güncellemeleri etkinleştir” bağlantısıyla açılır ya da kapatılır."
-
-#: src/includes/Updater.php
-msgid "The update package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Only a standard GET request is sent; your site address or user information is not sent."
-msgstr "Güncelleme paketi kurulmadan önce SHA-256 özeti ve Ed25519 imzasıyla doğrulanır; doğrulanamayan paket kurulmaz. Yalnız standart bir GET isteği gönderilir; site adresiniz ya da kullanıcı bilgileriniz gönderilmez."
 
 #: src/includes/Updater.php
 msgid "Check now"
@@ -312,10 +217,6 @@ msgstr "XML Site Haritası"
 #: src/includes/Services/SitemapService.php
 msgid "URL"
 msgstr "Adres"
-
-#: src/includes/Services/SitemapService.php
-msgid "Generated by WPSeoKit"
-msgstr "WPSeoKit tarafından üretildi"
 
 #: src/includes/Services/FeedService.php
 msgid "No post found"
@@ -766,14 +667,6 @@ msgid "Fix top errors"
 msgstr "Başlıca hataları düzelt"
 
 #: src/includes/Screens
-msgid "Yoast SEO is active on this site"
-msgstr "Bu sitede Yoast SEO etkin"
-
-#: src/includes/Screens
-msgid "Yoast SEO is not active"
-msgstr "Yoast SEO etkin değil"
-
-#: src/includes/Screens
 msgid "View report"
 msgstr "Raporu gör"
 
@@ -784,14 +677,6 @@ msgstr "Çıktı açık"
 #: src/includes/Screens
 msgid "Output paused"
 msgstr "Çıktı duraklatıldı"
-
-#: src/includes/Screens
-msgid "Site verification codes are set"
-msgstr "Site doğrulama kodları girilmiş"
-
-#: src/includes/Screens
-msgid "No verification codes yet"
-msgstr "Henüz doğrulama kodu yok"
 
 #: src/includes/Screens
 msgid "Verification"
@@ -846,10 +731,6 @@ msgid "Setup checklist"
 msgstr "Kurulum kontrol listesi"
 
 #: src/includes/Screens
-msgid "Recent activity"
-msgstr "Son etkinlik"
-
-#: src/includes/Screens
 msgid "Event"
 msgstr "Olay"
 
@@ -860,10 +741,6 @@ msgstr "Ziyaret"
 #: src/includes/Screens
 msgid "These checks decide whether your site is ready for search engines."
 msgstr "Bu kontroller sitenizin arama motorlarına hazır olup olmadığını belirler."
-
-#: src/includes/Screens
-msgid "Broken addresses visitors hit most, and the latest redirects."
-msgstr "Ziyaretçilerin en çok karşılaştığı bozuk adresler ve son yönlendirmeler."
 
 #: src/includes/Screens
 msgid "Feed (RSS)"
@@ -1106,10 +983,6 @@ msgid "Yoast import"
 msgstr "Yoast aktarımı"
 
 #: src/includes/Screens
-msgid "Bring your titles and descriptions over from Yoast SEO."
-msgstr "Başlıklarınızı ve açıklamalarınızı Yoast SEO’dan taşıyın."
-
-#: src/includes/Screens
 msgid "Dry run"
 msgstr "Deneme çalıştırması"
 
@@ -1124,10 +997,6 @@ msgstr "Rapor"
 #: src/includes/Screens
 msgid "No import has run yet. The report appears here when it finishes."
 msgstr "Henüz aktarım yapılmadı. Rapor, aktarım bitince burada görünür."
-
-#: src/includes/Screens
-msgid "Yoast import steps"
-msgstr "Yoast aktarım adımları"
 
 #: src/includes/Screens
 msgid "Bring your Yoast SEO data over"
@@ -2018,16 +1887,8 @@ msgid "Read-only. Reads the live page, so it reflects the settings you saved."
 msgstr "Salt okunur. Canlı sayfayı okur, bu yüzden kaydettiğiniz ayarları yansıtır."
 
 #: src/includes/Screens
-msgid "Sharing, verification codes, access and data."
-msgstr "Paylaşım, doğrulama kodları, erişim ve veri."
-
-#: src/includes/Screens
 msgid "Access"
 msgstr "Erişim"
-
-#: src/includes/Screens
-msgid "Settings sections"
-msgstr "Ayar bölümleri"
 
 #: src/includes/Screens
 msgid "Paused while Yoast SEO is active"
@@ -2505,8 +2366,9 @@ msgstr "Sayfa başlığı ile site adı arasında kullanılır."
 msgid "Title separator"
 msgstr "Başlık ayracı"
 
+#. translators: %sep% is a WPSeoKit template variable, not a printf
+#. placeholder; it is replaced with str_replace before printing.
 #: src/includes/Screens/TemplatesScreen.php
-#. translators: %sep% is a WPSeoKit template variable, not a printf placeholder; it is replaced with str_replace before printing.
 #, no-php-format, no-python-format
 msgid "Replaces %sep% in every template."
 msgstr "Her şablondaki %sep% yerine geçer."
@@ -2626,10 +2488,6 @@ msgstr "Bu liste yüklenemedi."
 #: src/includes/Screens
 msgid "Try again"
 msgstr "Yeniden dene"
-
-#: src/includes/Screens
-msgid "Demo data: the server part of this screen is not installed yet, so nothing here is saved."
-msgstr "Örnek veri: bu ekranın sunucu tarafı henüz kurulu değil, bu yüzden burada hiçbir şey kaydedilmez."
 
 #: src/includes/Screens
 msgid "Edit"
@@ -2888,18 +2746,6 @@ msgid "This is the list of pages on %s that search engines such as Google can re
 msgstr "Burası %s sitesinde Google gibi arama motorlarının okuyabildiği sayfaların listesidir. Listeye buradan göz atabilirsiniz; botlar bu sayfanın arkasındaki düz XML'i kullanır."
 
 #: src/includes/Services/SitemapView.php
-msgid "%s group"
-msgid_plural "%s groups"
-msgstr[0] "%s grup"
-msgstr[1] "%s grup"
-
-#: src/includes/Services/SitemapView.php
-msgid "%s file"
-msgid_plural "%s files"
-msgstr[0] "%s dosya"
-msgstr[1] "%s dosya"
-
-#: src/includes/Services/SitemapView.php
 msgid "%s URL"
 msgid_plural "%s URLs"
 msgstr[0] "%s adres"
@@ -2938,18 +2784,6 @@ msgstr "%s görünümünü aç"
 #: src/includes/Services/SitemapView.php
 msgid "File %1$s of %2$s"
 msgstr "Dosya %1$s / %2$s"
-
-#: src/includes/Services/SitemapView.php
-msgid "%s URL in this file"
-msgid_plural "%s URLs in this file"
-msgstr[0] "%s adres bu dosyada"
-msgstr[1] "%s adres bu dosyada"
-
-#: src/includes/Services/SitemapView.php
-msgid "%s URL in the group"
-msgid_plural "%s URLs in the group"
-msgstr[0] "%s adres tüm grupta"
-msgstr[1] "%s adres tüm grupta"
 
 #: src/includes/Services/SitemapView.php
 msgid "Newest change"
@@ -3012,6 +2846,7 @@ msgstr "Site haritası dizinine dön"
 #: src/includes/Services/SitemapView.php
 msgid "Site owner: open WPSeoKit › Sitemap and switch on at least one content type."
 msgstr "Site sahibi: WPSeoKit › Site haritası bölümünü açıp en az bir içerik türünü etkinleştirin."
+
 #: src/includes/Services/PreferredAddressService.php
 msgid "Correct: this address is the preferred address, or it sends visitors to it with one permanent redirect."
 msgstr "Doğru: bu adres tercih edilen adrestir ya da ziyaretçileri tek bir kalıcı yönlendirmeyle ona gönderir."
@@ -3085,7 +2920,6 @@ msgstr "Çoklu site ağı PHP yedeğinin kapsamı dışındadır; devre dışı 
 #: src/includes/Services/PreferredAddressService.php
 msgid "WordPress Address and Site Address do not match the preferred address. Set both to the preferred address in Settings > General."
 msgstr "WordPress Adresi ve Site Adresi tercih edilen adresle uyuşmuyor. Ayarlar > Genel bölümünde ikisini de tercih edilen adrese ayarlayın."
-
 
 #: src/includes/Services/ReportService.php
 msgid "The snapshot could not be saved."
@@ -3474,8 +3308,8 @@ msgstr "Adresleri kontrol et"
 msgid "Check address"
 msgstr "Adresi kontrol et"
 
-
-# --- WPRJ-556: WPRJ-586/590/594 sonrasında eklenen arayüz metinleri (tr_TR) ---
+#  --- WPRJ-556: WPRJ-586/590/594 sonrasında eklenen arayüz metinleri (tr_TR)
+#  ---
 #: src/includes/Screens/DashboardScreen.php
 msgid "%d setup item is missing."
 msgstr "%d kurulum adımı eksik."
@@ -3529,10 +3363,6 @@ msgid "Feed"
 msgstr "Besleme"
 
 #: src/includes/Screens/DashboardScreen.php
-msgid "Filter the log"
-msgstr "Günlüğü süz"
-
-#: src/includes/Screens/DashboardScreen.php
 msgid "Go to Setup"
 msgstr "Kuruluma git"
 
@@ -3545,22 +3375,6 @@ msgid "Import your Yoast data to continue."
 msgstr "Sürdürmek için Yoast verilerinizi aktarın."
 
 #: src/includes/Screens/DashboardScreen.php
-msgid "Loading the activity log…"
-msgstr "Etkinlik günlüğü yükleniyor…"
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "Loading the errors…"
-msgstr "Hatalar yükleniyor…"
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "Loading the import log…"
-msgstr "Aktarım günlüğü yükleniyor…"
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "Loading the update checks…"
-msgstr "Güncelleme denetimleri yükleniyor…"
-
-#: src/includes/Screens/DashboardScreen.php
 msgid "Loading your reports…"
 msgstr "Raporlarınız yükleniyor…"
 
@@ -3569,28 +3383,8 @@ msgid "Logs"
 msgstr "Günlükler"
 
 #: src/includes/Screens/DashboardScreen.php
-msgid "No Yoast import yet"
-msgstr "Henüz Yoast aktarımı yok"
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "No activity yet"
-msgstr "Henüz etkinlik yok"
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "No errors recorded"
-msgstr "Kayıtlı hata yok"
-
-#: src/includes/Screens/DashboardScreen.php
 msgid "No report data yet"
 msgstr "Henüz rapor verisi yok"
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "No update check yet"
-msgstr "Henüz güncelleme denetimi yok"
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "Nothing went wrong in the background. Problems WPSeoKit cannot fix on its own will show up here."
-msgstr "Arka planda ters giden bir şey yok. WPSeoKit'in tek başına çözemediği sorunlar burada görünür."
 
 #: src/includes/Screens/DashboardScreen.php
 msgid "Overview"
@@ -3625,24 +3419,12 @@ msgid "Reports are not recorded while WPSeoKit output is paused. Import your Yoa
 msgstr "WPSeoKit çıktısı duraklatılmışken rapor kaydedilmez. Sürdürmek için Yoast verilerinizi aktarın."
 
 #: src/includes/Screens/DashboardScreen.php
-msgid "Reset"
-msgstr "Sıfırla"
-
-#: src/includes/Screens/DashboardScreen.php
 msgid "SEO score"
 msgstr "SEO skoru"
 
 #: src/includes/Screens/DashboardScreen.php
 msgid "Score overview"
 msgstr "Skor özeti"
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "Sitemap rebuilds, snapshots, score recalculations and setting changes will be listed here."
-msgstr "Site haritası yenilemeleri, anlık görüntüler, skor hesaplamaları ve ayar değişiklikleri burada listelenir."
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "Snapshot"
-msgstr "Anlık görüntü"
 
 #: src/includes/Screens/DashboardScreen.php
 msgid "Snapshot settings"
@@ -3665,32 +3447,12 @@ msgid "Update checks"
 msgstr "Güncelleme denetimleri"
 
 #: src/includes/Screens/DashboardScreen.php
-msgid "WPSeoKit checks for a new version once a day. The first check has not run."
-msgstr "WPSeoKit günde bir kez yeni sürüm arar. İlk denetim henüz çalışmadı."
-
-#: src/includes/Screens/DashboardScreen.php
 msgid "WPSeoKit could not finish checking the site. The results below are from the last successful calculation."
 msgstr "WPSeoKit site denetimini tamamlayamadı. Aşağıdaki sonuçlar son başarılı hesaplamadan."
 
 #: src/includes/Screens/DashboardScreen.php
-msgid "WPSeoKit could not load the activity log."
-msgstr "WPSeoKit etkinlik günlüğünü yükleyemedi."
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "WPSeoKit could not load the errors."
-msgstr "WPSeoKit hataları yükleyemedi."
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "WPSeoKit could not load the import log."
-msgstr "WPSeoKit aktarım günlüğünü yükleyemedi."
-
-#: src/includes/Screens/DashboardScreen.php
 msgid "WPSeoKit could not load the reports."
 msgstr "WPSeoKit raporları yükleyemedi."
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "WPSeoKit could not load the update checks."
-msgstr "WPSeoKit güncelleme denetimlerini yükleyemedi."
 
 #: src/includes/Screens/DashboardScreen.php
 msgid "WPSeoKit prints nothing now, so a score would not describe what search engines see. Import your Yoast data to continue."
@@ -3703,10 +3465,6 @@ msgstr "WPSeoKit her gün sayılarınızın bir anlık görüntüsünü kaydeder
 #: src/includes/Screens/DashboardScreen.php
 msgid "What WPSeoKit and you changed on this site."
 msgstr "WPSeoKit ve sizin bu sitede değiştirdikleriniz."
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "When you check or import Yoast data, each step is recorded here."
-msgstr "Yoast verilerini denetlediğinizde ya da aktardığınızda her adım burada kaydedilir."
 
 #: src/includes/Screens/DashboardScreen.php
 msgid "Yoast import log"
@@ -3733,10 +3491,6 @@ msgid "%1$d of %2$d recent posts scored"
 msgstr "Son %2$d yazıdan %1$d tanesi puanlandı"
 
 #: src/includes/Screens/Ui.php
-msgid "%d descriptions"
-msgstr "%d açıklama"
-
-#: src/includes/Screens/Ui.php
 msgid "%d new 404 error"
 msgstr "%d yeni 404 hatası"
 
@@ -3749,20 +3503,8 @@ msgid "%d recommendations to review"
 msgstr "İncelenecek %d öneri"
 
 #: src/includes/Screens/Ui.php
-msgid "%d titles"
-msgstr "%d başlık"
-
-#: src/includes/Screens/Ui.php
 msgid "%s (total)"
 msgstr "%s (toplam)"
-
-#: src/includes/Screens/Ui.php
-msgid "%s turned off"
-msgstr "%s kapatıldı"
-
-#: src/includes/Screens/Ui.php
-msgid "%s turned on"
-msgstr "%s açıldı"
 
 #: src/includes/Screens/Ui.php
 msgid "(opens in a new tab)"
@@ -3775,10 +3517,6 @@ msgstr "404 isabeti"
 #: src/includes/Screens/Ui.php
 msgid "A critical rule fails, so the score cannot go above 79 until it is fixed."
 msgstr "Kritik bir kural başarısız; o düzeltilene kadar skor 79'u geçemez."
-
-#: src/includes/Screens/Ui.php
-msgid "Activity log"
-msgstr "Etkinlik günlüğü"
 
 #: src/includes/Screens/Ui.php
 msgid "All scores"
@@ -3821,28 +3559,12 @@ msgid "Change"
 msgstr "Değişim"
 
 #: src/includes/Screens/Ui.php
-msgid "Could not check"
-msgstr "Denetlenemedi"
-
-#: src/includes/Screens/Ui.php
 msgid "Critical"
 msgstr "Kritik"
 
 #: src/includes/Screens/Ui.php
-msgid "Daily snapshot saved for %s."
-msgstr "%s için günlük anlık görüntü kaydedildi."
-
-#: src/includes/Screens/Ui.php
 msgid "Dashed line"
 msgstr "Kesikli çizgi"
-
-#: src/includes/Screens/Ui.php
-msgid "Details"
-msgstr "Ayrıntı"
-
-#: src/includes/Screens/Ui.php
-msgid "Dry run completed"
-msgstr "Deneme çalıştırması tamamlandı"
 
 #: src/includes/Screens/Ui.php
 msgid "Edit post"
@@ -3885,20 +3607,12 @@ msgid "Hide"
 msgstr "Gizle"
 
 #: src/includes/Screens/Ui.php
-msgid "Import finished"
-msgstr "Aktarım bitti"
-
-#: src/includes/Screens/Ui.php
 msgid "Imported"
 msgstr "Aktarıldı"
 
 #: src/includes/Screens/Ui.php
 msgid "Info"
 msgstr "Bilgi"
-
-#: src/includes/Screens/Ui.php
-msgid "Last checked %s."
-msgstr "Son denetim: %s."
 
 #: src/includes/Screens/Ui.php
 msgid "Last snapshot: %s"
@@ -3917,10 +3631,6 @@ msgid "Measure"
 msgstr "Ölçü"
 
 #: src/includes/Screens/Ui.php
-msgid "Message"
-msgstr "İleti"
-
-#: src/includes/Screens/Ui.php
 msgid "New 404 addresses (24 h)"
 msgstr "Yeni 404 adresleri (24 saat)"
 
@@ -3929,16 +3639,8 @@ msgid "Next page"
 msgstr "Sonraki sayfa"
 
 #: src/includes/Screens/Ui.php
-msgid "No Yoast data has been checked yet."
-msgstr "Henüz Yoast verisi denetlenmedi."
-
-#: src/includes/Screens/Ui.php
 msgid "No data"
 msgstr "Veri yok"
-
-#: src/includes/Screens/Ui.php
-msgid "No events match these filters"
-msgstr "Bu süzgeçlerle eşleşen olay yok"
 
 #: src/includes/Screens/Ui.php
 msgid "No scored posts yet."
@@ -3953,48 +3655,16 @@ msgid "Nothing to fix"
 msgstr "Düzeltilecek bir şey yok"
 
 #: src/includes/Screens/Ui.php
-msgid "Nothing was changed."
-msgstr "Hiçbir şey değiştirilmedi."
-
-#: src/includes/Screens/Ui.php
 msgid "One snapshot so far. A trend needs at least two days; the numbers of that day are below."
 msgstr "Şu ana kadar tek anlık görüntü var. Eğilim için en az iki gün gerekir; o günün sayıları aşağıda."
-
-#: src/includes/Screens/Ui.php
-msgid "Open Reports"
-msgstr "Raporları aç"
-
-#: src/includes/Screens/Ui.php
-msgid "Open SEO score"
-msgstr "SEO skorunu aç"
-
-#: src/includes/Screens/Ui.php
-msgid "Open dry run"
-msgstr "Deneme çalıştırmasını aç"
-
-#: src/includes/Screens/Ui.php
-msgid "Open import"
-msgstr "Aktarımı aç"
-
-#: src/includes/Screens/Ui.php
-msgid "Open summary"
-msgstr "Özeti aç"
 
 #: src/includes/Screens/Ui.php
 msgid "Open the 404 log"
 msgstr "404 günlüğünü aç"
 
 #: src/includes/Screens/Ui.php
-msgid "Open update checks"
-msgstr "Güncelleme denetimlerini aç"
-
-#: src/includes/Screens/Ui.php
 msgid "Out of date: calculated %s. Recalculate to refresh it."
 msgstr "Güncel değil: hesaplanma %s. Yenilemek için yeniden hesaplayın."
-
-#: src/includes/Screens/Ui.php
-msgid "Page"
-msgstr "Sayfa"
 
 #: src/includes/Screens/Ui.php
 msgid "Post"
@@ -4017,32 +3687,12 @@ msgid "Recalculate"
 msgstr "Yeniden hesapla"
 
 #: src/includes/Screens/Ui.php
-msgid "Redirect added"
-msgstr "Yönlendirme eklendi"
-
-#: src/includes/Screens/Ui.php
-msgid "Redirect changed"
-msgstr "Yönlendirme değiştirildi"
-
-#: src/includes/Screens/Ui.php
-msgid "Redirect deleted"
-msgstr "Yönlendirme silindi"
-
-#: src/includes/Screens/Ui.php
 msgid "Redirect hits"
 msgstr "Yönlendirme isabeti"
 
 #: src/includes/Screens/Ui.php
 msgid "Redirects and 404 errors"
 msgstr "Yönlendirmeler ve 404 hataları"
-
-#: src/includes/Screens/Ui.php
-msgid "Report created"
-msgstr "Rapor oluşturuldu"
-
-#: src/includes/Screens/Ui.php
-msgid "Reset filters"
-msgstr "Süzgeçleri sıfırla"
 
 #: src/includes/Screens/Ui.php
 msgid "Restore"
@@ -4097,24 +3747,8 @@ msgid "Score"
 msgstr "Skor"
 
 #: src/includes/Screens/Ui.php
-msgid "Score recalculated"
-msgstr "Skor yeniden hesaplandı"
-
-#: src/includes/Screens/Ui.php
-msgid "Setting changed"
-msgstr "Ayar değiştirildi"
-
-#: src/includes/Screens/Ui.php
-msgid "Showing %1$s of %2$s"
-msgstr "%1$s / %2$s gösteriliyor"
-
-#: src/includes/Screens/Ui.php
 msgid "Site"
 msgstr "Site"
-
-#: src/includes/Screens/Ui.php
-msgid "Site score %s."
-msgstr "Site skoru %s."
 
 #: src/includes/Screens/Ui.php
 msgid "Site settings"
@@ -4129,16 +3763,8 @@ msgid "Sitemap: %s"
 msgstr "Site haritası: %s"
 
 #: src/includes/Screens/Ui.php
-msgid "Snapshot replaced"
-msgstr "Anlık görüntü güncellendi"
-
-#: src/includes/Screens/Ui.php
 msgid "Snapshot saved."
 msgstr "Anlık görüntü kaydedildi."
-
-#: src/includes/Screens/Ui.php
-msgid "Snapshot taken"
-msgstr "Anlık görüntü alındı"
 
 #: src/includes/Screens/Ui.php
 msgid "Solid line"
@@ -4165,28 +3791,12 @@ msgid "The check on %s found a difference. Verify again from the Report tab."
 msgstr "%s tarihli denetim bir fark buldu. Rapor sekmesinden yeniden doğrulayın."
 
 #: src/includes/Screens/Ui.php
-msgid "The dry run is done. Nothing is imported yet."
-msgstr "Deneme çalıştırması bitti. Henüz bir şey aktarılmadı."
-
-#: src/includes/Screens/Ui.php
 msgid "The import is already applied."
 msgstr "Aktarım zaten uygulandı."
 
 #: src/includes/Screens/Ui.php
-msgid "The import is applied. Newest steps first."
-msgstr "Aktarım uygulandı. En yeni adım önce."
-
-#: src/includes/Screens/Ui.php
 msgid "The import was applied, so there is no current check. Run it again to see what would change now."
 msgstr "Aktarım uygulandığı için güncel bir denetim yok. Şimdi neyin değişeceğini görmek için tekrar çalıştırın."
-
-#: src/includes/Screens/Ui.php
-msgid "The list of releases could not be reached. This is expected until a release is published; WPSeoKit tries again later."
-msgstr "Sürüm listesine ulaşılamadı. Bir sürüm yayımlanana kadar beklenen durumdur; WPSeoKit sonra tekrar dener."
-
-#: src/includes/Screens/Ui.php
-msgid "The result of the import is ready to read."
-msgstr "Aktarımın sonucu okumaya hazır."
 
 #: src/includes/Screens/Ui.php
 msgid "The score could not be calculated."
@@ -4201,52 +3811,16 @@ msgid "The snapshot could not be taken."
 msgstr "Anlık görüntü alınamadı."
 
 #: src/includes/Screens/Ui.php
-msgid "The values were saved in WPSeoKit."
-msgstr "Değerler WPSeoKit'e kaydedildi."
-
-#: src/includes/Screens/Ui.php
-msgid "This date range is not valid. Check the dates and apply again."
-msgstr "Bu tarih aralığı geçerli değil. Tarihleri kontrol edip yeniden uygulayın."
-
-#: src/includes/Screens/Ui.php
-msgid "Time"
-msgstr "Zaman"
-
-#: src/includes/Screens/Ui.php
 msgid "Title and description coverage"
 msgstr "Başlık ve açıklama kapsamı"
-
-#: src/includes/Screens/Ui.php
-msgid "Try a different type or a wider date range."
-msgstr "Başka bir tür ya da daha geniş bir tarih aralığı deneyin."
 
 #: src/includes/Screens/Ui.php
 msgid "Up to +%s points"
 msgstr "En fazla +%s puan"
 
 #: src/includes/Screens/Ui.php
-msgid "Up to date"
-msgstr "Güncel"
-
-#: src/includes/Screens/Ui.php
-msgid "Update check"
-msgstr "Güncelleme denetimi"
-
-#: src/includes/Screens/Ui.php
-msgid "Update found"
-msgstr "Güncelleme var"
-
-#: src/includes/Screens/Ui.php
 msgid "Verified on %s."
 msgstr "%s tarihinde doğrulandı."
-
-#: src/includes/Screens/Ui.php
-msgid "Version %s is available."
-msgstr "%s sürümü var."
-
-#: src/includes/Screens/Ui.php
-msgid "Version %s is the newest version."
-msgstr "En yeni sürüm %s."
 
 #: src/includes/Screens/Ui.php
 msgid "View as table"
@@ -4271,26 +3845,6 @@ msgstr "Ağırlık %s"
 #: src/includes/Screens/Ui.php
 msgid "What the import did"
 msgstr "Aktarım ne yaptı"
-
-#: src/includes/Screens/Ui.php
-msgid "Where"
-msgstr "Yer"
-
-#: src/includes/Screens/Ui.php
-msgid "Yoast SEO data was detected."
-msgstr "Yoast SEO verisi algılandı."
-
-#: src/includes/Screens/Ui.php
-msgid "Yoast data found"
-msgstr "Yoast verisi bulundu"
-
-#: src/includes/Screens/Ui.php
-msgid "for the entry at %s"
-msgstr "%s girdisi için"
-
-#: src/includes/Screens/Ui.php
-msgid "for this import step"
-msgstr "bu aktarım adımı için"
 
 #: src/includes/Screens/Ui.php
 msgid "for: %s"
@@ -4472,93 +4026,6 @@ msgstr "Skor ayrıntıları"
 msgid "You searched for %s"
 msgstr "%s için arama yaptınız"
 
-msgid "Content score (analysis result, no feature here)"
-msgstr "İçerik skoru (analiz sonucu, bizde karşılığı yok)"
-
-msgid "Reading time (WordPress counts it again)"
-msgstr "Okuma süresi (WordPress yeniden hesaplar)"
-
-msgid "Focus keyword (no feature here)"
-msgstr "Odak anahtar kelime (bizde karşılığı yok)"
-
-msgid "Meta descriptions"
-msgstr "Meta açıklamaları"
-
-msgid "SEO titles"
-msgstr "SEO başlıkları"
-
-msgid "Post robots"
-msgstr "Yazı robots ayarları"
-
-msgid "Post canonical URLs"
-msgstr "Yazı kanonik adresleri"
-
-msgid "Post social fields"
-msgstr "Yazı sosyal alanları"
-
-msgid "Variables are converted (%%sitename%% becomes %sitename%)."
-msgstr "Değişkenler dönüştürülür (%%sitename%% → %sitename%)."
-
-msgid "Twitter fields fill in only where the Open Graph field is empty."
-msgstr "Twitter alanları yalnız Open Graph alanı boşsa doldurulur."
-
-msgid "Category descriptions"
-msgstr "Kategori açıklamaları"
-
-msgid "Term titles, robots and images"
-msgstr "Terim başlıkları, robots ve görseller"
-
-msgid "Stored in term meta, not in one serialized option."
-msgstr "Tek bir seçenekte değil, terim meta verisinde saklanır."
-
-msgid "Analysis result, no feature here."
-msgstr "Analiz sonucu, bizde karşılığı yok."
-
-msgid "Robots rules"
-msgstr "Robots kuralları"
-
-msgid "General and verification"
-msgstr "Genel ve doğrulama"
-
-msgid "Schema (organization)"
-msgstr "Şema (kuruluş)"
-
-msgid "Social settings"
-msgstr "Sosyal ayarlar"
-
-msgid "Variables are converted; the separator code (sc-dash) becomes the character."
-msgstr "Değişkenler dönüştürülür; ayırıcı kodu (sc-dash) karaktere çevrilir."
-
-msgid "Yoast cache; its content is imported from the sources above."
-msgstr "Yoast önbelleği; içeriği yukarıdaki kaynaklardan alınır."
-
-msgid "Yoast cache."
-msgstr "Yoast önbelleği."
-
-msgid "Internal link counter, no feature here."
-msgstr "İç bağlantı sayacı, bizde karşılığı yok."
-
-msgid "Yoast schema history."
-msgstr "Yoast şema geçmişi."
-
-msgid "Temporary store."
-msgstr "Geçici depo."
-
-msgid "Read as the second source of the primary category."
-msgstr "Ana kategorinin ikinci kaynağı olarak okunur."
-
-msgid "WordPress handles this in Settings > Permalinks."
-msgstr "WordPress bunu Ayarlar > Kalıcı bağlantılar bölümünde yönetir."
-
-msgid "No matching setting here."
-msgstr "Bizde karşılığı olan bir ayar yok."
-
-msgid "wpseo (secrets and tokens)"
-msgstr "wpseo (gizli anahtarlar ve belirteçler)"
-
-msgid "Never copied: tokens and keys stay out."
-msgstr "Hiç kopyalanmaz: belirteçler ve anahtarlar dışarıda kalır."
-
 msgid "%1$s: unknown variable(s) %2$s (they render blank)."
 msgstr "%1$s: bilinmeyen değişken(ler) %2$s (boş görünür)."
 
@@ -4597,7 +4064,3 @@ msgstr "kanonik çıktı yok"
 
 msgid "llms.txt is off"
 msgstr "llms.txt kapalı"
-
-#: src/includes/Updater.php
-msgid "The release check failed."
-msgstr "Sürüm denetimi başarısız oldu."

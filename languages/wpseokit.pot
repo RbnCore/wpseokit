@@ -121,20 +121,6 @@ msgstr ""
 msgid "%s (total)"
 msgstr ""
 
-#: includes/Services/SitemapView.php:228
-#, php-format
-msgid "%s file"
-msgid_plural "%s files"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/Services/SitemapView.php:228
-#, php-format
-msgid "%s group"
-msgid_plural "%s groups"
-msgstr[0] ""
-msgstr[1] ""
-
 #: includes/Services/RedirectService.php:334
 #, php-format
 msgid "%s is itself redirected. Point to its final address so visitors make one hop only."
@@ -149,20 +135,6 @@ msgstr ""
 #, php-format
 msgid "%s URL"
 msgid_plural "%s URLs"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/Services/SitemapView.php:287
-#, php-format
-msgid "%s URL in the group"
-msgid_plural "%s URLs in the group"
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/Services/SitemapView.php:286
-#, php-format
-msgid "%s URL in this file"
-msgid_plural "%s URLs in this file"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -240,11 +212,6 @@ msgstr ""
 
 #: includes/Services/PreferredAddressService.php:866
 msgid "A multisite network is outside the scope of the PHP fallback; it stays inactive. Use a server rule."
-msgstr ""
-
-#: includes/Updater.php:438
-#, php-format
-msgid "A new version is available: %s. Click “Update” on the Plugins page."
 msgstr ""
 
 #: includes/Screens/RedirectsScreen.php:70
@@ -603,10 +570,6 @@ msgstr ""
 msgid "Automatic follows your WordPress address. Google prefers https pages."
 msgstr ""
 
-#: includes/Updater.php:448
-msgid "Automatic updates"
-msgstr ""
-
 #: includes/Screens/Ui.php:98
 msgid "Average of posts"
 msgstr ""
@@ -948,10 +911,6 @@ msgstr ""
 
 #: includes/Screens/Ui.php:360
 msgid "Could not be read"
-msgstr ""
-
-#: includes/Updater.php:435
-msgid "Could not check; it will be tried again later. The plugin works normally."
 msgstr ""
 
 #: includes/Screens/Log404Screen.php:72
@@ -2016,10 +1975,6 @@ msgstr ""
 msgid "Not checked yet"
 msgstr ""
 
-#: includes/Updater.php:431
-msgid "Not checked yet."
-msgstr ""
-
 #: includes/Screens/Ui.php:384
 msgid "Not needed."
 msgstr ""
@@ -2913,10 +2868,6 @@ msgstr ""
 msgid "SEO title"
 msgstr ""
 
-#: includes/Updater.php:316
-msgid "SEO titles and meta descriptions, canonical and robots, Open Graph, XML sitemap, schema graph, redirects and a 404 log."
-msgstr ""
-
 #: includes/Updater.php:306
 msgid "SEO Toolkit"
 msgstr ""
@@ -3407,10 +3358,6 @@ msgstr ""
 msgid "The PHP fallback is on while the server also redirects: this can make a chain. Turn the fallback off."
 msgstr ""
 
-#: includes/Updater.php:440
-msgid "The plugin is up to date."
-msgstr ""
-
 #: includes/Screens/Ui.php:115
 msgid "the post editor"
 msgstr ""
@@ -3527,16 +3474,8 @@ msgstr ""
 msgid "The tool is off, so the address answers 404 until you turn it on."
 msgstr ""
 
-#: includes/Updater.php:429
-msgid "The update check is off; GitHub is never contacted."
-msgstr ""
-
 #: includes/Admin.php:225
 msgid "The update check is off; nothing was checked."
-msgstr ""
-
-#: includes/Updater.php:449
-msgid "The update package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Only a standard GET request is sent; your site address or user information is not sent."
 msgstr ""
 
 #: includes/Screens/RedirectsScreen.php:150
@@ -3560,16 +3499,8 @@ msgstr ""
 msgid "There are no published pages yet."
 msgstr ""
 
-#: includes/Updater.php:317
-msgid "There are no release notes for this version."
-msgstr ""
-
 #: includes/Screens/Ui.php:267
 msgid "There is no published post to show."
-msgstr ""
-
-#: includes/Updater.php:433
-msgid "There is no published version yet."
 msgstr ""
 
 #: includes/Services/LlmsTxtService.php:527
@@ -3745,10 +3676,6 @@ msgstr ""
 msgid "Turned off"
 msgstr ""
 
-#: includes/Updater.php:448
-msgid "Turned on or off with the “Enable auto-updates” link on the WPSeoKit row in the Plugins page."
-msgstr ""
-
 #: includes/Screens/MetaBox.php:153
 msgid "TV series"
 msgstr ""
@@ -3814,52 +3741,8 @@ msgstr ""
 msgid "Update checks follow the RBN Kit network setting."
 msgstr ""
 
-#: includes/Updater.php:126
-msgid "Update rejected: signature verification (sodium) is missing on the server. The old version was kept."
-msgstr ""
-
-#: includes/Updater.php:150
-msgid "Update rejected: the digest (SHA-256) file could not be read. The old version was kept."
-msgstr ""
-
-#: includes/Updater.php:335
-msgid "Update rejected: the package address is not in the expected format. The old version was kept."
-msgstr ""
-
-#: includes/Updater.php:391
-msgid "Update rejected: the package did not pass the WPSeoKit verification. The old version was kept."
-msgstr ""
-
-#: includes/Updater.php:134
-msgid "Update rejected: the package signature is invalid. The old version was kept."
-msgstr ""
-
-#: includes/Updater.php:147
-msgid "Update rejected: the package size is not in the expected range. The old version was kept."
-msgstr ""
-
-#: includes/Updater.php:131
-msgid "Update rejected: the plugin has no valid signature key. The old version was kept."
-msgstr ""
-
-#: includes/Updater.php:168
-msgid "Update rejected: the root folder of the package is not “wpseokit” or wpseokit.php is missing. The old version was kept."
-msgstr ""
-
-#: includes/Updater.php:154
-msgid "Update rejected: the SHA-256 digest of the package does not match. The old version was kept."
-msgstr ""
-
-#: includes/Updater.php:172
-msgid "Update rejected: the version inside the package does not match the published version. The old version was kept."
-msgstr ""
-
 #: includes/Screens/SettingsScreen.php:153
 msgid "Update status"
-msgstr ""
-
-#: includes/Updater.php:370
-msgid "Update stopped: the digest or signature file could not be downloaded. The old version was kept."
 msgstr ""
 
 #: includes/Screens/SettingsScreen.php:160
@@ -4244,10 +4127,6 @@ msgstr ""
 msgid "Yoast SEO is active. WPSeoKit prints nothing while it is active, so the two never output duplicate tags. Remove Yoast SEO first, then use WPSeoKit."
 msgstr ""
 
-#: includes/Updater.php:412
-msgid "You do not have permission for this action."
-msgstr ""
-
 #: includes/Admin.php:180
 msgid "You do not have permission to open this page."
 msgstr ""
@@ -4316,93 +4195,6 @@ msgstr ""
 msgid "You searched for %s"
 msgstr ""
 
-msgid "Content score (analysis result, no feature here)"
-msgstr ""
-
-msgid "Reading time (WordPress counts it again)"
-msgstr ""
-
-msgid "Focus keyword (no feature here)"
-msgstr ""
-
-msgid "Meta descriptions"
-msgstr ""
-
-msgid "SEO titles"
-msgstr ""
-
-msgid "Post robots"
-msgstr ""
-
-msgid "Post canonical URLs"
-msgstr ""
-
-msgid "Post social fields"
-msgstr ""
-
-msgid "Variables are converted (%%sitename%% becomes %sitename%)."
-msgstr ""
-
-msgid "Twitter fields fill in only where the Open Graph field is empty."
-msgstr ""
-
-msgid "Category descriptions"
-msgstr ""
-
-msgid "Term titles, robots and images"
-msgstr ""
-
-msgid "Stored in term meta, not in one serialized option."
-msgstr ""
-
-msgid "Analysis result, no feature here."
-msgstr ""
-
-msgid "Robots rules"
-msgstr ""
-
-msgid "General and verification"
-msgstr ""
-
-msgid "Schema (organization)"
-msgstr ""
-
-msgid "Social settings"
-msgstr ""
-
-msgid "Variables are converted; the separator code (sc-dash) becomes the character."
-msgstr ""
-
-msgid "Yoast cache; its content is imported from the sources above."
-msgstr ""
-
-msgid "Yoast cache."
-msgstr ""
-
-msgid "Internal link counter, no feature here."
-msgstr ""
-
-msgid "Yoast schema history."
-msgstr ""
-
-msgid "Temporary store."
-msgstr ""
-
-msgid "Read as the second source of the primary category."
-msgstr ""
-
-msgid "WordPress handles this in Settings > Permalinks."
-msgstr ""
-
-msgid "No matching setting here."
-msgstr ""
-
-msgid "wpseo (secrets and tokens)"
-msgstr ""
-
-msgid "Never copied: tokens and keys stay out."
-msgstr ""
-
 msgid "%1$s: unknown variable(s) %2$s (they render blank)."
 msgstr ""
 
@@ -4440,8 +4232,4 @@ msgid "no canonical output"
 msgstr ""
 
 msgid "llms.txt is off"
-msgstr ""
-
-#: src/includes/Updater.php
-msgid "The release check failed."
 msgstr ""

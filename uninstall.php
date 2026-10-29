@@ -9,11 +9,10 @@ declare(strict_types=1);
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
-// Cache groups (AdminKit core) and update helpers: temporary records, removed regardless of the data-removal choice.
+// Cache groups (AdminKit core): temporary records, removed regardless of the data-removal choice.
 if ( class_exists( 'AdminKit\Core\Cache' ) ) {
 	\AdminKit\Core\Cache::purge_plugin( 'wpseokit' );
 }
-delete_option( 'wpseokit_update_checked' );
 
 $wpseokit_settings = get_option( 'wpseokit_settings', array() );
 if ( is_array( $wpseokit_settings ) && ! empty( $wpseokit_settings['general']['delete_on_uninstall'] ) ) {

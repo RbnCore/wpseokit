@@ -38,9 +38,6 @@ final class LlmsTxtService {
 	/** Rounds per list, so a site where almost everything is noindex cannot loop for long. */
 	private const MAX_ROUNDS = 20;
 
-	/** Yoast `wpseo_llmstxt` keys that each hold one page ID, in the order Yoast lists them. */
-	private const YOAST_PAGE_KEYS = array( 'about_us_page', 'contact_page', 'terms_page', 'privacy_policy_page', 'shop_page' );
-
 	public static function init(): void {
 		add_action( 'parse_request', array( self::class, 'serve' ), 1 );
 		add_action( 'wpseokit_register_rest_routes', array( self::class, 'register_routes' ) );
@@ -217,21 +214,6 @@ final class LlmsTxtService {
 			'sections' => $counts,
 			'skipped'  => $skipped,
 		);
-	}
-
-	/**
-	 * Yoast `wpseo_llmstxt` page IDs as the WPSeoKit `llms.pages` list (pure function, see docs §3.7).
-	 *
-	 * @param array<string, mixed> $yoast Value of the Yoast `wpseo_llmstxt` option.
-	 * @return int[]
-	 */
-	public static function map_yoast( array $yoast ): array {
-		$ids = array();
-		foreach ( self::YOAST_PAGE_KEYS as $key ) {
-			$ids[] = $yoast[ $key ] ?? 0;
-		}
-		$other = $yoast['other_included_pages'] ?? array();
-		return self::ids( array_merge( $ids, is_array( $other ) ? $other : array() ) );
 	}
 
 	/* ------------------------------------------------------------------ candidates */
