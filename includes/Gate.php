@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 final class Gate {
 
 	/** Lowest AdminKit core API level this plugin works with (`ADMINKIT_CORE_API`). */
-	public const REQUIRED_API = 1;
+	public const REQUIRED_API = 3;
 
 	private const BASENAME = 'adminkit/adminkit.php';
 

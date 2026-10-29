@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 8.1
 Requires Plugins: adminkit
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,10 @@ Only a release check: at most once a day the plugin asks GitHub for the newest v
 Settings, tables, post meta and the temporary update records are removed only if you turned on "Delete all WPSeoKit data when the plugin is deleted" in Settings → Data and uninstall. Without that, the plugin files are removed and your data stays.
 
 == Changelog ==
+
+= 0.1.2 =
+* Updates are now done by the AdminKit core (one central updater, AdminKit 0.1.1 or newer); the plugin's own updater is removed. The package check (SHA-256 and Ed25519 signature) is unchanged.
+* Update checks are logged in the shared `adminkit.updates` channel.
 
 = 0.1.1 =
 * First release.

@@ -24,13 +24,13 @@ final class Registry {
 	public const SITEMAP     = 'wpseokit.sitemap';
 	public const LLMS        = 'wpseokit.llms';
 	public const SCORE       = 'wpseokit.score';
-	public const UPDATES     = 'wpseokit.updates';
 	public const MAINTENANCE = 'wpseokit.maintenance';
 
 	/** Log channels (`plugin.name`). */
 	public const ACTIVITY   = 'wpseokit.activity';
 	public const ERRORS     = 'wpseokit.errors';
-	public const UPDATE_LOG = 'wpseokit.updates';
+	/** The update-check log belongs to the AdminKit core updater (one channel for every RBN plugin; not registered here). */
+	public const UPDATE_LOG = 'adminkit.updates';
 	public const YOAST      = 'wpseokit.yoast';
 
 	/** Group name => default lifetime in seconds (callers pass their own lifetime where a setting decides). */
@@ -39,7 +39,6 @@ final class Registry {
 		'sitemap'     => 12 * HOUR_IN_SECONDS,
 		'llms'        => 12 * HOUR_IN_SECONDS,
 		'score'       => 5 * MINUTE_IN_SECONDS,
-		'updates'     => 12 * HOUR_IN_SECONDS,
 		'maintenance' => DAY_IN_SECONDS,
 	);
 
@@ -47,7 +46,6 @@ final class Registry {
 	private const CHANNELS = array(
 		'activity' => array( 90, 500, array( 'info' ) ),
 		'errors'   => array( 90, 100, array( 'error' ) ),
-		'updates'  => array( 90, 100, array( 'info', 'warning' ) ),
 		'yoast'    => array( 90, 100, array( 'info' ) ),
 	);
 

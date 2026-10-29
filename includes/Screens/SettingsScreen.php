@@ -10,12 +10,9 @@ declare(strict_types=1);
 
 namespace Wpseokit\Screens;
 
-use AdminKit\Core\Cache;
 use Wpseokit\Admin;
 use Wpseokit\Db;
 use Wpseokit\Plugin;
-use Wpseokit\Registry;
-use Wpseokit\Updater;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -129,33 +126,18 @@ final class SettingsScreen {
 
 	/** Update check card; its buttons post to admin-post.php, so it sits outside the settings form. */
 	private static function updates(): string {
-		$on      = Updater::enabled();
-		$checked = (int) get_option( Updater::OPT_CHECKED, 0 );
-		$cached  = $on ? Cache::get( Registry::UPDATES, Updater::CACHE_KEY ) : false;
-		if ( ! $on ) {
-			$state = esc_html__( 'The update check is off; GitHub is never contacted.', 'wpseokit' );
-		} elseif ( ! is_array( $cached ) ) {
-			$state = esc_html__( 'Not checked yet.', 'wpseokit' );
-		} elseif ( 'none' === $cached['status'] ) {
-			$state = esc_html__( 'There is no published version yet.', 'wpseokit' );
-		} elseif ( 'ok' !== $cached['status'] || ! is_array( $cached['release'] ) ) {
-			$state = esc_html__( 'Could not check; it will be tried again later. The plugin works normally.', 'wpseokit' );
-		} elseif ( version_compare( $cached['release']['version'], WPSEOKIT_VERSION, '>' ) ) {
-			/* translators: %s: version number. */
-			$state = sprintf( esc_html__( 'A new version is available: %s. Click “Update” on the Plugins page.', 'wpseokit' ), '<b>' . esc_html( $cached['release']['version'] ) . '</b>' );
-		} else {
-			$state = esc_html__( 'The plugin is up to date.', 'wpseokit' );
-		}
-		$last = $checked > 0 ? esc_html( wp_date( 'd.m.Y H:i', $checked ) ) : esc_html__( 'never', 'wpseokit' );
-		$post = esc_url( admin_url( 'admin-post.php' ) );
+		$st      = \AdminKit\Core\Updater::status( 'wpseokit' );
+		$checked = (int) $st['checked_at'];
+		$state   = \AdminKit\Core\Updater::state_html( $st );
+		$last    = $checked > 0 ? esc_html( wp_date( 'd.m.Y H:i', $checked ) ) : esc_html__( 'never', 'wpseokit' );
 
 		$body  = Ui::row( esc_html__( 'Installed version', 'wpseokit' ), '<b>' . esc_html( WPSEOKIT_VERSION ) . '</b>' );
 		$body .= Ui::row( esc_html__( 'Update status', 'wpseokit' ), '<p>' . $state . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
 		$body .= Ui::row( esc_html__( 'Last check', 'wpseokit' ), '<span>' . $last . '</span>', esc_html__( 'The package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Automatic updates are turned on or off with the “Enable auto-updates” link on the Plugins page.', 'wpseokit' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		$body .= '<p class="rbn-help"><a href="' . esc_url( admin_url( 'admin.php?page=adminkit#adminkit-network' ) ) . '">' . esc_html__( 'Update checks follow the RBN Kit network setting.', 'wpseokit' ) . '</a></p>';
-		if ( $on ) {
-			$act   = '<form method="post" action="' . $post . '"><input type="hidden" name="action" value="wpseokit_update_check">' . wp_nonce_field( 'wpseokit_update_check', '_wpnonce', true, false ) . '<button type="submit" class="rbn-btn">' . Ui::icon( 'scan' ) . esc_html__( 'Check now', 'wpseokit' ) . '</button></form>';
-			$body .= '<div class="wps-row">' . $act . '</div>';
+		$act = \AdminKit\Core\Updater::check_form( 'wpseokit', Admin::page_url( array( 'tab' => 'settings' ) ), Ui::icon( 'scan' ) . esc_html__( 'Check now', 'wpseokit' ) );
+		if ( '' !== $act ) {
+			$body .= '<div class="wps-row">' . $act . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the form escapes its own output.
 		}
 		return Ui::card( __( 'Updates', 'wpseokit' ), '', $body );
 	}

@@ -3,7 +3,7 @@
  * Plugin Name:       WPSeoKit — SEO Toolkit
  * Plugin URI:        https://github.com/RbnCore/wpseokit
  * Description:       SEO titles and meta descriptions, canonical and robots, Open Graph, XML sitemap, schema graph, redirects and 404 log. Connects to GitHub only to check for updates (can be turned off in the settings).
- * Version:           0.1.1
+ * Version:           0.1.2
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  adminkit
@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WPSEOKIT_VERSION', '0.1.1' );
+define( 'WPSEOKIT_VERSION', '0.1.2' );
 define( 'WPSEOKIT_FILE', __FILE__ );
 define( 'WPSEOKIT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WPSEOKIT_URL', plugin_dir_url( __FILE__ ) );

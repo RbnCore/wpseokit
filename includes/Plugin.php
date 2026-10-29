@@ -78,10 +78,8 @@ final class Plugin {
 		Db::maybe_upgrade();
 		Admin::init();
 		Rest::init();
-		// Update code runs only in the admin, cron and WP-CLI; never on the front end.
-		if ( is_admin() || wp_doing_cron() || defined( 'WP_CLI' ) ) {
-			Updater::init();
-		}
+		// Updates are done by the AdminKit core (one central updater); the plugin only registers.
+		\AdminKit\Core\Updater::register( 'wpseokit', WPSEOKIT_FILE, WPSEOKIT_VERSION );
 		if ( ! self::output_enabled() ) {
 			return;
 		}

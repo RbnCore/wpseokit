@@ -226,6 +226,11 @@ final class Admin {
 		);
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- reading a message key only; it is matched against the list above.
 		$key = isset( $_GET['wk_note'] ) ? sanitize_key( wp_unslash( $_GET['wk_note'] ) ) : '';
+		// Result of the central updater's "Check now" (AdminKit): checked | off.
+		$upd = \AdminKit\Core\Updater::note();
+		if ( null !== $upd ) {
+			$key = 'checked' === $upd ? 'update_checked' : 'update_is_off';
+		}
 		if ( ! isset( $messages[ $key ] ) ) {
 			return '';
 		}
@@ -245,7 +250,19 @@ final class Admin {
 		}
 		echo '</dl></div>';
 		echo '<div class="wpseokit-card"><h2>' . esc_html__( 'Updates', 'wpseokit' ) . '</h2>';
-		echo Updater::render_card(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the card escapes its own output.
+		echo self::update_card_body(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the body escapes its own output.
 		echo '</div>';
+	}
+
+	/** Body of the "Updates" card: state comes from the central updater (AdminKit), which also checks and verifies. */
+	private static function update_card_body(): string {
+		$st   = \AdminKit\Core\Updater::status( 'wpseokit' );
+		$last = (int) $st['checked_at'] > 0 ? esc_html( wp_date( 'd.m.Y H:i', (int) $st['checked_at'] ) ) : esc_html__( 'never', 'wpseokit' );
+		$html = '<dl class="wpseokit-dl"><dt>' . esc_html__( 'Installed version', 'wpseokit' ) . '</dt><dd>' . esc_html( WPSEOKIT_VERSION ) . '</dd>'
+			. '<dt>' . esc_html__( 'Status', 'wpseokit' ) . '</dt><dd>' . \AdminKit\Core\Updater::state_html( $st ) . '</dd>'
+			. '<dt>' . esc_html__( 'Last check', 'wpseokit' ) . '</dt><dd>' . $last . '</dd></dl>'
+			. '<p class="wpseokit-help"><a href="' . esc_url( admin_url( 'admin.php?page=adminkit#adminkit-network' ) ) . '">' . esc_html__( 'Update checks follow the RBN Kit network setting.', 'wpseokit' ) . '</a></p>';
+		$form = \AdminKit\Core\Updater::check_form( 'wpseokit', self::page_url( array( 'tab' => 'status' ) ), esc_html__( 'Check now', 'wpseokit' ) );
+		return '' === $form ? $html : $html . '<div class="wpseokit-actions">' . $form . '</div>';
 	}
 }

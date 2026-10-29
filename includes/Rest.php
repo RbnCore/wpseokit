@@ -78,16 +78,16 @@ final class Rest {
 
 	/** @return \WP_REST_Response */
 	public static function status(): \WP_REST_Response {
-		$newer  = Updater::enabled() ? Updater::newer() : null;
+		$update = \AdminKit\Core\Updater::status( 'wpseokit' );
 		$status = array(
 			'version'        => WPSEOKIT_VERSION,
 			'db_version'     => (int) get_option( Db::OPTION, 0 ),
 			'yoast_active'   => Plugin::yoast_active(),
 			'output_enabled' => Plugin::output_enabled(),
 			'update'         => array(
-				'enabled'    => Updater::enabled(),
-				'checked_at' => (int) get_option( Updater::OPT_CHECKED, 0 ),
-				'available'  => $newer ? $newer['version'] : null,
+				'enabled'    => $update['enabled'],
+				'checked_at' => $update['checked_at'],
+				'available'  => $update['available'],
 			),
 		);
 		$filtered = apply_filters( 'wpseokit_status', $status );

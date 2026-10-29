@@ -57,20 +57,6 @@ final class Logs {
 		Log::log( Registry::ERRORS, 'error', $where, $message );
 	}
 
-	/** One update-check result: `up_to_date`, `update_found` or `failed` (+ the version). */
-	public static function update_check( string $result, string $version = '' ): void {
-		Log::log(
-			Registry::UPDATE_LOG,
-			'failed' === $result ? 'warning' : 'info',
-			'update_check',
-			$result,
-			array(
-				'result'  => $result,
-				'version' => $version,
-			)
-		);
-	}
-
 	/**
 	 * One Yoast import step: `found`, `dry_run`, `run` or `report`.
 	 *
