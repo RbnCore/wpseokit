@@ -4112,3 +4112,112 @@ msgstr "Logo eksik."
 #: src/includes/Screens
 msgid "No organization logo or site icon is set. Add a logo below."
 msgstr "Ne kuruluş logosu ne de site simgesi ayarlı. Aşağıdan bir logo ekleyin."
+
+#: src/includes/Screens/Ui.php
+msgid "How the score is calculated"
+msgstr "Skor nasıl hesaplanır"
+
+#: src/includes/Screens/Ui.php
+msgid "The score is a weighted average of the rules. A rule that passes earns its full weight, a rule that is partly met earns a share of it, a rule that fails earns nothing, and a rule that does not apply is left out."
+msgstr "Skor, kuralların ağırlıklı ortalamasıdır. Geçen kural ağırlığının tamamını, kısmen sağlanan kural bir bölümünü alır; geçmeyen kural puan almaz, uygulanamayan kural hesaba katılmaz."
+
+#: src/includes/Screens/Ui.php
+msgid "Step %d"
+msgstr "Adım %d"
+
+#: src/includes/Screens/Ui.php
+msgid "Every rule gets a value"
+msgstr "Her kurala bir değer verilir"
+
+#: src/includes/Screens/Ui.php
+msgid "WPSeoKit checks each rule and gives it one of four values."
+msgstr "WPSeoKit her kuralı denetler ve dört değerden birini verir."
+
+#: src/includes/Screens/Ui.php
+msgid "Passed"
+msgstr "Geçti"
+
+#: src/includes/Screens/Ui.php
+msgid "Partly met"
+msgstr "Kısmen"
+
+#: src/includes/Screens/Ui.php
+msgid "Failed"
+msgstr "Geçmedi"
+
+#: src/includes/Screens/Ui.php
+msgid "Not applicable"
+msgstr "Uygulanamaz"
+
+#: src/includes/Screens/Ui.php
+msgid "1"
+msgstr "1"
+
+#: src/includes/Screens/Ui.php
+msgid "between 0 and 1"
+msgstr "0 ile 1 arası"
+
+#: src/includes/Screens/Ui.php
+msgid "0"
+msgstr "0"
+
+#: src/includes/Screens/Ui.php
+msgid "not counted"
+msgstr "hesap dışı"
+
+#: src/includes/Screens/Ui.php
+msgid "Weights are averaged"
+msgstr "Ağırlıklar ortalanır"
+
+#: src/includes/Screens/Ui.php
+msgid "Each value is multiplied by the weight of its rule. The sum is divided by the weight of the rules that apply, scaled to 100 and rounded."
+msgstr "Her değer kuralın ağırlığıyla çarpılır. Toplam, uygulanabilen kuralların ağırlığına bölünür, 100 üzerinden alınır ve yuvarlanır."
+
+#: src/includes/Screens/Ui.php
+msgid "Formula"
+msgstr "Formül"
+
+#: src/includes/Screens/Ui.php
+msgid "score = round( 100 × Σ(weight × value) ÷ Σ(weight of applicable rules) )"
+msgstr "skor = yuvarla( 100 × Σ(ağırlık × değer) ÷ Σ(uygulanabilir kuralların ağırlığı) )"
+
+#: src/includes/Screens/Ui.php
+msgid "The site score has two parts"
+msgstr "Site skoru iki parçadır"
+
+#: src/includes/Screens/Ui.php
+msgid "The site score blends the site settings with the average of your latest posts."
+msgstr "Site skoru, site ayarlarının skoru ile son yazılarınızın ortalamasını birleştirir."
+
+
+#: src/includes/Screens/Ui.php
+msgid "The post average uses your newest %d posts. With no posts, the site settings score is the site score."
+msgstr "Yazı ortalaması en yeni %d yazınızdan hesaplanır. Yazı yoksa site skoru yalnızca site ayarlarının skorudur."
+
+#: src/includes/Screens/Ui.php
+msgid "Critical rules limit the score"
+msgstr "Kritik kurallar skoru sınırlar"
+
+#: src/includes/Screens/Ui.php
+msgid "While a critical rule fails, the score cannot go above %d. This limits the band; it does not change the formula."
+msgstr "Bir kritik kural geçmediği sürece skor %d değerini aşamaz. Bu, bandı sınırlar; formülü değiştirmez."
+
+#: src/includes/Screens/Ui.php
+msgid "Critical rules (weight in brackets)"
+msgstr "Kritik kurallar (parantezde ağırlık)"
+
+#: src/includes/Screens/Ui.php
+msgid "Score bands"
+msgstr "Puan bantları"
+
+#: src/includes/Screens/Ui.php
+msgid "The score falls into one of three bands."
+msgstr "Skor üç banttan birine girer."
+
+#: src/includes/Screens/Ui.php
+msgid "Score bands: %s"
+msgstr "Puan bantları: %s"
+
+#: src/includes/Screens/Ui.php
+msgid "You: %d"
+msgstr "Siz: %d"

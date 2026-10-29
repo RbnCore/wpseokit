@@ -608,6 +608,7 @@ final class ScoreService {
 			'formula'      => $data['formula'],
 			'site_blend'   => RuleSet::blend(),
 			'critical_cap' => RuleSet::cap(),
+			'post_sample'  => RuleSet::post_sample(),
 			'bands'        => $bands,
 			'rules'        => array(
 				'site' => $scope( 'site' ),

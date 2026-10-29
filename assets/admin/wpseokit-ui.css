@@ -240,12 +240,44 @@ p.rbn-brand{font-size:var(--rbn-fs-h2);line-height:var(--rbn-lh-h2)}
 .wps-filterbar .rbn-select{min-width:14rem}
 .wps-num{font-variant-numeric:tabular-nums;font-weight:600}
 
-/* Kural kataloğu (Nasıl hesaplanır) */
-.wps-how{max-width:52rem}
-.wps-how h2{margin:var(--rbn-s5) 0 var(--rbn-s2);font-size:var(--rbn-fs-h3)}
-.wps-how h2:first-child{margin-top:0}
+/* Nasıl hesaplanır: özet, üç adım, kritik tavan, puan bantları */
+.wps-how{margin:0 0 var(--rbn-s4)}
+.wps-how h2{margin:0 0 var(--rbn-s2);font-size:var(--rbn-fs-h3)}
 .wps-how p{margin:0 0 var(--rbn-s3)}
-.wps-bands{display:flex;flex-wrap:wrap;gap:var(--rbn-s2) var(--rbn-s3);margin:0 0 var(--rbn-s3);padding:0;list-style:none}
+.wps-how p:last-child{margin-bottom:0}
+.wps-how__lead{max-width:48rem;font-size:var(--rbn-fs)}
+.wps-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--rbn-s5);margin:0 0 var(--rbn-s4);padding:0;list-style:none}
+.wps-step{position:relative;display:flex;min-width:0}
+.wps-step>.rbn-card{flex:1;margin:0}
+.wps-step:not(:last-child)::after{content:"";position:absolute;top:var(--rbn-s5);right:calc(var(--rbn-s5) / -2);width:.6rem;height:.6rem;border:solid var(--rbn-muted);border-width:2px 2px 0 0;transform:translateX(50%) rotate(45deg)}
+.wps-step__n{margin:0 0 var(--rbn-s2)}
+.wps-step__h{margin:0 0 var(--rbn-s2);font-size:var(--rbn-fs-h3);line-height:var(--rbn-lh-h3)}
+.wps-states{display:grid;gap:var(--rbn-s2);margin:var(--rbn-s3) 0 0;padding:0;list-style:none}
+.wps-states li{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--rbn-s2)}
+.wps-states__v{font-weight:600;font-variant-numeric:tabular-nums}
+.wps-formula__l{margin:var(--rbn-s3) 0 var(--rbn-s1);color:var(--rbn-muted);font-size:var(--rbn-fs-sm)}
+.wps-formula{margin:0}
+.wps-formula code{display:block;padding:var(--rbn-s3);white-space:normal}
+.wps-blend{display:flex;gap:var(--rbn-s1);margin:var(--rbn-s3) 0;padding:0;list-style:none}
+.wps-blend li{display:grid;gap:var(--rbn-s1);flex:var(--w) 1 0;min-width:0;padding:var(--rbn-s3);border-radius:var(--rbn-r);background:var(--rbn-surface-2);border:var(--rbn-bw) solid var(--rbn-line)}
+.wps-blend b{font-size:var(--rbn-fs-h2);line-height:1;font-variant-numeric:tabular-nums}
+.wps-blend span{color:var(--rbn-muted);font-size:var(--rbn-fs-sm);overflow-wrap:anywhere}
+.wps-blend__a{border-color:var(--rbn-ac);background:var(--rbn-ac-soft)}
+.wps-cap__l{margin:var(--rbn-s2) 0 var(--rbn-s2);color:var(--rbn-muted);font-size:var(--rbn-fs-sm)}
+.wps-cap{display:flex;flex-wrap:wrap;gap:var(--rbn-s2);margin:0;padding:0;list-style:none}
+.wps-cap li{padding:var(--rbn-s1) var(--rbn-s3);border:var(--rbn-bw) solid var(--rbn-line);border-radius:var(--rbn-r-pill);background:var(--rbn-surface-2)}
+.wps-meter{position:relative;margin:var(--rbn-s4) 0 var(--rbn-s3)}
+.wps-meter--pin{padding-top:var(--rbn-s6)}
+.wps-meter__bar{display:flex;gap:var(--rbn-s1);height:1rem}
+.wps-meter__seg{flex:var(--w) 1 0;min-width:0;border-radius:var(--rbn-r-pill)}
+.wps-meter__seg--err{background:var(--rbn-err)}.wps-meter__seg--warn{background:var(--rbn-warn)}.wps-meter__seg--ok{background:var(--rbn-ok)}
+.wps-meter__pin{position:absolute;top:0;left:calc((var(--p) + .5) / 101 * 100%);display:flex;flex-direction:column;align-items:center;transform:translateX(-50%);color:var(--rbn-text);line-height:1}
+.wps-meter__pin b{white-space:nowrap;font-size:var(--rbn-fs-sm);font-variant-numeric:tabular-nums}
+@media (max-width:64rem){
+.wps-steps{grid-template-columns:minmax(0,1fr)}
+.wps-step:not(:last-child)::after{top:auto;right:auto;bottom:calc(var(--rbn-s5) / -2);left:var(--rbn-s5);transform:translateY(50%) rotate(135deg)}
+}
+.wps-bands{display:flex;flex-wrap:wrap;gap:var(--rbn-s2) var(--rbn-s4);margin:0 0 var(--rbn-s3);padding:0;list-style:none}
 .wps-catalog{margin:var(--rbn-s5) 0 0}
 .wps-catalog h2{margin:0 0 var(--rbn-s2);font-size:var(--rbn-fs-h3)}
 

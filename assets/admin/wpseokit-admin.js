@@ -346,6 +346,7 @@
 		function levelBadge( l ) { var m = LEVEL[ l ] || LEVEL.info; return '<span class="rbn-badge rbn-badge--' + m[ 0 ] + '">' + icon( l === 'critical' ? 'alert' : ( l === 'warning' ? 'info' : 'help' ) ) + esc( I[ m[ 1 ] ] ) + '</span>'; }
 		function paint( root ) {
 			$$( '[data-p]', root ).forEach( function ( c ) { c.style.setProperty( '--p', c.getAttribute( 'data-p' ) ); } );
+			$$( '[data-w]', root ).forEach( function ( c ) { c.style.setProperty( '--w', c.getAttribute( 'data-w' ) ); } );
 		}
 
 		function ring( site ) {
@@ -456,22 +457,45 @@
 
 		/* -- how view: the rule catalogue comes from the server -- */
 
+		function pct( n ) { return Math.round( Number( n ) * 100 ); }
+		function howStates() {
+			var st = [ [ 'ok', 'check', 'stPass', 'stPassVal' ], [ 'warn', 'info', 'stPartial', 'stPartialVal' ], [ 'err', 'x', 'stFail', 'stFailVal' ], [ 'mute', 'help', 'stNa', 'stNaVal' ] ];
+			return '<ul class="wps-states">' + st.map( function ( x ) { return '<li><span class="rbn-badge rbn-badge--' + x[ 0 ] + '">' + icon( x[ 1 ] ) + esc( I[ x[ 2 ] ] ) + '</span><span class="wps-states__v">' + esc( I[ x[ 3 ] ] ) + '</span></li>'; } ).join( '' ) + '</ul>';
+		}
+		function howStep( n, head, text, body ) {
+			return '<li class="wps-step"><section class="rbn-card"><div class="rbn-card__b"><p class="wps-step__n"><span class="rbn-badge rbn-badge--info">' + esc( sp( I.howStep, n ) ) + '</span></p><h3 class="wps-step__h">' + esc( head ) + '</h3><p>' + esc( text ) + '</p>' + body + '</div></section></li>';
+		}
+		function howBlend( R ) {
+			var b = R.site_blend || { config: 0.65, posts: 0.35 };
+			var part = function ( cls, w, label ) { return '<li class="wps-blend__' + cls + '" data-w="' + esc( pct( w ) ) + '"><b>' + esc( pct( w ) ) + '%</b><span>' + esc( label ) + '</span></li>'; };
+			return '<ul class="wps-blend">' + part( 'a', b.config, I.siteScore ) + part( 'b', b.posts, I.postsScore ) + '</ul><p class="rbn-help">' + esc( sp( I.howSample, R.post_sample || 200 ) ) + '</p>';
+		}
+		function howBands( R ) {
+			var list = R.bands || [], you = S.site ? Math.round( Number( S.site.score ) ) : null, names = [], bar = '', legend = '';
+			list.forEach( function ( b ) {
+				var m = bandOf( b.id ), label = I[ m[ 2 ] ];
+				names.push( label + ' ' + b.min + '–' + b.max );
+				bar += '<span class="wps-meter__seg wps-meter__seg--' + m[ 0 ] + '" data-w="' + esc( b.max - b.min + 1 ) + '"></span>';
+				legend += '<li><span class="rbn-badge rbn-badge--' + m[ 0 ] + '">' + icon( m[ 1 ] ) + esc( label ) + '</span> <span class="rbn-help">' + esc( b.min ) + '–' + esc( b.max ) + '</span></li>';
+			} );
+			var pin = you === null ? '' : '<span class="wps-meter__pin" data-p="' + esc( you ) + '"><b>' + esc( sp( I.bandsYou, you ) ) + '</b>' + icon( 'chevd' ) + '</span>';
+			return '<div class="wps-meter' + ( pin ? ' wps-meter--pin' : '' ) + '"><div class="wps-meter__bar" role="img" aria-label="' + esc( sp( I.bandsAria, names.join( ', ' ) ) + ( you === null ? '' : '. ' + sp( I.bandsYou, you ) ) ) + '">' + bar + '</div>' + pin + '</div><ul class="wps-bands">' + legend + '</ul>';
+		}
 		function drawHow() {
 			var box = view( 'how' );
 			if ( ! box || ! S.rules ) { return; }
-			var R = S.rules, rows = [];
+			var R = S.rules, rows = [], crit = [];
 			[ 'site', 'post' ].forEach( function ( scope ) {
 				( R.rules && R.rules[ scope ] ? R.rules[ scope ] : [] ).forEach( function ( r ) {
-					var lv = LEVEL[ r.level ] || LEVEL.info, src = '';
-					if ( r.source ) {
-						// A rule source is a portable document path (relative to the knowledge base), not a URL; only a real web address becomes a link.
-						src = /^https?:\/\//.test( String( r.source ) ) ? '<a href="' + esc( r.source ) + '" target="_blank" rel="noopener noreferrer">' + esc( String( r.source ).replace( /^https?:\/\/([^/]+).*/, '$1' ) ) + '<span class="rbn-sr"> ' + esc( I.sourceNew ) + '</span></a>' : esc( String( r.source ) );
-					}
-					rows.push( '<tr><th scope="row" data-label="' + esc( I.colRule ) + '">' + esc( r.title ) + '</th><td data-label="' + esc( I.colApplies ) + '">' + esc( scope === 'post' ? I.scopePosts : I.scopeSite ) + '</td><td data-label="' + esc( I.colLevel ) + '"><span class="rbn-badge rbn-badge--mute">' + esc( I[ lv[ 1 ] ] ) + '</span></td><td data-label="' + esc( I.colWeight ) + '" class="rbn-num">' + esc( r.weight ) + '</td><td data-label="' + esc( I.colSource ) + '">' + src + '</td></tr>' );
+					var lv = LEVEL[ r.level ] || LEVEL.info;
+					if ( r.level === 'critical' ) { crit.push( '<li>' + esc( r.title ) + ' <span class="rbn-help">(' + esc( r.weight ) + ')</span></li>' ); }
+					rows.push( '<tr><th scope="row" data-label="' + esc( I.colRule ) + '">' + esc( r.title ) + '</th><td data-label="' + esc( I.colApplies ) + '">' + esc( scope === 'post' ? I.scopePosts : I.scopeSite ) + '</td><td data-label="' + esc( I.colLevel ) + '"><span class="rbn-badge rbn-badge--mute">' + esc( I[ lv[ 1 ] ] ) + '</span></td><td data-label="' + esc( I.colWeight ) + '" class="rbn-num">' + esc( r.weight ) + '</td></tr>' );
 				} );
 			} );
-			var bands = ( R.bands || [] ).map( function ( b ) { var m = bandOf( b.id ); return '<li><span class="rbn-badge rbn-badge--' + m[ 0 ] + '">' + icon( m[ 1 ] ) + esc( b.label ) + '</span> <span class="rbn-help">' + esc( b.min ) + '–' + esc( b.max ) + '</span></li>'; } ).join( '' );
-			box.innerHTML = '<div class="wps-how">' + ( R.formula ? '<pre class="rbn-code"><code>' + esc( R.formula ) + '</code></pre>' : '' ) + ( bands ? '<ul class="wps-bands" aria-label="' + esc( I.colBand ) + '">' + bands + '</ul>' : '' ) + '</div><section class="rbn-card wps-catalog"><div class="rbn-card__h"><h2>' + esc( I.rulesHead ) + '</h2></div><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.rulesHead ) + '</caption><thead><tr><th scope="col">' + esc( I.colRule ) + '</th><th scope="col">' + esc( I.colApplies ) + '</th><th scope="col">' + esc( I.colLevel ) + '</th><th scope="col" class="rbn-num">' + esc( I.colWeight ) + '</th><th scope="col">' + esc( I.colSource ) + '</th></tr></thead><tbody>' + rows.join( '' ) + '</tbody></table></div></div></section>';
+			var steps = howStep( 1, I.howS1, I.howS1Text, howStates() ) + howStep( 2, I.howS2, I.howS2Text, '<p class="wps-formula__l">' + esc( I.howFormulaLabel ) + '</p><p class="wps-formula"><code>' + esc( I.howFormula ) + '</code></p>' ) + howStep( 3, I.howS3, I.howS3Text, howBlend( R ) );
+			var cap = note( 'warn', '<b>' + esc( I.capHead ) + '.</b> ' + esc( sp( I.capText, R.critical_cap || 79 ) ) ) + ( crit.length ? '<p class="wps-cap__l">' + esc( I.capRules ) + '</p><ul class="wps-cap">' + crit.join( '' ) + '</ul>' : '' );
+			box.innerHTML = '<section class="rbn-card wps-how"><div class="rbn-card__b"><h2>' + esc( I.howHead ) + '</h2><p class="wps-how__lead">' + esc( I.howLead ) + '</p></div></section><ol class="wps-steps">' + steps + '</ol><section class="rbn-card wps-how"><div class="rbn-card__b">' + cap + '</div></section><section class="rbn-card wps-how"><div class="rbn-card__b"><h2>' + esc( I.bandsHead ) + '</h2><p>' + esc( I.bandsText ) + '</p>' + howBands( R ) + '</div></section><section class="rbn-card wps-catalog"><div class="rbn-card__h"><h2>' + esc( I.rulesHead ) + '</h2></div><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.rulesHead ) + '</caption><thead><tr><th scope="col">' + esc( I.colRule ) + '</th><th scope="col">' + esc( I.colApplies ) + '</th><th scope="col">' + esc( I.colLevel ) + '</th><th scope="col" class="rbn-num">' + esc( I.colWeight ) + '</th></tr></thead><tbody>' + rows.join( '' ) + '</tbody></table></div></div></section>';
+			paint( box );
 		}
 
 		function drawAll() { drawOverview(); drawRecs(); drawPosts(); drawHow(); }

@@ -4281,3 +4281,112 @@ msgstr ""
 #: includes/Screens
 msgid "No organization logo or site icon is set. Add a logo below."
 msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "How the score is calculated"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "The score is a weighted average of the rules. A rule that passes earns its full weight, a rule that is partly met earns a share of it, a rule that fails earns nothing, and a rule that does not apply is left out."
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "Step %d"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "Every rule gets a value"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "WPSeoKit checks each rule and gives it one of four values."
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "Passed"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "Partly met"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "Failed"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "Not applicable"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "1"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "between 0 and 1"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "0"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "not counted"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "Weights are averaged"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "Each value is multiplied by the weight of its rule. The sum is divided by the weight of the rules that apply, scaled to 100 and rounded."
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "Formula"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "score = round( 100 × Σ(weight × value) ÷ Σ(weight of applicable rules) )"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "The site score has two parts"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "The site score blends the site settings with the average of your latest posts."
+msgstr ""
+
+
+#: includes/Screens/Ui.php
+msgid "The post average uses your newest %d posts. With no posts, the site settings score is the site score."
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "Critical rules limit the score"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "While a critical rule fails, the score cannot go above %d. This limits the band; it does not change the formula."
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "Critical rules (weight in brackets)"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "Score bands"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "The score falls into one of three bands."
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "Score bands: %s"
+msgstr ""
+
+#: includes/Screens/Ui.php
+msgid "You: %d"
+msgstr ""
