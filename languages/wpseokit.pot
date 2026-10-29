@@ -562,10 +562,6 @@ msgid "The page did not answer 200, so it could not be measured."
 msgstr ""
 
 #: src/includes/Services/ScoreService.php
-msgid "A score calculation is already running."
-msgstr ""
-
-#: src/includes/Services/ScoreService.php
 msgid "This is a local site: the HTTPS, certificate and public-access rules may fail here and pass on the live site."
 msgstr ""
 
@@ -3102,4 +3098,20 @@ msgstr ""
 
 #: src/includes/Services/ReportService.php
 msgid "The snapshot is being prepared in the background. Check again in a few minutes."
+msgstr ""
+
+#: src/includes/Gate.php
+msgid "Activate AdminKit"
+msgstr ""
+
+#: src/includes/Gate.php
+msgid "Get AdminKit"
+msgstr ""
+
+#: src/includes/Gate.php
+msgid "WPSeoKit is switched off: the installed AdminKit is too old. Update AdminKit to turn it back on."
+msgstr ""
+
+#: src/includes/Gate.php
+msgid "WPSeoKit is switched off: it needs the AdminKit plugin (cache, logs and the RBN Kit menu)."
 msgstr ""

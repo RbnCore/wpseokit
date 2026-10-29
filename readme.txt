@@ -1,9 +1,10 @@
 === WPSeoKit — SEO Toolkit ===
 Contributors: rbnbilisim
 Tags: seo, sitemap, schema, redirects, open graph
-Requires at least: 6.4
+Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 8.1
+Requires Plugins: adminkit
 Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -17,6 +18,7 @@ SEO titles and meta descriptions, canonical and robots, Open Graph, XML sitemap,
 WPSeoKit does the daily work of an SEO plugin on one site: it writes the tags search engines read, keeps an XML sitemap that carries the same URLs as before, closes the addresses that should not be indexed, and shows what changed.
 
 * Settings live under RBN Kit → WPSeoKit; the plugin shares the "RBN Kit" top-level menu with the other RBN plugins.
+* Needs the AdminKit plugin (shared cache, logs and the RBN Kit menu): without it WPSeoKit switches itself off and says so in the admin.
 * Does not run next to Yoast SEO: if Yoast is active, WPSeoKit prints nothing and asks you to remove Yoast first.
 * Updates from GitHub are verified with a SHA-256 digest and an Ed25519 signature; the check can be turned off in the Status tab.
 * Light: nothing is loaded on the front end except the tags in the page head.

@@ -566,10 +566,6 @@ msgid "The page did not answer 200, so it could not be measured."
 msgstr "Sayfa 200 yanıtı vermedi, bu yüzden ölçülemedi."
 
 #: src/includes/Services/ScoreService.php
-msgid "A score calculation is already running."
-msgstr "Bir skor hesaplaması zaten çalışıyor."
-
-#: src/includes/Services/ScoreService.php
 msgid "This is a local site: the HTTPS, certificate and public-access rules may fail here and pass on the live site."
 msgstr "Bu bir yerel site: HTTPS, sertifika ve herkese açık erişim kuralları burada başarısız olup canlı sitede geçebilir."
 
@@ -4431,3 +4427,19 @@ msgstr "Önce denetimi çalıştırın: raporu görmeden hiçbir şey yazılmaz.
 #: src/includes/Services/YoastImportService.php
 msgid "Unknown import mode."
 msgstr "Bilinmeyen aktarım kipi."
+
+#: src/includes/Gate.php
+msgid "Activate AdminKit"
+msgstr "AdminKit'i etkinleştir"
+
+#: src/includes/Gate.php
+msgid "Get AdminKit"
+msgstr "AdminKit'i edinin"
+
+#: src/includes/Gate.php
+msgid "WPSeoKit is switched off: the installed AdminKit is too old. Update AdminKit to turn it back on."
+msgstr "WPSeoKit kapalı: kurulu AdminKit çok eski. Yeniden açmak için AdminKit'i güncelleyin."
+
+#: src/includes/Gate.php
+msgid "WPSeoKit is switched off: it needs the AdminKit plugin (cache, logs and the RBN Kit menu)."
+msgstr "WPSeoKit kapalı: AdminKit eklentisine (önbellek, günlükler ve RBN Kit menüsü) ihtiyaç duyar."
