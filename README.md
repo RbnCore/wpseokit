@@ -1,6 +1,6 @@
 # WPSeoKit
 
-WPSeoKit is an SEO toolkit for a single WordPress site: it writes the tags search engines read, keeps an XML sitemap, closes the addresses that should not be indexed, redirects the ones that moved, and shows what changed. It does the everyday work of an SEO plugin without an account, an API key or a third-party service.
+WPSeoKit is an SEO toolkit for a single WordPress site: it writes the tags search engines read, keeps an XML sitemap, closes the addresses that should not be indexed, redirects the ones that moved, and shows what changed. It does the everyday work of an SEO plugin without an account, an API key or an outside SEO service.
 
 ## AdminKit is required
 
@@ -21,19 +21,19 @@ Site owners and editors who need SEO titles, descriptions, canonicals, a sitemap
 - **Titles and meta descriptions.** A template per content type — post types, categories and tags, home, search, 404, date and author archives — with variables such as `%title%`, `%sitename%`, `%sep%` and `%page%`; every post and term can override its own. The post editor box shows a preview of the Google result and a character counter.
 - **Canonical and robots.** One canonical per page, self-referencing on posts; paginated archives canonicalise to their own page and there is no rel prev/next. Tag archives, search, 404 and date archives are noindex, paginated archives stay indexable. Each post has its own robots and canonical fields.
 - **Open Graph and Twitter.** `og:*` tags with image size and type and the article times, plus a Twitter card with author and reading time. A default social image can be set.
-- **Primary category.** A post keeps one primary category, and the permalink, the breadcrumb and `articleSection` follow it through the `post_link_category` hook.
+- **Primary category.** A post keeps one primary category; the permalink and the breadcrumb follow it through the `post_link_category` hook, and the schema lists the post's categories in `articleSection`.
 - **XML sitemap.** `/sitemap_index.xml` with post, page and category sitemaps, `lastmod` from the content date and image entries. WordPress's own `/wp-sitemap.xml` is switched off so no page is listed twice, and robots.txt gets the `Sitemap:` line. A plain HTML view of each sitemap is served under `/sitemap/` for people; it is noindex, and the XML stays pure for search engines.
 - **Schema graph.** One `@graph` with WebSite, Organization (or Person), WebPage, Article, BreadcrumbList, ImageObject and Person nodes linked by `@id`. The post editor can add a Movie or TVSeries node by hand.
 - **Redirects.** 301, 302, 307 and 410 by exact path, with loop and chain checks, a hit counter, and CSV import and export. Wildcards, regular expressions and 451 are not supported.
 - **404 log.** The path, the referrer and a salted SHA-256 of the visitor's address — the address itself is never stored — with a hit counter, pruning by age and row count, and a one-click redirect from a logged address. Requests for scanner paths such as `/wp-login.php` are skipped by default.
 - **SEO score and recommendations.** A site score and a post score from a fixed rule table, with the weight of every rule, what it measured and how the score is calculated. Rules you do not want to see can be hidden; critical failures cap the score.
 - **Reports.** One snapshot of the numbers each day with a 7, 30 or 90 day trend, a table view, printing and CSV export.
-- **Feed (RSS) tool.** Item count and content mode, a source link and a copyright line on every item, closing the feeds nobody reads with 404 or a redirect to the main feed, and an optional `noindex` header. Off by default.
+- **Feed (RSS) tool.** Item count and content mode, a source link and a copyright line on every item, closing the feeds nobody reads with 404 or a redirect to the main feed, and an optional `noindex` header. The defaults leave WordPress's own feed output unchanged.
 - **llms.txt.** A plain-text site summary for AI systems, generated on request. Off by default: the address answers 404 while it is off.
 - **Preferred address.** Checks the four versions of the site address (http/https, with and without `www`), says which one answers and how many hops the others need, and writes the Apache or nginx rule for you to copy. It never edits your server files; an optional PHP fallback redirect is off by default.
 - **Yoast import.** Reads Yoast titles, descriptions, primary categories and settings, shows a dry run and a count first, writes nothing until you confirm, and leaves the Yoast data where it is.
 - **Site verification.** Meta tag fields for Google Search Console, Bing Webmaster Tools, Yandex Webmaster and Baidu Webmaster.
-- **Author and attachment archives.** Author archives and attachment pages can be redirected to the main content; attachment pages are redirected by default, author archives are not.
+- **Author and attachment archives.** Author archives can be redirected to the home page and attachment pages to their parent post; attachment pages are redirected by default, author archives are not.
 
 ## Requirements
 
@@ -69,7 +69,7 @@ Updates come from GitHub and appear on the Plugins page like any WordPress updat
 - The only external host it contacts is GitHub, for the update check described above, and that follows the central RBN Kit network setting.
 - The score, the preferred address check and the 404 log look at **your own site only**: robots.txt, the sitemap and page addresses are requested over HTTP with a timeout and the answers are cached. No other host is contacted.
 - The 404 log stores no raw IP address, only a salted SHA-256; the path and referrer are stored without their query string. Old rows are removed by age and row count.
-- On uninstall the data is kept by default. If "Delete all WPSeoKit data when the plugin is deleted" is ticked first, the tables, settings, post meta and update records are removed.
+- On uninstall the data is kept by default. If "Delete all WPSeoKit data when the plugin is deleted" is ticked first, the tables, the settings, the post and term meta and the plugin's log lines are removed.
 
 ## Translation
 
