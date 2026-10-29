@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Screens;
 
+use Wpseokit\Schema\Organization;
+
 defined( 'ABSPATH' ) || exit;
 
 final class SchemaScreen {
@@ -30,6 +32,9 @@ final class SchemaScreen {
 	public static function render(): void {
 		$empty = '' === trim( (string) Ui::val( 'schema.organization_name', '' ) ) && '' === trim( (string) Ui::val( 'schema.person_name', '' ) );
 		$top   = $empty ? Ui::note( 'warn', '<b>' . esc_html__( 'Organization name and logo are empty.', 'wpseokit' ) . '</b> ' . esc_html__( 'Search engines get an incomplete publisher until you add them.', 'wpseokit' ), 'status' ) : '';
+		if ( ! $empty ) {
+			$top = self::logo_note( Organization::publisher_status() );
+		}
 		Shell::page(
 			'schema',
 			__( 'Schema', 'wpseokit' ),
@@ -46,6 +51,27 @@ final class SchemaScreen {
 				'top'  => $top,
 			)
 		);
+	}
+
+	/**
+	 * Logo status line, from the same source as the dashboard card.
+	 *
+	 * @param array{key:string,logo:array<string,mixed>,small:bool} $pub Organization::publisher_status().
+	 */
+	private static function logo_note( array $pub ): string {
+		switch ( $pub['key'] ) {
+			case 'set':
+				return Ui::note( 'ok', '<b>' . esc_html__( 'Organization name and logo are set.', 'wpseokit' ) . '</b>', 'status' );
+			case 'icon':
+				if ( $pub['small'] ) {
+					/* translators: 1: width in pixels, 2: height in pixels. */
+					$text = sprintf( __( 'The WordPress site icon (%1$d × %2$d px) is smaller than the 112 × 112 px search engines ask for. Add an organization logo below.', 'wpseokit' ), (int) $pub['logo']['width'], (int) $pub['logo']['height'] );
+					return Ui::note( 'warn', '<b>' . esc_html__( 'Logo: site icon too small.', 'wpseokit' ) . '</b> ' . esc_html( $text ), 'status' );
+				}
+				return Ui::note( 'warn', '<b>' . esc_html__( 'Logo: site icon in use.', 'wpseokit' ) . '</b> ' . esc_html__( 'No organization logo is set, so the WordPress site icon is published instead. Add an organization logo below.', 'wpseokit' ), 'status' );
+			default:
+				return Ui::note( 'warn', '<b>' . esc_html__( 'Logo missing.', 'wpseokit' ) . '</b> ' . esc_html__( 'No organization logo or site icon is set. Add a logo below.', 'wpseokit' ), 'status' );
+		}
 	}
 
 	private static function organization(): string {

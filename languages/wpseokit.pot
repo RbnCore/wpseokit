@@ -4241,3 +4241,43 @@ msgstr ""
 
 msgid "llms.txt is off"
 msgstr ""
+
+#: includes/Screens
+msgid "Logo: site icon too small"
+msgstr ""
+
+#: includes/Screens
+msgid "Logo: site icon in use"
+msgstr ""
+
+#: includes/Screens
+msgid "Add organization logo"
+msgstr ""
+
+#: includes/Screens
+msgid "Organization name and logo are set."
+msgstr ""
+
+#: includes/Screens
+msgid "The WordPress site icon (%1$d × %2$d px) is smaller than the 112 × 112 px search engines ask for. Add an organization logo below."
+msgstr ""
+
+#: includes/Screens
+msgid "Logo: site icon too small."
+msgstr ""
+
+#: includes/Screens
+msgid "Logo: site icon in use."
+msgstr ""
+
+#: includes/Screens
+msgid "No organization logo is set, so the WordPress site icon is published instead. Add an organization logo below."
+msgstr ""
+
+#: includes/Screens
+msgid "Logo missing."
+msgstr ""
+
+#: includes/Screens
+msgid "No organization logo or site icon is set. Add a logo below."
+msgstr ""

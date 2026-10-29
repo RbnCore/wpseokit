@@ -4072,3 +4072,43 @@ msgstr "kanonik çıktı yok"
 
 msgid "llms.txt is off"
 msgstr "llms.txt kapalı"
+
+#: src/includes/Screens
+msgid "Logo: site icon too small"
+msgstr "Logo: site simgesi çok küçük"
+
+#: src/includes/Screens
+msgid "Logo: site icon in use"
+msgstr "Logo: site simgesi kullanılıyor"
+
+#: src/includes/Screens
+msgid "Add organization logo"
+msgstr "Kuruluş logosu ekle"
+
+#: src/includes/Screens
+msgid "Organization name and logo are set."
+msgstr "Kuruluş adı ve logo ayarlandı."
+
+#: src/includes/Screens
+msgid "The WordPress site icon (%1$d × %2$d px) is smaller than the 112 × 112 px search engines ask for. Add an organization logo below."
+msgstr "WordPress site simgesi (%1$d × %2$d px), arama motorlarının istediği 112 × 112 px'ten küçük. Aşağıdan bir kuruluş logosu ekleyin."
+
+#: src/includes/Screens
+msgid "Logo: site icon too small."
+msgstr "Logo: site simgesi çok küçük."
+
+#: src/includes/Screens
+msgid "Logo: site icon in use."
+msgstr "Logo: site simgesi kullanılıyor."
+
+#: src/includes/Screens
+msgid "No organization logo is set, so the WordPress site icon is published instead. Add an organization logo below."
+msgstr "Kuruluş logosu ayarlı değil, bu yüzden yerine WordPress site simgesi yayınlanıyor. Aşağıdan bir kuruluş logosu ekleyin."
+
+#: src/includes/Screens
+msgid "Logo missing."
+msgstr "Logo eksik."
+
+#: src/includes/Screens
+msgid "No organization logo or site icon is set. Add a logo below."
+msgstr "Ne kuruluş logosu ne de site simgesi ayarlı. Aşağıdan bir logo ekleyin."

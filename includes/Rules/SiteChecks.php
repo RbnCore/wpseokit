@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Wpseokit\Rules;
 
 use Wpseokit\Repositories\SettingsRepository;
+use Wpseokit\Schema\Organization;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -241,7 +242,8 @@ final class SiteChecks {
 			'url'  => HeadParser::is_absolute_url( $url ) && strtolower( (string) wp_parse_url( $url, PHP_URL_HOST ) ) === $host,
 			'logo' => HeadParser::is_absolute_url( (string) $logo ),
 		);
-		return self::result( $checks );
+		// The check measures the published JSON-LD; the source (settings / site_icon / none) comes from the one logo resolver the card and the Schema screen use.
+		return self::result( $checks, null, 'logo_source=' . Organization::resolved_logo()['source'] );
 	}
 
 	/** @param array<string, mixed>|null $head Parsed home head. */

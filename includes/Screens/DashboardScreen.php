@@ -12,6 +12,7 @@ namespace Wpseokit\Screens;
 
 use Wpseokit\Plugin;
 use Wpseokit\Registry;
+use Wpseokit\Schema\Organization;
 use Wpseokit\Services\ScoreService;
 use Wpseokit\Settings;
 
@@ -77,11 +78,29 @@ final class DashboardScreen {
 		return '<span class="rbn-badge rbn-badge--' . esc_attr( $type ) . '">' . Ui::icon( $icon ) . esc_html( $text ) . '</span>';
 	}
 
+	/**
+	 * Badge for the publisher status; the same four states on the card and in the checklist.
+	 *
+	 * @param array{key:string,logo:array<string,mixed>,small:bool} $pub Organization::publisher_status().
+	 */
+	private static function publisher_badge( array $pub, bool $card = false ): string {
+		switch ( $pub['key'] ) {
+			case 'set':
+				return self::badge( 'ok', 'check', $card ? __( 'Publisher set', 'wpseokit' ) : __( 'Added', 'wpseokit' ) );
+			case 'icon':
+				return self::badge( 'warn', 'alert', $pub['small'] ? __( 'Logo: site icon too small', 'wpseokit' ) : __( 'Logo: site icon in use', 'wpseokit' ) );
+			case 'logo_missing':
+				return self::badge( 'warn', 'alert', __( 'Logo missing', 'wpseokit' ) );
+			default:
+				return self::badge( 'warn', 'alert', $card ? __( 'Publisher missing', 'wpseokit' ) : __( 'Missing', 'wpseokit' ) );
+		}
+	}
+
 	/** @return array<int, array{0:string,1:string,2:string,3:string,4:bool,5?:string}> check, badge html, action label, action url, primary, extra link attributes */
 	public static function checks(): array {
 		$defaults  = Settings::defaults();
 		$templates = (array) Ui::val( 'templates', array() ) === (array) ( $defaults['templates'] ?? array() );
-		$org       = '' !== trim( (string) Ui::val( 'schema.organization_name', '' ) ) || '' !== trim( (string) Ui::val( 'schema.person_name', '' ) );
+		$pub       = Organization::publisher_status();
 		$sitemap   = (bool) Ui::val( 'sitemap.enabled', true );
 		$public    = (bool) get_option( 'blog_public', 1 );
 		$primary   = (bool) Ui::val( 'general.primary_category', true );
@@ -95,10 +114,10 @@ final class DashboardScreen {
 			),
 			array(
 				__( 'Organization name and logo', 'wpseokit' ),
-				$org ? self::badge( 'ok', 'check', __( 'Added', 'wpseokit' ) ) : self::badge( 'warn', 'alert', __( 'Missing', 'wpseokit' ) ),
-				$org ? __( 'Edit schema', 'wpseokit' ) : __( 'Add details', 'wpseokit' ),
+				self::publisher_badge( $pub ),
+				'set' === $pub['key'] ? __( 'Edit schema', 'wpseokit' ) : ( 'missing' === $pub['key'] ? __( 'Add details', 'wpseokit' ) : __( 'Add organization logo', 'wpseokit' ) ),
 				Shell::url( 'schema', 'organization' ),
-				! $org,
+				'set' !== $pub['key'],
 			),
 			array(
 				__( 'XML sitemap', 'wpseokit' ),
@@ -153,10 +172,13 @@ final class DashboardScreen {
 				$line = sprintf( __( '%1$d of %2$d posts have a description', 'wpseokit' ), $done, $total );
 				return array( $ok( __( 'Configured', 'wpseokit' ) ), $line, $link( 'templates', 'posts', __( 'Edit post template', 'wpseokit' ) ) );
 			case 'schema':
-				$has_logo = (int) Ui::val( 'schema.organization_logo_id', 0 ) > 0 || '' !== (string) Ui::val( 'schema.organization_logo_url', '' );
-				$named    = '' !== trim( (string) Ui::val( 'schema.organization_name', '' ) ) || '' !== trim( (string) Ui::val( 'schema.person_name', '' ) );
-				$badge    = $named && $has_logo ? $ok( __( 'Publisher set', 'wpseokit' ) ) : $warn( $named ? __( 'Logo missing', 'wpseokit' ) : __( 'Publisher missing', 'wpseokit' ) );
-				$label    = '' !== trim( (string) Ui::val( 'schema.organization_name', '' ) ) ? __( 'Edit organization', 'wpseokit' ) : ( $named ? __( 'Edit publisher', 'wpseokit' ) : __( 'Add organization', 'wpseokit' ) );
+				$pub   = Organization::publisher_status();
+				$named = 'missing' !== $pub['key'];
+				$badge = self::publisher_badge( $pub, true );
+				$label = '' !== trim( (string) Ui::val( 'schema.organization_name', '' ) ) ? __( 'Edit organization', 'wpseokit' ) : ( $named ? __( 'Edit publisher', 'wpseokit' ) : __( 'Add organization', 'wpseokit' ) );
+				if ( in_array( $pub['key'], array( 'icon', 'logo_missing' ), true ) ) {
+					$label = __( 'Add organization logo', 'wpseokit' );
+				}
 				return array( $badge, __( 'Article, WebSite and breadcrumb schema', 'wpseokit' ), $link( 'schema', 'organization', $label ) );
 			case 'sitemap':
 				$on = (bool) Ui::val( 'sitemap.enabled', true );
