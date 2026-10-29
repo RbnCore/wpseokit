@@ -343,6 +343,14 @@ msgstr ""
 msgid "Add organization"
 msgstr ""
 
+#: includes/Screens/DashboardScreen.php:159
+msgid "Edit organization"
+msgstr ""
+
+#: includes/Screens/DashboardScreen.php:159
+msgid "Edit publisher"
+msgstr ""
+
 #: includes/Screens/RedirectsScreen.php:73
 msgid "Add redirect"
 msgstr ""

@@ -45,15 +45,21 @@ final class SettingsRepository {
 	}
 
 	/**
-	 * Reads a "section.key" path.
+	 * Reads a dotted path: "section.key", or deeper into a map value ("social.profiles.facebook").
 	 *
 	 * @param mixed $default Returned when the path is unknown.
 	 * @return mixed
 	 */
 	public static function get( string $path, $default = null ) {
-		$parts = explode( '.', $path, 2 );
-		$all   = self::all();
-		return ( 2 === count( $parts ) && isset( $all[ $parts[0] ] ) && array_key_exists( $parts[1], $all[ $parts[0] ] ) ) ? $all[ $parts[0] ][ $parts[1] ] : $default;
+		$parts = explode( '.', $path );
+		$value = self::all();
+		foreach ( $parts as $i => $part ) {
+			if ( ! is_array( $value ) || ! array_key_exists( $part, $value ) || ( 0 === $i && count( $parts ) < 2 ) ) {
+				return $default;
+			}
+			$value = $value[ $part ];
+		}
+		return $value;
 	}
 
 	/**

@@ -587,6 +587,14 @@ msgid "Add organization"
 msgstr "Kuruluş ekle"
 
 #: src/includes/Screens
+msgid "Edit organization"
+msgstr "Kuruluşu düzenle"
+
+#: src/includes/Screens
+msgid "Edit publisher"
+msgstr "Yayıncıyı düzenle"
+
+#: src/includes/Screens
 msgid "Reachable"
 msgstr "Erişilebilir"
 

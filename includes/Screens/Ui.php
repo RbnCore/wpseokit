@@ -53,6 +53,7 @@ final class Ui {
 		if ( $page ) { // The Logs tab uses AdminKit's shared log list (registered by AdminKit on every admin screen).
 			wp_enqueue_style( 'adminkit-core-logs' );
 			wp_enqueue_script( 'adminkit-core-logs' );
+			wp_enqueue_media(); // The image choosers (logo, default sharing image) open the WordPress media frame, which only loads when asked for.
 		}
 		wp_add_inline_script( 'wpseokit-ui', 'window.wpseokitUi = ' . wp_json_encode( self::data( $editor ) ) . ';', 'before' );
 	}

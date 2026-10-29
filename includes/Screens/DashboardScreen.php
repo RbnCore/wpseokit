@@ -156,7 +156,8 @@ final class DashboardScreen {
 				$has_logo = (int) Ui::val( 'schema.organization_logo_id', 0 ) > 0 || '' !== (string) Ui::val( 'schema.organization_logo_url', '' );
 				$named    = '' !== trim( (string) Ui::val( 'schema.organization_name', '' ) ) || '' !== trim( (string) Ui::val( 'schema.person_name', '' ) );
 				$badge    = $named && $has_logo ? $ok( __( 'Publisher set', 'wpseokit' ) ) : $warn( $named ? __( 'Logo missing', 'wpseokit' ) : __( 'Publisher missing', 'wpseokit' ) );
-				return array( $badge, __( 'Article, WebSite and breadcrumb schema', 'wpseokit' ), $link( 'schema', 'organization', __( 'Add organization', 'wpseokit' ) ) );
+				$label    = '' !== trim( (string) Ui::val( 'schema.organization_name', '' ) ) ? __( 'Edit organization', 'wpseokit' ) : ( $named ? __( 'Edit publisher', 'wpseokit' ) : __( 'Add organization', 'wpseokit' ) );
+				return array( $badge, __( 'Article, WebSite and breadcrumb schema', 'wpseokit' ), $link( 'schema', 'organization', $label ) );
 			case 'sitemap':
 				$on = (bool) Ui::val( 'sitemap.enabled', true );
 				return array( $on ? $ok( __( 'Reachable', 'wpseokit' ) ) : $mute( __( 'Off', 'wpseokit' ) ), $on ? __( 'Address: /sitemap_index.xml', 'wpseokit' ) : __( 'Not published', 'wpseokit' ), '<button type="button" class="rbn-btn" data-sitemap-flush>' . esc_html__( 'Rebuild now', 'wpseokit' ) . '</button>' );
