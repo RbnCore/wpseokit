@@ -136,9 +136,15 @@ final class Shell {
 			. '<ul class="wps-menu__list" id="tools-menu" hidden>' . $items . '</ul></div></nav>';
 	}
 
-	/** Page head with the title and the output chip. */
-	public static function head( string $title, string $extra = '' ): string {
-		return '<div class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html( $title ) . '</h1>' . self::chip() . '</div><div class="rbn-head__act">' . $extra . '</div></div>';
+	/** Fixed plugin head: name, version chip and output chip, with the page buttons on the right. The dashboard passes `$title_tag` h1; tool pages keep their single h1 below. */
+	public static function brand( string $extra = '', string $title_tag = 'p' ): string {
+		$name = '<' . $title_tag . ' class="rbn-brand">' . esc_html__( 'WPSeoKit', 'wpseokit' ) . '</' . $title_tag . '>';
+		return '<div class="rbn-head wps-brand"><div class="rbn-head__id">' . $name . '<span class="rbn-chip">' . esc_html( WPSEOKIT_VERSION ) . '</span>' . self::chip() . '</div>' . ( '' !== $extra ? '<div class="rbn-head__act">' . $extra . '</div>' : '' ) . '</div>';
+	}
+
+	/** Tool page title under the plugin head. */
+	public static function head( string $title ): string {
+		return '<div class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html( $title ) . '</h1></div></div>';
 	}
 
 	/** Yoast warning shown above a tool. */
@@ -171,7 +177,7 @@ final class Shell {
 		}
 		$list .= '</div>';
 		$body  = isset( $o['form'] ) ? Ui::form( $o['form'], $panels ) : $panels;
-		$out   = Ui::open( $tool ) . self::crumb( $tool ) . self::head( $title ) . self::yoast_note() . ( $o['top'] ?? '' ) . $list . $body . Ui::close();
+		$out   = Ui::open( $tool ) . self::brand( self::crumb( $tool ) ) . self::head( $title ) . self::yoast_note() . ( $o['top'] ?? '' ) . $list . $body . Ui::close();
 		echo $out; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- every fragment is escaped where it is built.
 	}
 }

@@ -121,7 +121,11 @@
 .wps-suggest .rbn-btn span:first-child span{white-space:normal}
 
 /* ===== WPRJ-562 — Dashboard merkezli gezinme ===== */
-.wps-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s3);margin:0 0 var(--rbn-s4)}
+.wps-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s3);margin:0}
+/* Sabit eklenti başlığı (WPRJ-662): her sayfada aynı; araç sayfasında ad h1 değil, h1 araç başlığıdır. */
+.rbn-brand{margin:0;font-size:var(--rbn-fs-h1);line-height:var(--rbn-lh-h1);font-weight:var(--rbn-fw-m);color:var(--rbn-text)}
+p.rbn-brand{font-size:var(--rbn-fs-h2);line-height:var(--rbn-lh-h2)}
+.wps-brand .rbn-head__act{margin-inline-start:auto}
 .wps-menu{position:relative}
 .wps-menu>.rbn-btn[aria-expanded=true] .wps-chev{transform:rotate(180deg)}
 .wps-menu__list{position:absolute;z-index:20;top:calc(100% + var(--rbn-s1));left:0;min-width:16rem;margin:0;padding:var(--rbn-s1);list-style:none;background:var(--rbn-surface);border:var(--rbn-bw) solid var(--rbn-line);border-radius:var(--rbn-r-lg);box-shadow:var(--rbn-shadow-lg,var(--rbn-shadow))}

@@ -421,7 +421,7 @@ final class DashboardScreen {
 		}
 		$list .= '</div>';
 
-		$out  = Ui::open( 'dashboard' ) . '<div class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html__( 'WPSeoKit', 'wpseokit' ) . '</h1><span class="rbn-chip">' . esc_html( WPSEOKIT_VERSION ) . '</span>' . Shell::chip() . '</div><div class="rbn-head__act"></div></div>';
+		$out  = Ui::open( 'dashboard' ) . Shell::brand( '', 'h1' );
 		$out .= Shell::yoast_note() . $list . $panels . ImportScreen::dialog();
 		echo $out . Ui::close(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- every fragment is escaped where it is built.
 	}
