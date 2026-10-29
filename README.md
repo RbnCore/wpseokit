@@ -60,7 +60,7 @@ Updates come from GitHub and appear on the Plugins page like any WordPress updat
 
 - **Source**: only `github.com/RbnCore/wpseokit` releases. The request is unauthenticated, times out after 5 seconds, is cached for 12 hours, and sends only `User-Agent: WPSeoKit/<version>`. If GitHub cannot be reached, no error is shown and the plugin keeps working.
 - **Verification is always on**: the package's SHA-256 digest and its Ed25519 signature are checked before installation, and the zip must contain `wpseokit/` and `wpseokit.php`. A package that fails the check is not installed and the installed version stays as it was.
-- **Turning it off**: the check follows the central RBN Kit network setting (RBN Kit → AdminKit → Network). While it is off, no request goes to GitHub. "Check now" asks again immediately and skips the cache.
+- **Turning it off**: the check follows the central RBN Kit network setting (RBN Kit → AdminKit → General → Network). While it is off, no request goes to GitHub. "Check now" asks again immediately and skips the cache.
 - **Manual update**: upload the new `wpseokit-X.Y.Z.zip` with Plugins → Add New → Upload Plugin and choose *Replace current*. Settings, redirects, the 404 log and snapshots are kept: the database schema is additive.
 
 ## Privacy and external requests
