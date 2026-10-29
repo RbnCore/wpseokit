@@ -79,7 +79,7 @@ final class FeedScreen {
 	}
 
 	private static function cleanup(): string {
-		$close = '<div class="rbn-switchlist">';
+		$close = '<div class="wps-switchlist">';
 		foreach ( array(
 			'feed.disable_comments_feed'      => array( __( 'Comments feed', 'wpseokit' ), __( 'All comments of the site.', 'wpseokit' ) ),
 			'feed.disable_post_comments_feed' => array( __( 'Comments feed of each post', 'wpseokit' ), __( 'One feed for every post.', 'wpseokit' ) ),

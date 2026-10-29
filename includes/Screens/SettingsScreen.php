@@ -40,9 +40,9 @@ final class SettingsScreen {
 	private static function setup(): string {
 		$rows = '';
 		foreach ( DashboardScreen::checks() as $c ) {
-			$rows .= '<tr><th scope="row" data-l="' . esc_attr__( 'Check', 'wpseokit' ) . '">' . esc_html( $c[0] ) . '</th><td data-l="' . esc_attr__( 'Status', 'wpseokit' ) . '">' . $c[1] . '</td><td data-l="' . esc_attr__( 'Action', 'wpseokit' ) . '" class="rbn-acts"><a class="rbn-btn rbn-btn--sm' . ( $c[4] ? ' rbn-btn--pri' : '' ) . '" href="' . esc_url( $c[3] ) . '"' . ( $c[5] ?? '' ) . '>' . esc_html( $c[2] ) . '</a></td></tr>';
+			$rows .= '<tr><th scope="row" data-label="' . esc_attr__( 'Check', 'wpseokit' ) . '">' . esc_html( $c[0] ) . '</th><td data-label="' . esc_attr__( 'Status', 'wpseokit' ) . '">' . $c[1] . '</td><td data-label="' . esc_attr__( 'Action', 'wpseokit' ) . '" class="rbn-acts"><a class="rbn-btn rbn-btn--sm' . ( $c[4] ? ' rbn-btn--pri' : '' ) . '" href="' . esc_url( $c[3] ) . '"' . ( $c[5] ?? '' ) . '>' . esc_html( $c[2] ) . '</a></td></tr>';
 		}
-		$table = '<div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--cols"><caption class="rbn-sr">' . esc_html__( 'Setup checklist', 'wpseokit' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Check', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Status', 'wpseokit' ) . '</th><th scope="col"><span class="rbn-sr">' . esc_html__( 'Action', 'wpseokit' ) . '</span></th></tr></thead><tbody>' . $rows . '</tbody></table></div></div>';
+		$table = '<div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html__( 'Setup checklist', 'wpseokit' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Check', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Status', 'wpseokit' ) . '</th><th scope="col"><span class="rbn-sr">' . esc_html__( 'Action', 'wpseokit' ) . '</span></th></tr></thead><tbody>' . $rows . '</tbody></table></div></div>';
 		return '<section class="rbn-card"><div class="rbn-card__h"><h2>' . esc_html__( 'Setup checklist', 'wpseokit' ) . '</h2><p>' . esc_html__( 'These checks decide whether your site is ready for search engines.', 'wpseokit' ) . '</p></div>' . $table . '</section>';
 	}
 
@@ -102,7 +102,7 @@ final class SettingsScreen {
 			array( __( 'Change settings, redirects and the 404 log', 'wpseokit' ), __( 'Administrators', 'wpseokit' ), __( 'A wrong setting or redirect affects every visitor, so these stay with administrators.', 'wpseokit' ) ),
 			array( __( 'Edit the SEO box of a post', 'wpseokit' ), __( 'Anyone who can edit that post', 'wpseokit' ), __( 'Follows the WordPress permission to edit the post.', 'wpseokit' ) ),
 		) as $r ) {
-			$rows .= '<tr><th scope="row" data-l="' . esc_attr__( 'Action', 'wpseokit' ) . '">' . esc_html( $r[0] ) . '</th><td data-l="' . esc_attr__( 'Who', 'wpseokit' ) . '">' . esc_html( $r[1] ) . '</td><td data-l="' . esc_attr__( 'Why', 'wpseokit' ) . '">' . esc_html( $r[2] ) . '</td></tr>';
+			$rows .= '<tr><th scope="row" data-label="' . esc_attr__( 'Action', 'wpseokit' ) . '">' . esc_html( $r[0] ) . '</th><td data-label="' . esc_attr__( 'Who', 'wpseokit' ) . '">' . esc_html( $r[1] ) . '</td><td data-label="' . esc_attr__( 'Why', 'wpseokit' ) . '">' . esc_html( $r[2] ) . '</td></tr>';
 		}
 		$table = '<div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html__( 'Who can use WPSeoKit', 'wpseokit' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Action', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Who', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Why', 'wpseokit' ) . '</th></tr></thead><tbody>' . $rows . '</tbody></table></div></div>';
 		return '<section class="rbn-card"><div class="rbn-card__h"><h2>' . esc_html__( 'Who can use WPSeoKit', 'wpseokit' ) . '</h2><p>' . esc_html__( 'Access follows WordPress roles. Administrators always keep full access.', 'wpseokit' ) . '</p></div>' . $table . '</section>';
@@ -117,7 +117,7 @@ final class SettingsScreen {
 			__( 'Database schema', 'wpseokit' ) => (string) (int) get_option( Db::OPTION, 0 ),
 			__( 'Output', 'wpseokit' )          => Plugin::output_enabled() ? __( 'On', 'wpseokit' ) : __( 'Off (Yoast SEO is active)', 'wpseokit' ),
 		) as $label => $value ) {
-			$status .= '<tr><th scope="row" data-l="' . esc_attr__( 'Item', 'wpseokit' ) . '">' . esc_html( $label ) . '</th><td data-l="' . esc_attr__( 'Value', 'wpseokit' ) . '">' . esc_html( $value ) . '</td></tr>';
+			$status .= '<tr><th scope="row" data-label="' . esc_attr__( 'Item', 'wpseokit' ) . '">' . esc_html( $label ) . '</th><td data-label="' . esc_attr__( 'Value', 'wpseokit' ) . '">' . esc_html( $value ) . '</td></tr>';
 		}
 		$status = '<section class="rbn-card"><div class="rbn-card__h"><h2>' . esc_html__( 'Status', 'wpseokit' ) . '</h2></div><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html__( 'Plugin status', 'wpseokit' ) . '</caption><tbody>' . $status . '</tbody></table></div></div></section>';
 
@@ -150,14 +150,14 @@ final class SettingsScreen {
 		$post = esc_url( admin_url( 'admin-post.php' ) );
 
 		$body  = Ui::row( esc_html__( 'Installed version', 'wpseokit' ), '<b>' . esc_html( WPSEOKIT_VERSION ) . '</b>' );
-		$body .= Ui::row( esc_html__( 'Update status', 'wpseokit' ), '<p class="rbn-p">' . $state . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
+		$body .= Ui::row( esc_html__( 'Update status', 'wpseokit' ), '<p>' . $state . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
 		$body .= Ui::row( esc_html__( 'Last check', 'wpseokit' ), '<span>' . $last . '</span>', esc_html__( 'The package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Automatic updates are turned on or off with the “Enable auto-updates” link on the Plugins page.', 'wpseokit' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		$act   = '';
 		if ( $on ) {
 			$act .= '<form method="post" action="' . $post . '"><input type="hidden" name="action" value="wpseokit_update_check">' . wp_nonce_field( 'wpseokit_update_check', '_wpnonce', true, false ) . '<button type="submit" class="rbn-btn">' . Ui::icon( 'scan' ) . esc_html__( 'Check now', 'wpseokit' ) . '</button></form>';
 		}
 		$act .= '<form method="post" action="' . $post . '"><input type="hidden" name="action" value="wpseokit_update_toggle">' . wp_nonce_field( 'wpseokit_update_toggle', '_wpnonce', true, false ) . '<button type="submit" class="rbn-btn">' . esc_html( $on ? __( 'Turn off the update check', 'wpseokit' ) : __( 'Turn on the update check', 'wpseokit' ) ) . '</button></form>';
-		$body .= '<div class="rbn-row">' . $act . '</div>';
+		$body .= '<div class="wps-row">' . $act . '</div>';
 		return Ui::card( __( 'Updates', 'wpseokit' ), '', $body );
 	}
 }

@@ -108,7 +108,7 @@ final class Shell {
 			$tab  = 'import' === $tool ? 'yoast' : 'settings';
 			$tool = '';
 		}
-		echo '<div class="wrap rbn-wrap wpseokit-wrap">';
+		echo '<div class="wrap rbn-wrap wpseokit-wrap"' . Ui::tone_attr() . '>';
 		if ( isset( self::$tools[ $tool ] ) ) {
 			call_user_func( self::$tools[ $tool ]['render'] );
 		} else {
@@ -121,7 +121,7 @@ final class Shell {
 	public static function chip(): string {
 		$paused = Plugin::yoast_active();
 		return $paused
-			? '<span class="rbn-chip rbn-chip--off"><span class="rbn-dot"></span>' . esc_html__( 'Output paused', 'wpseokit' ) . '</span>'
+			? '<span class="rbn-chip rbn-chip--warn"><span class="rbn-dot"></span>' . esc_html__( 'Output paused', 'wpseokit' ) . '</span>'
 			: '<span class="rbn-chip rbn-chip--ok"><span class="rbn-dot"></span>' . esc_html__( 'Output on', 'wpseokit' ) . '</span>';
 	}
 
@@ -162,12 +162,12 @@ final class Shell {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- reading a tab name only.
 		$wanted = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '';
 		$active = isset( $tabs[ $wanted ] ) ? $wanted : (string) array_key_first( $tabs );
-		$list   = '<div class="wps-tabs" role="tablist" aria-label="' . esc_attr( $o['aria'] ?? $title ) . '" data-tabs>';
+		$list   = '<div class="rbn-tabs" role="tablist" aria-label="' . esc_attr( $o['aria'] ?? $title ) . '" data-rbn-tabs>';
 		$panels = '';
 		foreach ( $tabs as $id => $tab ) {
 			$on      = $id === $active;
-			$list   .= '<button type="button" role="tab" id="tab-' . esc_attr( (string) $id ) . '" aria-controls="pan-' . esc_attr( (string) $id ) . '" aria-selected="' . ( $on ? 'true' : 'false' ) . '" tabindex="' . ( $on ? '0' : '-1' ) . '" data-tab="' . esc_attr( (string) $id ) . '">' . esc_html( $tab[0] ) . '</button>';
-			$panels .= '<div role="tabpanel" id="pan-' . esc_attr( (string) $id ) . '" aria-labelledby="tab-' . esc_attr( (string) $id ) . '"' . ( $on ? '' : ' hidden' ) . '>' . $tab[1] . '</div>';
+			$list   .= '<button type="button" class="rbn-tabs__tab" role="tab" id="tab-' . esc_attr( (string) $id ) . '" aria-controls="pan-' . esc_attr( (string) $id ) . '" aria-selected="' . ( $on ? 'true' : 'false' ) . '" tabindex="' . ( $on ? '0' : '-1' ) . '" data-key="' . esc_attr( (string) $id ) . '">' . esc_html( $tab[0] ) . '</button>';
+			$panels .= '<div class="rbn-tabpanel" role="tabpanel" id="pan-' . esc_attr( (string) $id ) . '" aria-labelledby="tab-' . esc_attr( (string) $id ) . '"' . ( $on ? '' : ' hidden' ) . '>' . $tab[1] . '</div>';
 		}
 		$list .= '</div>';
 		$body  = isset( $o['form'] ) ? Ui::form( $o['form'], $panels ) : $panels;

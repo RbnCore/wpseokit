@@ -73,7 +73,7 @@ final class LlmsScreen {
 	private static function preview(): string {
 		$body = Ui::row(
 			esc_html__( 'File', 'wpseokit' ),
-			'<pre class="wps-pre" tabindex="0" aria-label="' . esc_attr__( 'llms.txt preview', 'wpseokit' ) . '" data-llms-out>' . esc_html__( 'Loading…', 'wpseokit' ) . '</pre><div class="rbn-row"><button type="button" class="rbn-btn" data-llms-refresh>' . Ui::icon( 'scan' ) . esc_html__( 'Refresh preview', 'wpseokit' ) . '</button><button type="button" class="rbn-btn" data-copy="" data-llms-copy>' . Ui::icon( 'copy' ) . esc_html__( 'Copy', 'wpseokit' ) . '</button></div>',
+			'<pre class="wps-pre" tabindex="0" aria-label="' . esc_attr__( 'llms.txt preview', 'wpseokit' ) . '" data-llms-out>' . esc_html__( 'Loading…', 'wpseokit' ) . '</pre><div class="wps-row"><button type="button" class="rbn-btn" data-llms-refresh>' . Ui::icon( 'scan' ) . esc_html__( 'Refresh preview', 'wpseokit' ) . '</button><button type="button" class="rbn-btn" data-copy="" data-llms-copy>' . Ui::icon( 'copy' ) . esc_html__( 'Copy', 'wpseokit' ) . '</button></div>',
 			esc_html__( 'Built from the values on this page, even before you save. It works while the file is still off.', 'wpseokit' )
 		);
 		return Ui::card( __( 'Preview', 'wpseokit' ), __( 'This is what /llms.txt would return.', 'wpseokit' ), $body );

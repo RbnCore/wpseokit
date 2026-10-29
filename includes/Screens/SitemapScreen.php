@@ -54,7 +54,7 @@ final class SitemapScreen {
 		$copy  = '<div class="wps-copy"><input class="rbn-input rbn-input--mono" id="sm-url" value="' . esc_attr( $url ) . '" readonly aria-label="' . esc_attr__( 'Sitemap address', 'wpseokit' ) . '">';
 		$copy .= '<button type="button" class="rbn-btn" data-copy="sm-url">' . Ui::icon( 'copy' ) . esc_html__( 'Copy', 'wpseokit' ) . '</button>';
 		$copy .= '<a class="rbn-btn" href="' . esc_url( $url ) . '" target="_blank" rel="noopener">' . Ui::icon( 'out' ) . esc_html__( 'Open', 'wpseokit' ) . '</a></div>';
-		$copy .= '<div class="rbn-row"><button type="button" class="rbn-btn" data-sitemap-flush>' . Ui::icon( 'scan' ) . esc_html__( 'Rebuild now', 'wpseokit' ) . '</button>';
+		$copy .= '<div class="wps-row"><button type="button" class="rbn-btn" data-sitemap-flush>' . Ui::icon( 'scan' ) . esc_html__( 'Rebuild now', 'wpseokit' ) . '</button>';
 		$copy .= '<a class="rbn-btn" href="' . esc_url( SitemapView::url() ) . '" target="_blank" rel="noopener">' . Ui::icon( 'out' ) . esc_html__( 'Open the human view', 'wpseokit' ) . '</a></div>';
 		$main .= Ui::row( Ui::label( 'sm-url', __( 'Sitemap address', 'wpseokit' ) ), $copy, esc_html__( 'Bots read this address.', 'wpseokit' ) . ' ' . esc_html__( 'The sitemap rebuilds by itself on a schedule and when you publish.', 'wpseokit' ) );
 		return Ui::card( __( 'XML sitemap', 'wpseokit' ), '', $main );

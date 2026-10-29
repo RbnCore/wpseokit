@@ -123,7 +123,7 @@ final class SchemaScreen {
 			) as $value => $label ) {
 				$sel .= '<option value="' . esc_attr( $value ) . '"' . selected( $cur, $value, false ) . '>' . esc_html( $label ) . '</option>';
 			}
-			$rows .= '<tr><th scope="row" data-l="' . esc_attr__( 'Category', 'wpseokit' ) . '">' . esc_html( $term->name ) . '</th><td data-l="' . esc_attr__( 'Posts', 'wpseokit' ) . '" class="rbn-num">' . (int) $term->count . '</td><td data-l="' . esc_attr__( 'Default type', 'wpseokit' ) . '">' . $sel . '</select></td></tr>';
+			$rows .= '<tr><th scope="row" data-label="' . esc_attr__( 'Category', 'wpseokit' ) . '">' . esc_html( $term->name ) . '</th><td data-label="' . esc_attr__( 'Posts', 'wpseokit' ) . '" class="rbn-num">' . (int) $term->count . '</td><td data-label="' . esc_attr__( 'Default type', 'wpseokit' ) . '">' . $sel . '</select></td></tr>';
 		}
 		$table = '<div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html__( 'Default schema type per category', 'wpseokit' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Category', 'wpseokit' ) . '</th><th scope="col" class="rbn-num">' . esc_html__( 'Posts', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Default type', 'wpseokit' ) . '</th></tr></thead><tbody>' . $rows . '</tbody></table></div></div>';
 		/* translators: 1: categories listed, 2: all categories. */
@@ -156,7 +156,7 @@ final class SchemaScreen {
 			$opts .= '<option value="' . esc_url( (string) get_permalink( $p ) ) . '">' . esc_html( get_the_title( $p ) ) . '</option>';
 		}
 		$body  = Ui::row( '<label for="pv-post">' . esc_html__( 'Show the schema for', 'wpseokit' ) . '</label>', '<select class="rbn-select" id="pv-post" data-schema-url>' . $opts . '</select>' );
-		$body .= Ui::row( esc_html__( 'JSON-LD', 'wpseokit' ), '<pre class="wps-pre" tabindex="0" aria-label="' . esc_attr__( 'Schema JSON-LD of the chosen page', 'wpseokit' ) . '" data-schema-out>' . esc_html__( 'Loading…', 'wpseokit' ) . '</pre><div class="rbn-row"><button type="button" class="rbn-btn" data-copy="" data-schema-copy>' . Ui::icon( 'copy' ) . esc_html__( 'Copy JSON-LD', 'wpseokit' ) . '</button><a class="rbn-btn" href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">' . Ui::icon( 'out' ) . esc_html__( 'Open Google Rich Results Test (opens in a new tab)', 'wpseokit' ) . '</a></div>' );
+		$body .= Ui::row( esc_html__( 'JSON-LD', 'wpseokit' ), '<pre class="wps-pre" tabindex="0" aria-label="' . esc_attr__( 'Schema JSON-LD of the chosen page', 'wpseokit' ) . '" data-schema-out>' . esc_html__( 'Loading…', 'wpseokit' ) . '</pre><div class="wps-row"><button type="button" class="rbn-btn" data-copy="" data-schema-copy>' . Ui::icon( 'copy' ) . esc_html__( 'Copy JSON-LD', 'wpseokit' ) . '</button><a class="rbn-btn" href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">' . Ui::icon( 'out' ) . esc_html__( 'Open Google Rich Results Test (opens in a new tab)', 'wpseokit' ) . '</a></div>' );
 		return Ui::card( __( 'Preview', 'wpseokit' ), __( 'Read-only. Reads the live page, so it reflects the settings you saved.', 'wpseokit' ), $body );
 	}
 }

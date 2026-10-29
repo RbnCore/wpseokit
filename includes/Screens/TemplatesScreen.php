@@ -82,7 +82,7 @@ final class TemplatesScreen {
 			);
 			$body .= Ui::row(
 				esc_html__( 'Search results', 'wpseokit' ),
-				'<label class="rbn-switch"><input type="checkbox" id="tpl-pt-' . esc_attr( $name ) . '-i" name="robots.noindex_post_types" value="' . esc_attr( $name ) . '" data-multi data-invert' . ( in_array( $name, (array) Ui::val( 'robots.noindex_post_types', array() ), true ) ? '' : ' checked' ) . '><span class="rbn-switch__t"></span><span class="rbn-switch__x"><b>' . esc_html( sprintf( /* translators: %s: post type name. */ __( 'Show %s in search results', 'wpseokit' ), $label ) ) . '</b><span class="rbn-help">' . esc_html__( 'Turn off to add noindex to every item of this type.', 'wpseokit' ) . '</span></span></label>'
+				'<label class="rbn-switch"><input type="checkbox" id="tpl-pt-' . esc_attr( $name ) . '-i" name="robots.noindex_post_types" value="' . esc_attr( $name ) . '" data-multi data-invert' . ( in_array( $name, (array) Ui::val( 'robots.noindex_post_types', array() ), true ) ? '' : ' checked' ) . '><span class="rbn-switch__x"></span><span><b>' . esc_html( sprintf( /* translators: %s: post type name. */ __( 'Show %s in search results', 'wpseokit' ), $label ) ) . '</b><span class="rbn-help">' . esc_html__( 'Turn off to add noindex to every item of this type.', 'wpseokit' ) . '</span></span></label>'
 			);
 			$out  .= Ui::card( $label, $desc, $body );
 		}
@@ -133,7 +133,7 @@ final class TemplatesScreen {
 		);
 		$rows = '';
 		foreach ( $vars as $tok => $v ) {
-			$rows .= '<tr><th scope="row" data-l="' . esc_attr__( 'Variable', 'wpseokit' ) . '"><code>' . esc_html( $tok ) . '</code></th><td data-l="' . esc_attr__( 'Meaning', 'wpseokit' ) . '">' . esc_html( $v[0] ) . '</td><td data-l="' . esc_attr__( 'Example', 'wpseokit' ) . '">' . esc_html( $v[1] ) . '</td></tr>';
+			$rows .= '<tr><th scope="row" data-label="' . esc_attr__( 'Variable', 'wpseokit' ) . '"><code>' . esc_html( $tok ) . '</code></th><td data-label="' . esc_attr__( 'Meaning', 'wpseokit' ) . '">' . esc_html( $v[0] ) . '</td><td data-label="' . esc_attr__( 'Example', 'wpseokit' ) . '">' . esc_html( $v[1] ) . '</td></tr>';
 		}
 		$table = '<div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html__( 'Template variables', 'wpseokit' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Variable', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Meaning', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Example', 'wpseokit' ) . '</th></tr></thead><tbody>' . $rows . '</tbody></table></div></div>';
 		return $sep . '<section class="rbn-card"><div class="rbn-card__h"><h2>' . esc_html__( 'Variables', 'wpseokit' ) . '</h2><p>' . esc_html__( 'Use these in any template. Click “Insert a variable” in a field to add one.', 'wpseokit' ) . '</p></div>' . $table . '</section>';

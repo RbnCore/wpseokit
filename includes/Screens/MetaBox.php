@@ -41,7 +41,7 @@ final class MetaBox {
 	}
 
 	private static function lim( string $id, string $min_good_max, string $label ): string {
-		return '<div class="wps-lim" id="' . esc_attr( $id ) . '" data-level="ok" data-lim-for="' . esc_attr( $min_good_max ) . '"><div class="rbn-progress" role="presentation"><i style="--w:0%"></i></div><output aria-live="polite" aria-label="' . esc_attr( $label ) . '">0</output></div>';
+		return '<div class="wps-lim" id="' . esc_attr( $id ) . '" data-level="ok" data-lim-for="' . esc_attr( $min_good_max ) . '"><div class="wps-progress" role="presentation"><i></i></div><output aria-live="polite" aria-label="' . esc_attr( $label ) . '">0</output></div>';
 	}
 
 	public static function render( \WP_Post $post ): void {
@@ -62,7 +62,7 @@ final class MetaBox {
 		Ui::sprite();
 		echo (string) ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the plugin's own fixed file.
 
-		$o  = '<div class="rbn-wrap rbn-wrap--box wpseokit-box" data-metabox' . Ui::tone_attr();
+		$o  = '<div class="rbn-wrap wps-wrap--box wpseokit-box" data-metabox';
 		$o .= ' data-site="' . esc_attr( (string) get_bloginfo( 'name' ) ) . '" data-host="' . esc_attr( $host ) . '" data-path="' . esc_attr( $path ) . '"';
 		$o .= ' data-sep="' . esc_attr( (string) Ui::val( 'templates.sep', '-' ) ) . '" data-tpl-title="' . esc_attr( (string) ( $tpl['title'] ?? '' ) ) . '" data-tpl-desc="' . esc_attr( (string) ( $tpl['description'] ?? '' ) ) . '"';
 		$o .= ' data-excerpt="' . esc_attr( wp_html_excerpt( (string) $post->post_excerpt, 300 ) ) . '" data-content="' . esc_attr( wp_html_excerpt( $plain, 300 ) ) . '" data-post-id="' . (int) $post->ID . '">';
@@ -73,18 +73,18 @@ final class MetaBox {
 			'schema' => array( __( 'Schema', 'wpseokit' ), 'code' ),
 			'adv'    => array( __( 'Advanced', 'wpseokit' ), 'gear' ),
 		);
-		$o   .= '<div class="wps-tabs" role="tablist" aria-label="' . esc_attr__( 'WPSeoKit sections', 'wpseokit' ) . '">';
+		$o   .= '<div class="rbn-tabs" role="tablist" aria-label="' . esc_attr__( 'WPSeoKit sections', 'wpseokit' ) . '" data-rbn-tabs>';
 		$first = true;
 		foreach ( $tabs as $id => $t ) {
-			$o    .= '<button type="button" role="tab" id="wps-tab-' . $id . '" aria-controls="wps-pn-' . $id . '" aria-selected="' . ( $first ? 'true' : 'false' ) . '" tabindex="' . ( $first ? '0' : '-1' ) . '">' . Ui::icon( $t[1] ) . esc_html( $t[0] ) . '</button>';
+			$o    .= '<button type="button" class="rbn-tabs__tab" role="tab" id="wps-tab-' . $id . '" data-key="' . $id . '" aria-controls="wps-pn-' . $id . '" aria-selected="' . ( $first ? 'true' : 'false' ) . '" tabindex="' . ( $first ? '0' : '-1' ) . '">' . Ui::icon( $t[1] ) . esc_html( $t[0] ) . '</button>';
 			$first = false;
 		}
 		$o .= '</div>';
 
-		$o .= '<div role="tabpanel" id="wps-pn-seo" aria-labelledby="wps-tab-seo" tabindex="0">' . self::panel_seo( $post, $m ) . '</div>';
-		$o .= '<div role="tabpanel" id="wps-pn-social" aria-labelledby="wps-tab-social" hidden tabindex="0">' . self::panel_social( $m ) . '</div>';
-		$o .= '<div role="tabpanel" id="wps-pn-schema" aria-labelledby="wps-tab-schema" hidden tabindex="0">' . self::panel_schema( $type, $schema, $cast ) . '</div>';
-		$o .= '<div role="tabpanel" id="wps-pn-adv" aria-labelledby="wps-tab-adv" hidden tabindex="0">' . self::panel_advanced( $m( 'canonical' ), $robots ) . '</div>';
+		$o .= '<div class="rbn-tabpanel" role="tabpanel" id="wps-pn-seo" aria-labelledby="wps-tab-seo" tabindex="0">' . self::panel_seo( $post, $m ) . '</div>';
+		$o .= '<div class="rbn-tabpanel" role="tabpanel" id="wps-pn-social" aria-labelledby="wps-tab-social" hidden tabindex="0">' . self::panel_social( $m ) . '</div>';
+		$o .= '<div class="rbn-tabpanel" role="tabpanel" id="wps-pn-schema" aria-labelledby="wps-tab-schema" hidden tabindex="0">' . self::panel_schema( $type, $schema, $cast ) . '</div>';
+		$o .= '<div class="rbn-tabpanel" role="tabpanel" id="wps-pn-adv" aria-labelledby="wps-tab-adv" hidden tabindex="0">' . self::panel_advanced( $m( 'canonical' ), $robots ) . '</div>';
 		$o .= '</div>';
 		echo $o; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- every fragment is escaped where it is built.
 	}
@@ -92,21 +92,21 @@ final class MetaBox {
 	/** @param callable $m Reads one `_wpseokit_*` meta value. */
 	private static function panel_seo( \WP_Post $post, callable $m ): string {
 		$o  = '<div class="wps-serp-wrap"><div class="wps-serp-wrap__bar"><h3>' . esc_html__( 'Search preview', 'wpseokit' ) . '</h3>';
-		$o .= '<fieldset class="rbn-seg"><legend class="rbn-sr">' . esc_html__( 'Preview device', 'wpseokit' ) . '</legend><label><input type="radio" name="wps-serp-mode" value="d" checked><span>' . Ui::icon( 'doc' ) . esc_html__( 'Desktop', 'wpseokit' ) . '</span></label><label><input type="radio" name="wps-serp-mode" value="m"><span>' . Ui::icon( 'phone' ) . esc_html__( 'Mobile', 'wpseokit' ) . '</span></label></fieldset></div>';
+		$o .= '<fieldset class="wps-radios"><legend class="rbn-sr">' . esc_html__( 'Preview device', 'wpseokit' ) . '</legend><label class="rbn-check"><input type="radio" name="wps-serp-mode" value="d" checked><span>' . Ui::icon( 'doc' ) . esc_html__( 'Desktop', 'wpseokit' ) . '</span></label><label class="rbn-check"><input type="radio" name="wps-serp-mode" value="m"><span>' . Ui::icon( 'phone' ) . esc_html__( 'Mobile', 'wpseokit' ) . '</span></label></fieldset></div>';
 		$o .= '<div class="wps-serp" data-serp><div class="wps-serp__site"><span class="wps-serp__fav">' . Ui::icon( 'film' ) . '</span><span class="wps-serp__who"><b data-serp-site></b><span class="wps-serp__url" data-serp-url></span></span></div>';
 		$o .= '<a class="wps-serp__t" href="#" tabindex="-1" aria-hidden="true" data-serp-title></a><p class="wps-serp__d" data-serp-desc></p></div></div>';
 
-		$o .= '<div class="rbn-stack">';
-		$o .= '<div class="rbn-field" style="grid-template-columns:1fr"><div class="rbn-field__l"><label for="wps-title">' . esc_html__( 'SEO title', 'wpseokit' ) . '</label></div><div class="rbn-field__c">';
+		$o .= '<div class="wps-stack">';
+		$o .= '<div class="rbn-field"><label for="wps-title">' . esc_html__( 'SEO title', 'wpseokit' ) . '</label>';
 		$o .= '<input class="rbn-input rbn-input--mono wps-wide" id="wps-title" name="wpseokit[title]" type="text" value="' . esc_attr( $m( 'title' ) ) . '" placeholder="%title% %sep% %sitename%" data-var-target data-lim="30,60,70" data-meter="wps-lim-t" aria-describedby="wps-lim-t wps-title-h">';
 		$o .= Ui::vars( 'wps-title', self::vars() ) . self::lim( 'wps-lim-t', '30,60,70', __( 'Title length', 'wpseokit' ) );
-		$o .= '<p class="rbn-help" id="wps-title-h">' . esc_html__( 'Aim for 30 to 60 characters. Search engines cut by width, not by count.', 'wpseokit' ) . '</p></div></div>';
+		$o .= '<p class="rbn-help" id="wps-title-h">' . esc_html__( 'Aim for 30 to 60 characters. Search engines cut by width, not by count.', 'wpseokit' ) . '</p></div>';
 
-		$o .= '<div class="rbn-field" style="grid-template-columns:1fr"><div class="rbn-field__l"><label for="wps-desc">' . esc_html__( 'Meta description', 'wpseokit' ) . '</label></div><div class="rbn-field__c">';
+		$o .= '<div class="rbn-field"><label for="wps-desc">' . esc_html__( 'Meta description', 'wpseokit' ) . '</label>';
 		$o .= '<textarea class="rbn-textarea wps-wide" id="wps-desc" name="wpseokit[description]" rows="3" data-var-target data-lim="70,155,170" data-meter="wps-lim-d" aria-describedby="wps-lim-d wps-desc-h">' . esc_textarea( $m( 'description' ) ) . '</textarea>';
 		$o .= self::lim( 'wps-lim-d', '70,155,170', __( 'Description length', 'wpseokit' ) );
 		$o .= '<p class="rbn-help" id="wps-desc-h">' . esc_html__( 'Aim for 70 to 155 characters. Empty falls back to the template, then the excerpt.', 'wpseokit' ) . '</p>';
-		$o .= '<span class="wps-src" data-src>' . Ui::icon( 'doc' ) . '<span></span></span></div></div>';
+		$o .= '<span class="wps-src" data-src>' . Ui::icon( 'doc' ) . '<span></span></span></div>';
 
 		$o .= self::primary( $post, $m( 'primary_category' ) ) . '</div>';
 		return $o;
@@ -124,23 +124,23 @@ final class MetaBox {
 			}
 		}
 		$assigned = wp_get_post_categories( $post->ID );
-		$o        = '<div class="rbn-field" style="grid-template-columns:1fr"><div class="rbn-field__l"><span id="wps-pc-l">' . esc_html__( 'Primary category', 'wpseokit' ) . '</span></div><div class="rbn-field__c">';
+		$o        = '<div class="rbn-field"><span class="rbn-label" id="wps-pc-l">' . esc_html__( 'Primary category', 'wpseokit' ) . '</span>';
 		$o       .= '<fieldset class="wps-primary" data-primary data-current="' . (int) $current . '" data-assigned="' . esc_attr( (string) wp_json_encode( array_map( 'intval', $assigned ) ) ) . '" data-terms="' . esc_attr( (string) wp_json_encode( $map ) ) . '"><legend class="rbn-sr">' . esc_html__( 'Primary category', 'wpseokit' ) . '</legend></fieldset>';
 		$o       .= '<input type="hidden" name="wpseokit[primary_category]" value="' . (int) $current . '" data-primary-input>';
 		$o       .= '<input type="hidden" name="wpseokit[primary_original]" value="' . (int) $current . '">';
 		$o       .= '<p class="wps-urlprev" data-urlprev hidden><span>' . esc_html__( 'URL:', 'wpseokit' ) . '</span><code></code></p>';
-		$o       .= '<div class="rbn-note rbn-note--warn" data-url-warn hidden>' . Ui::icon( 'alert' ) . '<div><p>' . esc_html__( 'Changing the primary category changes this post’s URL.', 'wpseokit' ) . '</p><label class="rbn-switch"><input type="checkbox" name="wpseokit[add_301]" value="1" checked><span class="rbn-switch__t"></span><span class="rbn-switch__x"><b>' . esc_html__( 'Add a 301 redirect from the old URL', 'wpseokit' ) . '</b></span></label></div></div>';
-		$o       .= '<p class="rbn-help">' . esc_html__( 'The primary category sets this post’s URL and breadcrumb.', 'wpseokit' ) . '</p></div></div>';
+		$o       .= '<div class="rbn-note rbn-note--warn" data-url-warn hidden>' . Ui::icon( 'alert' ) . '<div class="rbn-note__t"><p>' . esc_html__( 'Changing the primary category changes this post’s URL.', 'wpseokit' ) . '</p><label class="rbn-switch"><input type="checkbox" name="wpseokit[add_301]" value="1" checked><span class="rbn-switch__x"></span><span><b>' . esc_html__( 'Add a 301 redirect from the old URL', 'wpseokit' ) . '</b></span></label></div></div>';
+		$o       .= '<p class="rbn-help">' . esc_html__( 'The primary category sets this post’s URL and breadcrumb.', 'wpseokit' ) . '</p></div>';
 		return $o;
 	}
 
 	/** @param callable $m Reads one `_wpseokit_*` meta value. */
 	private static function panel_social( callable $m ): string {
 		$img = $m( 'og_image' );
-		$o   = '<div class="rbn-stack"><div class="wps-og" data-og><div class="wps-og__img" data-og-img>' . Ui::icon( 'image' ) . '</div><div class="wps-og__t"><small data-og-host></small><b data-og-title></b><span data-og-desc></span></div></div>';
+		$o   = '<div class="wps-stack"><div class="wps-og" data-og><div class="wps-og__img" data-og-img>' . Ui::icon( 'image' ) . '</div><div class="wps-og__t"><small data-og-host></small><b data-og-title></b><span data-og-desc></span></div></div>';
 		$o  .= Ui::row( Ui::label( 'wps-og-t', __( 'Sharing title', 'wpseokit' ) ), '<input class="rbn-input" id="wps-og-t" name="wpseokit[og_title]" type="text" value="' . esc_attr( $m( 'og_title' ) ) . '" placeholder="' . esc_attr__( 'Same as the SEO title', 'wpseokit' ) . '">', esc_html__( 'Leave empty to use the SEO title.', 'wpseokit' ) );
 		$o  .= Ui::row( Ui::label( 'wps-og-d', __( 'Sharing description', 'wpseokit' ) ), '<textarea class="rbn-textarea wps-wide" id="wps-og-d" name="wpseokit[og_description]" rows="2">' . esc_textarea( $m( 'og_description' ) ) . '</textarea>', esc_html__( 'Leave empty to use the meta description.', 'wpseokit' ) );
-		$media  = '<div class="wps-media" data-media="wps-og-i"><div class="wps-media__img' . ( '' !== $img ? ' wps-media__img--filled' : '' ) . '">' . ( '' !== $img ? '<img src="' . esc_url( $img ) . '" alt="">' : Ui::icon( 'image' ) ) . '</div><div class="rbn-row">';
+		$media  = '<div class="wps-media" data-media="wps-og-i"><div class="wps-media__img' . ( '' !== $img ? ' wps-media__img--filled' : '' ) . '">' . ( '' !== $img ? '<img src="' . esc_url( $img ) . '" alt="">' : Ui::icon( 'image' ) ) . '</div><div class="wps-row">';
 		$media .= '<button type="button" class="rbn-btn" data-media-pick data-media-url-only>' . Ui::icon( 'image' ) . esc_html__( 'Choose image', 'wpseokit' ) . '</button><button type="button" class="rbn-btn rbn-btn--danger" data-media-clear' . ( '' === $img ? ' hidden' : '' ) . '>' . Ui::icon( 'trash' ) . esc_html__( 'Remove', 'wpseokit' ) . '</button></div>';
 		$media .= '<input type="hidden" name="wpseokit[og_image]" value="' . esc_attr( $img ) . '" data-media-url></div>';
 		$o     .= Ui::row( esc_html__( 'Sharing image', 'wpseokit' ), $media, esc_html__( 'Empty: the featured image is used.', 'wpseokit' ) );
@@ -153,12 +153,12 @@ final class MetaBox {
 		foreach ( array( 'Movie' => __( 'Movie', 'wpseokit' ), 'TVSeries' => __( 'TV series', 'wpseokit' ) ) as $v => $l ) {
 			$opts .= '<option value="' . esc_attr( $v ) . '"' . selected( $type, $v, false ) . '>' . esc_html( $l ) . '</option>';
 		}
-		$o  = '<div class="rbn-stack">';
+		$o  = '<div class="wps-stack">';
 		$o .= Ui::row( Ui::label( 'wps-st', __( 'Schema type', 'wpseokit' ) ), '<select class="rbn-select" id="wps-st" name="wpseokit[schema_type]" data-schema-type>' . $opts . '</select>', esc_html__( 'Movie and TVSeries need the details below. Without them the post stays an Article.', 'wpseokit' ) );
-		$o .= '<div class="rbn-stack" data-schema-fields>';
+		$o .= '<div class="wps-stack" data-schema-fields>';
 		$o .= Ui::row( Ui::label( 'wps-dir', __( 'Director', 'wpseokit' ) ), '<input class="rbn-input" id="wps-dir" name="wpseokit[schema][director]" type="text" value="' . esc_attr( (string) ( $schema['director'] ?? '' ) ) . '">' );
 		$o .= Ui::row( Ui::label( 'wps-cast', __( 'Cast', 'wpseokit' ) ), '<input class="rbn-input" id="wps-cast" name="wpseokit[schema][cast]" type="text" value="' . esc_attr( $cast ) . '">', esc_html__( 'Separate names with commas.', 'wpseokit' ) );
-		$o .= Ui::row( Ui::label( 'wps-yr', __( 'Year', 'wpseokit' ) ), '<span class="rbn-unit"><input class="rbn-input rbn-input--s" id="wps-yr" name="wpseokit[schema][year]" type="number" min="1888" max="2100" value="' . esc_attr( (string) ( $schema['year'] ?? '' ) ) . '"></span>' );
+		$o .= Ui::row( Ui::label( 'wps-yr', __( 'Year', 'wpseokit' ) ), '<span class="wps-unit"><input class="rbn-input rbn-input--s" id="wps-yr" name="wpseokit[schema][year]" type="number" min="1888" max="2100" value="' . esc_attr( (string) ( $schema['year'] ?? '' ) ) . '"></span>' );
 		$o .= '</div></div>';
 		return $o;
 	}
@@ -166,10 +166,10 @@ final class MetaBox {
 	private static function panel_advanced( string $canonical, string $robots ): string {
 		$noindex  = false !== strpos( $robots, 'noindex' );
 		$nofollow = false !== strpos( $robots, 'nofollow' );
-		$sw       = '<div class="rbn-switchlist">';
-		$sw      .= '<label class="rbn-switch"><input type="checkbox" id="wps-ni" name="wpseokit[noindex]" value="1"' . checked( $noindex, true, false ) . '><span class="rbn-switch__t"></span><span class="rbn-switch__x"><b>' . esc_html__( 'Hide this post from search results', 'wpseokit' ) . '</b><span class="rbn-help">' . esc_html__( 'Adds noindex. The post also leaves the sitemap.', 'wpseokit' ) . '</span></span></label>';
-		$sw      .= '<label class="rbn-switch"><input type="checkbox" id="wps-nf" name="wpseokit[nofollow]" value="1"' . checked( $nofollow, true, false ) . '><span class="rbn-switch__t"></span><span class="rbn-switch__x"><b>' . esc_html__( 'Do not follow links on this post', 'wpseokit' ) . '</b><span class="rbn-help">' . esc_html__( 'Adds nofollow. Rarely needed.', 'wpseokit' ) . '</span></span></label></div>';
-		$o        = '<div class="rbn-stack">';
+		$sw       = '<div class="wps-switchlist">';
+		$sw      .= '<label class="rbn-switch"><input type="checkbox" id="wps-ni" name="wpseokit[noindex]" value="1"' . checked( $noindex, true, false ) . '><span class="rbn-switch__x"></span><span><b>' . esc_html__( 'Hide this post from search results', 'wpseokit' ) . '</b><span class="rbn-help">' . esc_html__( 'Adds noindex. The post also leaves the sitemap.', 'wpseokit' ) . '</span></span></label>';
+		$sw      .= '<label class="rbn-switch"><input type="checkbox" id="wps-nf" name="wpseokit[nofollow]" value="1"' . checked( $nofollow, true, false ) . '><span class="rbn-switch__x"></span><span><b>' . esc_html__( 'Do not follow links on this post', 'wpseokit' ) . '</b><span class="rbn-help">' . esc_html__( 'Adds nofollow. Rarely needed.', 'wpseokit' ) . '</span></span></label></div>';
+		$o        = '<div class="wps-stack">';
 		$o       .= Ui::row( Ui::label( 'wps-can', __( 'Canonical URL', 'wpseokit' ) ), '<input class="rbn-input rbn-input--mono" id="wps-can" name="wpseokit[canonical]" type="url" value="' . esc_attr( $canonical ) . '" placeholder="https://">', esc_html__( 'Leave empty to use the post address. Only fill this when the same content lives elsewhere.', 'wpseokit' ) );
 		$o       .= Ui::row( esc_html__( 'Search engines', 'wpseokit' ), $sw );
 		return $o . '</div>';

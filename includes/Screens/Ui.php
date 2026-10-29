@@ -19,6 +19,9 @@ defined( 'ABSPATH' ) || exit;
 
 final class Ui {
 
+	/** Handle of the shared AdminKit UI kit (style + tab script). */
+	private const KIT = 'rbn-admin-ui';
+
 	private static bool $booted      = false;
 	private static bool $sprite_done = false;
 
@@ -43,9 +46,10 @@ final class Ui {
 		if ( ! $page && ! $editor ) {
 			return;
 		}
-		wp_enqueue_style( 'wpseokit-kit', WPSEOKIT_URL . 'assets/admin/rbn-admin-ui.css', array(), WPSEOKIT_VERSION );
-		wp_enqueue_style( 'wpseokit-ui', WPSEOKIT_URL . 'assets/admin/wpseokit-ui.css', array( 'wpseokit-kit' ), WPSEOKIT_VERSION );
-		wp_enqueue_script( 'wpseokit-ui', WPSEOKIT_URL . 'assets/admin/wpseokit-admin.js', array(), WPSEOKIT_VERSION, array( 'in_footer' => true ) );
+		wp_enqueue_style( self::KIT ); // The shared AdminKit kit (CSS + tab script, registered by AdminKit); this plugin ships no copy of it.
+		wp_enqueue_script( self::KIT );
+		wp_enqueue_style( 'wpseokit-ui', WPSEOKIT_URL . 'assets/admin/wpseokit-ui.css', array( self::KIT ), WPSEOKIT_VERSION );
+		wp_enqueue_script( 'wpseokit-ui', WPSEOKIT_URL . 'assets/admin/wpseokit-admin.js', array( self::KIT ), WPSEOKIT_VERSION, array( 'in_footer' => true ) );
 		if ( $page ) { // The Logs tab uses AdminKit's shared log list (registered by AdminKit on every admin screen).
 			wp_enqueue_style( 'adminkit-core-logs' );
 			wp_enqueue_script( 'adminkit-core-logs' );
@@ -222,6 +226,10 @@ final class Ui {
 			'rebuilt'        => __( 'Sitemap rebuilt.', 'wpseokit' ),
 			'rebuilding'     => __( 'Rebuilding the sitemap…', 'wpseokit' ),
 			'copied'         => __( 'Copied', 'wpseokit' ),
+			'pagePrev'       => __( 'Previous page', 'wpseokit' ),
+			'pageNext'       => __( 'Next page', 'wpseokit' ),
+			/* translators: 1: current page number, 2: number of pages */
+			'pageOf'         => __( 'Page %1$d of %2$d', 'wpseokit' ),
 			'previewTitle'   => __( 'Gentle Shadows', 'wpseokit' ),
 			'chooseImage'    => __( 'Choose image', 'wpseokit' ),
 			'replaceImage'   => __( 'Replace image', 'wpseokit' ),
@@ -412,7 +420,7 @@ final class Ui {
 	public static function open( string $screen ): string {
 		ob_start();
 		self::sprite();
-		return (string) ob_get_clean() . '<div class="wps-screen" data-screen="' . esc_attr( $screen ) . '"' . self::tone_attr() . '><div class="wps-live-region" role="status" aria-live="polite" data-result></div>';
+		return (string) ob_get_clean() . '<div class="wps-screen" data-screen="' . esc_attr( $screen ) . '"><div class="wps-live-region" role="status" aria-live="polite" data-result></div>';
 	}
 
 	public static function close(): string {
@@ -423,7 +431,7 @@ final class Ui {
 	public static function note( string $type, string $html, string $role = '' ): string {
 		$icons = array( 'ok' => 'check', 'warn' => 'alert', 'err' => 'x', 'info' => 'info' );
 		$attr  = '' !== $role ? ' role="' . esc_attr( $role ) . '"' : '';
-		return '<div class="rbn-note rbn-note--' . esc_attr( $type ) . '"' . $attr . '>' . self::icon( $icons[ $type ] ?? 'info' ) . '<div><p>' . $html . '</p></div></div>';
+		return '<div class="rbn-note' . ( 'info' === $type ? '' : ' rbn-note--' . esc_attr( $type ) ) . '"' . $attr . '>' . self::icon( $icons[ $type ] ?? 'info' ) . '<div class="rbn-note__t"><p>' . $html . '</p></div></div>';
 	}
 
 	public static function card( string $title, string $desc, string $body, string $extra = '' ): string {
@@ -434,7 +442,8 @@ final class Ui {
 	/** One label + control row. */
 	public static function row( string $label_html, string $control, string $help = '', string $help_id = '' ): string {
 		$h = '' !== $help ? '<p class="rbn-help"' . ( '' !== $help_id ? ' id="' . esc_attr( $help_id ) . '"' : '' ) . '>' . $help . '</p>' : '';
-		return '<div class="rbn-field"><div class="rbn-field__l">' . $label_html . '</div><div class="rbn-field__c">' . $control . $h . '</div></div>';
+		$l = 0 === strpos( $label_html, '<label' ) ? $label_html : '<span class="rbn-label">' . $label_html . '</span>';
+		return '<div class="rbn-field">' . $l . $control . $h . '</div>';
 	}
 
 	public static function label( string $id, string $text ): string {
@@ -473,7 +482,7 @@ final class Ui {
 			$ctl = '<input class="' . $cls . '" type="' . esc_attr( $type ) . '"' . $attrs . ' value="' . esc_attr( (string) $value ) . '">';
 		}
 		if ( ! empty( $o['unit'] ) ) {
-			$ctl = '<span class="rbn-unit">' . $ctl . '<span>' . esc_html( (string) $o['unit'] ) . '</span></span>';
+			$ctl = '<span class="wps-unit">' . $ctl . '<span>' . esc_html( (string) $o['unit'] ) . '</span></span>';
 		}
 		if ( ! empty( $o['vars'] ) ) {
 			$ctl .= self::vars( $id, (array) $o['vars'] );
@@ -484,9 +493,9 @@ final class Ui {
 
 	/** "Insert a variable" disclosure. @param array<int, string> $tokens */
 	public static function vars( string $target, array $tokens, bool $open = false ): string {
-		$out = '<details class="wps-vars" data-vars-for="' . esc_attr( $target ) . '"' . ( $open ? ' open' : '' ) . '><summary>' . self::icon( 'plus' ) . esc_html__( 'Insert a variable', 'wpseokit' ) . '</summary><div class="rbn-toks">';
+		$out = '<details class="wps-vars" data-vars-for="' . esc_attr( $target ) . '"' . ( $open ? ' open' : '' ) . '><summary>' . self::icon( 'plus' ) . esc_html__( 'Insert a variable', 'wpseokit' ) . '</summary><div class="wps-toks">';
 		foreach ( $tokens as $t ) {
-			$out .= '<button type="button" class="rbn-tok" data-insert="' . esc_attr( $t ) . '">' . esc_html( $t ) . '</button>';
+			$out .= '<button type="button" class="wps-tok" data-insert="' . esc_attr( $t ) . '">' . esc_html( $t ) . '</button>';
 		}
 		return $out . '</div></details>';
 	}
@@ -494,7 +503,7 @@ final class Ui {
 	/** Switch bound to a boolean setting. */
 	public static function toggle( string $path, string $id, string $title, string $help = '', bool $disabled = false ): string {
 		$on = (bool) self::val( $path, false );
-		return '<label class="rbn-switch"><input type="checkbox" id="' . esc_attr( $id ) . '" name="' . esc_attr( $path ) . '" data-type="bool"' . ( $on ? ' checked' : '' ) . ( $disabled ? ' disabled' : '' ) . '><span class="rbn-switch__t"></span><span class="rbn-switch__x"><b>' . esc_html( $title ) . '</b>' . ( '' !== $help ? '<span class="rbn-help">' . esc_html( $help ) . '</span>' : '' ) . '</span></label>';
+		return '<label class="rbn-switch"><input type="checkbox" id="' . esc_attr( $id ) . '" name="' . esc_attr( $path ) . '" data-type="bool"' . ( $on ? ' checked' : '' ) . ( $disabled ? ' disabled' : '' ) . '><span class="rbn-switch__x"></span><span><b>' . esc_html( $title ) . '</b>' . ( '' !== $help ? '<span class="rbn-help">' . esc_html( $help ) . '</span>' : '' ) . '</span></label>';
 	}
 
 	/** Switch inside a field row. */
@@ -509,9 +518,9 @@ final class Ui {
 	 */
 	public static function seg( string $path, string $id, string $label, array $options, string $help = '' ): string {
 		$cur = (string) self::val( $path, '' );
-		$out = '<fieldset class="rbn-seg" aria-labelledby="' . esc_attr( $id ) . '-l">';
+		$out = '<fieldset class="wps-radios" aria-labelledby="' . esc_attr( $id ) . '-l">';
 		foreach ( $options as $value => $text ) {
-			$out .= '<label><input type="radio" name="' . esc_attr( $path ) . '" value="' . esc_attr( (string) $value ) . '"' . checked( $cur, (string) $value, false ) . '><span>' . esc_html( $text ) . '</span></label>';
+			$out .= '<label class="rbn-check"><input type="radio" name="' . esc_attr( $path ) . '" value="' . esc_attr( (string) $value ) . '"' . checked( $cur, (string) $value, false ) . '><span>' . esc_html( $text ) . '</span></label>';
 		}
 		$out .= '</fieldset>';
 		return self::row( '<span id="' . esc_attr( $id ) . '-l">' . esc_html( $label ) . '</span>', $out, $help );
@@ -524,10 +533,10 @@ final class Ui {
 	 */
 	public static function multi( string $path, string $id, array $items ): string {
 		$cur = array_map( 'strval', (array) self::val( $path, array() ) );
-		$out = '<div class="rbn-switchlist">';
+		$out = '<div class="wps-switchlist">';
 		$i   = 0;
 		foreach ( $items as $value => $text ) {
-			$out .= '<label class="rbn-switch"><input type="checkbox" id="' . esc_attr( $id . '-' . $i ) . '" name="' . esc_attr( $path ) . '" value="' . esc_attr( (string) $value ) . '" data-multi' . ( in_array( (string) $value, $cur, true ) ? ' checked' : '' ) . '><span class="rbn-switch__t"></span><span class="rbn-switch__x"><b>' . esc_html( $text ) . '</b></span></label>';
+			$out .= '<label class="rbn-switch"><input type="checkbox" id="' . esc_attr( $id . '-' . $i ) . '" name="' . esc_attr( $path ) . '" value="' . esc_attr( (string) $value ) . '" data-multi' . ( in_array( (string) $value, $cur, true ) ? ' checked' : '' ) . '><span class="rbn-switch__x"></span><span><b>' . esc_html( $text ) . '</b></span></label>';
 			++$i;
 		}
 		return $out . '</div>';
@@ -537,7 +546,7 @@ final class Ui {
 	public static function media( string $id_path, string $url_path, string $id, string $help = '' ): string {
 		$url   = (string) self::val( $url_path, '' );
 		$img   = '' !== $url ? '<img src="' . esc_url( $url ) . '" alt="">' : self::icon( 'image' );
-		$ctl   = '<div class="wps-media" data-media="' . esc_attr( $id ) . '"><div class="wps-media__img' . ( '' !== $url ? ' wps-media__img--filled' : '' ) . '">' . $img . '</div><div class="rbn-row">';
+		$ctl   = '<div class="wps-media" data-media="' . esc_attr( $id ) . '"><div class="wps-media__img' . ( '' !== $url ? ' wps-media__img--filled' : '' ) . '">' . $img . '</div><div class="wps-row">';
 		$ctl  .= '<button type="button" class="rbn-btn" data-media-pick>' . self::icon( 'image' ) . esc_html( '' !== $url ? __( 'Replace image', 'wpseokit' ) : __( 'Choose image', 'wpseokit' ) ) . '</button>';
 		$ctl  .= '<button type="button" class="rbn-btn rbn-btn--danger" data-media-clear' . ( '' === $url ? ' hidden' : '' ) . '>' . self::icon( 'trash' ) . esc_html__( 'Remove', 'wpseokit' ) . '</button></div>';
 		$ctl  .= '<input type="hidden" name="' . esc_attr( $id_path ) . '" value="' . (int) self::val( $id_path, 0 ) . '" data-type="int" data-media-id>';
@@ -547,7 +556,7 @@ final class Ui {
 
 	/** Sticky save bar shown only while a form has unsaved changes. */
 	public static function bar(): string {
-		return '<div class="rbn-bar" data-bar><p>' . esc_html__( 'You have unsaved changes.', 'wpseokit' ) . '</p><div class="rbn-bar__act"><button type="button" class="rbn-btn" data-discard>' . esc_html__( 'Discard', 'wpseokit' ) . '</button><button type="submit" class="rbn-btn rbn-btn--pri" data-save>' . self::icon( 'save' ) . esc_html__( 'Save changes', 'wpseokit' ) . '</button></div></div>';
+		return '<div class="wps-savebar" data-bar><p>' . esc_html__( 'You have unsaved changes.', 'wpseokit' ) . '</p><div class="wps-savebar__act"><button type="button" class="rbn-btn" data-discard>' . esc_html__( 'Discard', 'wpseokit' ) . '</button><button type="submit" class="rbn-btn rbn-btn--pri" data-save>' . self::icon( 'save' ) . esc_html__( 'Save changes', 'wpseokit' ) . '</button></div></div>';
 	}
 
 	/** Wraps cards in a settings form handled by the shared script. */

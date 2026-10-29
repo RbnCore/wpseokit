@@ -59,53 +59,23 @@
 
 	function initShell() {
 		var wrap = $( '.wpseokit-wrap' );
-		if ( wrap ) { wrap.classList.add( 'rbn-js' ); }
+		if ( wrap ) { wrap.classList.add( 'wps-js' ); }
 		if ( wrap && T.tone === 'koyu' ) { wrap.setAttribute( 'data-tone', 'koyu' ); }
 	}
 
-	/* ---------- Tabs (WAI-ARIA): one tablist per tool, the address keeps ?tab= ---------- */
-
-	function selectTab( list, id, focus ) {
-		var tabs = $$( '[role="tab"]', list ), found = false;
-		tabs.forEach( function ( t ) {
-			var sel = t.getAttribute( 'data-tab' ) === id;
-			found = found || sel;
-			t.setAttribute( 'aria-selected', sel ? 'true' : 'false' );
-			t.tabIndex = sel ? 0 : -1;
-			var p = doc.getElementById( t.getAttribute( 'aria-controls' ) );
-			if ( p ) { p.hidden = ! sel; }
-			if ( sel && focus ) { t.focus(); }
-		} );
-		if ( found && window.history && history.replaceState ) {
-			var u = new URL( window.location.href );
-			u.searchParams.set( 'tab', id );
-			history.replaceState( null, '', u.toString() );
-		}
-		return found;
-	}
+	/* ---------- Tabs: the shared AdminKit component (rbn-admin-ui) owns roles, arrows, Home/End and the ?tab= / ?sub= address ---------- */
 
 	function initTabs( root ) {
-		$$( '[data-tabs]', root ).forEach( function ( list ) {
-			list.addEventListener( 'click', function ( e ) {
-				var t = e.target.closest( '[role="tab"]' );
-				if ( t ) { selectTab( list, t.getAttribute( 'data-tab' ), false ); }
-			} );
-			list.addEventListener( 'keydown', function ( e ) {
-				var tabs = $$( '[role="tab"]', list ), i = tabs.indexOf( doc.activeElement ), n = -1;
-				if ( i < 0 ) { return; }
-				if ( e.key === 'ArrowRight' ) { n = ( i + 1 ) % tabs.length; } else if ( e.key === 'ArrowLeft' ) { n = ( i - 1 + tabs.length ) % tabs.length; } else if ( e.key === 'Home' ) { n = 0; } else if ( e.key === 'End' ) { n = tabs.length - 1; }
-				if ( n < 0 ) { return; }
-				e.preventDefault();
-				selectTab( list, tabs[ n ].getAttribute( 'data-tab' ), true );
-			} );
-		} );
+		if ( window.RbnUi ) { window.RbnUi.initTabs( root ); }
 	}
 
 	/** Opens a tab of the tool on this page, e.g. goTab( 'dry' ). */
 	function goTab( id ) {
 		if ( dashApi ) { return dashApi.showSub( 'yoast', id, false ); }
-		var list = $( '[data-tabs]' );
-		return list ? selectTab( list, id, false ) : false;
+		var tab = $( '[data-rbn-tabs] [data-key="' + id + '"]' );
+		if ( ! tab ) { return false; }
+		tab.click();
+		return true;
 	}
 
 	/* ---------- Tools menu ---------- */
@@ -130,7 +100,7 @@
 	}
 
 	function initVars( root ) {
-		on( root, 'click', '.rbn-tok[data-insert]', function ( e, btn ) {
+		on( root, 'click', '.wps-tok[data-insert]', function ( e, btn ) {
 			var det = btn.closest( '[data-vars-for]' );
 			var target = det && doc.getElementById( det.getAttribute( 'data-vars-for' ) );
 			if ( ! target ) { return; }
@@ -289,44 +259,27 @@
 		return String( s ).replace( /%(?:(\d+)\$)?[sd]/g, function ( m, n ) { var v = a[ n ? n - 1 : i++ ]; return v === undefined ? '' : v; } );
 	}
 
+	/** Dashboard tabs are the shared component; this adds "go to" links and tells lazy panels when they are shown. */
 	function dashTabs( screen ) {
 		var topList = $( '[data-dtabs]', screen );
 		if ( ! topList ) { return null; }
-		function tabsOf( list ) { return $$( '[role="tab"]', list ); }
-		function current( list ) {
-			return tabsOf( list ).filter( function ( t ) { return t.getAttribute( 'aria-selected' ) === 'true'; } )[ 0 ] || tabsOf( list )[ 0 ];
-		}
-		function pick( list, tab ) {
-			tabsOf( list ).forEach( function ( t ) {
-				var on = t === tab, p = doc.getElementById( t.getAttribute( 'aria-controls' ) );
-				t.setAttribute( 'aria-selected', on ? 'true' : 'false' );
-				t.tabIndex = on ? 0 : -1;
-				if ( p ) { p.hidden = ! on; }
-			} );
-		}
 		function subList( top ) { return $( '[data-subtabs="' + top + '"]', screen ); }
-		function sync() {
-			var top = current( topList ).getAttribute( 'data-top' ), sl = subList( top ), u = new URL( window.location.href );
-			u.searchParams.delete( 'tool' );
-			if ( top === 'overview' ) { u.searchParams.delete( 'tab' ); } else { u.searchParams.set( 'tab', top ); }
-			if ( sl && tabsOf( sl ).indexOf( current( sl ) ) > 0 ) { u.searchParams.set( 'sub', current( sl ).getAttribute( 'data-sub' ) ); } else { u.searchParams.delete( 'sub' ); }
-			if ( window.history && history.replaceState ) { history.replaceState( null, '', u.toString() ); }
-			screen.dispatchEvent( new CustomEvent( 'wps:tab', { detail: { top: top } } ) );
+		function tabsOf( list ) { return $$( '[role="tab"]', list ); }
+		function current() {
+			return tabsOf( topList ).filter( function ( t ) { return t.getAttribute( 'aria-selected' ) === 'true'; } )[ 0 ] || tabsOf( topList )[ 0 ];
 		}
 		function showTop( id, focus ) {
 			var tab = $( '[data-top="' + id + '"]', topList );
 			if ( ! tab ) { return false; }
-			pick( topList, tab );
+			tab.click();
 			if ( focus ) { tab.focus(); }
-			sync();
 			return true;
 		}
 		function showSub( top, id, focus ) {
 			var sl = subList( top ), tab = sl ? $( '[data-sub="' + id + '"]', sl ) : null;
 			if ( ! showTop( top, false ) || ! tab ) { return false; }
-			pick( sl, tab );
+			tab.click();
 			if ( focus ) { tab.focus(); }
-			sync();
 			return true;
 		}
 		function go( spec, heading ) {
@@ -338,22 +291,20 @@
 			return ok;
 		}
 		screen.addEventListener( 'click', function ( e ) {
-			var g = e.target.closest ? e.target.closest( '[data-goto]' ) : null, t = e.target.closest ? e.target.closest( '[role="tab"]' ) : null;
-			if ( g && screen.contains( g ) ) { e.preventDefault(); go( g.getAttribute( 'data-goto' ), true ); return; }
-			if ( ! t || ! screen.contains( t ) ) { return; }
-			var list = t.closest( '[role="tablist"]' );
-			if ( list === topList ) { e.preventDefault(); showTop( t.getAttribute( 'data-top' ), false ); } else if ( list && list.hasAttribute( 'data-subtabs' ) ) { e.preventDefault(); showSub( list.getAttribute( 'data-subtabs' ), t.getAttribute( 'data-sub' ), false ); }
+			var g = e.target.closest ? e.target.closest( '[data-goto]' ) : null;
+			if ( g && screen.contains( g ) ) { e.preventDefault(); go( g.getAttribute( 'data-goto' ), true ); }
 		} );
-		screen.addEventListener( 'keydown', function ( e ) {
-			var t = e.target.closest ? e.target.closest( '[role="tab"]' ) : null, list = t ? t.closest( '[role="tablist"]' ) : null;
-			if ( ! t || ! list || ( list !== topList && ! list.hasAttribute( 'data-subtabs' ) ) ) { return; }
-			var tabs = tabsOf( list ), i = tabs.indexOf( t ), n = -1;
-			if ( e.key === 'ArrowRight' ) { n = ( i + 1 ) % tabs.length; } else if ( e.key === 'ArrowLeft' ) { n = ( i - 1 + tabs.length ) % tabs.length; } else if ( e.key === 'Home' ) { n = 0; } else if ( e.key === 'End' ) { n = tabs.length - 1; }
-			if ( n < 0 ) { return; }
-			e.preventDefault();
-			if ( list === topList ) { showTop( tabs[ n ].getAttribute( 'data-top' ), true ); } else { showSub( list.getAttribute( 'data-subtabs' ), tabs[ n ].getAttribute( 'data-sub' ), true ); }
-		} );
-		return { go: go, showTop: showTop, showSub: showSub, current: function () { return current( topList ).getAttribute( 'data-top' ); } };
+		// Panels that load on first view listen for this; the component only toggles [hidden].
+		var queued = false;
+		new MutationObserver( function () {
+			if ( queued ) { return; }
+			queued = true;
+			Promise.resolve().then( function () {
+				queued = false;
+				screen.dispatchEvent( new CustomEvent( 'wps:tab', { detail: { top: current().getAttribute( 'data-top' ) } } ) );
+			} );
+		} ).observe( screen, { subtree: true, attributes: true, attributeFilter: [ 'hidden' ] } );
+		return { go: go, showTop: showTop, showSub: showSub, current: function () { return current().getAttribute( 'data-top' ); } };
 	}
 
 	function dashHref( top, sub ) {
@@ -383,8 +334,8 @@
 
 	function score( screen ) {
 		var sum = $( '[data-score-summary]', screen ), S = { site: null, recs: null, posts: null, rules: null };
-		var BAND = { good: [ 'ok', 'check', 'bandGood' ], fair: [ 'warn', 'alert', 'bandFair' ], poor: [ 'crit', 'alert', 'bandPoor' ] };
-		var LEVEL = { critical: [ 'crit', 'lvCritical' ], warning: [ 'warn', 'lvWarning' ], info: [ 'mute', 'lvInfo' ] };
+		var BAND = { good: [ 'ok', 'check', 'bandGood' ], fair: [ 'warn', 'alert', 'bandFair' ], poor: [ 'err', 'alert', 'bandPoor' ] };
+		var LEVEL = { critical: [ 'err', 'lvCritical' ], warning: [ 'warn', 'lvWarning' ], info: [ 'mute', 'lvInfo' ] };
 		var ORDER = { critical: 0, warning: 1, info: 2 };
 		function view( name ) { return $( '[data-score-view="' + name + '"]', screen ); }
 		function bandOf( b ) { return BAND[ b ] || BAND.poor; }
@@ -395,7 +346,7 @@
 
 		function ring( site ) {
 			var b = bandOf( site.band && site.band.id ), label = ( site.band && site.band.label ) || I[ b[ 2 ] ];
-			return '<div class="wps-score__fig"><div class="rbn-ring rbn-ring--' + ( b[ 0 ] === 'crit' ? 'err' : b[ 0 ] ) + '"><div class="rbn-ring__svg" role="img" aria-label="' + esc( sp( I.scoreOutOf, site.score, label ) ) + '"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="rbn-ring__track" cx="60" cy="60" r="52"></circle><circle class="rbn-ring__val" cx="60" cy="60" r="52" data-p="' + esc( site.score ) + '"></circle></svg><div class="rbn-ring__n"><b>' + esc( site.score ) + '</b><span>/ 100</span></div></div></div><span class="rbn-badge rbn-badge--' + b[ 0 ] + '">' + icon( b[ 1 ] ) + esc( label ) + '</span></div>';
+			return '<div class="wps-score__fig"><div class="wps-ring wps-ring--' + ( b[ 0 ] ) + '"><div class="wps-ring__svg" role="img" aria-label="' + esc( sp( I.scoreOutOf, site.score, label ) ) + '"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="wps-ring__track" cx="60" cy="60" r="52"></circle><circle class="wps-ring__val" cx="60" cy="60" r="52" data-p="' + esc( site.score ) + '"></circle></svg><div class="wps-ring__n"><b>' + esc( site.score ) + '</b><span>/ 100</span></div></div></div><span class="rbn-badge rbn-badge--' + b[ 0 ] + '">' + icon( b[ 1 ] ) + esc( label ) + '</span></div>';
 		}
 		function breakdown( site ) {
 			var out = '<p class="wps-score__lead">' + esc( I.siteScore ) + ': <b>' + esc( site.config ? site.config.score : '–' ) + '</b>';
@@ -410,16 +361,16 @@
 		/** Summary card of the Overview tab: the whole card is one link to the score. */
 		function drawSummary( site ) {
 			if ( ! sum ) { return; }
-			sum.innerHTML = '<section class="rbn-card wps-score wps-sum"><div class="rbn-card__b rbn-card__b--pad"><div class="wps-score__grid">' + ring( site ) + '<div><h2 class="wps-score__h"><a class="wps-stretch" href="' + esc( dashHref( 'score' ) ) + '" data-goto="score">' + esc( I.scoreHead ) + '</a></h2>' + breakdown( site ) + stamp( site ) + '<p class="wps-sum__go">' + esc( I.details || 'Score details' ) + icon( 'chevr' ) + '</p></div></div></div></section>';
+			sum.innerHTML = '<section class="rbn-card wps-score wps-sum"><div class="rbn-card__b"><div class="wps-score__grid">' + ring( site ) + '<div><h2 class="wps-score__h"><a class="wps-stretch" href="' + esc( dashHref( 'score' ) ) + '" data-goto="score">' + esc( I.scoreHead ) + '</a></h2>' + breakdown( site ) + stamp( site ) + '<p class="wps-sum__go">' + esc( I.details || 'Score details' ) + icon( 'chevr' ) + '</p></div></div></div></section>';
 			paint( sum );
 		}
 		function drawSummaryEmpty() {
 			if ( ! sum ) { return; }
-			sum.innerHTML = '<section class="rbn-card wps-score"><div class="rbn-card__b rbn-card__b--pad"><h2 class="wps-score__h">' + esc( I.scoreHead ) + '</h2><p class="rbn-p"><b>' + esc( I.scoreNone ) + '</b> ' + esc( I.scoreNoneText ) + '</p><p><button type="button" class="rbn-btn rbn-btn--pri" data-recalc>' + icon( 'scan' ) + esc( I.calcNow ) + '</button></p></div></section>';
+			sum.innerHTML = '<section class="rbn-card wps-score"><div class="rbn-card__b"><h2 class="wps-score__h">' + esc( I.scoreHead ) + '</h2><p><b>' + esc( I.scoreNone ) + '</b> ' + esc( I.scoreNoneText ) + '</p><p><button type="button" class="rbn-btn rbn-btn--pri" data-recalc>' + icon( 'scan' ) + esc( I.calcNow ) + '</button></p></div></section>';
 		}
 		function drawSummaryError() {
 			if ( ! sum ) { return; }
-			sum.innerHTML = '<section class="rbn-card wps-score"><div class="rbn-card__b rbn-card__b--pad"><h2 class="wps-score__h">' + esc( I.scoreHead ) + '</h2>' + note( 'err', '<b>' + esc( I.calcFailed ) + '</b> ' + esc( I.loadFailed ), 'alert' ) + '<p><button type="button" class="rbn-btn" data-recalc>' + icon( 'undo' ) + esc( I.retry ) + '</button></p></div></section>';
+			sum.innerHTML = '<section class="rbn-card wps-score"><div class="rbn-card__b"><h2 class="wps-score__h">' + esc( I.scoreHead ) + '</h2>' + note( 'err', '<b>' + esc( I.calcFailed ) + '</b> ' + esc( I.loadFailed ), 'alert' ) + '<p><button type="button" class="rbn-btn" data-recalc>' + icon( 'undo' ) + esc( I.retry ) + '</button></p></div></section>';
 		}
 
 		/* -- recommendations -- */
@@ -460,7 +411,7 @@
 			if ( ! act.length ) {
 				out = '<section class="rbn-card"><div class="rbn-card__b"><div class="rbn-empty"><span class="rbn-empty__i">' + icon( 'check' ) + '</span><h3>' + esc( I.recsNone ) + '</h3><p>' + esc( I.recsNoneText ) + '</p></div></div></section>';
 			} else {
-				out = '<div class="wps-recbar"><p class="rbn-p">' + esc( sp( I.recsCount, act.length ) ) + '</p></div><ol class="wps-recs">' + act.map( recHtml ).join( '' ) + '</ol>';
+				out = '<div class="wps-recbar"><p>' + esc( sp( I.recsCount, act.length ) ) + '</p></div><ol class="wps-recs">' + act.map( recHtml ).join( '' ) + '</ol>';
 			}
 			if ( hid.length ) { out += '<details class="wps-hidden"><summary>' + icon( 'eye' ) + '<span>' + esc( sp( I.hiddenHead, hid.length ) ) + '</span></summary><ol class="wps-recs">' + hid.map( recHtml ).join( '' ) + '</ol></details>'; }
 			out += '<p class="rbn-help" role="status" data-rec-live></p>';
@@ -474,7 +425,7 @@
 		function drawOverview() {
 			var box = view( 'overview' );
 			if ( ! box || ! S.site ) { return; }
-			var site = S.site, out = '<section class="rbn-card wps-score"><div class="rbn-card__b rbn-card__b--pad"><div class="wps-score__grid">' + ring( site ) + '<div><h2 class="wps-score__h">' + esc( I.scoreHead ) + '</h2>' + breakdown( site ) + stamp( site );
+			var site = S.site, out = '<section class="rbn-card wps-score"><div class="rbn-card__b"><div class="wps-score__grid">' + ring( site ) + '<div><h2 class="wps-score__h">' + esc( I.scoreHead ) + '</h2>' + breakdown( site ) + stamp( site );
 			if ( site.cap_applied && site.cap_note ) { out += note( 'warn', esc( site.cap_note ) ); }
 			if ( site.environment_note ) { out += '<p class="rbn-help wps-score__note">' + esc( site.environment_note ) + '</p>'; }
 			out += '<p class="wps-score__note"><button type="button" class="rbn-btn" data-recalc>' + icon( 'undo' ) + esc( I.recalc ) + '</button></p></div></div></div></section>';
@@ -490,11 +441,11 @@
 			var box = view( 'posts' );
 			if ( ! box || ! S.posts ) { return; }
 			var posts = S.posts.posts || [];
-			var sel = '<div class="wps-filterbar"><div><div class="rbn-field__l"><label for="wps-pb">' + esc( I.colBand ) + '</label></div><select class="rbn-select" id="wps-pb" data-post-band><option value="all">' + esc( I.allBands ) + '</option><option value="good">' + esc( I.bandGood ) + '</option><option value="fair">' + esc( I.bandFair ) + '</option><option value="poor">' + esc( I.bandPoor ) + '</option></select></div><p class="rbn-help" role="status" data-posts-live></p></div>';
+			var sel = '<div class="wps-filterbar"><div class="rbn-field"><label for="wps-pb">' + esc( I.colBand ) + '</label><select class="rbn-select" id="wps-pb" data-post-band><option value="all">' + esc( I.allBands ) + '</option><option value="good">' + esc( I.bandGood ) + '</option><option value="fair">' + esc( I.bandFair ) + '</option><option value="poor">' + esc( I.bandPoor ) + '</option></select></div><p class="rbn-help" role="status" data-posts-live></p></div>';
 			if ( ! posts.length ) { box.innerHTML = '<section class="rbn-card"><div class="rbn-card__b"><div class="rbn-empty"><span class="rbn-empty__i">' + icon( 'doc' ) + '</span><h3>' + esc( I.noPosts ) + '</h3></div></div></section>'; return; }
 			var rows = posts.map( function ( p ) {
 				var b = bandOf( p.band );
-				return '<tr data-post-row data-band="' + esc( p.band ) + '"><th scope="row" data-l="' + esc( I.colPost ) + '">' + esc( p.title || '#' + p.id ) + '</th><td data-l="' + esc( I.colScore ) + '"><span class="wps-num">' + esc( p.score ) + '</span></td><td data-l="' + esc( I.colBand ) + '"><span class="rbn-badge rbn-badge--' + b[ 0 ] + '">' + icon( b[ 1 ] ) + esc( I[ b[ 2 ] ] ) + '</span></td><td data-l="' + esc( I.colFailing ) + '">' + ( p.failing.length ? esc( p.failing.join( ', ' ) ) : esc( I.noFailing ) ) + '</td><td data-l="' + esc( I.action || 'Action' ) + '">' + ( p.edit ? '<a class="rbn-btn rbn-btn--sm" href="' + esc( p.edit ) + '">' + esc( I.editPost ) + '<span class="rbn-sr"> ' + esc( sp( I.fixFor, p.title ) ) + '</span></a>' : '' ) + '</td></tr>';
+				return '<tr data-post-row data-band="' + esc( p.band ) + '"><th scope="row" data-label="' + esc( I.colPost ) + '">' + esc( p.title || '#' + p.id ) + '</th><td data-label="' + esc( I.colScore ) + '"><span class="wps-num">' + esc( p.score ) + '</span></td><td data-label="' + esc( I.colBand ) + '"><span class="rbn-badge rbn-badge--' + b[ 0 ] + '">' + icon( b[ 1 ] ) + esc( I[ b[ 2 ] ] ) + '</span></td><td data-label="' + esc( I.colFailing ) + '">' + ( p.failing.length ? esc( p.failing.join( ', ' ) ) : esc( I.noFailing ) ) + '</td><td data-label="' + esc( I.action || 'Action' ) + '">' + ( p.edit ? '<a class="rbn-btn rbn-btn--sm" href="' + esc( p.edit ) + '">' + esc( I.editPost ) + '<span class="rbn-sr"> ' + esc( sp( I.fixFor, p.title ) ) + '</span></a>' : '' ) + '</td></tr>';
 			} ).join( '' );
 			box.innerHTML = sel + '<section class="rbn-card"><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.colPost + ' / ' + I.colScore ) + '</caption><thead><tr><th scope="col">' + esc( I.colPost ) + '</th><th scope="col">' + esc( I.colScore ) + '</th><th scope="col">' + esc( I.colBand ) + '</th><th scope="col">' + esc( I.colFailing ) + '</th><th scope="col">' + esc( I.action || 'Action' ) + '</th></tr></thead><tbody>' + rows + '</tbody></table></div></div></section>';
 		}
@@ -508,7 +459,7 @@
 			[ 'site', 'post' ].forEach( function ( scope ) {
 				( R.rules && R.rules[ scope ] ? R.rules[ scope ] : [] ).forEach( function ( r ) {
 					var lv = LEVEL[ r.level ] || LEVEL.info, src = r.source ? '<a href="' + esc( r.source ) + '" target="_blank" rel="noopener noreferrer">' + esc( String( r.source ).replace( /^https?:\/\/([^/]+).*/, '$1' ) ) + '<span class="rbn-sr"> ' + esc( I.sourceNew ) + '</span></a>' : '';
-					rows.push( '<tr><th scope="row" data-l="' + esc( I.colRule ) + '">' + esc( r.title ) + '</th><td data-l="' + esc( I.colApplies ) + '">' + esc( scope === 'post' ? I.scopePosts : I.scopeSite ) + '</td><td data-l="' + esc( I.colLevel ) + '"><span class="rbn-badge rbn-badge--mute">' + esc( I[ lv[ 1 ] ] ) + '</span></td><td data-l="' + esc( I.colWeight ) + '" class="rbn-num">' + esc( r.weight ) + '</td><td data-l="' + esc( I.colSource ) + '">' + src + '</td></tr>' );
+					rows.push( '<tr><th scope="row" data-label="' + esc( I.colRule ) + '">' + esc( r.title ) + '</th><td data-label="' + esc( I.colApplies ) + '">' + esc( scope === 'post' ? I.scopePosts : I.scopeSite ) + '</td><td data-label="' + esc( I.colLevel ) + '"><span class="rbn-badge rbn-badge--mute">' + esc( I[ lv[ 1 ] ] ) + '</span></td><td data-label="' + esc( I.colWeight ) + '" class="rbn-num">' + esc( r.weight ) + '</td><td data-label="' + esc( I.colSource ) + '">' + src + '</td></tr>' );
 				} );
 			} );
 			var bands = ( R.bands || [] ).map( function ( b ) { var m = bandOf( b.id ); return '<li><span class="rbn-badge rbn-badge--' + m[ 0 ] + '">' + icon( m[ 1 ] ) + esc( b.label ) + '</span> <span class="rbn-help">' + esc( b.min ) + '–' + esc( b.max ) + '</span></li>'; } ).join( '' );
@@ -681,17 +632,17 @@
 			} );
 			svg += '</svg>';
 			var head = '<tr><th scope="col">' + esc( I.colDate ) + '</th>' + keys.map( function ( k ) { return '<th scope="col" class="rbn-num">' + esc( label( k ) ) + '</th>'; } ).join( '' ) + '</tr>';
-			d.points.forEach( function ( p ) { rows += '<tr><th scope="row" data-l="' + esc( I.colDate ) + '">' + esc( p.date ) + '</th>' + keys.map( function ( k ) { return '<td data-l="' + esc( label( k ) ) + '" class="rbn-num">' + esc( num( p.values[ k ] ) ) + '</td>'; } ).join( '' ) + '</tr>'; } );
+			d.points.forEach( function ( p ) { rows += '<tr><th scope="row" data-label="' + esc( I.colDate ) + '">' + esc( p.date ) + '</th>' + keys.map( function ( k ) { return '<td data-label="' + esc( label( k ) ) + '" class="rbn-num">' + esc( num( p.values[ k ] ) ) + '</td>'; } ).join( '' ) + '</tr>'; } );
 			var lead = keys.map( function ( k, i ) { return i ? '<span>' + esc( label( k ) + ': ' + num( lastVal( d, k ) ) ) + '</span>' : '<strong>' + esc( num( lastVal( d, k ) ) ) + '</strong><span>' + esc( label( k ) + ( o.suffix || '' ) ) + '</span>'; } ).join( '' );
 			var ch = changeText( d, keys[ 0 ] );
 			var lg = keys.length > 1 ? '<ul class="wps-chart__lg">' + keys.map( function ( k, i ) { return '<li' + ( i ? ' class="is-2"' : '' ) + '><svg viewBox="0 0 36 12" aria-hidden="true"><line x1="0" y1="6" x2="36" y2="6"></line></svg>' + esc( label( k ) + ' (' + ( i ? I.repDash : I.repLine ).toLowerCase() + ')' ) + '</li>'; } ).join( '' ) + '</ul>' : '';
-			return '<li' + ( o.wide ? ' class="wps-wide"' : '' ) + '><section class="rbn-card"><div class="rbn-card__h"><h2>' + esc( o.title ) + '</h2>' + ( o.text ? '<p>' + esc( o.text ) + '</p>' : '' ) + '</div><div class="rbn-card__b rbn-card__b--pad"><figure class="wps-chart"><figcaption class="rbn-sr">' + esc( o.title ) + '</figcaption><p class="wps-chart__k">' + lead + ( ch ? '<span>' + esc( ch ) + '</span>' : '' ) + '</p><div class="wps-chart__plot"><div class="wps-chart__y" aria-hidden="true"><span>' + esc( Math.round( g.hi ) ) + '</span><span>' + esc( Math.round( g.lo ) ) + '</span></div>' + svg + '<div class="wps-chart__x" aria-hidden="true"><span>' + esc( day( d.from ) ) + '</span><span>' + esc( day( d.to ) ) + '</span></div></div>' + lg + '<details><summary>' + esc( I.repTable ) + '</summary><div class="rbn-tw"><table class="rbn-table rbn-table--cols"><caption class="rbn-sr">' + esc( o.title ) + '</caption><thead>' + head + '</thead><tbody>' + rows + '</tbody></table></div></details></figure></div></section></li>';
+			return '<li' + ( o.wide ? ' class="wps-wide"' : '' ) + '><section class="rbn-card"><div class="rbn-card__h"><h2>' + esc( o.title ) + '</h2>' + ( o.text ? '<p>' + esc( o.text ) + '</p>' : '' ) + '</div><div class="rbn-card__b"><figure class="wps-chart"><figcaption class="rbn-sr">' + esc( o.title ) + '</figcaption><p class="wps-chart__k">' + lead + ( ch ? '<span>' + esc( ch ) + '</span>' : '' ) + '</p><div class="wps-chart__plot"><div class="wps-chart__y" aria-hidden="true"><span>' + esc( Math.round( g.hi ) ) + '</span><span>' + esc( Math.round( g.lo ) ) + '</span></div>' + svg + '<div class="wps-chart__x" aria-hidden="true"><span>' + esc( day( d.from ) ) + '</span><span>' + esc( day( d.to ) ) + '</span></div></div>' + lg + '<details><summary>' + esc( I.repTable ) + '</summary><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( o.title ) + '</caption><thead>' + head + '</thead><tbody>' + rows + '</tbody></table></div></details></figure></div></section></li>';
 		}
 		function bars( d, o ) {
 			var items = o.keys.filter( function ( k ) { return hasData( d, k ); } );
 			if ( ! items.length ) { return ''; }
 			var max = o.pct ? 100 : Math.max.apply( null, items.map( function ( k ) { return +lastVal( d, k ); } ).concat( [ 1 ] ) );
-			return '<li><section class="rbn-card"><div class="rbn-card__h"><h2>' + esc( o.title ) + '</h2><p>' + esc( sp( I.repMeta, d.latest ? when( d.latest.taken_at ) : '' ) ) + '</p></div><div class="rbn-card__b rbn-card__b--pad"><ul class="wps-hbars">' + items.map( function ( k, i ) {
+			return '<li><section class="rbn-card"><div class="rbn-card__h"><h2>' + esc( o.title ) + '</h2><p>' + esc( sp( I.repMeta, d.latest ? when( d.latest.taken_at ) : '' ) ) + '</p></div><div class="rbn-card__b"><ul class="wps-hbars">' + items.map( function ( k, i ) {
 				var v = +lastVal( d, k );
 				return '<li' + ( i % 2 ? ' class="is-2"' : '' ) + '><span>' + esc( o.names ? o.names( k ) : label( k ) ) + '</span><span class="wps-hbars__t" aria-hidden="true"><i data-w="' + esc( Math.max( 0, Math.min( 100, v / max * 100 ) ) ) + '"></i></span><span class="wps-hbars__v">' + esc( num( v ) + ( o.pct ? '%' : '' ) ) + '</span></li>';
 			} ).join( '' ) + '</ul></div></section></li>';
@@ -701,14 +652,14 @@
 			if ( ! keys.length ) { return ''; }
 			return '<li class="wps-wide"><section class="rbn-card"><div class="rbn-card__h"><h2>' + esc( I.repSummary ) + '</h2><p>' + esc( I.repGap ) + '</p></div><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.repSummary ) + '</caption><thead><tr><th scope="col">' + esc( I.colMetric ) + '</th><th scope="col" class="rbn-num">' + esc( I.colStart ) + '</th><th scope="col" class="rbn-num">' + esc( I.colEnd ) + '</th><th scope="col" class="rbn-num">' + esc( I.colChange ) + '</th></tr></thead><tbody>' + keys.map( function ( k ) {
 				var s = d.summary[ k ];
-				return '<tr><th scope="row" data-l="' + esc( I.colMetric ) + '">' + esc( label( k ) ) + '</th><td data-l="' + esc( I.colStart ) + '" class="rbn-num">' + esc( num( s.start ) ) + '</td><td data-l="' + esc( I.colEnd ) + '" class="rbn-num">' + esc( num( s.end ) ) + '</td><td data-l="' + esc( I.colChange ) + '" class="rbn-num">' + ( s.change === null ? esc( I.repNoValue ) : esc( ( s.change > 0 ? '+' : '' ) + num( s.change ) ) ) + '</td></tr>';
+				return '<tr><th scope="row" data-label="' + esc( I.colMetric ) + '">' + esc( label( k ) ) + '</th><td data-label="' + esc( I.colStart ) + '" class="rbn-num">' + esc( num( s.start ) ) + '</td><td data-label="' + esc( I.colEnd ) + '" class="rbn-num">' + esc( num( s.end ) ) + '</td><td data-label="' + esc( I.colChange ) + '" class="rbn-num">' + ( s.change === null ? esc( I.repNoValue ) : esc( ( s.change > 0 ? '+' : '' ) + num( s.change ) ) ) + '</td></tr>';
 			} ).join( '' ) + '</tbody></table></div></div></section></li>';
 		}
 
 		function valuesCard( d ) {
 			var keys = Object.keys( d.summary || {} ).filter( function ( k ) { return d.summary[ k ].end !== null; } );
 			if ( ! keys.length ) { return ''; }
-			return '<li class="wps-wide"><section class="rbn-card"><div class="rbn-card__h"><h2>' + esc( I.repSummary ) + '</h2></div><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.repSummary ) + '</caption><thead><tr><th scope="col">' + esc( I.colMetric ) + '</th><th scope="col" class="rbn-num">' + esc( I.repValue ) + '</th></tr></thead><tbody>' + keys.map( function ( k ) { return '<tr><th scope="row" data-l="' + esc( I.colMetric ) + '">' + esc( label( k ) ) + '</th><td data-l="' + esc( I.repValue ) + '" class="rbn-num">' + esc( num( d.summary[ k ].end ) ) + '</td></tr>'; } ).join( '' ) + '</tbody></table></div></div></section></li>';
+			return '<li class="wps-wide"><section class="rbn-card"><div class="rbn-card__h"><h2>' + esc( I.repSummary ) + '</h2></div><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.repSummary ) + '</caption><thead><tr><th scope="col">' + esc( I.colMetric ) + '</th><th scope="col" class="rbn-num">' + esc( I.repValue ) + '</th></tr></thead><tbody>' + keys.map( function ( k ) { return '<tr><th scope="row" data-label="' + esc( I.colMetric ) + '">' + esc( label( k ) ) + '</th><td data-label="' + esc( I.repValue ) + '" class="rbn-num">' + esc( num( d.summary[ k ].end ) ) + '</td></tr>'; } ).join( '' ) + '</tbody></table></div></div></section></li>';
 		}
 		function draw( d ) {
 			var meta = $( '[data-rep-meta]', root ), box = $( '[data-rep-charts]', root ), one = $( '[data-rep-one]', root ), main = $( '[data-rep-main]', root );
@@ -788,7 +739,7 @@
 			api( 'GET', '404-logs?per_page=100&orderby=first_seen_at&order=desc' ).then( function ( r ) {
 				var n = 0, cut = Date.now() - 864e5;
 				if ( r.ok && Array.isArray( r.data ) ) { r.data.forEach( function ( l ) { if ( new Date( l.first_seen_at ).getTime() >= cut ) { n++; } } ); }
-				box.innerHTML = n ? '<div class="rbn-note rbn-note--info">' + icon( 'info' ) + '<div><p><b>' + esc( sp( n === 1 ? I.logNew404One : I.logNew404, n ) ) + '</b> ' + esc( I.logNew404Text ) + '</p><div class="rbn-note__act"><a class="rbn-btn" href="' + esc( toolHref( 'log404' ) ) + '">' + icon( 'alert' ) + esc( I.logOpen404 ) + '</a></div></div></div>' : '';
+				box.innerHTML = n ? '<div class="rbn-note">' + icon( 'info' ) + '<div><p><b>' + esc( sp( n === 1 ? I.logNew404One : I.logNew404, n ) ) + '</b> ' + esc( I.logNew404Text ) + '</p><div class="rbn-note__act"><a class="rbn-btn" href="' + esc( toolHref( 'log404' ) ) + '">' + icon( 'alert' ) + esc( I.logOpen404 ) + '</a></div></div></div>' : '';
 			} );
 		}
 		/* A list starts when its sub-tab is first shown (the component script is deferred, so wait for it). */
@@ -839,7 +790,7 @@
 			if ( tb ) {
 				var url = T.pageUrl + ( T.pageUrl.indexOf( '?' ) > -1 ? '&' : '?' ) + 'tool=log404';
 				tb.innerHTML = ( r.data || [] ).length ? r.data.map( function ( l ) {
-					return '<tr><td data-l="' + esc( I.event || 'Event' ) + '"><code>' + esc( l.url_path ) + '</code></td><td data-l="' + esc( I.hits || 'Hits' ) + '" class="rbn-num">' + esc( l.hit_count ) + '</td><td data-l="' + esc( I.action || 'Action' ) + '" class="rbn-acts"><a class="rbn-btn rbn-btn--sm" href="' + esc( url ) + '">' + esc( I.fix || 'Fix' ) + '</a></td></tr>';
+					return '<tr><td data-label="' + esc( I.event || 'Event' ) + '"><code>' + esc( l.url_path ) + '</code></td><td data-label="' + esc( I.hits || 'Hits' ) + '" class="rbn-num">' + esc( l.hit_count ) + '</td><td data-label="' + esc( I.action || 'Action' ) + '" class="rbn-acts"><a class="rbn-btn rbn-btn--sm" href="' + esc( url ) + '">' + esc( I.fix || 'Fix' ) + '</a></td></tr>';
 				} ).join( '' ) : '<tr><td colspan="3">' + esc( I.no404 ) + '</td></tr>';
 			}
 		} );
@@ -937,7 +888,7 @@
 				if ( ! r.ok || ! r.data ) { tb.innerHTML = '<tr><td colspan="4">' + esc( I.loadFailed ) + '</td></tr>'; return; }
 				var items = r.data.items || [];
 				tb.innerHTML = items.length ? items.map( function ( i ) {
-					return '<tr><th scope="row" data-l="File"><code>' + esc( i.name ) + '</code></th><td data-l="URLs" class="rbn-num">' + esc( i.count ) + '</td><td data-l="Last modified">' + esc( i.lastmod ? new Date( i.lastmod ).toLocaleString() : '–' ) + '</td><td data-l="Status"><span class="rbn-badge rbn-badge--ok">' + icon( 'check' ) + esc( 'OK' ) + '</span></td></tr>';
+					return '<tr><th scope="row" data-label="File"><code>' + esc( i.name ) + '</code></th><td data-label="URLs" class="rbn-num">' + esc( i.count ) + '</td><td data-label="Last modified">' + esc( i.lastmod ? new Date( i.lastmod ).toLocaleString() : '–' ) + '</td><td data-label="Status"><span class="rbn-badge rbn-badge--ok">' + icon( 'check' ) + esc( 'OK' ) + '</span></td></tr>';
 				} ).join( '' ) : '<tr><td colspan="4">' + esc( I.noMatch ) + '</td></tr>';
 			} );
 		}
@@ -955,11 +906,9 @@
 	/* ---------- Lists: shared pager and selection ---------- */
 
 	function pagerHtml( pg, pages, total, shown ) {
-		var h = '<p>' + esc( shown + ' / ' + total ) + '</p><ul>';
-		h += pg > 1 ? '<li><a href="#" data-page="' + ( pg - 1 ) + '">' + esc( '‹' ) + '</a></li>' : '<li><span class="rbn-pg" aria-disabled="true">' + esc( '‹' ) + '</span></li>';
-		for ( var i = 1; i <= pages && i <= 7; i++ ) { h += '<li><a href="#" data-page="' + i + '"' + ( i === pg ? ' aria-current="page"' : '' ) + '>' + i + '</a></li>'; }
-		h += pg < pages ? '<li><a href="#" data-page="' + ( pg + 1 ) + '">' + esc( '›' ) + '</a></li>' : '<li><span class="rbn-pg" aria-disabled="true">' + esc( '›' ) + '</span></li>';
-		return h + '</ul>';
+		var h = '<span class="rbn-pager__n">' + esc( shown + ' / ' + total + ' · ' + sp( I.pageOf, pg, pages ) ) + '</span>';
+		h += '<button type="button" class="rbn-btn rbn-btn--sm" data-page="' + ( pg - 1 ) + '"' + ( pg > 1 ? '' : ' disabled' ) + '>' + esc( I.pagePrev ) + '</button>';
+		return h + '<button type="button" class="rbn-btn rbn-btn--sm" data-page="' + ( pg + 1 ) + '"' + ( pg < pages ? '' : ' disabled' ) + '>' + esc( I.pageNext ) + '</button>';
 	}
 
 	function selection( root, table, bulk ) {
@@ -1014,15 +963,15 @@
 
 		function row( x ) {
 			var code = +x.status_code, cls = code === 301 || code === 308 ? 'ok' : ( code === 410 || code === 451 ? 'warn' : 'info' );
-			return '<tr><td class="rbn-chk-cell" data-l="Select"><label class="rbn-chk"><input type="checkbox" data-row value="' + x.id + '"><span class="rbn-sr">' + esc( x.source_path ) + '</span></label></td>'
-				+ '<th scope="row" data-l="From"><code>' + esc( x.source_path ) + '</code></th><td data-l="To"><code>' + esc( x.target_url || '–' ) + '</code></td>'
-				+ '<td data-l="Type"><span class="rbn-badge rbn-badge--' + cls + '">' + icon( 'arrows' ) + code + '</span></td><td data-l="Hits" class="rbn-num">' + esc( x.hits ) + '</td><td data-l="Last hit">' + esc( dateText( x.last_hit_at ) ) + '</td>'
-				+ '<td data-l="Status">' + ( x.is_active ? '<span class="rbn-badge rbn-badge--ok">' + icon( 'check' ) + esc( I.on ) + '</span>' : '<span class="rbn-badge">' + icon( 'pause' ) + esc( I.off ) + '</span>' ) + '</td>'
-				+ '<td data-l="Actions" class="rbn-acts"><button type="button" class="rbn-btn rbn-btn--sm" data-edit="' + x.id + '">' + icon( 'pen' ) + esc( I.edit ) + '</button><button type="button" class="rbn-btn rbn-btn--danger rbn-btn--sm" data-del="' + x.id + '">' + icon( 'trash' ) + esc( I.delete ) + '</button></td></tr>';
+			return '<tr><td class="wps-chk-cell" data-label="Select"><label class="rbn-check"><input type="checkbox" data-row value="' + x.id + '"><span class="rbn-sr">' + esc( x.source_path ) + '</span></label></td>'
+				+ '<th scope="row" data-label="From"><code>' + esc( x.source_path ) + '</code></th><td data-label="To"><code>' + esc( x.target_url || '–' ) + '</code></td>'
+				+ '<td data-label="Type"><span class="rbn-badge rbn-badge--' + cls + '">' + icon( 'arrows' ) + code + '</span></td><td data-label="Hits" class="rbn-num">' + esc( x.hits ) + '</td><td data-label="Last hit">' + esc( dateText( x.last_hit_at ) ) + '</td>'
+				+ '<td data-label="Status">' + ( x.is_active ? '<span class="rbn-badge rbn-badge--ok">' + icon( 'check' ) + esc( I.on ) + '</span>' : '<span class="rbn-badge">' + icon( 'pause' ) + esc( I.off ) + '</span>' ) + '</td>'
+				+ '<td data-label="Actions" class="rbn-acts"><button type="button" class="rbn-btn rbn-btn--sm" data-edit="' + x.id + '">' + icon( 'pen' ) + esc( I.edit ) + '</button><button type="button" class="rbn-btn rbn-btn--danger rbn-btn--sm" data-del="' + x.id + '">' + icon( 'trash' ) + esc( I.delete ) + '</button></td></tr>';
 		}
 
 		on( root, 'click', '[data-retry]', load );
-		on( pager, 'click', 'a[data-page]', function ( e, a ) { e.preventDefault(); st.page = +a.getAttribute( 'data-page' ); load(); } );
+		on( pager, 'click', 'button[data-page]', function ( e, a ) { e.preventDefault(); st.page = +a.getAttribute( 'data-page' ); load(); } );
 		filter.addEventListener( 'submit', function ( e ) {
 			e.preventDefault();
 			st.page = 1; st.search = filter.search.value.trim(); st.status_code = filter.status_code.value; st.is_active = filter.is_active.value;
@@ -1117,7 +1066,7 @@
 				} );
 				var h = note( valid.length ? 'ok' : 'warn', '<b>' + esc( f.name ) + '</b> ' + esc( I.csvChecked ) + ': <b>' + valid.length + '</b> OK, <b>' + errors.length + '</b> ' + esc( 'invalid' ), 'status' );
 				if ( errors.length ) {
-					h += '<div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">Lines that need attention</caption><thead><tr><th scope="col">' + esc( I.line ) + '</th><th scope="col">Problem</th></tr></thead><tbody>' + errors.map( function ( x ) { return '<tr><th scope="row" data-l="Line">' + x[ 0 ] + '</th><td data-l="Problem"><span class="rbn-badge rbn-badge--crit">' + icon( 'x' ) + 'Invalid</span> ' + esc( x[ 1 ] ) + '</td></tr>'; } ).join( '' ) + '</tbody></table></div>';
+					h += '<div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">Lines that need attention</caption><thead><tr><th scope="col">' + esc( I.line ) + '</th><th scope="col">Problem</th></tr></thead><tbody>' + errors.map( function ( x ) { return '<tr><th scope="row" data-label="Line">' + x[ 0 ] + '</th><td data-label="Problem"><span class="rbn-badge rbn-badge--err">' + icon( 'x' ) + 'Invalid</span> ' + esc( x[ 1 ] ) + '</td></tr>'; } ).join( '' ) + '</tbody></table></div>';
 				}
 				report.innerHTML = h;
 				run.lastChild.nodeValue = fmt( I.importN, valid.length );
@@ -1164,13 +1113,13 @@
 		}
 
 		function row( x ) {
-			return '<tr data-row-id="' + x.id + '"><td class="rbn-chk-cell" data-l="Select"><label class="rbn-chk"><input type="checkbox" data-row value="' + x.id + '"><span class="rbn-sr">' + esc( x.url_path ) + '</span></label></td>'
-				+ '<th scope="row" data-l="Address"><code>' + esc( x.url_path ) + '</code></th><td data-l="Hits" class="rbn-num">' + esc( x.hit_count ) + '</td><td data-l="Referrer">' + esc( x.referer || '–' ) + '</td><td data-l="Last seen">' + esc( dateText( x.last_seen_at ) ) + '</td>'
-				+ '<td data-l="Actions" class="rbn-acts"><button type="button" class="rbn-btn rbn-btn--sm" aria-expanded="false" aria-controls="sg-' + x.id + '" data-toggle="' + x.id + '">' + icon( 'arrows' ) + esc( I.redirectTo ) + '</button><button type="button" class="rbn-btn rbn-btn--sm" data-ignore="' + x.id + '">' + icon( 'trash' ) + esc( I.delete ) + '</button></td></tr>';
+			return '<tr data-row-id="' + x.id + '"><td class="wps-chk-cell" data-label="Select"><label class="rbn-check"><input type="checkbox" data-row value="' + x.id + '"><span class="rbn-sr">' + esc( x.url_path ) + '</span></label></td>'
+				+ '<th scope="row" data-label="Address"><code>' + esc( x.url_path ) + '</code></th><td data-label="Hits" class="rbn-num">' + esc( x.hit_count ) + '</td><td data-label="Referrer">' + esc( x.referer || '–' ) + '</td><td data-label="Last seen">' + esc( dateText( x.last_seen_at ) ) + '</td>'
+				+ '<td data-label="Actions" class="rbn-acts"><button type="button" class="rbn-btn rbn-btn--sm" aria-expanded="false" aria-controls="sg-' + x.id + '" data-toggle="' + x.id + '">' + icon( 'arrows' ) + esc( I.redirectTo ) + '</button><button type="button" class="rbn-btn rbn-btn--sm" data-ignore="' + x.id + '">' + icon( 'trash' ) + esc( I.delete ) + '</button></td></tr>';
 		}
 
 		on( root, 'click', '[data-retry]', load );
-		on( pager, 'click', 'a[data-page]', function ( e, a ) { e.preventDefault(); st.page = +a.getAttribute( 'data-page' ); load(); } );
+		on( pager, 'click', 'button[data-page]', function ( e, a ) { e.preventDefault(); st.page = +a.getAttribute( 'data-page' ); load(); } );
 		filter.addEventListener( 'submit', function ( e ) { e.preventDefault(); st.page = 1; st.search = filter.search.value.trim(); st.bots = filter.bots.checked; load(); } );
 		filter.bots.addEventListener( 'change', function () { st.bots = filter.bots.checked; load(); } );
 
@@ -1193,8 +1142,8 @@
 			btn.setAttribute( 'aria-expanded', 'true' );
 			var x = rows[ id ], inl = doc.createElement( 'tr' );
 			inl.className = 'wps-inline'; inl.id = 'sg-' + id;
-			inl.innerHTML = '<td colspan="6"><div class="wps-inline__b"><h3>' + esc( I.redirected ) + ' <code>' + esc( x.url_path ) + '</code> →</h3><p class="rbn-help" style="margin:0">' + esc( 'Closest pages on your site. One click creates a 301 redirect.' ) + '</p><ul class="wps-suggest" data-sugg><li>' + esc( I.loading ) + '</li></ul>'
-				+ '<div class="wps-inline__row"><label class="rbn-sr" for="sg-own-' + id + '">' + esc( 'Or type another address' ) + '</label><input class="rbn-input rbn-input--mono" id="sg-own-' + id + '" placeholder="/" autocomplete="off"><button type="button" class="rbn-btn rbn-btn--pri" data-create>' + icon( 'plus' ) + esc( 'Create redirect' ) + '</button><button type="button" class="rbn-btn" data-close>' + esc( I.close ) + '</button></div><p class="rbn-err-msg" data-inline-err hidden></p></div></td>';
+			inl.innerHTML = '<td colspan="6"><div class="wps-inline__b"><h3>' + esc( I.redirected ) + ' <code>' + esc( x.url_path ) + '</code> →</h3><p class="rbn-help">' + esc( 'Closest pages on your site. One click creates a 301 redirect.' ) + '</p><ul class="wps-suggest" data-sugg><li>' + esc( I.loading ) + '</li></ul>'
+				+ '<div class="wps-inline__row"><label class="rbn-sr" for="sg-own-' + id + '">' + esc( 'Or type another address' ) + '</label><input class="rbn-input rbn-input--mono" id="sg-own-' + id + '" placeholder="/" autocomplete="off"><button type="button" class="rbn-btn rbn-btn--pri" data-create>' + icon( 'plus' ) + esc( 'Create redirect' ) + '</button><button type="button" class="rbn-btn" data-close>' + esc( I.close ) + '</button></div><p class="rbn-field__err" data-inline-err hidden></p></div></td>';
 			tr.parentNode.insertBefore( inl, tr.nextSibling );
 			var words = x.url_path.replace( /[-_/]+/g, ' ' ).replace( /\b\d+\b/g, '' ).trim();
 			request( 'GET', '' ).then( function () {
@@ -1252,7 +1201,7 @@
 			var found = 0, will = 0, conf = 0;
 			$( 'tbody', $s( 'import-table' ) ).innerHTML = ( rep.rows || [] ).map( function ( x ) {
 				found += +x.found || 0; will += +x.will_import || 0; conf += +x.conflicts || 0;
-				return '<tr><th scope="row" data-l="Data">' + esc( x.label ) + '</th><td data-l="Found" class="rbn-num">' + esc( x.found ) + '</td><td data-l="Will import" class="rbn-num">' + esc( x.will_import ) + '</td><td data-l="Note">' + esc( x.note || '' ) + '</td></tr>';
+				return '<tr><th scope="row" data-label="Data">' + esc( x.label ) + '</th><td data-label="Found" class="rbn-num">' + esc( x.found ) + '</td><td data-label="Will import" class="rbn-num">' + esc( x.will_import ) + '</td><td data-label="Note">' + esc( x.note || '' ) + '</td></tr>';
 			} ).join( '' );
 			$s( 'import-summary' ).textContent = found + ' ' + I.found.toLowerCase() + ' · ' + will + ' ' + I.willImport.toLowerCase() + ' · ' + conf + ' ' + I.conflicts.toLowerCase();
 			return conf;
@@ -1261,7 +1210,7 @@
 		/* The report of an applied import: what was written and what already matched. */
 		function appliedTable( rep ) {
 			var rows = ( rep.rows || [] ).map( function ( x ) {
-				return '<tr><th scope="row" data-l="' + esc( I.importData ) + '">' + esc( x.label ) + '</th><td data-l="' + esc( I.found ) + '" class="rbn-num">' + esc( x.found ) + '</td><td data-l="' + esc( I.importWritten ) + '" class="rbn-num">' + esc( x.will_import ) + '</td><td data-l="' + esc( I.importSame ) + '" class="rbn-num">' + esc( x.same ) + '</td><td data-l="' + esc( I.importNote ) + '">' + esc( x.note || '' ) + '</td></tr>';
+				return '<tr><th scope="row" data-label="' + esc( I.importData ) + '">' + esc( x.label ) + '</th><td data-label="' + esc( I.found ) + '" class="rbn-num">' + esc( x.found ) + '</td><td data-label="' + esc( I.importWritten ) + '" class="rbn-num">' + esc( x.will_import ) + '</td><td data-label="' + esc( I.importSame ) + '" class="rbn-num">' + esc( x.same ) + '</td><td data-label="' + esc( I.importNote ) + '">' + esc( x.note || '' ) + '</td></tr>';
 			} ).join( '' );
 			return '<section class="rbn-card"><div class="rbn-card__h"><h2>' + esc( I.importRowsCap ) + '</h2></div><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.importRowsCap ) + '</caption><thead><tr><th scope="col">' + esc( I.importData ) + '</th><th scope="col" class="rbn-num">' + esc( I.found ) + '</th><th scope="col" class="rbn-num">' + esc( I.importWritten ) + '</th><th scope="col" class="rbn-num">' + esc( I.importSame ) + '</th><th scope="col">' + esc( I.importNote ) + '</th></tr></thead><tbody>' + rows + '</tbody></table></div></div></section>';
 		}
@@ -1394,20 +1343,7 @@
 		initMedia( box, render );
 		on( box, 'change', 'input[name="wps-serp-mode"]', function ( e, r ) { serp.classList.toggle( 'wps-serp--m', r.value === 'm' ); } );
 
-		// Tabs: arrows, Home, End.
-		var tabs = $$( '[role=tab]', box );
-		function pick( tab, focus ) {
-			tabs.forEach( function ( t ) { var on_ = t === tab; t.setAttribute( 'aria-selected', on_ ? 'true' : 'false' ); t.tabIndex = on_ ? 0 : -1; doc.getElementById( t.getAttribute( 'aria-controls' ) ).hidden = ! on_; } );
-			if ( focus ) { tab.focus(); }
-		}
-		tabs.forEach( function ( t, i ) {
-			t.addEventListener( 'click', function () { pick( t, false ); } );
-			t.addEventListener( 'keydown', function ( e ) {
-				var n = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[ e.key ];
-				if ( n === undefined ) { return; }
-				e.preventDefault(); pick( tabs[ ( n + tabs.length ) % tabs.length ], true );
-			} );
-		} );
+		initTabs( box );
 
 		// Schema fields only for Movie and TVSeries.
 		var st = $b( '[data-schema-type]' ), sf = $b( '[data-schema-fields]' );
@@ -1439,7 +1375,7 @@
 			if ( list.length && ! list.some( function ( t ) { return t.id === cur; } ) ) { cur = list[ 0 ].id; input.value = cur; }
 			if ( ! list.length ) { input.value = 0; cur = 0; }
 			fs.innerHTML = '<legend class="rbn-sr">' + esc( $( '#wps-pc-l', box ).textContent ) + '</legend>' + list.map( function ( t ) {
-				return '<label><input type="radio" name="wps-pc" value="' + t.id + '"' + ( t.id === cur ? ' checked' : '' ) + '><span>' + esc( t.name ) + '</span>' + ( t.id === original ? '<span class="rbn-badge rbn-badge--ok">' + icon( 'check' ) + 'Current</span>' : '' ) + '</label>';
+				return '<label class="rbn-check"><input type="radio" name="wps-pc" value="' + t.id + '"' + ( t.id === cur ? ' checked' : '' ) + '><span>' + esc( t.name ) + '</span>' + ( t.id === original ? '<span class="rbn-badge rbn-badge--ok">' + icon( 'check' ) + 'Current</span>' : '' ) + '</label>';
 			} ).join( '' );
 			urlPreview( list, cur );
 		}
@@ -1556,17 +1492,17 @@
 		function variantRow( v ) {
 			var first = v.hops && v.hops[ 0 ] ? v.hops[ 0 ] : { code: 0 };
 			var goes = v.verdict === 'unreachable' ? '—' : ( v.redirects ? '<code>' + esc( v.final_url ) + '</code>' : esc( A.staysHere ) );
-			return '<tr><th scope="row" data-l="' + esc( A.colAddress ) + '"><code>' + esc( v.url ) + '</code>' + ( v.is_preferred ? ' <span class="rbn-badge rbn-badge--info">' + esc( A.preferredTag ) + '</span>' : '' ) + '</th>'
-				+ '<td data-l="' + esc( A.colStatus ) + '">' + ( first.code ? esc( first.code ) : '—' ) + '</td>'
-				+ '<td data-l="' + esc( A.colGoes ) + '">' + goes + ( v.redirects > 1 || v.verdict === 'loop' ? hopsList( v.hops ) : '' ) + '</td>'
-				+ '<td data-l="' + esc( A.colRedirects ) + '">' + esc( v.redirects ) + '</td>'
-				+ '<td data-l="' + esc( A.colVerdict ) + '">' + badge( v.verdict ) + ( v.verdict === 'ok' ? '' : '<span class="wps-cell-sub">' + esc( v.message ) + '</span>' ) + '</td></tr>';
+			return '<tr><th scope="row" data-label="' + esc( A.colAddress ) + '"><code>' + esc( v.url ) + '</code>' + ( v.is_preferred ? ' <span class="rbn-badge rbn-badge--info">' + esc( A.preferredTag ) + '</span>' : '' ) + '</th>'
+				+ '<td data-label="' + esc( A.colStatus ) + '">' + ( first.code ? esc( first.code ) : '—' ) + '</td>'
+				+ '<td data-label="' + esc( A.colGoes ) + '">' + goes + ( v.redirects > 1 || v.verdict === 'loop' ? hopsList( v.hops ) : '' ) + '</td>'
+				+ '<td data-label="' + esc( A.colRedirects ) + '">' + esc( v.redirects ) + '</td>'
+				+ '<td data-label="' + esc( A.colVerdict ) + '">' + badge( v.verdict ) + ( v.verdict === 'ok' ? '' : '<span class="wps-cell-sub">' + esc( v.message ) + '</span>' ) + '</td></tr>';
 		}
 
 		function otherRows( c ) {
 			var rows = [];
 			function row( label, tone, ic, text, detail ) {
-				rows.push( '<tr><th scope="row" data-l="' + esc( A.colCheck ) + '">' + esc( label ) + '</th><td data-l="' + esc( A.colResult ) + '"><span class="rbn-badge rbn-badge--' + tone + '">' + icon( ic ) + esc( text ) + '</span>' + ( detail ? '<span class="wps-cell-sub">' + detail + '</span>' : '' ) + '</td></tr>' );
+				rows.push( '<tr><th scope="row" data-label="' + esc( A.colCheck ) + '">' + esc( label ) + '</th><td data-label="' + esc( A.colResult ) + '"><span class="rbn-badge rbn-badge--' + tone + '">' + icon( ic ) + esc( text ) + '</span>' + ( detail ? '<span class="wps-cell-sub">' + detail + '</span>' : '' ) + '</td></tr>' );
 			}
 			function match( label, yes, val ) { row( label, yes ? 'ok' : 'warn', yes ? 'check' : 'alert', yes ? A.matches : A.differs, val ? '<code>' + esc( val ) + '</code>' : '' ); }
 			match( A.chkHome, c.home_matches_preferred, c.home );
@@ -1591,9 +1527,9 @@
 				notes += '<div class="rbn-note rbn-note--warn">' + icon( 'alert' ) + '<div><p><b>' + esc( A.attention ) + '</b></p><ul class="wps-ul">' + items.map( function ( v ) { return '<li><code>' + esc( v.url ) + '</code> ' + esc( v.message ) + '</li>'; } ).join( '' ) + '</ul></div></div>';
 			}
 			if ( ( d.warnings || [] ).length ) {
-				notes += '<div class="rbn-note rbn-note--info">' + icon( 'info' ) + '<div><p><b>' + esc( A.knowThis ) + '</b></p><ul class="wps-ul">' + d.warnings.map( function ( w ) { return '<li>' + esc( w ) + '</li>'; } ).join( '' ) + '</ul></div></div>';
+				notes += '<div class="rbn-note">' + icon( 'info' ) + '<div><p><b>' + esc( A.knowThis ) + '</b></p><ul class="wps-ul">' + d.warnings.map( function ( w ) { return '<li>' + esc( w ) + '</li>'; } ).join( '' ) + '</ul></div></div>';
 			}
-			out.innerHTML = '<div class="rbn-stack">' + s.html + '<p class="rbn-help">' + esc( sub( A.checkedAt, new Date().toLocaleTimeString() ) ) + '</p>' + notes
+			out.innerHTML = '<div class="wps-stack">' + s.html + '<p class="rbn-help">' + esc( sub( A.checkedAt, new Date().toLocaleTimeString() ) ) + '</p>' + notes
 				+ '<h3 class="wps-h3" id="pa-v-t">' + esc( A.fourVersions ) + '</h3><div class="rbn-tw"><table class="rbn-table rbn-table--stack" aria-labelledby="pa-v-t"><thead><tr><th scope="col">' + esc( A.colAddress ) + '</th><th scope="col">' + esc( A.colStatus ) + '</th><th scope="col">' + esc( A.colGoes ) + '</th><th scope="col">' + esc( A.colRedirects ) + '</th><th scope="col">' + esc( A.colVerdict ) + '</th></tr></thead><tbody>' + ( d.variants || [] ).map( variantRow ).join( '' ) + '</tbody></table></div>'
 				+ '<h3 class="wps-h3" id="pa-o-t">' + esc( A.otherChecks ) + '</h3><div class="rbn-tw"><table class="rbn-table rbn-table--stack" aria-labelledby="pa-o-t"><thead><tr><th scope="col">' + esc( A.colCheck ) + '</th><th scope="col">' + esc( A.colResult ) + '</th></tr></thead><tbody>' + otherRows( d.consistency || {} ) + '</tbody></table></div></div>';
 			live.textContent = sub( A.auditDone, s.text );
@@ -1637,7 +1573,7 @@
 			if ( ! snip ) { return; }
 			$( '[data-rule-table]', box ).innerHTML = ( snip.table || [] ).map( function ( r ) {
 				var x = r[ sv ] || {};
-				return '<tr><th scope="row" data-l="' + esc( A.colAddress ) + '"><code>' + esc( r.from ) + '</code></th><td data-l="' + esc( A.colGoes ) + '">' + ( x.hops ? '<code>' + esc( x.to ) + '</code>' : esc( A.staysHere ) ) + '</td><td data-l="' + esc( A.colRedirects ) + '">' + esc( x.hops || 0 ) + '</td></tr>';
+				return '<tr><th scope="row" data-label="' + esc( A.colAddress ) + '"><code>' + esc( r.from ) + '</code></th><td data-label="' + esc( A.colGoes ) + '">' + ( x.hops ? '<code>' + esc( x.to ) + '</code>' : esc( A.staysHere ) ) + '</td><td data-label="' + esc( A.colRedirects ) + '">' + esc( x.hops || 0 ) + '</td></tr>';
 			} ).join( '' );
 		}
 

@@ -188,7 +188,7 @@ final class DashboardScreen {
 			}
 			/* translators: %s: tool name. */
 			$open = sprintf( __( 'Open %s', 'wpseokit' ), $t['label'] );
-			$out .= '<li><article class="rbn-card wps-tool"><div class="rbn-card__b rbn-card__b--pad"><div class="wps-tool__top"><span class="wps-tool__i">' . Ui::icon( $t['icon'] ) . '</span><h3 class="wps-tool__n"><a href="' . esc_url( Shell::url( $id ) ) . '">' . esc_html( $t['label'] ) . '</a></h3></div>'
+			$out .= '<li><article class="rbn-card wps-tool"><div class="rbn-card__b"><div class="wps-tool__top"><span class="wps-tool__i">' . Ui::icon( $t['icon'] ) . '</span><h3 class="wps-tool__n"><a href="' . esc_url( Shell::url( $id ) ) . '">' . esc_html( $t['label'] ) . '</a></h3></div>'
 				. '<p class="wps-tool__d">' . esc_html( $t['desc'] ) . '</p><p class="wps-tool__s">' . $badge . '</p><p class="wps-tool__m" data-card-line="' . esc_attr( $id ) . '">' . esc_html( $line ) . '</p></div>'
 				. '<div class="rbn-card__foot"><a class="rbn-btn rbn-btn--pri" href="' . esc_url( Shell::url( $id ) ) . '" aria-label="' . esc_attr( $open ) . '">' . esc_html__( 'Open', 'wpseokit' ) . '</a>' . $more . '</div></article></li>';
 		}
@@ -221,10 +221,10 @@ final class DashboardScreen {
 	private static function score_summary(): string {
 		$h = '<h2 class="wps-score__h">' . esc_html__( 'SEO score', 'wpseokit' ) . '</h2>';
 		if ( Plugin::yoast_active() ) {
-			return '<section class="rbn-card wps-score wps-sum"><div class="rbn-card__b rbn-card__b--pad"><h2 class="wps-score__h"><a class="wps-stretch" href="' . esc_url( Shell::dash_url( 'score' ) ) . '" data-goto="score">' . esc_html__( 'SEO score', 'wpseokit' ) . '</a></h2>'
+			return '<section class="rbn-card wps-score wps-sum"><div class="rbn-card__b"><h2 class="wps-score__h"><a class="wps-stretch" href="' . esc_url( Shell::dash_url( 'score' ) ) . '" data-goto="score">' . esc_html__( 'SEO score', 'wpseokit' ) . '</a></h2>'
 				. Ui::note( 'info', '<b>' . esc_html__( 'The score is paused while Yoast SEO is active.', 'wpseokit' ) . '</b> ' . esc_html__( 'Import your Yoast data to continue.', 'wpseokit' ) ) . '</div></section>';
 		}
-		return '<div data-score-summary data-calculated="' . ( self::calculated() ? '1' : '0' ) . '"><section class="rbn-card wps-score" aria-busy="true"><div class="rbn-card__b rbn-card__b--pad">' . $h . '<p class="wps-busy" role="status"><span class="wps-spin" aria-hidden="true"></span>' . esc_html__( 'Loading…', 'wpseokit' ) . '</p><span class="wps-skel wps-skel--w50"></span></div></section></div>';
+		return '<div data-score-summary data-calculated="' . ( self::calculated() ? '1' : '0' ) . '"><section class="rbn-card wps-score" aria-busy="true"><div class="rbn-card__b">' . $h . '<p class="wps-busy" role="status"><span class="wps-spin" aria-hidden="true"></span>' . esc_html__( 'Loading…', 'wpseokit' ) . '</p><span class="wps-skel wps-skel--w50"></span></div></section></div>';
 	}
 
 	private static function stats(): string {
@@ -252,12 +252,12 @@ final class DashboardScreen {
 	}
 
 	private static function skeleton_cards(): string {
-		$card = '<li><section class="rbn-card"><div class="rbn-card__b rbn-card__b--pad"><span class="wps-skel wps-skel--w30"></span><span class="wps-skel wps-skel--tall"></span><span class="wps-skel wps-skel--w70"></span></div></section></li>';
+		$card = '<li><section class="rbn-card"><div class="rbn-card__b"><span class="wps-skel wps-skel--w30"></span><span class="wps-skel wps-skel--tall"></span><span class="wps-skel wps-skel--w70"></span></div></section></li>';
 		return '<ul class="wps-reports">' . $card . $card . '</ul>';
 	}
 
 	private static function paused_card( string $text ): string {
-		return '<section class="rbn-card wps-score"><div class="rbn-card__b rbn-card__b--pad"><h2 class="wps-score__h">' . esc_html__( 'Paused', 'wpseokit' ) . '</h2>'
+		return '<section class="rbn-card wps-score"><div class="rbn-card__b"><h2 class="wps-score__h">' . esc_html__( 'Paused', 'wpseokit' ) . '</h2>'
 			. Ui::note( 'info', '<b>' . esc_html__( 'Yoast SEO is active.', 'wpseokit' ) . '</b> ' . esc_html( $text ) )
 			. '<p><a class="rbn-btn rbn-btn--pri" href="' . esc_url( Shell::dash_url( 'yoast' ) ) . '" data-goto="yoast">' . esc_html__( 'Import Yoast data', 'wpseokit' ) . '</a></p></div></section>';
 	}
@@ -288,12 +288,12 @@ final class DashboardScreen {
 		$snap = '<button type="button" class="rbn-btn rbn-btn--pri" data-snapshot>' . Ui::icon( 'scan' ) . esc_html__( 'Take snapshot now', 'wpseokit' ) . '</button>';
 		$busy = static fn( string $text ): string => '<p class="wps-busy" role="status"><span class="wps-spin" aria-hidden="true"></span>' . esc_html( $text ) . '</p>' . self::skeleton_cards();
 		return '<h2 class="rbn-sr">' . esc_html__( 'Reports', 'wpseokit' ) . '</h2><div data-reports data-csv="' . esc_url( rest_url( 'wpseokit/v1/reports/export' ) ) . '">'
-			. '<div data-rep="nodata" hidden>' . self::empty_state( 'chart', __( 'No report data yet', 'wpseokit' ), __( 'WPSeoKit saves one snapshot of your numbers each day. You can also take one now; it changes nothing on your site.', 'wpseokit' ), '<div class="rbn-row">' . $snap . '<a class="rbn-btn" href="' . esc_url( Shell::dash_url( 'settings', 'advanced' ) ) . '" data-goto="settings:advanced">' . esc_html__( 'Snapshot settings', 'wpseokit' ) . '</a></div>' ) . '</div>'
+			. '<div data-rep="nodata" hidden>' . self::empty_state( 'chart', __( 'No report data yet', 'wpseokit' ), __( 'WPSeoKit saves one snapshot of your numbers each day. You can also take one now; it changes nothing on your site.', 'wpseokit' ), '<div class="wps-row">' . $snap . '<a class="rbn-btn" href="' . esc_url( Shell::dash_url( 'settings', 'advanced' ) ) . '" data-goto="settings:advanced">' . esc_html__( 'Snapshot settings', 'wpseokit' ) . '</a></div>' ) . '</div>'
 			. '<div data-rep="preparing" aria-busy="true" hidden>' . $busy( __( 'Preparing your first snapshot… This usually takes a few seconds.', 'wpseokit' ) ) . '</div>'
 			. '<div data-rep="loading" aria-busy="true">' . $busy( __( 'Loading your reports…', 'wpseokit' ) ) . '</div>'
 			. '<div data-rep="error" hidden><div class="rbn-note rbn-note--err" role="alert">' . Ui::icon( 'alert' ) . '<div><p><b>' . esc_html__( 'WPSeoKit could not load the reports.', 'wpseokit' ) . '</b> ' . esc_html__( 'Your data is safe. Try again in a moment.', 'wpseokit' ) . '</p><div class="rbn-note__act"><button type="button" class="rbn-btn rbn-btn--pri" data-rep-retry>' . esc_html__( 'Try again', 'wpseokit' ) . '</button></div></div></div></div>'
 			. '<div data-rep="ok" hidden><div data-rep-one hidden></div><div data-rep-main>'
-			. '<div class="wps-range"><div class="rbn-seg" role="radiogroup" aria-label="' . esc_attr__( 'Report range', 'wpseokit' ) . '"><label><input type="radio" name="rep-range" value="7"><span>' . esc_html__( '7 days', 'wpseokit' ) . '</span></label><label><input type="radio" name="rep-range" value="30" checked><span>' . esc_html__( '30 days', 'wpseokit' ) . '</span></label><label><input type="radio" name="rep-range" value="90"><span>' . esc_html__( '90 days', 'wpseokit' ) . '</span></label></div>'
+			. '<div class="wps-range"><div class="wps-radios" role="radiogroup" aria-label="' . esc_attr__( 'Report range', 'wpseokit' ) . '"><label class="rbn-check"><input type="radio" name="rep-range" value="7"><span>' . esc_html__( '7 days', 'wpseokit' ) . '</span></label><label class="rbn-check"><input type="radio" name="rep-range" value="30" checked><span>' . esc_html__( '30 days', 'wpseokit' ) . '</span></label><label class="rbn-check"><input type="radio" name="rep-range" value="90"><span>' . esc_html__( '90 days', 'wpseokit' ) . '</span></label></div>'
 			. '<div class="wps-range__act"><button type="button" class="rbn-btn" data-snapshot>' . Ui::icon( 'scan' ) . esc_html__( 'Take snapshot now', 'wpseokit' ) . '</button><a class="rbn-btn" href="' . esc_url( rest_url( 'wpseokit/v1/reports/export' ) ) . '" data-csv-link>' . Ui::icon( 'down' ) . esc_html__( 'Download CSV', 'wpseokit' ) . '</a><button type="button" class="rbn-btn" data-print>' . Ui::icon( 'doc' ) . esc_html__( 'Print', 'wpseokit' ) . '</button></div></div>'
 			. '<p class="rbn-help wps-meta" data-rep-meta></p><div data-rep-charts></div></div></div></div>';
 	}
@@ -323,7 +323,7 @@ final class DashboardScreen {
 				__( 'Update checks', 'wpseokit' ),
 				__( 'Each time WPSeoKit looks for a new version, newest first.', 'wpseokit' ),
 				false,
-				'<div class="rbn-note rbn-note--info">' . Ui::icon( 'info' ) . '<div><p>' . esc_html__( 'A check that cannot reach the release list is expected until the first release is published. WPSeoKit tries again later.', 'wpseokit' ) . '</p></div></div>'
+				'<div class="rbn-note">' . Ui::icon( 'info' ) . '<div><p>' . esc_html__( 'A check that cannot reach the release list is expected until the first release is published. WPSeoKit tries again later.', 'wpseokit' ) . '</p></div></div>'
 			),
 			'errors'   => self::log_panel( Registry::ERRORS, __( 'Errors', 'wpseokit' ), __( 'Background problems, newest first.', 'wpseokit' ), true ),
 		);
@@ -331,10 +331,10 @@ final class DashboardScreen {
 
 	/** Sub-tab bar of one tab. @param array<string, string> $subs sub id => label. */
 	private static function sub_bar( string $top, array $subs, string $active, string $label ): string {
-		$out = '<div class="wps-tabs wps-tabs--sub" role="tablist" aria-label="' . esc_attr( $label ) . '" data-subtabs="' . esc_attr( $top ) . '">';
+		$out = '<div class="rbn-tabs rbn-tabs--sub" role="tablist" aria-label="' . esc_attr( $label ) . '" data-rbn-tabs data-subtabs="' . esc_attr( $top ) . '">';
 		foreach ( $subs as $id => $text ) {
 			$on   = (string) $id === $active;
-			$out .= '<a role="tab" id="stab-' . esc_attr( $top . '-' . $id ) . '" aria-controls="spn-' . esc_attr( $top . '-' . $id ) . '" aria-selected="' . ( $on ? 'true' : 'false' ) . '" tabindex="' . ( $on ? '0' : '-1' ) . '" href="' . esc_url( Shell::dash_url( $top, (string) $id ) ) . '" data-sub="' . esc_attr( (string) $id ) . '">' . esc_html( $text ) . '</a>';
+			$out .= '<a class="rbn-tabs__tab" role="tab" id="stab-' . esc_attr( $top . '-' . $id ) . '" aria-controls="spn-' . esc_attr( $top . '-' . $id ) . '" aria-selected="' . ( $on ? 'true' : 'false' ) . '" tabindex="' . ( $on ? '0' : '-1' ) . '" href="' . esc_url( Shell::dash_url( $top, (string) $id ) ) . '" data-sub="' . esc_attr( (string) $id ) . '" data-key="' . esc_attr( (string) $id ) . '">' . esc_html( $text ) . '</a>';
 		}
 		return $out . '</div>';
 	}
@@ -343,7 +343,7 @@ final class DashboardScreen {
 	private static function sub_panels( string $top, array $subs, array $bodies, string $active, string $label ): string {
 		$out = self::sub_bar( $top, $subs, $active, $label );
 		foreach ( $subs as $id => $text ) {
-			$out .= '<div role="tabpanel" id="spn-' . esc_attr( $top . '-' . $id ) . '" aria-labelledby="stab-' . esc_attr( $top . '-' . $id ) . '" data-sub="' . esc_attr( (string) $id ) . '"' . ( (string) $id === $active ? '' : ' hidden' ) . '>' . ( $bodies[ $id ] ?? '' ) . '</div>';
+			$out .= '<div class="rbn-tabpanel" role="tabpanel" id="spn-' . esc_attr( $top . '-' . $id ) . '" aria-labelledby="stab-' . esc_attr( $top . '-' . $id ) . '" data-sub="' . esc_attr( (string) $id ) . '"' . ( (string) $id === $active ? '' : ' hidden' ) . '>' . ( $bodies[ $id ] ?? '' ) . '</div>';
 		}
 		return $out;
 	}
@@ -384,17 +384,17 @@ final class DashboardScreen {
 			$body['score'] = '<h2 class="rbn-sr">' . esc_html__( 'SEO score', 'wpseokit' ) . '</h2>' . self::paused_card( __( 'WPSeoKit prints nothing now, so a score would not describe what search engines see. Import your Yoast data to continue.', 'wpseokit' ) );
 		}
 
-		$list   = '<div class="wps-dash__top" role="tablist" aria-label="' . esc_attr__( 'Dashboard sections', 'wpseokit' ) . '" data-dtabs>';
+		$list   = '<div class="rbn-tabs" role="tablist" aria-label="' . esc_attr__( 'Dashboard sections', 'wpseokit' ) . '" data-rbn-tabs data-dtabs>';
 		$panels = '';
 		foreach ( $tabs as $id => $t ) {
 			$on      = $id === $top;
-			$list   .= '<a role="tab" id="dtab-' . esc_attr( $id ) . '" aria-controls="dpan-' . esc_attr( $id ) . '" aria-selected="' . ( $on ? 'true' : 'false' ) . '" tabindex="' . ( $on ? '0' : '-1' ) . '" href="' . esc_url( Shell::dash_url( $id ) ) . '" data-top="' . esc_attr( $id ) . '">' . Ui::icon( $t[1] ) . esc_html( $t[0] ) . '</a>';
+			$list   .= '<a class="rbn-tabs__tab" role="tab" id="dtab-' . esc_attr( $id ) . '" aria-controls="dpan-' . esc_attr( $id ) . '" aria-selected="' . ( $on ? 'true' : 'false' ) . '" tabindex="' . ( $on ? '0' : '-1' ) . '" href="' . esc_url( Shell::dash_url( $id ) ) . '" data-top="' . esc_attr( $id ) . '" data-key="' . esc_attr( $id ) . '">' . Ui::icon( $t[1] ) . esc_html( $t[0] ) . '</a>';
 			$inner   = $body[ $id ] ?? '';
 			if ( isset( $deep[ $id ] ) && $deep[ $id ] ) {
 				$active = isset( $subs[ $id ][ $sub ] ) && $on ? $sub : (string) array_key_first( $subs[ $id ] );
 				$inner  = self::sub_panels( $id, $subs[ $id ], $deep[ $id ], $active, $t[0] );
 			}
-			$panels .= '<div role="tabpanel" id="dpan-' . esc_attr( $id ) . '" aria-labelledby="dtab-' . esc_attr( $id ) . '" class="wps-dpan" data-top="' . esc_attr( $id ) . '"' . ( $on ? '' : ' hidden' ) . '>' . $inner . '</div>';
+			$panels .= '<div role="tabpanel" id="dpan-' . esc_attr( $id ) . '" aria-labelledby="dtab-' . esc_attr( $id ) . '" class="rbn-tabpanel" data-top="' . esc_attr( $id ) . '"' . ( $on ? '' : ' hidden' ) . '>' . $inner . '</div>';
 		}
 		$list .= '</div>';
 

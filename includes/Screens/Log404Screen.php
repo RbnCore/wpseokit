@@ -40,17 +40,17 @@ final class Log404Screen {
 	private static function log(): string {
 		$out = Ui::note( 'info', esc_html__( 'Addresses that bots probe (such as wp-login.php) are hidden by default. Show them with the switch below the search.', 'wpseokit' ) );
 
-		$filter  = '<form class="rbn-filter wps-filter3" role="search" aria-label="' . esc_attr__( 'Filter 404 log', 'wpseokit' ) . '" data-log-filter>';
+		$filter  = '<form class="wps-filter wps-filter3" role="search" aria-label="' . esc_attr__( 'Filter 404 log', 'wpseokit' ) . '" data-log-filter>';
 		$filter .= '<div><label for="lf-q">' . esc_html__( 'Search', 'wpseokit' ) . '</label><input class="rbn-input" id="lf-q" name="search" type="search" placeholder="' . esc_attr__( 'Path', 'wpseokit' ) . '"></div>';
-		$filter .= '<div><label class="rbn-switch" style="margin-top:var(--rbn-s5)"><input type="checkbox" id="lf-bots" name="bots"><span class="rbn-switch__t"></span><span class="rbn-switch__x"><b>' . esc_html__( 'Show bot noise', 'wpseokit' ) . '</b></span></label></div>';
-		$filter .= '<div class="rbn-filter__act"><button type="submit" class="rbn-btn rbn-btn--pri">' . esc_html__( 'Apply', 'wpseokit' ) . '</button></div></form>';
+		$filter .= '<div class="wps-filter__end"><label class="rbn-switch"><input type="checkbox" id="lf-bots" name="bots"><span class="rbn-switch__x"></span><span><b>' . esc_html__( 'Show bot noise', 'wpseokit' ) . '</b></span></label></div>';
+		$filter .= '<div class="wps-filter__act"><button type="submit" class="rbn-btn rbn-btn--pri">' . esc_html__( 'Apply', 'wpseokit' ) . '</button></div></form>';
 
-		$bulk  = '<div class="rbn-bulk" data-bulk hidden><p><b data-count>0</b> ' . esc_html__( 'selected', 'wpseokit' ) . '</p><div class="rbn-bulk__act">';
+		$bulk  = '<div class="wps-bulk" data-bulk hidden><p><b data-count>0</b> ' . esc_html__( 'selected', 'wpseokit' ) . '</p><div class="wps-bulk__act">';
 		$bulk .= '<button type="button" class="rbn-btn rbn-btn--sm" data-bulk-redirect>' . Ui::icon( 'arrows' ) . esc_html__( 'Redirect all to…', 'wpseokit' ) . '</button>';
 		$bulk .= '<button type="button" class="rbn-btn rbn-btn--danger rbn-btn--sm" data-bulk-delete>' . Ui::icon( 'trash' ) . esc_html__( 'Delete from log', 'wpseokit' ) . '</button></div></div>';
 
 		$table  = '<div class="rbn-tw"><table class="rbn-table rbn-table--stack" data-log><caption class="rbn-sr">' . esc_html__( '404 errors, most hits first', 'wpseokit' ) . '</caption><thead><tr>';
-		$table .= '<th scope="col" class="rbn-chk-cell"><label class="rbn-chk"><input type="checkbox" data-select-all><span class="rbn-sr">' . esc_html__( 'Select all', 'wpseokit' ) . '</span></label></th>';
+		$table .= '<th scope="col" class="wps-chk-cell"><label class="rbn-check"><input type="checkbox" data-select-all><span class="rbn-sr">' . esc_html__( 'Select all', 'wpseokit' ) . '</span></label></th>';
 		$table .= '<th scope="col">' . esc_html__( 'Address', 'wpseokit' ) . '</th><th scope="col" class="rbn-num">' . esc_html__( 'Hits', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Referrer', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Last seen', 'wpseokit' ) . '</th><th scope="col"><span class="rbn-sr">' . esc_html__( 'Actions', 'wpseokit' ) . '</span></th>';
 		$table .= '</tr></thead><tbody></tbody></table></div><div class="rbn-pager" data-pager></div>';
 
@@ -66,8 +66,8 @@ final class Log404Screen {
 	}
 
 	private static function dialog(): string {
-		$x   = '<button type="button" class="rbn-dlg__x" data-dlg-close aria-label="' . esc_attr__( 'Close', 'wpseokit' ) . '">' . Ui::icon( 'x' ) . '</button>';
-		$out  = '<dialog class="rbn-dlg" aria-labelledby="bk-t" data-dlg="bulk"' . Ui::tone_attr() . '><form method="dialog" data-bulk-form novalidate><div class="rbn-dlg__h"><h2 id="bk-t">' . esc_html__( 'Redirect the selected addresses', 'wpseokit' ) . '</h2>' . $x . '</div><div class="rbn-dlg__b"><div class="rbn-stack">';
+		$x   = '<button type="button" class="rbn-btn rbn-btn--icon" data-dlg-close aria-label="' . esc_attr__( 'Close', 'wpseokit' ) . '">' . Ui::icon( 'x' ) . '</button>';
+		$out  = '<dialog class="rbn-dlg" aria-labelledby="bk-t" data-dlg="bulk"' . Ui::tone_attr() . '><form method="dialog" data-bulk-form novalidate><div class="rbn-dlg__h wps-dlg__h"><h2 id="bk-t">' . esc_html__( 'Redirect the selected addresses', 'wpseokit' ) . '</h2>' . $x . '</div><div class="rbn-dlg__b"><div class="wps-stack">';
 		$out .= Ui::row( Ui::label( 'bk-to', __( 'To (new address)', 'wpseokit' ) ), '<input class="rbn-input rbn-input--mono" id="bk-to" name="target_url" type="text" placeholder="/">', esc_html__( 'All selected addresses get a 301 redirect to this page.', 'wpseokit' ) );
 		$out .= '<div class="rbn-note rbn-note--err" role="alert" data-bulk-error hidden></div></div></div><div class="rbn-dlg__f"><button type="button" class="rbn-btn" data-dlg-close>' . esc_html__( 'Cancel', 'wpseokit' ) . '</button><button type="submit" class="rbn-btn rbn-btn--pri">' . Ui::icon( 'arrows' ) . esc_html__( 'Create redirects', 'wpseokit' ) . '</button></div></form></dialog>';
 		return $out;

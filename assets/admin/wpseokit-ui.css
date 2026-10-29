@@ -1,29 +1,8 @@
-/*! wpseokit-ui — WPSeoKit'e özgü EK bileşenler (maket, WPRJ-548). rbn-admin-ui kitinin ÜSTÜNE yüklenir.
-   Kural: renk YOK — yalnız kitin --rbn-* token'ları. Önek: wps-. Kitte karşılığı olan bileşen (rozet, not, boş durum,
-   sayfalama, tablo, anahtar, ilerleme, adımlayıcı, filtre) burada TEKRAR yazılmaz.
-   Bölüm 1 = 17 px zemini (AdminKit ile aynı karar: .rbn-wrap 17 px). Bölüm 2+ = yeni bileşenler. */
-
-/* ── 1. Yazı zemini: 17 px / 1.55 (Plugins/README §6). Kit 12–14 px'lik öğeleri 17 px'e çeker. ── */
-.rbn-wrap,.rbn-dlg{font-size:17px;line-height:1.55}
-/* WordPress yönetim CSS'i düz <p> öğesini 13 px yapar (common.css); kit sınıfı olmayan paragraflar 17 px zeminini miras alsın. Özgüllük (0,0,1): sınıflı kural hep kazanır. */
-:where(.rbn-wrap,.rbn-dlg) p,:where(.rbn-wrap,.rbn-dlg) li{font-size:inherit;line-height:inherit}
-.rbn-chip,.rbn-badge,.rbn-help,.rbn-err-msg,.rbn-stat__k,.rbn-stat__s,.rbn-table,.rbn-table thead th,.rbn-table .rbn-sub,
-.rbn-table__grp th,.rbn-filter label,.rbn-chips,.rbn-fchip,.rbn-counter,.rbn-count,.rbn-tok,.rbn-pager,.rbn-wrap code,.rbn-dlg code,
-.rbn-ev,.rbn-input--mono,.rbn-sect>h3,.rbn-h3,.rbn-progress__l,.rbn-btn--sm,.rbn-dl dt,.rbn-dl dd,.rbn-stepper b,.rbn-tile span,
-.rbn-gcard ul,.rbn-gcard__sc small,.rbn-diff__r,.rbn-stat__v small,.rbn-card__h h2,.rbn-empty h3,.rbn-empty p,.rbn-spark__ax{font-size:17px}
-.rbn-head h1{font-size:1.75rem}
-.rbn-badge{min-height:1.75rem}
-.rbn-chip{min-height:1.75rem}
-.rbn-tok{min-height:2.5rem}
-.rbn-btn--sm{min-height:2.5rem}                               /* düğme ≥ 40 px: "küçük" boy de 40 px */
-.rbn-pager a,.rbn-pager span.rbn-pg{min-width:2.5rem;min-height:2.5rem}
-.rbn-fchip button,.rbn-fchip a,.rbn-pat button{min-width:2.5rem;min-height:2.5rem}
-.rbn-chk{min-width:2.5rem;min-height:2.5rem}
-.rbn-tip__b{width:2.5rem;height:2.5rem}
-.rbn-seg span{min-height:calc(2.5rem - 6px)}
+/*! wpseokit-ui — WPSeoKit'e özgü DÜZEN (WPRJ-608). Bileşenler (düğme, alan, tablo, sekme, rozet, not, anahtar, diyalog, boş durum) rbn-admin-ui kitindendir ve burada TEKRAR yazılmaz.
+   Kural: renk/boyut/yarıçap/gölge yalnız kitin --rbn-* token'ı. Önek: wps-. */
 
 /* ── 2. Kutu varyantı: yazı düzenleme ekranındaki metabox (sayfa değil) ── */
-.rbn-wrap--box,.rbn-wrap--box[data-tone=koyu]{max-width:none;margin:0;padding:0;background:none;border-radius:0}
+.wps-wrap--box,.wps-wrap--box[data-tone=koyu]{max-width:none;margin:0;padding:0;background:none;border-radius:0}
 
 /* ── 3. İskelet (yükleniyor) ── */
 .wps-skel{display:block;height:1.25rem;border-radius:var(--rbn-r);background:linear-gradient(90deg,var(--rbn-line) 25%,var(--rbn-surface-2) 50%,var(--rbn-line) 75%);background-size:200% 100%;animation:wps-shim 1.3s linear infinite}
@@ -38,13 +17,13 @@
 @media (prefers-reduced-motion:reduce){.wps-spin{animation:none;border-top-color:var(--rbn-line);border-right-color:var(--rbn-ac)}}
 
 /* ── 4. Arama sonucu önizlemesi (SERP): renkler kit token'ı; Google'ın sabit renkleri KOPYALANMAZ ── */
-.wps-serp{max-width:40rem;padding:var(--rbn-s4);border:1px solid var(--rbn-line);border-radius:var(--rbn-r-lg);background:var(--rbn-surface);overflow:hidden}
+.wps-serp{max-width:40rem;padding:var(--rbn-s4);border:var(--rbn-bw) solid var(--rbn-line);border-radius:var(--rbn-r-lg);background:var(--rbn-surface);overflow:hidden}
 .wps-serp__site{display:flex;align-items:center;gap:var(--rbn-s3);min-width:0}
 .wps-serp__fav{display:flex;align-items:center;justify-content:center;flex:none;width:1.75rem;height:1.75rem;border-radius:50%;background:var(--rbn-ac-soft);color:var(--rbn-ac);font-weight:700}
 .wps-serp__who{min-width:0;line-height:1.3}
 .wps-serp__who b{display:block;font-weight:600;color:var(--rbn-text)}
 .wps-serp__url{display:block;color:var(--rbn-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.wps-serp__t{display:block;max-width:37.5rem;margin:var(--rbn-s2) 0 var(--rbn-s1);color:var(--rbn-ac);font-size:1.25rem;line-height:1.3;font-weight:400;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wps-serp__t{display:block;max-width:37.5rem;margin:var(--rbn-s2) 0 var(--rbn-s1);color:var(--rbn-ac);font-size:var(--rbn-fs-h2);line-height:1.3;font-weight:400;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .wps-serp__d{margin:0;color:var(--rbn-text);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden}
 .wps-serp__d .wps-ph{color:var(--rbn-muted);font-style:italic}
 .wps-serp--m{max-width:22.5rem}
@@ -52,44 +31,30 @@
 .wps-serp--m .wps-serp__d{-webkit-line-clamp:3;line-clamp:3}
 .wps-serp-wrap{display:grid;gap:var(--rbn-s3);margin:0 0 var(--rbn-s4)}
 .wps-serp-wrap__bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--rbn-s3)}
-.wps-serp-wrap__bar h3{margin:0;font-size:1.0625rem;font-weight:600}
+.wps-serp-wrap__bar h3{margin:0;font-size:var(--rbn-fs);font-weight:600}
 
 /* ── 5. Alan + sayaç + ilerleme satırı (başlık/açıklama) ── */
 .wps-lim{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--rbn-s3);align-items:center;margin-top:var(--rbn-s2)}
 .wps-lim output{font-variant-numeric:tabular-nums;color:var(--rbn-muted);font-weight:600;white-space:nowrap}
 .wps-lim[data-level=ok] output{color:var(--rbn-ok)}.wps-lim[data-level=warn] output{color:var(--rbn-warn)}.wps-lim[data-level=bad] output{color:var(--rbn-err)}
-.wps-lim[data-level=ok] .rbn-progress>i{background:var(--rbn-ok)}.wps-lim[data-level=warn] .rbn-progress>i{background:var(--rbn-warn)}.wps-lim[data-level=bad] .rbn-progress>i{background:var(--rbn-err)}
+.wps-lim[data-level=ok] .wps-progress>i{background:var(--rbn-ok)}.wps-lim[data-level=warn] .wps-progress>i{background:var(--rbn-warn)}.wps-lim[data-level=bad] .wps-progress>i{background:var(--rbn-err)}
 .wps-src{display:inline-flex;align-items:center;gap:var(--rbn-s2);margin-top:var(--rbn-s2);color:var(--rbn-muted)}
 .wps-mono{font-family:var(--rbn-font-mono)}
 .wps-wide{max-width:none}
 
 /* ── 6. Değişken ekleme (şablon alanları) ── */
 .wps-vars{margin:var(--rbn-s2) 0 0}
-.wps-vars>summary{display:inline-flex;align-items:center;gap:var(--rbn-s2);min-height:2.5rem;padding:0 var(--rbn-s2);color:var(--rbn-ac);font-weight:600;cursor:pointer;border-radius:var(--rbn-r)}
+.wps-vars>summary{display:inline-flex;align-items:center;gap:var(--rbn-s2);min-height:var(--rbn-ctl);padding:0 var(--rbn-s2);color:var(--rbn-ac);font-weight:600;cursor:pointer;border-radius:var(--rbn-r)}
 .wps-vars[open]>summary{margin-bottom:var(--rbn-s1)}
-.wps-vars .rbn-toks{margin-top:0}
+.wps-vars .wps-toks{margin-top:0}
 .wps-live{margin:var(--rbn-s2) 0 0;color:var(--rbn-muted)}
 .wps-live b{color:var(--rbn-text);font-weight:600}
 
-/* ── 7. Metabox içi sekmeler (WAI-ARIA tablist; <button role=tab>) ── */
-.wps-tabs{display:flex;gap:var(--rbn-s1);margin:0 0 var(--rbn-s4);padding:0;border-bottom:1px solid var(--rbn-line);overflow-x:auto;scrollbar-width:thin}
-.wps-tabs [role=tab]{position:relative;display:flex;align-items:center;gap:var(--rbn-s2);min-height:2.5rem;padding:0 var(--rbn-s4);border:0;background:none;color:var(--rbn-muted);font:inherit;font-weight:600;white-space:nowrap;border-radius:var(--rbn-r) var(--rbn-r) 0 0;cursor:pointer}
-.wps-tabs [role=tab]:hover{color:var(--rbn-text);background:var(--rbn-surface-2)}
-.wps-tabs [role=tab][aria-selected=true]{color:var(--rbn-text)}
-.wps-tabs [role=tab][aria-selected=true]::after{content:"";position:absolute;left:var(--rbn-s2);right:var(--rbn-s2);bottom:-1px;height:3px;border-radius:3px 3px 0 0;background:var(--rbn-ac)}
-.wps-tabs [role=tab]:focus-visible{outline:2px solid var(--rbn-ac);outline-offset:-2px}
-.wps-panel[hidden]{display:none}
-.wps-panel .rbn-field{padding:var(--rbn-s3) 0}
-.wps-panel>.rbn-field:first-child{border-top:0;padding-top:0}
-.wps-box-fields .rbn-field{grid-template-columns:minmax(0,11rem) minmax(0,1fr);gap:var(--rbn-s2) var(--rbn-s5)}
-.wps-box-fields .rbn-input,.wps-box-fields .rbn-select,.wps-box-fields .rbn-textarea{max-width:none}
-.wps-box-fields .rbn-textarea{min-height:5.5rem;padding:var(--rbn-s2) var(--rbn-s3);line-height:1.55;resize:vertical}
-
 /* ── 8. Birincil kategori (URL'yi belirler → dikkat gerektirir) ── */
 .wps-primary{display:grid;gap:var(--rbn-s1);margin:0;padding:0;border:0}
-.wps-primary label{display:flex;align-items:center;gap:var(--rbn-s3);min-height:2.5rem;padding:0 var(--rbn-s3);border:1px solid var(--rbn-line);border-radius:var(--rbn-r);cursor:pointer}
+.wps-primary label{display:flex;align-items:center;gap:var(--rbn-s3);min-height:var(--rbn-ctl);padding:0 var(--rbn-s3);border:var(--rbn-bw) solid var(--rbn-line);border-radius:var(--rbn-r);cursor:pointer}
 .wps-primary label:has(input:checked){border-color:var(--rbn-ac);background:var(--rbn-ac-soft);box-shadow:0 0 0 1px var(--rbn-ac)}
-.wps-primary label:has(input:focus-visible){outline:2px solid var(--rbn-ac);outline-offset:2px}
+.wps-primary label:has(input:focus-visible){outline:var(--rbn-ring) solid var(--rbn-ac);outline-offset:var(--rbn-ring-off)}
 .wps-primary input{width:1.125rem;height:1.125rem;margin:0;accent-color:var(--rbn-ac)}
 .wps-primary .rbn-badge{margin-left:auto}
 .wps-urlprev{margin:var(--rbn-s2) 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s2);color:var(--rbn-muted)}
@@ -101,7 +66,7 @@
 /* ── 10. 404 günlüğü: satır içi yönlendirme paneli ── */
 .wps-inline>td{padding:0;background:var(--rbn-ac-soft)}
 .wps-inline__b{display:grid;gap:var(--rbn-s3);padding:var(--rbn-s4) var(--rbn-s5)}
-.wps-inline__b h3{margin:0;font-size:1.0625rem;font-weight:600}
+.wps-inline__b h3{margin:0;font-size:var(--rbn-fs);font-weight:600}
 .wps-suggest{display:grid;gap:var(--rbn-s2);margin:0;padding:0;list-style:none}
 .wps-suggest .rbn-btn{width:100%;justify-content:space-between;text-align:left;font-weight:500;gap:var(--rbn-s3)}
 .wps-suggest .rbn-btn span:first-child{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s2);min-width:0;overflow-wrap:anywhere}
@@ -110,17 +75,17 @@
 
 /* ── 11. JSON-LD önizleme ── */
 [data-wps-logs]{overflow-x:auto;max-width:100%}
-.wps-pre{margin:0;padding:var(--rbn-s4);border:1px solid var(--rbn-line);border-radius:var(--rbn-r);background:var(--rbn-surface-2);color:var(--rbn-text);font:500 17px/1.55 var(--rbn-font-mono);white-space:pre-wrap;overflow-wrap:anywhere;max-height:22rem;overflow:auto}
-.wps-pre:focus-visible{outline:2px solid var(--rbn-ac);outline-offset:2px}
+.wps-pre{margin:0;padding:var(--rbn-s4);border:var(--rbn-bw) solid var(--rbn-line);border-radius:var(--rbn-r);background:var(--rbn-surface-2);color:var(--rbn-text);font:500 var(--rbn-fs)/var(--rbn-lh) var(--rbn-font-mono);white-space:pre-wrap;overflow-wrap:anywhere;max-height:22rem;overflow:auto}
+.wps-pre:focus-visible{outline:var(--rbn-ring) solid var(--rbn-ac);outline-offset:var(--rbn-ring-off)}
 
 /* ── 12. Görsel seçici (logo, OG görseli) ── */
 .wps-media{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s3)}
-.wps-media__img{display:flex;align-items:center;justify-content:center;width:6rem;height:6rem;border:1px dashed var(--rbn-line-strong);border-radius:var(--rbn-r);background:var(--rbn-surface-2);color:var(--rbn-muted)}
+.wps-media__img{display:flex;align-items:center;justify-content:center;width:6rem;height:6rem;border:var(--rbn-bw) dashed var(--rbn-line-strong);border-radius:var(--rbn-r);background:var(--rbn-surface-2);color:var(--rbn-muted)}
 .wps-media__img .rbn-ico{width:2rem;height:2rem}
 .wps-media__img--filled{border-style:solid;background:var(--rbn-ac-soft);color:var(--rbn-ac)}
 
 /* ── 13. Sosyal kart önizlemesi ── */
-.wps-og{max-width:28rem;border:1px solid var(--rbn-line);border-radius:var(--rbn-r-lg);overflow:hidden;background:var(--rbn-surface)}
+.wps-og{max-width:28rem;border:var(--rbn-bw) solid var(--rbn-line);border-radius:var(--rbn-r-lg);overflow:hidden;background:var(--rbn-surface)}
 .wps-og__img{display:flex;align-items:center;justify-content:center;aspect-ratio:1.91/1;background:var(--rbn-ac-soft);color:var(--rbn-ac)}
 .wps-og__img .rbn-ico{width:3rem;height:3rem}
 .wps-og__t{padding:var(--rbn-s3) var(--rbn-s4)}
@@ -129,119 +94,70 @@
 .wps-og__t span{display:block;color:var(--rbn-muted)}
 
 /* ── 14. Dar ekran: tablo → kart (kitin .rbn-table--stack'i) + sekme şeridi ── */
-@media (max-width:782px){
+@media (max-width:48.875rem){
 	.wps-skel-row{grid-template-columns:1fr 1fr}
 	.wps-skel-rows{padding:var(--rbn-s4)}
 	.wps-inline__b{padding:var(--rbn-s4)}
-	.wps-box-fields .rbn-field{grid-template-columns:1fr}
-	.wps-tabs [role=tab]{min-height:2.75rem}
 	.wps-serp,.wps-serp--m{max-width:none}
-	.wps-vars>summary{min-height:2.75rem}
-	.wps-primary label{min-height:2.75rem}
+	.wps-vars>summary{min-height:var(--rbn-ctl-touch)}
+	.wps-primary label{min-height:var(--rbn-ctl-touch)}
 }
 @media (forced-colors:active){
 	.wps-primary label:has(input:checked){outline:2px solid Highlight}
-	.wps-tabs [role=tab][aria-selected=true]{outline:2px solid Highlight}
-	.wps-lim .rbn-progress>i{background:Highlight}
+	.wps-lim .wps-progress>i{background:Highlight}
 }
 
-/* ── 15. Küçük kit düzeltmeleri (düğme ≥ 40 px) ve süzgeç varyantı ── */
-.rbn-dlg__x{width:2.5rem;height:2.5rem}
+/* ── 15. Süzgeç ızgarası varyantı (3 alan) ve küçük yardımcılar ── */
 .wps-filter3{grid-template-columns:minmax(0,2fr) repeat(2,minmax(0,1fr)) auto}
 @media (max-width:1180px){.wps-filter3{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:480px){.wps-filter3{grid-template-columns:1fr}}
-.wps-icon-btn{min-width:2.5rem;padding:0}
+.wps-icon-btn{min-width:var(--rbn-ctl);padding:0}
 .wps-hl{box-shadow:inset 3px 0 0 var(--rbn-ac)}
-.rbn-empty h2{margin:0;font-size:1rem;font-weight:600}
-
-/* ── 16. Hedef boyutu ve 17 px tabanı (kit düzeltmesi) ── */
-.rbn-seg label,.rbn-seg label>span{min-height:2.5rem}
-.rbn-seg{max-width:100%;flex-wrap:wrap}                                   /* 390 px: 3 seçenekli denetim taşmasın, satır kırsın */
-.rbn-seg label>span{display:inline-flex;align-items:center;gap:var(--rbn-s2)}
-.rbn-empty h2,.rbn-empty h3{font-size:1.0625rem}
-@media (max-width:782px){
-	.rbn-wrap input.rbn-input,.rbn-wrap select.rbn-select,.rbn-wrap textarea.rbn-textarea,.rbn-input,.rbn-select{font-size:1.0625rem}
-}
-
-/* ── 17. Vurgu rengi: AdminKit'in --adminkit-accent değişkeni (yoksa kitin kendi ardıl değeri) ──
-   Koyu temada kitin açık vurgusu (#8aa4ff) korunur; sabit renk bu dosyaya yazılmaz. */
-.rbn-wrap:not([data-tone=koyu]),.rbn-dlg:not([data-tone=koyu]){--rbn-ac:var(--adminkit-accent,var(--wp-admin-theme-color-darker-10,#2145e6))}
-
-/* ── 18. Taşma yok: içerik kendi kartının sağ kenarını aşmaz (WPRJ-548 düzeltme) ──
-   a) Sekme şeridi kaydırılmaz, satıra sarar: gizli kalan sekme (ör. "Settings") olmasın.
-   b) Tablo, bulunduğu kutunun genişliğine göre karta döner (container query). Kitin 782 px medya
-      kuralı yalnız görünüm genişliğine bakar; 2 sütunlu ızgarada dar kart 1280 px'te de taşardı. */
-.rbn-tabs,.wps-tabs{flex-wrap:wrap;overflow:visible}
-.rbn-tw{container-type:inline-size}
-.rbn-table .rbn-badge{white-space:normal}
-@container (max-width:52rem){
-	.rbn-table--stack,.rbn-table--stack tbody{display:block;width:100%;min-width:0}
-	.rbn-table--stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-	.rbn-table--stack tr{position:relative;display:block;padding:var(--rbn-s3) var(--rbn-s4);border-bottom:1px solid var(--rbn-line)}
-	.rbn-table--sel tr{padding-left:calc(var(--rbn-s3) + 3rem)}
-	.rbn-table--stack tbody tr:last-child{border-bottom:0}
-	.rbn-table--stack td,.rbn-table--stack th{display:block;padding:0;border:0}
-	.rbn-table--stack td+td,.rbn-table--stack th+td{margin-top:.2rem}
-	.rbn-table--stack td.rbn-ck{position:absolute;left:var(--rbn-s2);top:var(--rbn-s2);width:2.75rem}
-	.rbn-table--stack td[data-l]::before{content:attr(data-l) ": ";font-weight:600;color:var(--rbn-muted);font-size:.8125rem}
-	.rbn-table--stack .rbn-acts{justify-content:flex-start;flex-wrap:wrap;margin-top:var(--rbn-s2);white-space:normal}
-}
-@media (max-width:782px){.rbn-table--stack,.rbn-table--stack tbody{display:block;width:100%;min-width:0}}
 .wps-inline__b,.wps-suggest{grid-template-columns:minmax(0,1fr)}
 .wps-suggest li{min-width:0}
-.wps-suggest .rbn-btn{white-space:normal;height:auto;min-height:2.5rem}
+.wps-suggest .rbn-btn{white-space:normal;height:auto}
 .wps-suggest .rbn-btn span:first-child span{white-space:normal}
 
 /* ===== WPRJ-562 — Dashboard merkezli gezinme ===== */
 .wps-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s3);margin:0 0 var(--rbn-s4)}
 .wps-menu{position:relative}
 .wps-menu>.rbn-btn[aria-expanded=true] .wps-chev{transform:rotate(180deg)}
-.wps-menu__list{position:absolute;z-index:20;top:calc(100% + var(--rbn-s1));left:0;min-width:16rem;margin:0;padding:var(--rbn-s1);list-style:none;background:var(--rbn-surface);border:1px solid var(--rbn-line);border-radius:var(--rbn-r-lg);box-shadow:var(--rbn-shadow-lg,var(--rbn-shadow))}
+.wps-menu__list{position:absolute;z-index:20;top:calc(100% + var(--rbn-s1));left:0;min-width:16rem;margin:0;padding:var(--rbn-s1);list-style:none;background:var(--rbn-surface);border:var(--rbn-bw) solid var(--rbn-line);border-radius:var(--rbn-r-lg);box-shadow:var(--rbn-shadow-lg,var(--rbn-shadow))}
 .wps-menu__list[hidden]{display:none}
-.wps-menu__list a{display:flex;align-items:center;gap:var(--rbn-s2);min-height:2.5rem;padding:0 var(--rbn-s3);border-radius:var(--rbn-r);color:var(--rbn-text);text-decoration:none;font-weight:600}
+.wps-menu__list a{display:flex;align-items:center;gap:var(--rbn-s2);min-height:var(--rbn-ctl);padding:0 var(--rbn-s3);border-radius:var(--rbn-r);color:var(--rbn-text);text-decoration:none;font-weight:600}
 .wps-menu__list a:hover{background:var(--rbn-surface-2)}
 .wps-menu__list a[aria-current=page]{background:var(--rbn-ac-soft,var(--rbn-surface-2));color:var(--rbn-ac)}
-.wps-menu__list a:focus-visible,.wps-menu>.rbn-btn:focus-visible{outline:2px solid var(--rbn-ac);outline-offset:2px}
-.wps-sect{margin:var(--rbn-s5) 0 var(--rbn-s3);font-size:1.125rem}
+.wps-menu__list a:focus-visible,.wps-menu>.rbn-btn:focus-visible{outline:var(--rbn-ring) solid var(--rbn-ac);outline-offset:var(--rbn-ring-off)}
+.wps-sect{margin:var(--rbn-s5) 0 var(--rbn-s3);font-size:var(--rbn-fs-h3)}
 .wps-tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--rbn-s4);margin:0 0 var(--rbn-s5);padding:0;list-style:none}
 .wps-tools>li{display:flex;min-width:0}
 .wps-tool{display:flex;flex-direction:column;width:100%;margin:0}
 .wps-tool .rbn-card__b{flex:1}
 .wps-tool__top{display:flex;align-items:center;gap:var(--rbn-s3);margin:0 0 var(--rbn-s2)}
-.wps-tool__i{display:inline-grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:var(--rbn-r);background:var(--rbn-surface-2);color:var(--rbn-ac)}
-.wps-tool__n{margin:0;font-size:1.0625rem}
+.wps-tool__i{display:inline-grid;place-items:center;width:var(--rbn-ctl);height:var(--rbn-ctl);border-radius:var(--rbn-r);background:var(--rbn-surface-2);color:var(--rbn-ac)}
+.wps-tool__n{margin:0;font-size:var(--rbn-fs)}
 .wps-tool__n a{color:var(--rbn-text);text-decoration:none}
 .wps-tool__n a:hover{text-decoration:underline}
 .wps-tool__d{margin:0 0 var(--rbn-s3);color:var(--rbn-muted)}
 .wps-tool__s{margin:0 0 var(--rbn-s1)}
 .wps-tool__m{margin:0;font-weight:600}
 @media (max-width:1100px){.wps-tools{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:782px){.wps-tools{grid-template-columns:1fr}.wps-menu,.wps-menu>.rbn-btn,.wps-crumb>.rbn-btn{width:100%}.wps-menu>.rbn-btn{justify-content:center}.wps-menu__list{position:static;margin-top:var(--rbn-s1);min-width:0}.wps-crumb{flex-direction:column;align-items:stretch}}
+@media (max-width:48.875rem){.wps-tools{grid-template-columns:1fr}.wps-menu,.wps-menu>.rbn-btn,.wps-crumb>.rbn-btn{width:100%}.wps-menu>.rbn-btn{justify-content:center}.wps-menu__list{position:static;margin-top:var(--rbn-s1);min-width:0}.wps-crumb{flex-direction:column;align-items:stretch}}
 @media (prefers-reduced-motion:reduce){.wps-chev{transition:none}}
 .wps-chev{transition:transform .15s}
-.wps-og__t small{font-size:17px}
 
-/* ===== WPRJ-576 — Blok aralığı (kit düzeyi, ekran başına yama yok) =====
-   Kural: eylem satırı (düğme/bağlantı grubu) kendinden önceki bloğa (önizleme, alan, not, paragraf) >= 12 px (--rbn-s3);
-   dikey yığılmış kart/bölüm >= 16 px (--rbn-s4); düğmeler arası >= 8 px (--rbn-s2). */
-.rbn-row{row-gap:var(--rbn-s3)}
-:is(.rbn-field__c,.rbn-card__b,.rbn-card__b--pad)>*+:is(.rbn-row,.wps-copy,.rbn-card__act){margin-top:var(--rbn-s3)}
-.wps-pre+.rbn-row{margin-top:var(--rbn-s3)}
+/* ===== WPRJ-576 — Blok aralığı: eylem satırı kendinden önceki bloğa >= 12 px (--rbn-s3) ===== */
+:is(.rbn-field,.rbn-card__b)>*+:is(.wps-row,.wps-copy,.rbn-card__act){margin-top:var(--rbn-s3)}
+.wps-pre+.wps-row{margin-top:var(--rbn-s3)}
 .wps-copy{row-gap:var(--rbn-s3)}
-/* Uzun yazılı düğme (ör. "… (yeni sekmede açılır)") dar ekranda taşmaz, satıra sarar; tek satırda yükseklik yine 40 px. */
-.rbn-btn{max-width:100%;padding-block:var(--rbn-s2);white-space:normal;line-height:1.25;text-align:center}
-/* Değişken düğmeleri ile üstündeki başlık arası */
 .wps-vars[open]>summary{margin-bottom:var(--rbn-s2)}
-/* Boş liste: veri yokken başlık satırı (ve içindeki gizli "tümünü seç" kutusu) gösterilmez; boş sayfalayıcı çizgi çizmez. */
-.rbn-tw:has(>.rbn-table>tbody:empty){display:none}
-.rbn-pager:empty{display:none}
 
 /* WPRJ-580: Redirects > Preferred address */
 .wps-pre--scroll{white-space:pre;overflow-wrap:normal;word-break:normal;overflow:auto;max-width:100%;tab-size:4}
 .wps-pre--scroll code{font:inherit;white-space:inherit}
 .wps-addr code,.wps-addr .wps-url{overflow-wrap:anywhere}
 .wps-addr .wps-pre--scroll code{overflow-wrap:normal}
-.wps-h3{margin:var(--rbn-s4) 0 var(--rbn-s2);font-size:1.0625rem;font-weight:600}
+.wps-h3{margin:var(--rbn-s4) 0 var(--rbn-s2);font-size:var(--rbn-fs);font-weight:600}
 .wps-ul{margin:var(--rbn-s2) 0 0;padding-left:var(--rbn-s5);display:grid;gap:var(--rbn-s2)}
 .wps-cell-sub{display:block;margin-top:var(--rbn-s1);color:var(--rbn-muted)}
 .wps-vsum{display:flex;flex-wrap:wrap;gap:var(--rbn-s2);margin:0}
@@ -252,21 +168,19 @@
 .wps-addr .wps-field-1{grid-template-columns:1fr}
 
 /* ===== WPRJ-567 — SEO skoru ve öneriler =====
-   Yeni sabit renk YOK. Halka kitin .rbn-ring'i; bant rengi yalnız ek ipucu: her banta ikon + metin eşlik eder. */
-.rbn-ring__n span{font-size:1.0625rem}                      /* kit 12 px → 17 px tabanı */
-.rbn-ring--sm .rbn-ring__svg{width:5.5rem;height:5.5rem}
+   Yeni sabit renk YOK. Halka WPSeoKit'e özgüdür (bölüm 21); bant rengi yalnız ek ipucu: her banta ikon + metin eşlik eder. */
 
 /* Skor kartı (dashboard) */
 .wps-score{margin:0 0 var(--rbn-s5)}
 .wps-score__grid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--rbn-s5) var(--rbn-s6);align-items:start}
 .wps-score__fig{display:grid;justify-items:center;gap:var(--rbn-s3)}
-.wps-score__h{margin:0 0 var(--rbn-s2);font-size:1.125rem}
+.wps-score__h{margin:0 0 var(--rbn-s2);font-size:var(--rbn-fs-h3)}
 .wps-score__lead{margin:0 0 var(--rbn-s3)}
-.wps-score__sub{margin:var(--rbn-s4) 0 var(--rbn-s2);font-size:1.0625rem;font-weight:600}
+.wps-score__sub{margin:var(--rbn-s4) 0 var(--rbn-s2);font-size:var(--rbn-fs);font-weight:600}
 .wps-score__when{margin:0 0 0 auto;color:var(--rbn-muted)}
 .wps-score__note{margin:var(--rbn-s3) 0 0}
 .wps-score .rbn-note{margin:var(--rbn-s3) 0 0}
-@media (max-width:782px){
+@media (max-width:48.875rem){
 	.wps-score__grid{grid-template-columns:minmax(0,1fr)}
 	.wps-score__fig{justify-items:start}
 	.wps-score__when{margin-left:0}
@@ -274,13 +188,13 @@
 
 /* Öneri satırı: sıralı liste (sıra anlamlıdır: seviye → ağırlık → düzeltme tipi → kimlik) */
 .wps-recs{display:grid;gap:var(--rbn-s3);margin:0;padding:0;list-style:none}
-.wps-rec{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--rbn-s3) var(--rbn-s5);padding:var(--rbn-s4);border:1px solid var(--rbn-line);border-left-width:4px;border-radius:var(--rbn-r-lg);background:var(--rbn-surface)}
+.wps-rec{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--rbn-s3) var(--rbn-s5);padding:var(--rbn-s4);border:var(--rbn-bw) solid var(--rbn-line);border-left-width:4px;border-radius:var(--rbn-r-lg);background:var(--rbn-surface)}
 .wps-rec[data-level=critical]{border-left-color:var(--rbn-err)}
 .wps-rec[data-level=warning]{border-left-color:var(--rbn-warn)}
 .wps-rec[data-level=info]{border-left-color:var(--rbn-info)}
 .wps-rec__main{min-width:0}
 .wps-rec__top{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s2);margin:0 0 var(--rbn-s2)}
-.wps-rec__t{margin:0 0 var(--rbn-s1);font-size:1.0625rem;font-weight:600}
+.wps-rec__t{margin:0 0 var(--rbn-s1);font-size:var(--rbn-fs);font-weight:600}
 .wps-rec__m{margin:0 0 var(--rbn-s1);font-weight:600}
 .wps-rec__d{margin:0;color:var(--rbn-muted)}
 .wps-rec__act{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:var(--rbn-s2);min-width:12rem}
@@ -291,7 +205,7 @@
 .wps-recs--mini .wps-rec__top{margin:0 0 var(--rbn-s1)}
 .wps-recs--mini .wps-rec__t{margin:0}
 .wps-recs--mini .wps-rec__m{margin:0;font-weight:400;color:var(--rbn-muted)}
-@media (max-width:782px){
+@media (max-width:48.875rem){
 	.wps-rec{grid-template-columns:minmax(0,1fr)}
 	.wps-rec__act{flex-direction:row;flex-wrap:wrap;min-width:0}
 }
@@ -307,7 +221,7 @@
 
 /* Gizlenen öneriler */
 .wps-hidden{margin:var(--rbn-s5) 0 0}
-.wps-hidden>summary{display:inline-flex;align-items:center;gap:var(--rbn-s2);min-height:2.5rem;padding:0 var(--rbn-s2);color:var(--rbn-ac);font-weight:600;cursor:pointer;border-radius:var(--rbn-r)}
+.wps-hidden>summary{display:inline-flex;align-items:center;gap:var(--rbn-s2);min-height:var(--rbn-ctl);padding:0 var(--rbn-s2);color:var(--rbn-ac);font-weight:600;cursor:pointer;border-radius:var(--rbn-r)}
 .wps-hidden[open]>summary{margin-bottom:var(--rbn-s3)}
 .wps-hidden .wps-rec{opacity:1;border-left-style:dashed}
 .wps-hidline{margin:var(--rbn-s4) 0 0;color:var(--rbn-muted)}
@@ -316,26 +230,26 @@
 
 /* Yazılar süzgeci */
 .wps-filterbar{display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--rbn-s3) var(--rbn-s4);margin:0 0 var(--rbn-s4)}
-.wps-filterbar .rbn-field__l{margin:0 0 var(--rbn-s1)}
+.wps-filterbar .rbn-field{min-width:0}
 .wps-filterbar .rbn-select{min-width:14rem}
 .wps-num{font-variant-numeric:tabular-nums;font-weight:600}
 
 /* Kural kataloğu (Nasıl hesaplanır) */
 .wps-how{max-width:52rem}
-.wps-how h2{margin:var(--rbn-s5) 0 var(--rbn-s2);font-size:1.125rem}
+.wps-how h2{margin:var(--rbn-s5) 0 var(--rbn-s2);font-size:var(--rbn-fs-h3)}
 .wps-how h2:first-child{margin-top:0}
 .wps-how p{margin:0 0 var(--rbn-s3)}
 .wps-bands{display:flex;flex-wrap:wrap;gap:var(--rbn-s2) var(--rbn-s3);margin:0 0 var(--rbn-s3);padding:0;list-style:none}
 .wps-catalog{margin:var(--rbn-s5) 0 0}
-.wps-catalog h2{margin:0 0 var(--rbn-s2);font-size:1.125rem}
+.wps-catalog h2{margin:0 0 var(--rbn-s2);font-size:var(--rbn-fs-h3)}
 
 /* Yazı kutusu: Score sekmesi */
 .wps-pscore{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--rbn-s4) var(--rbn-s5);align-items:center;margin:0 0 var(--rbn-s4)}
 .wps-pscore p{margin:0 0 var(--rbn-s2)}
 .wps-pscore__act{display:flex;flex-wrap:wrap;gap:var(--rbn-s2) var(--rbn-s3);margin-top:var(--rbn-s2)}
-.wps-pgroup{margin:var(--rbn-s5) 0 var(--rbn-s3);font-size:1.0625rem;font-weight:600}
+.wps-pgroup{margin:var(--rbn-s5) 0 var(--rbn-s3);font-size:var(--rbn-fs);font-weight:600}
 .wps-rules{display:grid;gap:var(--rbn-s3);margin:0 0 var(--rbn-s3);padding:0;list-style:none}
-.wps-rule{display:grid;gap:var(--rbn-s1);padding:var(--rbn-s3) var(--rbn-s4);border:1px solid var(--rbn-line);border-left-width:4px;border-radius:var(--rbn-r-lg)}
+.wps-rule{display:grid;gap:var(--rbn-s1);padding:var(--rbn-s3) var(--rbn-s4);border:var(--rbn-bw) solid var(--rbn-line);border-left-width:4px;border-radius:var(--rbn-r-lg)}
 .wps-rule[data-level=critical]{border-left-color:var(--rbn-err)}
 .wps-rule[data-level=warning]{border-left-color:var(--rbn-warn)}
 .wps-rule[data-level=info]{border-left-color:var(--rbn-info)}
@@ -348,54 +262,17 @@
 .wps-ok-list{margin:0 0 var(--rbn-s3);padding:0;list-style:none;display:grid;gap:var(--rbn-s2)}
 .wps-ok-list li{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s2) var(--rbn-s3)}
 .wps-ok-list span.wps-ok-list__m{color:var(--rbn-muted)}
-@media (max-width:782px){.wps-pscore{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:48.875rem){.wps-pscore{grid-template-columns:minmax(0,1fr)}}
 @media (forced-colors:active){.wps-rec,.wps-rule{border-left-width:6px}}
 
 
 /* ── 20. WPRJ-575 — Dashboard'un kendi sekmeleri (iki seviyeli), sütunlu tablo, grafikler ──
    Üst sekme = büyük, altı çizili, ikonlu (1. seviye). Alt sekme = küçük hap düğme (2. seviye); ikisi görsel olarak ayrıdır. */
-.wps-dash__top{display:flex;flex-wrap:wrap;gap:var(--rbn-s1);margin:0 0 var(--rbn-s5);padding:0 var(--rbn-s2);border-bottom:2px solid var(--rbn-line-strong)}
-.wps-dash__top [role=tab]{position:relative;display:flex;align-items:center;gap:var(--rbn-s2);min-height:3rem;padding:0 var(--rbn-s4);border:0;background:none;color:var(--rbn-muted);font:inherit;font-size:1.125rem;font-weight:700;white-space:nowrap;border-radius:var(--rbn-r) var(--rbn-r) 0 0;cursor:pointer}
-.wps-dash__top [role=tab]:hover{color:var(--rbn-text);background:var(--rbn-surface-2)}
-.wps-dash__top [role=tab][aria-selected=true]{color:var(--rbn-text)}
-.wps-dash__top [role=tab][aria-selected=true]::after{content:"";position:absolute;left:var(--rbn-s2);right:var(--rbn-s2);bottom:-2px;height:4px;border-radius:4px 4px 0 0;background:var(--rbn-ac)}
-.wps-dash__top [role=tab]:focus-visible{outline:2px solid var(--rbn-ac);outline-offset:-2px}
-.wps-dash__top .rbn-badge{margin-left:var(--rbn-s1)}
-.wps-tabs--sub{gap:var(--rbn-s2);margin:0 0 var(--rbn-s4);padding:0;border-bottom:0}
-.wps-tabs--sub [role=tab]{min-height:2.5rem;padding:0 var(--rbn-s4);border:1px solid var(--rbn-line-strong);border-radius:999px;background:var(--rbn-surface);color:var(--rbn-text);font-size:1.0625rem;font-weight:600}
-.wps-tabs--sub [role=tab]:hover{background:var(--rbn-surface-2)}
-.wps-tabs--sub [role=tab][aria-selected=true]{background:var(--rbn-ac-soft);border-color:var(--rbn-ac);color:var(--rbn-text)}
-.wps-tabs--sub [role=tab][aria-selected=true]::after{display:none}
-.wps-tabs--sub [role=tab]:focus-visible{outline:2px solid var(--rbn-ac);outline-offset:2px}
 .wps-where{margin:0 0 var(--rbn-s3);color:var(--rbn-muted);font-weight:600}
 .wps-where b{color:var(--rbn-text)}
-.wps-dpan>*:last-child{margin-bottom:0}
-.wps-band{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s2) var(--rbn-s4);margin:0 0 var(--rbn-s4);padding:var(--rbn-s3) var(--rbn-s4);border:1px solid var(--rbn-warn);border-radius:var(--rbn-r-lg);background:var(--rbn-warn-bg);color:var(--rbn-text)}
+.rbn-tabpanel>*:last-child{margin-bottom:0}
+.wps-band{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s2) var(--rbn-s4);margin:0 0 var(--rbn-s4);padding:var(--rbn-s3) var(--rbn-s4);border:var(--rbn-bw) solid var(--rbn-warn);border-radius:var(--rbn-r-lg);background:var(--rbn-warn-bg);color:var(--rbn-text)}
 .wps-band p{margin:0;flex:1 1 16rem;font-weight:600}
-@media (max-width:782px){
-	.wps-dash__top{padding:0}
-	.wps-dash__top [role=tab]{min-height:3rem;padding:0 var(--rbn-s3);font-size:1.0625rem}
-	.wps-tabs--sub [role=tab]{min-height:2.75rem}
-}
-@media (forced-colors:active){.wps-dash__top [role=tab][aria-selected=true],.wps-tabs--sub [role=tab][aria-selected=true]{outline:2px solid Highlight}}
-
-/* Sütunlu tablo: masaüstü ve tablet genişliğinde SÜTUN kalır; yalnız kutu 36 rem'den daralınca kart olur. */
-.rbn-table--cols{min-width:0}
-.rbn-table--cols td,.rbn-table--cols th{overflow-wrap:anywhere}
-.rbn-table--cols .rbn-acts{justify-content:flex-start;flex-wrap:wrap}
-@container (max-width:36rem){
-	.rbn-table--cols,.rbn-table--cols tbody{display:block;width:100%}
-	.rbn-table--cols thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-	.rbn-table--cols tr{position:relative;display:block;padding:var(--rbn-s3) var(--rbn-s4);border-bottom:1px solid var(--rbn-line)}
-	.rbn-table--cols tbody tr:last-child{border-bottom:0}
-	.rbn-table--cols td,.rbn-table--cols th{display:block;padding:0;border:0}
-	.rbn-table--cols td+td,.rbn-table--cols th+td{margin-top:.2rem}
-	.rbn-table--cols td[data-l]::before{content:attr(data-l) ": ";font-weight:600;color:var(--rbn-muted);font-size:1rem}
-	.rbn-table--cols .rbn-acts{margin-top:var(--rbn-s2)}
-}
-.rbn-table--cols .rbn-num{text-align:right}
-@container (max-width:36rem){.rbn-table--cols .rbn-num{text-align:left}}
-
 /* Raporlar: saf SVG/CSS grafikler. Etiket ve değerler HTML'dedir (SVG içi metin küçülmez); renk yanında desen ve metin var. */
 .wps-reports{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--rbn-s4);margin:0 0 var(--rbn-s4);padding:0;list-style:none}
 .wps-reports>li{display:flex;min-width:0}
@@ -403,11 +280,11 @@
 .wps-reports .wps-wide{grid-column:1/-1}
 .wps-chart{margin:0}
 .wps-chart__k{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--rbn-s1) var(--rbn-s3);margin:0 0 var(--rbn-s3)}
-.wps-chart__k strong{font-size:1.75rem;line-height:1.1}
+.wps-chart__k strong{font-size:var(--rbn-fs-h1);line-height:1.1}
 .wps-chart__k span{color:var(--rbn-muted)}
 .wps-chart__plot{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--rbn-s2) var(--rbn-s3);align-items:stretch}
 .wps-chart__y{display:flex;flex-direction:column;justify-content:space-between;color:var(--rbn-muted);text-align:right;font-variant-numeric:tabular-nums}
-.wps-chart__svg{display:block;width:100%;height:10rem;border-bottom:1px solid var(--rbn-line-strong);border-left:1px solid var(--rbn-line-strong)}
+.wps-chart__svg{display:block;width:100%;height:10rem;border-bottom:var(--rbn-bw) solid var(--rbn-line-strong);border-left:var(--rbn-bw) solid var(--rbn-line-strong)}
 .wps-chart__grid{stroke:var(--rbn-line);stroke-width:1;vector-effect:non-scaling-stroke}
 .wps-chart__area{fill:var(--rbn-ac-soft);stroke:none}
 .wps-chart__ln{fill:none;stroke:var(--rbn-ac);stroke-width:3;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
@@ -421,13 +298,13 @@
 .wps-chart__lg line{stroke:var(--rbn-ac);stroke-width:3}
 .wps-chart__lg .is-2 line{stroke:var(--rbn-warn);stroke-dasharray:6 4}
 .wps-chart details{margin:var(--rbn-s3) 0 0}
-.wps-chart summary{display:flex;align-items:center;min-height:2.5rem;font-weight:600;cursor:pointer}
-.wps-chart summary:focus-visible{outline:2px solid var(--rbn-ac);outline-offset:2px}
+.wps-chart summary{display:flex;align-items:center;min-height:var(--rbn-ctl);font-weight:600;cursor:pointer}
+.wps-chart summary:focus-visible{outline:var(--rbn-ring) solid var(--rbn-ac);outline-offset:var(--rbn-ring-off)}
 .wps-chart .rbn-tw{margin-top:var(--rbn-s2)}
 .wps-hbars{display:grid;gap:var(--rbn-s3);margin:0;padding:0;list-style:none}
 .wps-hbars li{display:grid;grid-template-columns:minmax(7rem,11rem) minmax(0,1fr) 4.5rem;gap:var(--rbn-s3);align-items:center}
-.wps-hbars__t{height:1rem;border:1px solid var(--rbn-line-strong);border-radius:999px;background:var(--rbn-surface-2);overflow:hidden}
-.wps-hbars__t i{display:block;height:100%;width:var(--w,0%);background:var(--rbn-ac);background-image:repeating-linear-gradient(135deg,transparent 0 6px,rgb(255 255 255/.35) 6px 9px)}
+.wps-hbars__t{height:1rem;border:var(--rbn-bw) solid var(--rbn-line-strong);border-radius:var(--rbn-r-pill);background:var(--rbn-surface-2);overflow:hidden}
+.wps-hbars__t i{display:block;height:100%;width:var(--w,0%);background:var(--rbn-ac);background-image:repeating-linear-gradient(135deg,transparent 0 6px,color-mix(in srgb,var(--rbn-surface) 35%,transparent) 6px 9px)}
 .wps-hbars__v{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
 .wps-hbars li.is-2 .wps-hbars__t i{background-color:var(--rbn-ok);background-image:none}
 .wps-range{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--rbn-s3);margin:0 0 var(--rbn-s4)}
@@ -441,8 +318,8 @@
 	.wps-chart__svg{height:8rem}
 }
 @media print{
-	#adminmenumain,#wpadminbar,#wpfooter,.wps-dash__top,.wps-tabs--sub,.wps-range__act,.rbn-head__act{display:none!important}
-	.wps-dpan[hidden]{display:none!important}
+	#adminmenumain,#wpadminbar,#wpfooter,.rbn-tabs,.wps-range__act,.rbn-head__act{display:none!important}
+	.rbn-tabpanel[hidden]{display:none!important}
 }
 
 /* Genel bakış: skor özet kartı tek bağlantıdır (kartın tamamı tıklanır; bağlantı başlıktadır). */
@@ -450,18 +327,92 @@
 .wps-sum .wps-stretch{color:inherit;text-decoration:none}
 .wps-sum .wps-stretch::after{content:"";position:absolute;inset:0;border-radius:var(--rbn-r-lg)}
 .wps-sum .wps-stretch:focus-visible{outline:none}
-.wps-sum .wps-stretch:focus-visible::after{outline:2px solid var(--rbn-ac);outline-offset:2px}
+.wps-sum .wps-stretch:focus-visible::after{outline:var(--rbn-ring) solid var(--rbn-ac);outline-offset:var(--rbn-ring-off)}
 .wps-sum:hover{border-color:var(--rbn-ac)}
 .wps-sum__go{display:flex;align-items:center;gap:var(--rbn-s1);margin:var(--rbn-s3) 0 0;color:var(--rbn-ac);font-weight:600}
 .wps-sum .rbn-btn{position:relative;z-index:1}
 .wps-band .rbn-ico{vertical-align:-.2em}
 .wps-meta{margin:0 0 var(--rbn-s4)}
 .wps-hbars+.rbn-help{margin-top:var(--rbn-s4)}
-.wps-dpan code{white-space:normal;overflow-wrap:anywhere}
+.rbn-tabpanel code{white-space:normal;overflow-wrap:anywhere}
 
-/* WPRJ-586: Dashboard sekmeleri bağlantıdır (JS yokken de çalışır); yeni panelin başlığı odak alır. */
-.wps-dash__top a[role=tab],.wps-tabs--sub a[role=tab]{color:var(--rbn-muted);text-decoration:none}
-.wps-dash__top a[role=tab]:hover,.wps-tabs--sub a[role=tab]:hover,.wps-dash__top a[role=tab][aria-selected=true],.wps-tabs--sub a[role=tab][aria-selected=true]{color:var(--rbn-text)}
-.wps-dpan h2[tabindex="-1"]:focus{outline:none}
-.wps-dpan h2[tabindex="-1"]:focus-visible{outline:2px solid var(--rbn-ac);outline-offset:2px}
-.wps-dpan>.rbn-card+.rbn-card,.wps-dpan>.wps-tools{margin-top:var(--rbn-s4)}
+/* WPRJ-586: yeni panelin başlığı odak alır. */
+.rbn-tabpanel h2[tabindex="-1"]:focus{outline:none}
+.rbn-tabpanel h2[tabindex="-1"]:focus-visible{outline:var(--rbn-ring) solid var(--rbn-ac);outline-offset:var(--rbn-ring-off)}
+.rbn-tabpanel>.rbn-card+.rbn-card,.rbn-tabpanel>.wps-tools{margin-top:var(--rbn-s4)}
+
+/* ── 21. Kitte karşılığı olmayan DÜZEN parçaları (kit adayı: raporda listelenir). Yalnız --rbn-* token'ı. ── */
+/* Dizilim */
+.wps-row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s3)}
+.wps-row--end{justify-content:flex-end}
+.wps-row--between{justify-content:space-between}
+.wps-stack{display:grid;gap:var(--rbn-s3)}
+.wps-switchlist{display:grid;gap:var(--rbn-s1)}
+.wps-unit{display:inline-flex;align-items:center;gap:var(--rbn-s2)}
+.wps-unit span{color:var(--rbn-muted)}
+.wps-form .rbn-field{max-width:48rem}
+
+/* Yapışkan kaydet çubuğu: değişiklik varken görünür (JS açıkken) */
+.wps-savebar{position:sticky;bottom:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--rbn-s3);margin:var(--rbn-s5) 0 0;padding:var(--rbn-s3) var(--rbn-s4);border:var(--rbn-bw) solid var(--rbn-line);border-radius:var(--rbn-r-lg);background:var(--rbn-surface);box-shadow:var(--rbn-shadow)}
+.wps-savebar p{margin:0;display:flex;align-items:center;gap:var(--rbn-s2);color:var(--rbn-muted)}
+.wps-savebar__act{display:flex;gap:var(--rbn-s2);margin-left:auto}
+.wps-js .wps-savebar:not(.is-dirty){display:none}
+.wps-savebar.is-dirty p{color:var(--rbn-text);font-weight:var(--rbn-fw-m)}
+.wps-savebar.is-dirty .wps-dot{background:var(--rbn-warn)}
+
+/* Tablo üstü: süzgeç + toplu işlem */
+.wps-filter{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:var(--rbn-s3);align-items:end;padding:var(--rbn-s4) var(--rbn-s5);border-bottom:var(--rbn-bw) solid var(--rbn-line)}
+.wps-filter .rbn-field{min-width:0}
+.wps-filter .rbn-input,.wps-filter .rbn-select{max-width:none}
+.wps-filter__act{display:flex;gap:var(--rbn-s2)}
+.wps-filter__end{justify-self:end}
+.wps-bulk{position:sticky;top:2rem;z-index:15;display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s2) var(--rbn-s3);padding:var(--rbn-s3) var(--rbn-s5);border-bottom:var(--rbn-bw) solid var(--rbn-ac);background:var(--rbn-ac-soft)}
+.wps-bulk p{margin:0;font-weight:var(--rbn-fw-m)}
+.wps-bulk__act{display:flex;flex-wrap:wrap;gap:var(--rbn-s2);margin-left:auto}
+.wps-chk-cell{width:var(--rbn-ctl-touch)}
+@media (max-width:48.875rem){
+	.wps-filter{grid-template-columns:minmax(0,1fr);padding:var(--rbn-s4)}
+	.wps-bulk{padding:var(--rbn-s3) var(--rbn-s4)}
+	.wps-bulk__act{margin-left:0}
+}
+
+/* Değişken (token) düğmeleri */
+.wps-toks{display:flex;flex-wrap:wrap;gap:var(--rbn-s2);margin-top:var(--rbn-s2)}
+.wps-tok{display:inline-flex;align-items:center;min-height:var(--rbn-ctl);padding:0 var(--rbn-s3);border:var(--rbn-bw) dashed var(--rbn-line-strong);border-radius:var(--rbn-r);background:var(--rbn-surface-2);color:var(--rbn-text);font:var(--rbn-fw-m) var(--rbn-fs-mono)/1.4 var(--rbn-font-mono);cursor:pointer}
+.wps-tok:hover{border-style:solid;border-color:var(--rbn-ac)}
+.wps-tok:focus-visible{outline:var(--rbn-ring) solid var(--rbn-ac);outline-offset:var(--rbn-ring-off)}
+.wps-vars .wps-toks{margin-top:0}
+
+/* Radyo grubu (kit .rbn-seg düğme tabanlıdır; radyo için kit .rbn-check satırları) */
+.wps-radios{display:flex;flex-wrap:wrap;gap:var(--rbn-s2) var(--rbn-s5);margin:0;padding:0;border:0}
+
+/* İlerleme çubuğu */
+.wps-progress{height:.625rem;border-radius:var(--rbn-r-pill);background:var(--rbn-line);overflow:hidden}
+.wps-progress>i{display:block;height:100%;width:var(--w,0%);border-radius:var(--rbn-r-pill);background:var(--rbn-ac);transition:width .3s}
+@media (prefers-reduced-motion:reduce){.wps-progress>i{transition:none}}
+
+/* Skor halkası (SEO skoru) */
+.wps-ring{display:flex;flex-direction:column;align-items:center;gap:var(--rbn-s3);text-align:center}
+.wps-ring__svg{position:relative;width:9.5rem;height:9.5rem}
+.wps-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.wps-ring__track{fill:none;stroke:var(--rbn-line);stroke-width:10}
+.wps-ring__val{fill:none;stroke:var(--wps-ring,var(--rbn-ac));stroke-width:10;stroke-linecap:round;stroke-dasharray:326.73;stroke-dashoffset:calc(326.73 * (1 - var(--p,0) / 100));transition:stroke-dashoffset .6s}
+.wps-ring--ok{--wps-ring:var(--rbn-ok)}.wps-ring--warn{--wps-ring:var(--rbn-warn)}.wps-ring--err{--wps-ring:var(--rbn-err)}
+.wps-ring__n{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.wps-ring__n b{font-size:var(--rbn-fs-stat);font-weight:var(--rbn-fw-m);font-variant-numeric:tabular-nums}
+.wps-ring__n span{margin-top:var(--rbn-s1);color:var(--rbn-muted);font-size:var(--rbn-fs-sm);font-weight:var(--rbn-fw-m)}
+.wps-ring--sm .wps-ring__svg{width:5.5rem;height:5.5rem}
+.wps-ring--sm .wps-ring__n b{font-size:var(--rbn-fs-h2)}
+.wps-ring--sm .wps-ring__n span{display:none}
+.wps-ring--sm .wps-ring__track,.wps-ring--sm .wps-ring__val{stroke-width:12}
+@media (prefers-reduced-motion:reduce){.wps-ring__val{transition:none}}
+
+/* Diyalog: kapatma düğmeli başlık ve orta genişlik */
+.wps-dlg__h{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--rbn-s3)}
+.wps-dlg__h h2{margin:0}
+.wps-dlg__h > .rbn-btn{flex:none}
+.wps-dlg--mid{width:min(46rem,calc(100% - 2rem))}
+
+/* Tip ölçeği: kit "küçük" öğeyi tarayıcı varsayılanına (smaller) bırakır, mobil h1'i 24 px yapar; WPSeoKit 15/17/18/20/28/32 ölçeğinde kalır (kit boşluğu). */
+.rbn-stat__v small{font-size:var(--rbn-fs-sm);font-weight:var(--rbn-fw)}
+@media (max-width:48.875rem){.wpseokit-wrap .rbn-head h1{font-size:var(--rbn-fs-h1)}}
