@@ -7,8 +7,9 @@
 	var I = T.i18n || {};
 	var doc = document;
 
-	function $( sel, root ) { return ( root || doc ).querySelector( sel ); }
-	function $$( sel, root ) { return Array.prototype.slice.call( ( root || doc ).querySelectorAll( sel ) ); }
+	var u = window.RbnUi || {};
+	var $ = u.$ || function ( sel, root ) { return ( root || doc ).querySelector( sel ); };
+	var $$ = u.$$ || function ( sel, root ) { return Array.prototype.slice.call( ( root || doc ).querySelectorAll( sel ) ); };
 	function esc( s ) { return String( s == null ? '' : s ).replace( /[&<>"']/g, function ( c ) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ c ]; } ); }
 	function icon( n ) { return '<svg class="rbn-ico" aria-hidden="true"><use href="#i-' + n + '"/></svg>'; }
 	function fmt( s, n ) { return String( s ).replace( '%d', n ); }

@@ -426,18 +426,11 @@ final class Ui {
 
 	/** Prints the icon sprite once per request. */
 	public static function sprite(): void {
-		if ( self::$sprite_done ) {
-			return;
-		}
-		self::$sprite_done = true;
-		$file              = WPSEOKIT_DIR . 'assets/admin/sprite.svg';
-		if ( is_readable( $file ) ) {
-			echo (string) file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents,WordPress.Security.EscapeOutput.OutputNotEscaped -- the plugin's own fixed file.
-		}
+		\AdminKit\Helpers\Icons::sprite( WPSEOKIT_DIR . 'assets/admin/sprite.svg' );
 	}
 
 	public static function icon( string $name ): string {
-		return '<svg class="rbn-ico" aria-hidden="true"><use href="#i-' . esc_attr( $name ) . '"/></svg>';
+		return \AdminKit\Helpers\Icons::icon( $name );
 	}
 
 	/** Dark tone: WP "Midnight" colour scheme or a dark-mode plugin; can be overridden by a filter. */

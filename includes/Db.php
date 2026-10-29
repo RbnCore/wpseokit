@@ -22,8 +22,7 @@ final class Db {
 	 * Full table name for a short name: 'redirects', '404_logs' or 'snapshots'.
 	 */
 	public static function table( string $name ): string {
-		global $wpdb;
-		return $wpdb->prefix . 'seokit_' . $name;
+		return \AdminKit\Helpers\Db::table( 'seokit', $name );
 	}
 
 	/** Activation hook. */
@@ -33,22 +32,18 @@ final class Db {
 
 	/** Runs install() when the stored schema version is older than VERSION. Cheap: the option is autoloaded. */
 	public static function maybe_upgrade(): void {
-		if ( (int) get_option( self::OPTION, 0 ) < self::VERSION ) {
-			self::install();
-		}
+		\AdminKit\Helpers\Db::maybe_upgrade( self::OPTION, self::VERSION, array( self::class, 'install' ) );
 	}
 
 	/** Creates or updates the tables with dbDelta and records the schema version. */
 	public static function install(): void {
-		global $wpdb;
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-		$charset = $wpdb->get_charset_collate();
-		$redir   = self::table( 'redirects' );
-		$logs    = self::table( '404_logs' );
-		$snaps   = self::table( 'snapshots' );
+		$redir = self::table( 'redirects' );
+		$logs  = self::table( '404_logs' );
+		$snaps = self::table( 'snapshots' );
 
-		dbDelta(
-			"CREATE TABLE {$redir} (
+		\AdminKit\Helpers\Db::install(
+			array(
+				"CREATE TABLE {$redir} (
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   source_path varchar(191) NOT NULL,
   target_url text NOT NULL,
@@ -62,10 +57,8 @@ final class Db {
   PRIMARY KEY  (id),
   UNIQUE KEY source_path (source_path),
   KEY is_active (is_active)
-) {$charset};"
-		);
-		dbDelta(
-			"CREATE TABLE {$logs} (
+) %s;",
+				"CREATE TABLE {$logs} (
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   url_path varchar(191) NOT NULL,
   ip_hash char(64) NOT NULL DEFAULT '',
@@ -77,10 +70,8 @@ final class Db {
   PRIMARY KEY  (id),
   UNIQUE KEY url_path (url_path),
   KEY last_seen_at (last_seen_at)
-) {$charset};"
-		);
-		dbDelta(
-			"CREATE TABLE {$snaps} (
+) %s;",
+				"CREATE TABLE {$snaps} (
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   snapshot_date date NOT NULL,
   metrics longtext NOT NULL,
@@ -88,16 +79,18 @@ final class Db {
   taken_at datetime NOT NULL,
   PRIMARY KEY  (id),
   UNIQUE KEY snapshot_date (snapshot_date)
-) {$charset};"
+) %s;",
+			),
+			self::OPTION,
+			self::VERSION,
+			true
 		);
 		self::drop_legacy_events();
-		update_option( self::OPTION, self::VERSION, true );
 	}
 
 	/** Schema 4: the own activity table is gone (logs live in the AdminKit core); one idempotent clean-up. */
 	private static function drop_legacy_events(): void {
-		global $wpdb;
-		$wpdb->query( 'DROP TABLE IF EXISTS `' . esc_sql( $wpdb->prefix . 'seokit_events' ) . '`' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared -- fixed table name.
+		\AdminKit\Helpers\Db::drop_tables( array( self::table( 'events' ) ) );
 		delete_option( 'wpseokit_log_errors' );
 		delete_option( 'wpseokit_log_updates' );
 	}

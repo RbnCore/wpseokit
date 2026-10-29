@@ -41,7 +41,7 @@ final class Admin {
 	 * @param array<string, string> $args Extra query arguments.
 	 */
 	public static function page_url( array $args = array() ): string {
-		return add_query_arg( array_merge( array( 'page' => self::SLUG ), $args ), admin_url( 'admin.php' ) );
+		return \AdminKit\Helpers\Menu::page_url( self::SLUG, $args );
 	}
 
 	/**
@@ -62,13 +62,12 @@ final class Admin {
 	 * @return array<int, string>
 	 */
 	public static function links( array $links ): array {
-		array_unshift( $links, '<a href="' . esc_url( self::page_url() ) . '">' . esc_html__( 'Settings', 'wpseokit' ) . '</a>' );
-		return $links;
+		return \AdminKit\Helpers\Menu::action_link( $links, self::page_url(), __( 'Settings', 'wpseokit' ) );
 	}
 
 	/** Registers the page under the single RBN Kit top-level menu. */
 	public static function menu(): void {
-		\RbnKitMenu::add(
+		\AdminKit\Helpers\Menu::add(
 			array(
 				'slug'       => self::SLUG,
 				'title'      => __( 'WPSeoKit — SEO Toolkit', 'wpseokit' ),
@@ -82,7 +81,7 @@ final class Admin {
 
 	/** Reads the screen id once the menu is built. */
 	public static function late(): void {
-		self::$hook = \RbnKitMenu::hook( self::SLUG );
+		self::$hook = \AdminKit\Helpers\Menu::hook( self::SLUG );
 	}
 
 	/** Whether the current admin screen is the plugin page. */
