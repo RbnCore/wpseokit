@@ -461,7 +461,11 @@
 			var R = S.rules, rows = [];
 			[ 'site', 'post' ].forEach( function ( scope ) {
 				( R.rules && R.rules[ scope ] ? R.rules[ scope ] : [] ).forEach( function ( r ) {
-					var lv = LEVEL[ r.level ] || LEVEL.info, src = r.source ? '<a href="' + esc( r.source ) + '" target="_blank" rel="noopener noreferrer">' + esc( String( r.source ).replace( /^https?:\/\/([^/]+).*/, '$1' ) ) + '<span class="rbn-sr"> ' + esc( I.sourceNew ) + '</span></a>' : '';
+					var lv = LEVEL[ r.level ] || LEVEL.info, src = '';
+					if ( r.source ) {
+						// A rule source is a portable document path (relative to the knowledge base), not a URL; only a real web address becomes a link.
+						src = /^https?:\/\//.test( String( r.source ) ) ? '<a href="' + esc( r.source ) + '" target="_blank" rel="noopener noreferrer">' + esc( String( r.source ).replace( /^https?:\/\/([^/]+).*/, '$1' ) ) + '<span class="rbn-sr"> ' + esc( I.sourceNew ) + '</span></a>' : esc( String( r.source ) );
+					}
 					rows.push( '<tr><th scope="row" data-label="' + esc( I.colRule ) + '">' + esc( r.title ) + '</th><td data-label="' + esc( I.colApplies ) + '">' + esc( scope === 'post' ? I.scopePosts : I.scopeSite ) + '</td><td data-label="' + esc( I.colLevel ) + '"><span class="rbn-badge rbn-badge--mute">' + esc( I[ lv[ 1 ] ] ) + '</span></td><td data-label="' + esc( I.colWeight ) + '" class="rbn-num">' + esc( r.weight ) + '</td><td data-label="' + esc( I.colSource ) + '">' + src + '</td></tr>' );
 				} );
 			} );

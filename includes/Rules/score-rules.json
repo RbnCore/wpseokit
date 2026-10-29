@@ -1,12 +1,12 @@
 {
     "schema_version": "1.0.0",
     "product": "WPSeoKit",
-    "document": "E:/localhost/wordpress/Plugins/wpseokit/docs/seo-skoru-yontemi.md",
+    "document": "docs/seo-skoru-yontemi.md",
     "generated_at": "2026-10-28",
     "source_policy": {
-        "knowledge_base": "E:/localhost/docs",
-        "index_file": "E:/localhost/docs/INDEKS.md",
-        "rule": "Every scoring rule must be backed by a 'Kurallar' or 'Uygulama talimati' item of a knowledge-base document (source.doc + source.section). Items listed under a document's DOGRULANMADI section and rules without a document ('SEO folklore') are never scoring rules.",
+        "knowledge_base": "bilgi-bankasi",
+        "index_file": "INDEKS.md",
+        "rule": "Every scoring rule must be backed by a 'Kurallar' or 'Uygulama talimati' item of a knowledge-base document (source.doc + source.section). Items listed under a document's DOGRULANMADI section and rules without a document ('SEO folklore') are never scoring rules. All paths are portable: source.doc is relative to the knowledge-base root named by knowledge_base, and document is relative to the plugin root; no machine-specific absolute path is stored.",
         "verified_at": "2026-10-13",
         "no_black_hat": true
     },
@@ -127,7 +127,7 @@
                 },
                 "dismissible": false,
                 "source": {
-                    "doc": "E:/localhost/docs/araclar-ve-botlar/robots-meta-ve-x-robots-tag.md",
+                    "doc": "araclar-ve-botlar/robots-meta-ve-x-robots-tag.md",
                     "section": "Kurallar + Uygulama talimati 1,3,4",
                     "url": "https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag",
                     "verified": "2026-10-13"
@@ -173,7 +173,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/robots-txt.md",
+                    "doc": "google-arama/robots-txt.md",
                     "section": "Uygulama talimati 1,4 + Dogrulama 1,2",
                     "url": "https://developers.google.com/search/docs/crawling-indexing/robots/robots_txt",
                     "verified": "2026-10-13"
@@ -214,7 +214,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/robots-txt.md",
+                    "doc": "google-arama/robots-txt.md",
                     "section": "Uygulama talimati 2,3",
                     "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
                     "verified": "2026-10-13"
@@ -255,7 +255,7 @@
                 },
                 "dismissible": false,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/sitemap.md",
+                    "doc": "google-arama/sitemap.md",
                     "section": "Uygulama talimati 1,2,6 + Dogrulama 1,2,3",
                     "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
                     "verified": "2026-10-13"
@@ -292,7 +292,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/sitemap.md",
+                    "doc": "google-arama/sitemap.md",
                     "section": "Dogrulama 4",
                     "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
                     "verified": "2026-10-13"
@@ -334,7 +334,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/sitemap.md",
+                    "doc": "google-arama/sitemap.md",
                     "section": "Uygulama talimati 8 + Dogrulama 5",
                     "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
                     "verified": "2026-10-13"
@@ -381,7 +381,7 @@
                 },
                 "dismissible": false,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/sayfa-deneyimi-https-mobil.md",
+                    "doc": "google-arama/sayfa-deneyimi-https-mobil.md",
                     "section": "Kurallar (HTTPS) + Uygulama talimati 1,2 + Dogrulama",
                     "url": "https://developers.google.com/search/docs/appearance/page-experience",
                     "verified": "2026-10-13"
@@ -432,7 +432,7 @@
                 },
                 "dismissible": false,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/kanonik-url.md",
+                    "doc": "google-arama/kanonik-url.md",
                     "section": "Uygulama talimati 1,2,3,4 + Dogrulama 1",
                     "url": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls",
                     "verified": "2026-10-13"
@@ -483,7 +483,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/yapisal-veri-ve-onizleme/acik-grafik-ve-sosyal-onizleme.md",
+                    "doc": "yapisal-veri-ve-onizleme/acik-grafik-ve-sosyal-onizleme.md",
                     "section": "Uygulama talimati 1,2",
                     "url": "https://ogp.me/",
                     "verified": "2026-10-13"
@@ -529,7 +529,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/yapisal-veri-ve-onizleme/yapisal-veri-turleri.md",
+                    "doc": "yapisal-veri-ve-onizleme/yapisal-veri-turleri.md",
                     "section": "Organization tablosu + json-ld-hedef-semalari.md 'Kurum dugumu'",
                     "url": "https://developers.google.com/search/docs/appearance/structured-data/organization",
                     "verified": "2026-10-13"
@@ -580,7 +580,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/json-ld-hedef-semalari.md",
+                    "doc": "google-arama/json-ld-hedef-semalari.md",
                     "section": "Kurallar + Uygulama talimati 5",
                     "url": "https://developers.google.com/search/docs/appearance/structured-data/faqpage",
                     "verified": "2026-10-13"
@@ -613,7 +613,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/search-console/url-denetimi-ve-dizin.md",
+                    "doc": "search-console/url-denetimi-ve-dizin.md",
                     "section": "Kurallar 5 (Soft 404) + Uygulama talimati 4",
                     "url": "https://support.google.com/webmasters/answer/7440203",
                     "verified": "2026-10-13"
@@ -664,7 +664,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/rss-besleme.md",
+                    "doc": "google-arama/rss-besleme.md",
                     "section": "Uygulama talimati 2,3,4,6 + Dogrulama",
                     "url": "https://www.rssboard.org/rss-specification",
                     "verified": "2026-10-13"
@@ -717,7 +717,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/yapay-zeka-aramalari/llms-txt.md",
+                    "doc": "yapay-zeka-aramalari/llms-txt.md",
                     "section": "Uygulama talimati 1-4 + Dogrulama",
                     "url": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
                     "verified": "2026-10-13"
@@ -754,8 +754,8 @@
                 "dismissible": true,
                 "derived": true,
                 "source": {
-                    "doc": "E:/localhost/docs/yapisal-veri-ve-onizleme/acik-grafik-ve-sosyal-onizleme.md",
-                    "section": "Uygulama talimati 1 (og:title) + E:/localhost/docs/google-arama/yapisal-veri-article.md Uygulama talimati 2 (headline = visible title)",
+                    "doc": "yapisal-veri-ve-onizleme/acik-grafik-ve-sosyal-onizleme.md",
+                    "section": "Uygulama talimati 1 (og:title) + google-arama/yapisal-veri-article.md Uygulama talimati 2 (headline = visible title)",
                     "url": "https://ogp.me/",
                     "verified": "2026-10-13"
                 }
@@ -800,7 +800,7 @@
                 },
                 "dismissible": false,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/kanonik-url.md",
+                    "doc": "google-arama/kanonik-url.md",
                     "section": "Uygulama talimati 1,2 + Dogrulama 1",
                     "url": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls",
                     "verified": "2026-10-13"
@@ -838,7 +838,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/kanonik-url.md",
+                    "doc": "google-arama/kanonik-url.md",
                     "section": "Uygulama talimati 3,4,8",
                     "url": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls",
                     "verified": "2026-10-13"
@@ -877,7 +877,7 @@
                 },
                 "dismissible": false,
                 "source": {
-                    "doc": "E:/localhost/docs/araclar-ve-botlar/robots-meta-ve-x-robots-tag.md",
+                    "doc": "araclar-ve-botlar/robots-meta-ve-x-robots-tag.md",
                     "section": "Kurallar + Uygulama talimati 1,3,4",
                     "url": "https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag",
                     "verified": "2026-10-13"
@@ -913,7 +913,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/yapisal-veri-article.md",
+                    "doc": "google-arama/yapisal-veri-article.md",
                     "section": "Uygulama talimati 1",
                     "url": "https://developers.google.com/search/docs/appearance/structured-data/article",
                     "verified": "2026-10-13"
@@ -964,7 +964,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/yapisal-veri-article.md",
+                    "doc": "google-arama/yapisal-veri-article.md",
                     "section": "Uygulama talimati 2,3,7,8,9",
                     "url": "https://developers.google.com/search/docs/appearance/structured-data/article",
                     "verified": "2026-10-13"
@@ -1006,8 +1006,8 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/tarih-kurallari.md",
-                    "section": "Uygulama talimati 2 + E:/localhost/docs/google-arama/yapisal-veri-article.md Uygulama talimati 4,5,6",
+                    "doc": "google-arama/tarih-kurallari.md",
+                    "section": "Uygulama talimati 2 + google-arama/yapisal-veri-article.md Uygulama talimati 4,5,6",
                     "url": "https://developers.google.com/search/docs/appearance/structured-data/article",
                     "verified": "2026-10-13"
                 }
@@ -1049,8 +1049,8 @@
                 "dismissible": true,
                 "derived": true,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/kanonik-url.md",
-                    "section": "Uygulama talimati 1 (tek kanonik adres) + E:/localhost/docs/google-arama/sitemap.md Uygulama talimati 3 (yalniz tercih edilen adres)",
+                    "doc": "google-arama/kanonik-url.md",
+                    "section": "Uygulama talimati 1 (tek kanonik adres) + google-arama/sitemap.md Uygulama talimati 3 (yalniz tercih edilen adres)",
                     "url": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls",
                     "verified": "2026-10-13"
                 }
@@ -1105,7 +1105,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/yapisal-veri-ve-onizleme/acik-grafik-ve-sosyal-onizleme.md",
+                    "doc": "yapisal-veri-ve-onizleme/acik-grafik-ve-sosyal-onizleme.md",
                     "section": "Uygulama talimati 1,2,5",
                     "url": "https://ogp.me/",
                     "verified": "2026-10-13"
@@ -1151,7 +1151,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/json-ld-hedef-semalari.md",
+                    "doc": "google-arama/json-ld-hedef-semalari.md",
                     "section": "Kurallar (BreadcrumbList >= 2 ogeler, oge URL 200)",
                     "url": "https://developers.google.com/search/docs/appearance/structured-data/breadcrumb",
                     "verified": "2026-10-13"
@@ -1192,7 +1192,7 @@
                 },
                 "dismissible": true,
                 "source": {
-                    "doc": "E:/localhost/docs/google-arama/sitemap.md",
+                    "doc": "google-arama/sitemap.md",
                     "section": "Uygulama talimati 3,8",
                     "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap",
                     "verified": "2026-10-13"
