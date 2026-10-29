@@ -122,9 +122,8 @@
 
 /* ===== WPRJ-562 — Dashboard merkezli gezinme ===== */
 .wps-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s3);margin:0}
-/* Sabit eklenti başlığı (WPRJ-662): her sayfada aynı; araç sayfasında ad h1 değil, h1 araç başlığıdır. */
-.rbn-brand{margin:0;font-size:var(--rbn-fs-h1);line-height:var(--rbn-lh-h1);font-weight:var(--rbn-fw-m);color:var(--rbn-text)}
-p.rbn-brand{font-size:var(--rbn-fs-h2);line-height:var(--rbn-lh-h2)}
+/* Sabit eklenti başlığı (WPRJ-662/668): Shell::header() her sayfada aynı p.rbn-brand'i basar; tek ölçü, h1 sayfa başlığıdır. */
+.rbn-head .rbn-brand{margin:0;padding:0;font-size:var(--rbn-fs-h1);line-height:var(--rbn-lh-h1);font-weight:var(--rbn-fw-m);color:var(--rbn-text)}
 .wps-brand .rbn-head__act{margin-inline-start:auto}
 .wps-menu{position:relative}
 .wps-menu>.rbn-btn[aria-expanded=true] .wps-chev{transform:rotate(180deg)}
@@ -453,7 +452,7 @@ p.rbn-brand{font-size:var(--rbn-fs-h2);line-height:var(--rbn-lh-h2)}
 
 /* Tip ölçeği: kit "küçük" öğeyi tarayıcı varsayılanına (smaller) bırakır, mobil h1'i 24 px yapar; WPSeoKit 15/17/18/20/28/32 ölçeğinde kalır (kit boşluğu). */
 .rbn-stat__v small{font-size:var(--rbn-fs-sm);font-weight:var(--rbn-fw)}
-@media (max-width:48.875rem){.wpseokit-wrap .rbn-head h1{font-size:var(--rbn-fs-h1)}}
+@media (max-width:48.875rem){.wpseokit-wrap .rbn-head h1{font-size:var(--rbn-fs-h1)}.wpseokit-wrap .rbn-head .rbn-brand{font-size:1.5rem}}
 
 /* ── Kit boşlukları (WPRJ-623): kit bunları tanımlamıyor; AdminKit'e dokunulmadı ── */
 /* İstatistik kartı başlığı: ikon ile metin arasında token boşluğu, ikon metne yapışmaz */
