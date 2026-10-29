@@ -46,6 +46,10 @@ final class Ui {
 		wp_enqueue_style( 'wpseokit-kit', WPSEOKIT_URL . 'assets/admin/rbn-admin-ui.css', array(), WPSEOKIT_VERSION );
 		wp_enqueue_style( 'wpseokit-ui', WPSEOKIT_URL . 'assets/admin/wpseokit-ui.css', array( 'wpseokit-kit' ), WPSEOKIT_VERSION );
 		wp_enqueue_script( 'wpseokit-ui', WPSEOKIT_URL . 'assets/admin/wpseokit-admin.js', array(), WPSEOKIT_VERSION, array( 'in_footer' => true ) );
+		if ( $page ) { // The Logs tab uses AdminKit's shared log list (registered by AdminKit on every admin screen).
+			wp_enqueue_style( 'adminkit-core-logs' );
+			wp_enqueue_script( 'adminkit-core-logs' );
+		}
 		wp_add_inline_script( 'wpseokit-ui', 'window.wpseokitUi = ' . wp_json_encode( self::data( $editor ) ) . ';', 'before' );
 	}
 
@@ -167,97 +171,12 @@ final class Ui {
 			'repSchemaOf'    => __( 'Schema: %s', 'wpseokit' ),
 			'repValue'       => __( 'Value', 'wpseokit' ),
 			'reviewPosts'    => __( 'Review posts', 'wpseokit' ),
-			'logTypes'       => array(
-				'settings' => __( 'Settings', 'wpseokit' ),
-				'sitemap' => __( 'Sitemap', 'wpseokit' ),
-				'feed' => __( 'Feed', 'wpseokit' ),
-				'llms' => __( 'llms.txt', 'wpseokit' ),
-				'redirects' => __( 'Redirects', 'wpseokit' ),
-				'snapshot' => __( 'Snapshot', 'wpseokit' ),
-				'score' => __( 'SEO score', 'wpseokit' ),
-			),
-			'logEvents'      => array(
-				'settings_saved' => __( 'Setting changed', 'wpseokit' ),
-				'redirect_added' => __( 'Redirect added', 'wpseokit' ),
-				'redirect_updated' => __( 'Redirect changed', 'wpseokit' ),
-				'redirect_deleted' => __( 'Redirect deleted', 'wpseokit' ),
-				'snapshot_taken' => __( 'Snapshot taken', 'wpseokit' ),
-				'snapshot_replaced' => __( 'Snapshot replaced', 'wpseokit' ),
-				'score_refreshed' => __( 'Score recalculated', 'wpseokit' ),
-			),
-			/* translators: %s: feature name. */
-			'logOn' => __( '%s turned on', 'wpseokit' ),
-			/* translators: %s: feature name. */
-			'logOff' => __( '%s turned off', 'wpseokit' ),
-			/* translators: %s: score number. */
-			'logScoreIs' => __( 'Site score %s.', 'wpseokit' ),
-			/* translators: %s: date. */
-			'logSnapshotFor' => __( 'Daily snapshot saved for %s.', 'wpseokit' ),
-			'logTime' => __( 'Time', 'wpseokit' ),
-			'logDetails' => __( 'Details', 'wpseokit' ),
-			'logResult' => __( 'Result', 'wpseokit' ),
-			'logWhere' => __( 'Where', 'wpseokit' ),
-			'logMessage' => __( 'Message', 'wpseokit' ),
-			/* translators: %s: area name, e.g. Redirects. */
-			'logOpen' => __( 'Open %s', 'wpseokit' ),
-			/* translators: %s: date and time. */
-			'logFor' => __( 'for the entry at %s', 'wpseokit' ),
-			/* translators: 1: rows on this page; 2: all rows. */
-			'logShowing' => __( 'Showing %1$s of %2$s', 'wpseokit' ),
-			'prevPage' => __( 'Previous page', 'wpseokit' ),
-			'nextPage' => __( 'Next page', 'wpseokit' ),
-			'pageWord' => __( 'Page', 'wpseokit' ),
-			'logBadFilter' => __( 'This date range is not valid. Check the dates and apply again.', 'wpseokit' ),
-			'logNoMatch' => __( 'No events match these filters', 'wpseokit' ),
-			'logNoMatchText' => __( 'Try a different type or a wider date range.', 'wpseokit' ),
-			'logResetFilters' => __( 'Reset filters', 'wpseokit' ),
-			'logActivityCap' => __( 'Activity log', 'wpseokit' ),
-			'logYoastCap' => __( 'Yoast import log', 'wpseokit' ),
-			'logUpdatesCap' => __( 'Update checks', 'wpseokit' ),
-			'logErrorsCap' => __( 'Errors', 'wpseokit' ),
 			/* translators: %d: number of addresses. */
 			'logNew404' => __( '%d new 404 errors', 'wpseokit' ),
 			/* translators: %d: number of addresses (one). */
 			'logNew404One' => __( '%d new 404 error', 'wpseokit' ),
 			'logNew404Text' => __( 'in the last 24 hours. Visits are counted in the 404 log, not here.', 'wpseokit' ),
 			'logOpen404' => __( 'Open the 404 log', 'wpseokit' ),
-			'logYFound' => __( 'Yoast data found', 'wpseokit' ),
-			'logYFoundNone' => __( 'Yoast SEO data was detected.', 'wpseokit' ),
-			/* translators: %d: number. */
-			'logYTitles' => __( '%d titles', 'wpseokit' ),
-			/* translators: %d: number. */
-			'logYDescs' => __( '%d descriptions', 'wpseokit' ),
-			'logYDry' => __( 'Dry run completed', 'wpseokit' ),
-			'logYDryText' => __( 'Nothing was changed.', 'wpseokit' ),
-			'logYRun' => __( 'Import finished', 'wpseokit' ),
-			'logYRunText' => __( 'The values were saved in WPSeoKit.', 'wpseokit' ),
-			'logYReport' => __( 'Report created', 'wpseokit' ),
-			'logYReportText' => __( 'The result of the import is ready to read.', 'wpseokit' ),
-			'logYOpenSummary' => __( 'Open summary', 'wpseokit' ),
-			'logYOpenDry' => __( 'Open dry run', 'wpseokit' ),
-			'logYOpenRun' => __( 'Open import', 'wpseokit' ),
-			'logYOpenReport' => __( 'View report', 'wpseokit' ),
-			'logYoastFor' => __( 'for this import step', 'wpseokit' ),
-			'logYLead' => __( 'Every check and import step, newest first.', 'wpseokit' ),
-			'logYState'      => array(
-				'none' => __( 'No Yoast data has been checked yet.', 'wpseokit' ),
-				'dry-run' => __( 'The dry run is done. Nothing is imported yet.', 'wpseokit' ),
-				'applied' => __( 'The import is applied. Newest steps first.', 'wpseokit' ),
-			),
-			'logUpToDate' => __( 'Up to date', 'wpseokit' ),
-			'logUpdateFound' => __( 'Update found', 'wpseokit' ),
-			'logCheckFailed' => __( 'Could not check', 'wpseokit' ),
-			/* translators: %s: version number. */
-			'logNewestText' => __( 'Version %s is the newest version.', 'wpseokit' ),
-			/* translators: %s: version number. */
-			'logFoundText' => __( 'Version %s is available.', 'wpseokit' ),
-			'logCheckFailedText' => __( 'The list of releases could not be reached. This is expected until a release is published; WPSeoKit tries again later.', 'wpseokit' ),
-			/* translators: %s: date and time. */
-			'logLastCheck' => __( 'Last checked %s.', 'wpseokit' ),
-			'logUpdateCheck' => __( 'Update check', 'wpseokit' ),
-			'logOpenReports' => __( 'Open Reports', 'wpseokit' ),
-			'logOpenScore' => __( 'Open SEO score', 'wpseokit' ),
-			'logOpenUpdates' => __( 'Open update checks', 'wpseokit' ),
 			'toolNames'      => array(
 				'schema'    => __( 'Schema', 'wpseokit' ),
 				'sitemap'   => __( 'Sitemap', 'wpseokit' ),

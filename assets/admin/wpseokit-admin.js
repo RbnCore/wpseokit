@@ -779,172 +779,29 @@
 		maybeStart();
 	}
 
-	/* ---------- Logs: Activity, Yoast import log, Update checks, Errors (routes wpseokit/v1/logs/*) ---------- */
+	/* ---------- Logs: the four sub-tabs are AdminKit's shared log list (adminkit-core-logs), one channel each ---------- */
 
 	function logs( screen ) {
-		var PER = 8, flt = { type: '', from: '', to: '', page: 1 };
-		var TYPE = I.logTypes || {}, EV = I.logEvents || {};
-
-		function utc( at ) { return at ? at + 'Z' : ''; }
-		function panel( key ) { return $( '[data-log="' + key + '"]', screen ); }
-		function state( key, name ) {
-			var root = panel( key );
-			if ( ! root ) { return; }
-			$$( '[data-ls]', root ).forEach( function ( el ) { el.hidden = el.getAttribute( 'data-ls' ) !== name; } );
-		}
-		function stamp( at ) { return '<th scope="row" data-l="' + esc( I.logTime ) + '">' + esc( when( utc( at ) ) ) + '</th>'; }
-		function table( cols, rows, caption ) {
-			return '<div class="rbn-tw"><table class="rbn-table rbn-table--cols"><caption class="rbn-sr">' + esc( caption ) + '</caption><thead><tr>' + cols.map( function ( c ) { return c.sr ? '<th scope="col"><span class="rbn-sr">' + esc( c.t ) + '</span></th>' : '<th scope="col">' + esc( c.t ) + '</th>'; } ).join( '' ) + '</tr></thead><tbody>' + rows.join( '' ) + '</tbody></table></div>';
-		}
-		function goLink( spec, label, ctx ) {
-			var p = spec.split( ':' );
-			return '<a class="rbn-btn rbn-btn--sm" href="' + esc( dashHref( p[ 0 ], p[ 1 ] ) ) + '" data-goto="' + esc( spec ) + '">' + esc( label ) + '<span class="rbn-sr"> ' + esc( ctx ) + '</span></a>';
-		}
-		function actCell( html ) { return '<td data-l="' + esc( I.action ) + '" class="rbn-acts">' + html + '</td>'; }
-
-		/* -- Activity -- */
-
-		function eventLabel( it ) {
-			if ( it.event === 'enabled' || it.event === 'disabled' ) { return sp( it.event === 'enabled' ? I.logOn : I.logOff, TYPE[ it.type ] || it.type ); }
-			return EV[ it.event ] || it.event;
-		}
-		function detailHtml( it ) {
-			var d = String( it.detail || '' );
-			if ( ! d ) { return ''; }
-			if ( it.type === 'score' ) { return esc( sp( I.logScoreIs, d ) ); }
-			if ( it.type === 'snapshot' ) { return esc( sp( I.logSnapshotFor, /^\d{4}-\d{2}-\d{2}$/.test( d ) ? day( d ) : d ) ); }
-			return d.split( ',' ).map( function ( p ) { return '<code>' + esc( p.trim() ) + '</code>'; } ).join( ' ' );
-		}
-		function pager( total, page ) {
-			var pages = Math.max( 1, Math.ceil( total / PER ) ), from = Math.max( 1, Math.min( page - 2, pages - 4 ) ), to = Math.min( pages, from + 4 ), li = '';
-			li += '<li>' + ( page > 1 ? '<a href="#" data-log-page="' + ( page - 1 ) + '">' + icon( 'chevl' ) + '<span class="rbn-sr">' + esc( I.prevPage ) + '</span></a>' : '<span class="rbn-pg" aria-disabled="true">' + icon( 'chevl' ) + '<span class="rbn-sr">' + esc( I.prevPage ) + '</span></span>' ) + '</li>';
-			for ( var n = from; n <= to; n++ ) { li += '<li><a href="#" data-log-page="' + n + '"' + ( n === page ? ' aria-current="page"' : '' ) + '><span class="rbn-sr">' + esc( I.pageWord ) + ' </span>' + n + '</a></li>'; }
-			li += '<li>' + ( page < pages ? '<a href="#" data-log-page="' + ( page + 1 ) + '">' + icon( 'chevr' ) + '<span class="rbn-sr">' + esc( I.nextPage ) + '</span></a>' : '<span class="rbn-pg" aria-disabled="true">' + icon( 'chevr' ) + '<span class="rbn-sr">' + esc( I.nextPage ) + '</span></span>' ) + '</li>';
-			return '<div class="rbn-pager"><p>' + esc( sp( I.logShowing, Math.min( PER, total - ( page - 1 ) * PER ), total ) ) + '</p><ul>' + li + '</ul></div>';
-		}
-		function filtered() { return !! ( flt.type || flt.from || flt.to ); }
-		function activityRows( items ) {
-			return items.map( function ( it ) {
-				var t = TYPE[ it.type ] || it.type, tm = when( utc( it.at ) );
-				return '<tr>' + stamp( it.at ) + '<td data-l="' + esc( I.event ) + '"><span class="rbn-badge rbn-badge--mute">' + esc( t ) + '</span> <b>' + esc( eventLabel( it ) ) + '</b></td><td data-l="' + esc( I.logDetails ) + '">' + detailHtml( it ) + '</td>'
-					+ actCell( it.link ? '<a class="rbn-btn rbn-btn--sm" href="' + esc( it.link ) + '">' + esc( sp( I.logOpen, t ) ) + '<span class="rbn-sr"> ' + esc( sp( I.logFor, tm ) ) + '</span></a>' : '' ) + '</tr>';
-			} );
-		}
-		function loadActivity() {
-			var q = 'logs/activity?per_page=' + PER + '&page=' + flt.page + ( flt.type ? '&type=' + encodeURIComponent( flt.type ) : '' ) + ( flt.from ? '&from=' + flt.from : '' ) + ( flt.to ? '&to=' + flt.to : '' );
-			return api( 'GET', q ).then( function ( r ) {
-				var body = $( '[data-log="activity"] [data-log-body]', screen );
-				if ( r.status === 400 && filtered() ) { state( 'activity', 'ok' ); body.innerHTML = '<div class="rbn-card__b">' + note( 'err', '<b>' + esc( I.logBadFilter ) + '</b>', 'alert' ) + '</div>'; return; }
-				if ( ! r.ok || ! r.data || r.data.status !== 'ok' ) { state( 'activity', 'error' ); return; }
-				var d = r.data;
-				if ( ! d.total && ! filtered() ) { state( 'activity', 'empty' ); return; }
-				state( 'activity', 'ok' );
-				if ( ! d.total ) {
-					body.innerHTML = '<div class="rbn-card__b"><div class="rbn-empty"><span class="rbn-empty__i">' + icon( 'search' ) + '</span><h3>' + esc( I.logNoMatch ) + '</h3><p>' + esc( I.logNoMatchText ) + '</p><button type="button" class="rbn-btn rbn-btn--pri" data-log-reset>' + esc( I.logResetFilters ) + '</button></div></div>';
-					return;
-				}
-				body.innerHTML = table( [ { t: I.logTime }, { t: I.event }, { t: I.logDetails }, { t: I.action, sr: true } ], activityRows( d.items || [] ), I.logActivityCap ) + pager( d.total, flt.page );
-			} );
-		}
 		function loadNew404() {
 			var box = $( '[data-log-note]', screen );
 			if ( ! box ) { return; }
-			return api( 'GET', '404-logs?per_page=100&orderby=first_seen_at&order=desc' ).then( function ( r ) {
+			api( 'GET', '404-logs?per_page=100&orderby=first_seen_at&order=desc' ).then( function ( r ) {
 				var n = 0, cut = Date.now() - 864e5;
 				if ( r.ok && Array.isArray( r.data ) ) { r.data.forEach( function ( l ) { if ( new Date( l.first_seen_at ).getTime() >= cut ) { n++; } } ); }
 				box.innerHTML = n ? '<div class="rbn-note rbn-note--info">' + icon( 'info' ) + '<div><p><b>' + esc( sp( n === 1 ? I.logNew404One : I.logNew404, n ) ) + '</b> ' + esc( I.logNew404Text ) + '</p><div class="rbn-note__act"><a class="rbn-btn" href="' + esc( toolHref( 'log404' ) ) + '">' + icon( 'alert' ) + esc( I.logOpen404 ) + '</a></div></div></div>' : '';
 			} );
 		}
-
-		/* -- Yoast import log -- */
-
-		function loadYoast() {
-			return api( 'GET', 'logs/yoast' ).then( function ( r ) {
-				if ( ! r.ok || ! r.data || r.data.status !== 'ok' ) { state( 'yoast', 'error' ); return; }
-				var s = r.data.steps || {}, rows = [], f = s.found || {}, c = f.counts || {};
-				function row( step, label, text, goto, open ) {
-					if ( ! step || ! step.at ) { return; }
-					rows.push( { at: step.at, html: '<tr>' + stamp( step.at ) + '<td data-l="' + esc( I.event ) + '"><b>' + esc( label ) + '</b></td><td data-l="' + esc( I.logDetails ) + '">' + esc( text ) + '</td>' + actCell( goLink( goto, open, I.logYoastFor ) ) + '</tr>' } );
-				}
-				var found = [];
-				if ( c.postmeta_yoast_wpseo_title ) { found.push( sp( I.logYTitles, c.postmeta_yoast_wpseo_title ) ); }
-				if ( c.postmeta_yoast_wpseo_metadesc ) { found.push( sp( I.logYDescs, c.postmeta_yoast_wpseo_metadesc ) ); }
-				row( f, I.logYFound, found.length ? found.join( ', ' ) : I.logYFoundNone, 'yoast:summary', I.logYOpenSummary );
-				row( s.dry_run, I.logYDry, I.logYDryText, 'yoast:dry', I.logYOpenDry );
-				row( s.run, I.logYRun, I.logYRunText, 'yoast:run', I.logYOpenRun );
-				row( s.report, I.logYReport, I.logYReportText, 'yoast:report', I.logYOpenReport );
-				if ( ! rows.length ) { state( 'yoast', 'empty' ); return; }
-				rows.sort( function ( a, b ) { return a.at < b.at ? 1 : -1; } );
-				var lead = $( '[data-log="yoast"] [data-log-lead]', screen ), st = r.data.state;
-				if ( lead ) { lead.textContent = I.logYState && I.logYState[ st ] ? I.logYState[ st ] : I.logYLead; }
-				$( '[data-log="yoast"] [data-log-body]', screen ).innerHTML = table( [ { t: I.logTime }, { t: I.event }, { t: I.logDetails }, { t: I.action, sr: true } ], rows.map( function ( x ) { return x.html; } ), I.logYoastCap );
-				state( 'yoast', 'ok' );
+		/* A list starts when its sub-tab is first shown (the component script is deferred, so wait for it). */
+		function start() {
+			if ( ! window.RbnKitLogs ) { return; }
+			$$( '[data-wps-logs]', screen ).forEach( function ( n ) {
+				if ( n.classList.contains( 'rbnkit-logs' ) || n.closest( '[hidden]' ) ) { return; }
+				window.RbnKitLogs.init( n );
+				if ( n.getAttribute( 'data-wps-logs' ) === 'activity' ) { loadNew404(); }
 			} );
 		}
-
-		/* -- Update checks (a failed check is expected until a release is published: shown as a status, not as an error) -- */
-
-		function loadUpdates() {
-			return api( 'GET', 'logs/updates' ).then( function ( r ) {
-				if ( ! r.ok || ! r.data || r.data.status !== 'ok' ) { state( 'updates', 'error' ); return; }
-				var items = r.data.items || [];
-				if ( ! items.length ) { state( 'updates', 'empty' ); return; }
-				var RES = { up_to_date: [ 'ok', 'check', I.logUpToDate ], update_found: [ 'info', 'info', I.logUpdateFound ], failed: [ 'mute', 'clock', I.logCheckFailed ] };
-				var rows = items.map( function ( it ) {
-					var m = RES[ it.result ] || [ 'mute', 'info', it.result ], txt = it.result === 'failed' ? I.logCheckFailedText : sp( it.result === 'update_found' ? I.logFoundText : I.logNewestText, it.version );
-					return '<tr>' + stamp( it.at ) + '<td data-l="' + esc( I.logResult ) + '"><span class="rbn-badge rbn-badge--' + m[ 0 ] + '">' + icon( m[ 1 ] ) + esc( m[ 2 ] ) + '</span></td><td data-l="' + esc( I.logDetails ) + '">' + esc( txt ) + '</td></tr>';
-				} );
-				var lead = $( '[data-log="updates"] [data-log-lead]', screen );
-				if ( lead ) { lead.textContent = sp( I.logLastCheck, when( utc( items[ 0 ].at ) ) ); }
-				$( '[data-log="updates"] [data-log-body]', screen ).innerHTML = table( [ { t: I.logTime }, { t: I.logResult }, { t: I.logDetails } ], rows, I.logUpdatesCap );
-				state( 'updates', 'ok' );
-			} );
-		}
-
-		/* -- Errors -- */
-
-		function loadErrors() {
-			return api( 'GET', 'logs/errors' ).then( function ( r ) {
-				if ( ! r.ok || ! r.data || r.data.status !== 'ok' ) { state( 'errors', 'error' ); return; }
-				var items = r.data.items || [];
-				if ( ! items.length ) { state( 'errors', 'empty' ); return; }
-				var WH = { snapshot: [ TYPE.snapshot, 'reports', I.logOpenReports ], score: [ TYPE.score, 'score', I.logOpenScore ], update_check: [ I.logUpdateCheck, 'logs:updates', I.logOpenUpdates ] };
-				var rows = items.map( function ( it ) {
-					var w = WH[ it.where ] || [ it.where, '', '' ];
-					return '<tr>' + stamp( it.at ) + '<td data-l="' + esc( I.logWhere ) + '"><span class="rbn-badge rbn-badge--mute">' + esc( w[ 0 ] ) + '</span></td><td data-l="' + esc( I.logMessage ) + '">' + esc( it.message ) + ( it.where === 'update_check' ? '<br><span class="rbn-help">' + esc( I.logCheckFailedText ) + '</span>' : '' ) + '</td>' + actCell( w[ 1 ] ? goLink( w[ 1 ], w[ 2 ], sp( I.logFor, when( utc( it.at ) ) ) ) : '' ) + '</tr>';
-				} );
-				$( '[data-log="errors"] [data-log-body]', screen ).innerHTML = table( [ { t: I.logTime }, { t: I.logWhere }, { t: I.logMessage }, { t: I.action, sr: true } ], rows, I.logErrorsCap );
-				state( 'errors', 'ok' );
-			} );
-		}
-
-		var loaders = { activity: loadActivity, yoast: loadYoast, updates: loadUpdates, errors: loadErrors };
-		function loadAll() { Object.keys( loaders ).forEach( function ( k ) { loaders[ k ](); } ); loadNew404(); }
-
-		var form = $( '[data-log-filter]', screen );
-		function reload() { state( 'activity', 'loading' ); return loadActivity(); }
-		function readForm() { flt.type = form.elements.type.value; flt.from = form.elements.from.value; flt.to = form.elements.to.value; flt.page = 1; }
-		if ( form ) {
-			form.addEventListener( 'submit', function ( e ) { e.preventDefault(); readForm(); reload(); } );
-			form.addEventListener( 'reset', function () { setTimeout( function () { readForm(); reload(); }, 0 ); } );
-		}
-		on( screen, 'click', '[data-log-reset]', function () { if ( form ) { form.reset(); } } );
-		on( screen, 'click', '[data-log-page]', function ( e, a ) {
-			e.preventDefault();
-			flt.page = parseInt( a.getAttribute( 'data-log-page' ), 10 ) || 1;
-			loadActivity().then( function () { var h = $( '[data-log="activity"] [data-log-body] [aria-current="page"]', screen ); if ( h ) { h.focus(); } } );
-		} );
-		on( screen, 'click', '[data-log-retry]', function ( e, b ) {
-			var key = b.closest( '[data-log]' ).getAttribute( 'data-log' );
-			state( key, 'loading' );
-			loaders[ key ]();
-		} );
-		function maybeStart() {
-			var p = doc.getElementById( 'dpan-logs' );
-			if ( p && ! p.hidden ) { loadAll(); }
-		}
-		screen.addEventListener( 'wps:tab', maybeStart );
-		maybeStart();
+		screen.addEventListener( 'wps:tab', start );
+		if ( doc.readyState === 'complete' ) { start(); } else { window.addEventListener( 'load', start ); }
 	}
 
 	/* ---------- Dashboard ---------- */

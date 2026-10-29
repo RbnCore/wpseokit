@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Wpseokit\Screens;
 
 use Wpseokit\Plugin;
+use Wpseokit\Registry;
 use Wpseokit\Services\ScoreService;
 use Wpseokit\Settings;
 
@@ -298,86 +299,33 @@ final class DashboardScreen {
 	}
 
 	/**
-	 * One log panel: loading, error, empty and filled states. The script (data-log) fills the filled state from the /logs routes.
+	 * One log panel: a card whose body is AdminKit's shared log list (`adminkit-core-logs`) bound to one channel.
+	 * The list draws the loading, empty, no-match and error states itself; the script (data-wps-logs) starts it when the sub-tab is shown.
 	 *
-	 * @param string $key   Route name: activity, yoast, updates or errors.
-	 * @param string $title Panel heading.
-	 * @param string $busy  Loading text.
-	 * @param string $fail  Error text.
-	 * @param string $empty Empty-state html.
-	 * @param string $ok    Static html of the filled state (the script fills the rest).
+	 * @param string $channel Log channel id, e.g. `wpseokit.activity`.
+	 * @param string $title   Card heading.
+	 * @param string $lead    One line under the heading.
+	 * @param bool   $filters Show the list's level / event / date filters.
+	 * @param string $before  Static html above the card (notes).
 	 */
-	private static function log_panel( string $key, string $title, string $busy, string $fail, string $empty, string $ok ): string {
-		$skel = '<section class="rbn-card"><div class="wps-skel-rows"><span class="wps-skel wps-skel--w70"></span><span class="wps-skel wps-skel--w70"></span><span class="wps-skel wps-skel--w70"></span><span class="wps-skel wps-skel--w70"></span></div></section>';
-		return '<h2 class="rbn-sr">' . esc_html( $title ) . '</h2><div data-log="' . esc_attr( $key ) . '">'
-			. '<div data-ls="loading" aria-busy="true"><p class="wps-busy" role="status"><span class="wps-spin" aria-hidden="true"></span>' . esc_html( $busy ) . '</p>' . $skel . '</div>'
-			. '<div data-ls="error" hidden><div class="rbn-note rbn-note--err" role="alert">' . Ui::icon( 'alert' ) . '<div><p><b>' . esc_html( $fail ) . '</b> ' . esc_html__( 'Your data is safe. Try again in a moment.', 'wpseokit' ) . '</p><div class="rbn-note__act"><button type="button" class="rbn-btn rbn-btn--pri" data-log-retry>' . esc_html__( 'Try again', 'wpseokit' ) . '</button></div></div></div></div>'
-			. '<div data-ls="empty" hidden>' . $empty . '</div>'
-			. '<div data-ls="ok" hidden>' . $ok . '</div></div>';
-	}
-
-	/** Filter form of the activity log: type and date range. */
-	private static function activity_filter(): string {
-		$types = array(
-			'sitemap'   => __( 'Sitemap', 'wpseokit' ),
-			'score'     => __( 'SEO score', 'wpseokit' ),
-			'snapshot'  => __( 'Snapshot', 'wpseokit' ),
-			'settings'  => __( 'Settings', 'wpseokit' ),
-			'redirects' => __( 'Redirects', 'wpseokit' ),
-			'feed'      => __( 'Feed', 'wpseokit' ),
-			'llms'      => __( 'llms.txt', 'wpseokit' ),
-		);
-		$opts  = '<option value="">' . esc_html__( 'All types', 'wpseokit' ) . '</option>';
-		foreach ( $types as $id => $label ) {
-			$opts .= '<option value="' . esc_attr( $id ) . '">' . esc_html( $label ) . '</option>';
-		}
-		return '<form class="rbn-filter wps-filter3" role="search" aria-label="' . esc_attr__( 'Filter the log', 'wpseokit' ) . '" data-log-filter>'
-			. '<div><label for="wps-la-t">' . esc_html__( 'Type', 'wpseokit' ) . '</label><select class="rbn-select" id="wps-la-t" name="type">' . $opts . '</select></div>'
-			. '<div><label for="wps-la-f">' . esc_html__( 'From', 'wpseokit' ) . '</label><input class="rbn-input" type="date" id="wps-la-f" name="from"></div>'
-			. '<div><label for="wps-la-u">' . esc_html__( 'To', 'wpseokit' ) . '</label><input class="rbn-input" type="date" id="wps-la-u" name="to"></div>'
-			. '<div class="rbn-filter__act"><button type="submit" class="rbn-btn rbn-btn--pri">' . Ui::icon( 'filter' ) . esc_html__( 'Apply', 'wpseokit' ) . '</button><button type="reset" class="rbn-btn">' . esc_html__( 'Reset', 'wpseokit' ) . '</button></div></form>';
-	}
-
-	/** Card shell of a log whose rows the script draws into data-log-body. */
-	private static function log_card( string $title, string $lead ): string {
-		return '<section class="rbn-card"><div class="rbn-card__h"><h2>' . esc_html( $title ) . '</h2><p data-log-lead>' . esc_html( $lead ) . '</p></div><div class="rbn-card__b rbn-card__b--flush"><div data-log-body></div></div></section>';
+	private static function log_panel( string $channel, string $title, string $lead, bool $filters, string $before = '' ): string {
+		return $before . '<section class="rbn-card"><div class="rbn-card__h"><h2>' . esc_html( $title ) . '</h2><p>' . esc_html( $lead ) . '</p></div><div class="rbn-card__b">'
+			. '<div data-wps-logs="' . esc_attr( substr( $channel, strpos( $channel, '.' ) + 1 ) ) . '" data-channel="' . esc_attr( $channel ) . '" data-per-page="8" data-filters="' . ( $filters ? '1' : '0' ) . '"></div></div></section>';
 	}
 
 	/** @return array<string, string> sub id => panel html */
 	private static function log_panels(): array {
 		return array(
-			'activity' => self::log_panel(
-				'activity',
-				__( 'Activity', 'wpseokit' ),
-				__( 'Loading the activity log…', 'wpseokit' ),
-				__( 'WPSeoKit could not load the activity log.', 'wpseokit' ),
-				self::empty_state( 'list', __( 'No activity yet', 'wpseokit' ), __( 'Sitemap rebuilds, snapshots, score recalculations and setting changes will be listed here.', 'wpseokit' ) ),
-				'<div data-log-note></div><section class="rbn-card"><div class="rbn-card__h"><h2>' . esc_html__( 'Activity', 'wpseokit' ) . '</h2><p>' . esc_html__( 'What WPSeoKit and you changed on this site.', 'wpseokit' ) . '</p></div><div class="rbn-card__b rbn-card__b--flush">' . self::activity_filter() . '<div data-log-body></div></div></section>'
-			),
-			'yoast'    => self::log_panel(
-				'yoast',
-				__( 'Yoast import log', 'wpseokit' ),
-				__( 'Loading the import log…', 'wpseokit' ),
-				__( 'WPSeoKit could not load the import log.', 'wpseokit' ),
-				self::empty_state( 'down', __( 'No Yoast import yet', 'wpseokit' ), __( 'When you check or import Yoast data, each step is recorded here.', 'wpseokit' ) ),
-				self::log_card( __( 'Yoast import log', 'wpseokit' ), __( 'Every check and import step, newest first.', 'wpseokit' ) )
-			),
+			'activity' => self::log_panel( Registry::ACTIVITY, __( 'Activity', 'wpseokit' ), __( 'What WPSeoKit and you changed on this site.', 'wpseokit' ), true, '<div data-log-note></div>' ),
+			'yoast'    => self::log_panel( Registry::YOAST, __( 'Yoast import log', 'wpseokit' ), __( 'Every check and import step, newest first.', 'wpseokit' ), false ),
 			'updates'  => self::log_panel(
-				'updates',
+				Registry::UPDATE_LOG,
 				__( 'Update checks', 'wpseokit' ),
-				__( 'Loading the update checks…', 'wpseokit' ),
-				__( 'WPSeoKit could not load the update checks.', 'wpseokit' ),
-				self::empty_state( 'clock', __( 'No update check yet', 'wpseokit' ), __( 'WPSeoKit checks for a new version once a day. The first check has not run.', 'wpseokit' ) ),
-				self::log_card( __( 'Update checks', 'wpseokit' ), __( 'Each time WPSeoKit looks for a new version, newest first.', 'wpseokit' ) )
+				__( 'Each time WPSeoKit looks for a new version, newest first.', 'wpseokit' ),
+				false,
+				'<div class="rbn-note rbn-note--info">' . Ui::icon( 'info' ) . '<div><p>' . esc_html__( 'A check that cannot reach the release list is expected until the first release is published. WPSeoKit tries again later.', 'wpseokit' ) . '</p></div></div>'
 			),
-			'errors'   => self::log_panel(
-				'errors',
-				__( 'Errors', 'wpseokit' ),
-				__( 'Loading the errors…', 'wpseokit' ),
-				__( 'WPSeoKit could not load the errors.', 'wpseokit' ),
-				self::empty_state( 'check', __( 'No errors recorded', 'wpseokit' ), __( 'Nothing went wrong in the background. Problems WPSeoKit cannot fix on its own will show up here.', 'wpseokit' ) ),
-				self::log_card( __( 'Errors', 'wpseokit' ), __( 'Background problems, newest first.', 'wpseokit' ) )
-			),
+			'errors'   => self::log_panel( Registry::ERRORS, __( 'Errors', 'wpseokit' ), __( 'Background problems, newest first.', 'wpseokit' ), true ),
 		);
 	}
 

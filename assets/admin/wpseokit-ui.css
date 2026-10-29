@@ -109,6 +109,7 @@
 .wps-inline__row .rbn-input{flex:1;min-width:14rem;max-width:none}
 
 /* ── 11. JSON-LD önizleme ── */
+[data-wps-logs]{overflow-x:auto;max-width:100%}
 .wps-pre{margin:0;padding:var(--rbn-s4);border:1px solid var(--rbn-line);border-radius:var(--rbn-r);background:var(--rbn-surface-2);color:var(--rbn-text);font:500 17px/1.55 var(--rbn-font-mono);white-space:pre-wrap;overflow-wrap:anywhere;max-height:22rem;overflow:auto}
 .wps-pre:focus-visible{outline:2px solid var(--rbn-ac);outline-offset:2px}
 
