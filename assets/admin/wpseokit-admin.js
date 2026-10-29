@@ -30,7 +30,10 @@
 		if ( body !== undefined && body !== null ) {
 			if ( isForm ) { opts.body = body; } else { opts.headers[ 'Content-Type' ] = 'application/json'; opts.body = JSON.stringify( body ); }
 		}
-		return fetch( T.restUrl + path.replace( /^\//, '' ), opts ).then( function ( res ) {
+		// REST answers in the site language unless asked otherwise; _locale=user makes it use the language of the signed-in user.
+		var url = T.restUrl + path.replace( /^\//, '' );
+		url += ( url.indexOf( '?' ) > -1 ? '&' : '?' ) + '_locale=user';
+		return fetch( url, opts ).then( function ( res ) {
 			return res.text().then( function ( txt ) {
 				var data = null;
 				try { data = txt ? JSON.parse( txt ) : null; } catch ( e ) { data = txt; }
@@ -46,7 +49,7 @@
 	function api( method, path, body ) { return request( method, path, body ); }
 
 	function errMsg( r ) {
-		return ( r && r.data && r.data.message ) ? r.data.message : ( I.saveFailed || 'Request failed.' );
+		return ( r && r.data && r.data.message ) ? r.data.message : ( I.saveFailed );
 	}
 
 	function say( type, html ) {
@@ -112,7 +115,7 @@
 			target.dispatchEvent( new Event( 'input', { bubbles: true } ) );
 		} );
 		// Live preview line under each template field.
-		var sample = { title: I.previewTitle || 'Sample title', sitename: T.siteName || '', sitedesc: '', sep: '-', page: '', excerpt: '', category: '', primary_category: '', date: '', name: '', term_title: I.previewTitle || 'Sample', searchphrase: '…' };
+		var sample = { title: I.previewTitle, sitename: T.siteName || '', sitedesc: '', sep: '-', page: '', excerpt: '', category: '', primary_category: '', date: '', name: '', term_title: I.previewTitle, searchphrase: '…' };
 		function refresh( el ) {
 			var out = $( '[data-preview-for="' + el.id + '"]' );
 			if ( ! out ) { return; }
@@ -361,7 +364,7 @@
 		/** Summary card of the Overview tab: the whole card is one link to the score. */
 		function drawSummary( site ) {
 			if ( ! sum ) { return; }
-			sum.innerHTML = '<section class="rbn-card wps-score wps-sum"><div class="rbn-card__b"><div class="wps-score__grid">' + ring( site ) + '<div><h2 class="wps-score__h"><a class="wps-stretch" href="' + esc( dashHref( 'score' ) ) + '" data-goto="score">' + esc( I.scoreHead ) + '</a></h2>' + breakdown( site ) + stamp( site ) + '<p class="wps-sum__go">' + esc( I.details || 'Score details' ) + icon( 'chevr' ) + '</p></div></div></div></section>';
+			sum.innerHTML = '<section class="rbn-card wps-score wps-sum"><div class="rbn-card__b"><div class="wps-score__grid">' + ring( site ) + '<div><h2 class="wps-score__h"><a class="wps-stretch" href="' + esc( dashHref( 'score' ) ) + '" data-goto="score">' + esc( I.scoreHead ) + '</a></h2>' + breakdown( site ) + stamp( site ) + '<p class="wps-sum__go">' + esc( I.details ) + icon( 'chevr' ) + '</p></div></div></div></section>';
 			paint( sum );
 		}
 		function drawSummaryEmpty() {
@@ -445,9 +448,9 @@
 			if ( ! posts.length ) { box.innerHTML = '<section class="rbn-card"><div class="rbn-card__b"><div class="rbn-empty"><span class="rbn-empty__i">' + icon( 'doc' ) + '</span><h3>' + esc( I.noPosts ) + '</h3></div></div></section>'; return; }
 			var rows = posts.map( function ( p ) {
 				var b = bandOf( p.band );
-				return '<tr data-post-row data-band="' + esc( p.band ) + '"><th scope="row" data-label="' + esc( I.colPost ) + '">' + esc( p.title || '#' + p.id ) + '</th><td data-label="' + esc( I.colScore ) + '"><span class="wps-num">' + esc( p.score ) + '</span></td><td data-label="' + esc( I.colBand ) + '"><span class="rbn-badge rbn-badge--' + b[ 0 ] + '">' + icon( b[ 1 ] ) + esc( I[ b[ 2 ] ] ) + '</span></td><td data-label="' + esc( I.colFailing ) + '">' + ( p.failing.length ? esc( p.failing.join( ', ' ) ) : esc( I.noFailing ) ) + '</td><td data-label="' + esc( I.action || 'Action' ) + '">' + ( p.edit ? '<a class="rbn-btn rbn-btn--sm" href="' + esc( p.edit ) + '">' + esc( I.editPost ) + '<span class="rbn-sr"> ' + esc( sp( I.fixFor, p.title ) ) + '</span></a>' : '' ) + '</td></tr>';
+				return '<tr data-post-row data-band="' + esc( p.band ) + '"><th scope="row" data-label="' + esc( I.colPost ) + '">' + esc( p.title || '#' + p.id ) + '</th><td data-label="' + esc( I.colScore ) + '"><span class="wps-num">' + esc( p.score ) + '</span></td><td data-label="' + esc( I.colBand ) + '"><span class="rbn-badge rbn-badge--' + b[ 0 ] + '">' + icon( b[ 1 ] ) + esc( I[ b[ 2 ] ] ) + '</span></td><td data-label="' + esc( I.colFailing ) + '">' + ( p.failing.length ? esc( p.failing.join( ', ' ) ) : esc( I.noFailing ) ) + '</td><td data-label="' + esc( I.action ) + '">' + ( p.edit ? '<a class="rbn-btn rbn-btn--sm" href="' + esc( p.edit ) + '">' + esc( I.editPost ) + '<span class="rbn-sr"> ' + esc( sp( I.fixFor, p.title ) ) + '</span></a>' : '' ) + '</td></tr>';
 			} ).join( '' );
-			box.innerHTML = sel + '<section class="rbn-card"><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.colPost + ' / ' + I.colScore ) + '</caption><thead><tr><th scope="col">' + esc( I.colPost ) + '</th><th scope="col">' + esc( I.colScore ) + '</th><th scope="col">' + esc( I.colBand ) + '</th><th scope="col">' + esc( I.colFailing ) + '</th><th scope="col">' + esc( I.action || 'Action' ) + '</th></tr></thead><tbody>' + rows + '</tbody></table></div></div></section>';
+			box.innerHTML = sel + '<section class="rbn-card"><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.colPost + ' / ' + I.colScore ) + '</caption><thead><tr><th scope="col">' + esc( I.colPost ) + '</th><th scope="col">' + esc( I.colScore ) + '</th><th scope="col">' + esc( I.colBand ) + '</th><th scope="col">' + esc( I.colFailing ) + '</th><th scope="col">' + esc( I.action ) + '</th></tr></thead><tbody>' + rows + '</tbody></table></div></div></section>';
 		}
 
 		/* -- how view: the rule catalogue comes from the server -- */
@@ -778,26 +781,26 @@
 			if ( ! r.ok ) { line( 'redirects', I.loadFailed ); return; }
 			var n = r.total >= 0 ? r.total : ( r.data || [] ).length;
 			setStat( 'redirects', String( n ) );
-			line( 'redirects', fmt( I.cardRedirects || '%d active redirects', n ) );
+			line( 'redirects', fmt( I.cardRedirects, n ) );
 		} );
 		api( 'GET', '404-logs?per_page=5&orderby=hit_count&order=desc' ).then( function ( r ) {
 			var tb = $( '[data-activity] tbody' );
 			if ( ! r.ok ) { line( 'log404', I.loadFailed ); if ( tb ) { tb.innerHTML = '<tr><td colspan="3">' + esc( I.loadFailed ) + '</td></tr>'; } return; }
 			var n = r.total >= 0 ? r.total : ( r.data || [] ).length;
 			setStat( 'log', String( n ) );
-			line( 'log404', fmt( I.cardLog || '%d errors logged', n ) );
-			if ( n ) { badge( 'log404', 'warn', 'alert', I.needsLook || 'Needs a look' ); } else { badge( 'log404', 'ok', 'check', I.clean || 'Clean' ); }
+			line( 'log404', fmt( I.cardLog, n ) );
+			if ( n ) { badge( 'log404', 'warn', 'alert', I.needsLook ); } else { badge( 'log404', 'ok', 'check', I.clean ); }
 			if ( tb ) {
 				var url = T.pageUrl + ( T.pageUrl.indexOf( '?' ) > -1 ? '&' : '?' ) + 'tool=log404';
 				tb.innerHTML = ( r.data || [] ).length ? r.data.map( function ( l ) {
-					return '<tr><td data-label="' + esc( I.event || 'Event' ) + '"><code>' + esc( l.url_path ) + '</code></td><td data-label="' + esc( I.hits || 'Hits' ) + '" class="rbn-num">' + esc( l.hit_count ) + '</td><td data-label="' + esc( I.action || 'Action' ) + '" class="rbn-acts"><a class="rbn-btn rbn-btn--sm" href="' + esc( url ) + '">' + esc( I.fix || 'Fix' ) + '</a></td></tr>';
+					return '<tr><td data-label="' + esc( I.event ) + '"><code>' + esc( l.url_path ) + '</code></td><td data-label="' + esc( I.hits ) + '" class="rbn-num">' + esc( l.hit_count ) + '</td><td data-label="' + esc( I.action ) + '" class="rbn-acts"><a class="rbn-btn rbn-btn--sm" href="' + esc( url ) + '">' + esc( I.fix ) + '</a></td></tr>';
 				} ).join( '' ) : '<tr><td colspan="3">' + esc( I.no404 ) + '</td></tr>';
 			}
 		} );
 		api( 'GET', 'import/state' ).then( function ( r ) {
 			var b = $( '[data-import-state]' );
 			if ( b && r.ok && r.data && r.data.state && r.data.state !== 'none' ) {
-				b.innerHTML = '<span class="rbn-badge rbn-badge--ok">' + icon( 'check' ) + esc( r.data.state === 'applied' ? ( I.importDone || 'Imported' ) : r.data.state ) + '</span>';
+				b.innerHTML = '<span class="rbn-badge rbn-badge--ok">' + icon( 'check' ) + esc( r.data.state === 'applied' ? ( I.importDone ) : r.data.state ) + '</span>';
 			}
 		} );
 		on( screen, 'click', '[data-sitemap-flush]', function ( e, b ) {
@@ -830,7 +833,7 @@
 				$$( 'script[type="application/ld+json"]', d ).forEach( function ( s ) {
 					try { blocks.push( JSON.stringify( JSON.parse( s.textContent ), null, 2 ) ); } catch ( x ) { blocks.push( s.textContent.trim() ); }
 				} );
-				out.textContent = blocks.length ? blocks.join( '\n\n' ) : ( I.noSchema || 'This page prints no schema.' );
+				out.textContent = blocks.length ? blocks.join( '\n\n' ) : ( I.noSchema );
 			} ).catch( function () { out.textContent = I.loadFailed; } );
 		}
 		sel.addEventListener( 'change', load );
@@ -853,11 +856,11 @@
 		api( 'GET', 'feed/status' ).then( function ( r ) {
 			if ( ! chk ) { return; }
 			if ( ! r.ok || ! r.data ) { chk.textContent = I.loadFailed; return; }
-			chk.textContent = r.data.enabled ? ( I.feedOn || 'The feed is on and answers at this address.' ) : ( I.feedOff || 'The feed is off.' );
+			chk.textContent = r.data.enabled ? ( I.feedOn ) : ( I.feedOff );
 		} );
 		api( 'GET', 'feed/preview' ).then( function ( r ) {
 			if ( ! sample ) { return; }
-			sample.textContent = r.ok && r.data && r.data.sample_item_xml ? r.data.sample_item_xml : ( r.status === 404 ? ( I.noPosts || 'There is no published post to show.' ) : I.loadFailed );
+			sample.textContent = r.ok && r.data && r.data.sample_item_xml ? r.data.sample_item_xml : ( r.status === 404 ? ( I.noPosts ) : I.loadFailed );
 		} );
 	}
 
@@ -888,7 +891,7 @@
 				if ( ! r.ok || ! r.data ) { tb.innerHTML = '<tr><td colspan="4">' + esc( I.loadFailed ) + '</td></tr>'; return; }
 				var items = r.data.items || [];
 				tb.innerHTML = items.length ? items.map( function ( i ) {
-					return '<tr><th scope="row" data-label="File"><code>' + esc( i.name ) + '</code></th><td data-label="URLs" class="rbn-num">' + esc( i.count ) + '</td><td data-label="Last modified">' + esc( i.lastmod ? new Date( i.lastmod ).toLocaleString() : '–' ) + '</td><td data-label="Status"><span class="rbn-badge rbn-badge--ok">' + icon( 'check' ) + esc( 'OK' ) + '</span></td></tr>';
+					return '<tr><th scope="row" data-label="' + esc( I.dlFile ) + '"><code>' + esc( i.name ) + '</code></th><td data-label="' + esc( I.dlUrls ) + '" class="rbn-num">' + esc( i.count ) + '</td><td data-label="' + esc( I.dlLastmod ) + '">' + esc( i.lastmod ? new Date( i.lastmod ).toLocaleString() : '–' ) + '</td><td data-label="' + esc( I.dlStatus ) + '"><span class="rbn-badge rbn-badge--ok">' + icon( 'check' ) + esc( I.dlOk ) + '</span></td></tr>';
 				} ).join( '' ) : '<tr><td colspan="4">' + esc( I.noMatch ) + '</td></tr>';
 			} );
 		}
@@ -963,11 +966,11 @@
 
 		function row( x ) {
 			var code = +x.status_code, cls = code === 301 || code === 308 ? 'ok' : ( code === 410 || code === 451 ? 'warn' : 'info' );
-			return '<tr><td class="wps-chk-cell" data-label="Select"><label class="rbn-check"><input type="checkbox" data-row value="' + x.id + '"><span class="rbn-sr">' + esc( x.source_path ) + '</span></label></td>'
-				+ '<th scope="row" data-label="From"><code>' + esc( x.source_path ) + '</code></th><td data-label="To"><code>' + esc( x.target_url || '–' ) + '</code></td>'
-				+ '<td data-label="Type"><span class="rbn-badge rbn-badge--' + cls + '">' + icon( 'arrows' ) + code + '</span></td><td data-label="Hits" class="rbn-num">' + esc( x.hits ) + '</td><td data-label="Last hit">' + esc( dateText( x.last_hit_at ) ) + '</td>'
-				+ '<td data-label="Status">' + ( x.is_active ? '<span class="rbn-badge rbn-badge--ok">' + icon( 'check' ) + esc( I.on ) + '</span>' : '<span class="rbn-badge">' + icon( 'pause' ) + esc( I.off ) + '</span>' ) + '</td>'
-				+ '<td data-label="Actions" class="rbn-acts"><button type="button" class="rbn-btn rbn-btn--sm" data-edit="' + x.id + '">' + icon( 'pen' ) + esc( I.edit ) + '</button><button type="button" class="rbn-btn rbn-btn--danger rbn-btn--sm" data-del="' + x.id + '">' + icon( 'trash' ) + esc( I.delete ) + '</button></td></tr>';
+			return '<tr><td class="wps-chk-cell" data-label="' + esc( I.dlSelect ) + '"><label class="rbn-check"><input type="checkbox" data-row value="' + x.id + '"><span class="rbn-sr">' + esc( x.source_path ) + '</span></label></td>'
+				+ '<th scope="row" data-label="' + esc( I.dlFrom ) + '"><code>' + esc( x.source_path ) + '</code></th><td data-label="' + esc( I.dlTo ) + '"><code>' + esc( x.target_url || '–' ) + '</code></td>'
+				+ '<td data-label="' + esc( I.dlType ) + '"><span class="rbn-badge rbn-badge--' + cls + '">' + icon( 'arrows' ) + code + '</span></td><td data-label="' + esc( I.hits ) + '" class="rbn-num">' + esc( x.hits ) + '</td><td data-label="' + esc( I.dlLastHit ) + '">' + esc( dateText( x.last_hit_at ) ) + '</td>'
+				+ '<td data-label="' + esc( I.dlStatus ) + '">' + ( x.is_active ? '<span class="rbn-badge rbn-badge--ok">' + icon( 'check' ) + esc( I.on ) + '</span>' : '<span class="rbn-badge">' + icon( 'pause' ) + esc( I.off ) + '</span>' ) + '</td>'
+				+ '<td data-label="' + esc( I.dlActions ) + '" class="rbn-acts"><button type="button" class="rbn-btn rbn-btn--sm" data-edit="' + x.id + '">' + icon( 'pen' ) + esc( I.edit ) + '</button><button type="button" class="rbn-btn rbn-btn--danger rbn-btn--sm" data-del="' + x.id + '">' + icon( 'trash' ) + esc( I.delete ) + '</button></td></tr>';
 		}
 
 		on( root, 'click', '[data-retry]', load );
@@ -1054,7 +1057,7 @@
 		file.addEventListener( 'change', function () {
 			var f = file.files[ 0 ]; valid = []; run.disabled = true; report.innerHTML = '';
 			if ( ! f ) { return; }
-			if ( f.size > 1048576 ) { report.innerHTML = note( 'err', esc( 'Up to 1 MB.' ), 'alert' ); return; }
+			if ( f.size > 1048576 ) { report.innerHTML = note( 'err', esc( I.csvTooBig ), 'alert' ); return; }
 			f.text().then( function ( text ) {
 				var errors = [], seen = {};
 				text.replace( /^﻿/, '' ).split( /\r?\n/ ).forEach( function ( line, i ) {
@@ -1062,11 +1065,11 @@
 					var c = line.split( ',' ).map( function ( s ) { return s.trim().replace( /^"|"$/g, '' ); } );
 					if ( i === 0 && c[ 0 ].toLowerCase() === 'from' ) { return; }
 					var code = c[ 2 ] ? +c[ 2 ] : 301;
-					if ( c[ 0 ].charAt( 0 ) !== '/' ) { errors.push( [ i + 1, '“From” does not start with a slash' ] ); } else if ( [ 301, 302, 307, 410, 451 ].indexOf( code ) < 0 ) { errors.push( [ i + 1, 'Type ' + c[ 2 ] + ' is not supported' ] ); } else if ( ! c[ 1 ] && code !== 410 ) { errors.push( [ i + 1, '“To” is empty' ] ); } else if ( seen[ c[ 0 ] ] ) { errors.push( [ i + 1, 'Duplicate of line ' + seen[ c[ 0 ] ] ] ); } else { seen[ c[ 0 ] ] = i + 1; valid.push( line ); }
+					if ( c[ 0 ].charAt( 0 ) !== '/' ) { errors.push( [ i + 1, I.csvNoSlash ] ); } else if ( [ 301, 302, 307, 410, 451 ].indexOf( code ) < 0 ) { errors.push( [ i + 1, String( I.csvBadType ).replace( '%s', c[ 2 ] ) ] ); } else if ( ! c[ 1 ] && code !== 410 ) { errors.push( [ i + 1, I.csvToEmpty ] ); } else if ( seen[ c[ 0 ] ] ) { errors.push( [ i + 1, fmt( I.csvDuplicate, seen[ c[ 0 ] ] ) ] ); } else { seen[ c[ 0 ] ] = i + 1; valid.push( line ); }
 				} );
 				var h = note( valid.length ? 'ok' : 'warn', '<b>' + esc( f.name ) + '</b> ' + esc( I.csvChecked ) + ': <b>' + valid.length + '</b> OK, <b>' + errors.length + '</b> ' + esc( 'invalid' ), 'status' );
 				if ( errors.length ) {
-					h += '<div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">Lines that need attention</caption><thead><tr><th scope="col">' + esc( I.line ) + '</th><th scope="col">Problem</th></tr></thead><tbody>' + errors.map( function ( x ) { return '<tr><th scope="row" data-label="Line">' + x[ 0 ] + '</th><td data-label="Problem"><span class="rbn-badge rbn-badge--err">' + icon( 'x' ) + 'Invalid</span> ' + esc( x[ 1 ] ) + '</td></tr>'; } ).join( '' ) + '</tbody></table></div>';
+					h += '<div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' + esc( I.csvAttention ) + '</caption><thead><tr><th scope="col">' + esc( I.line ) + '</th><th scope="col">' + esc( I.problem ) + '</th></tr></thead><tbody>' + errors.map( function ( x ) { return '<tr><th scope="row" data-label="' + esc( I.line ) + '">' + x[ 0 ] + '</th><td data-label="' + esc( I.problem ) + '"><span class="rbn-badge rbn-badge--err">' + icon( 'x' ) + esc( I.invalid ) + '</span> ' + esc( x[ 1 ] ) + '</td></tr>'; } ).join( '' ) + '</tbody></table></div>';
 				}
 				report.innerHTML = h;
 				run.lastChild.nodeValue = fmt( I.importN, valid.length );
@@ -1113,9 +1116,9 @@
 		}
 
 		function row( x ) {
-			return '<tr data-row-id="' + x.id + '"><td class="wps-chk-cell" data-label="Select"><label class="rbn-check"><input type="checkbox" data-row value="' + x.id + '"><span class="rbn-sr">' + esc( x.url_path ) + '</span></label></td>'
-				+ '<th scope="row" data-label="Address"><code>' + esc( x.url_path ) + '</code></th><td data-label="Hits" class="rbn-num">' + esc( x.hit_count ) + '</td><td data-label="Referrer">' + esc( x.referer || '–' ) + '</td><td data-label="Last seen">' + esc( dateText( x.last_seen_at ) ) + '</td>'
-				+ '<td data-label="Actions" class="rbn-acts"><button type="button" class="rbn-btn rbn-btn--sm" aria-expanded="false" aria-controls="sg-' + x.id + '" data-toggle="' + x.id + '">' + icon( 'arrows' ) + esc( I.redirectTo ) + '</button><button type="button" class="rbn-btn rbn-btn--sm" data-ignore="' + x.id + '">' + icon( 'trash' ) + esc( I.delete ) + '</button></td></tr>';
+			return '<tr data-row-id="' + x.id + '"><td class="wps-chk-cell" data-label="' + esc( I.dlSelect ) + '"><label class="rbn-check"><input type="checkbox" data-row value="' + x.id + '"><span class="rbn-sr">' + esc( x.url_path ) + '</span></label></td>'
+				+ '<th scope="row" data-label="' + esc( I.dlAddress ) + '"><code>' + esc( x.url_path ) + '</code></th><td data-label="' + esc( I.hits ) + '" class="rbn-num">' + esc( x.hit_count ) + '</td><td data-label="' + esc( I.dlReferrer ) + '">' + esc( x.referer || '–' ) + '</td><td data-label="' + esc( I.dlLastSeen ) + '">' + esc( dateText( x.last_seen_at ) ) + '</td>'
+				+ '<td data-label="' + esc( I.dlActions ) + '" class="rbn-acts"><button type="button" class="rbn-btn rbn-btn--sm" aria-expanded="false" aria-controls="sg-' + x.id + '" data-toggle="' + x.id + '">' + icon( 'arrows' ) + esc( I.redirectTo ) + '</button><button type="button" class="rbn-btn rbn-btn--sm" data-ignore="' + x.id + '">' + icon( 'trash' ) + esc( I.delete ) + '</button></td></tr>';
 		}
 
 		on( root, 'click', '[data-retry]', load );
@@ -1143,7 +1146,7 @@
 			var x = rows[ id ], inl = doc.createElement( 'tr' );
 			inl.className = 'wps-inline'; inl.id = 'sg-' + id;
 			inl.innerHTML = '<td colspan="6"><div class="wps-inline__b"><h3>' + esc( I.redirected ) + ' <code>' + esc( x.url_path ) + '</code> →</h3><p class="rbn-help">' + esc( 'Closest pages on your site. One click creates a 301 redirect.' ) + '</p><ul class="wps-suggest" data-sugg><li>' + esc( I.loading ) + '</li></ul>'
-				+ '<div class="wps-inline__row"><label class="rbn-sr" for="sg-own-' + id + '">' + esc( 'Or type another address' ) + '</label><input class="rbn-input rbn-input--mono" id="sg-own-' + id + '" placeholder="/" autocomplete="off"><button type="button" class="rbn-btn rbn-btn--pri" data-create>' + icon( 'plus' ) + esc( 'Create redirect' ) + '</button><button type="button" class="rbn-btn" data-close>' + esc( I.close ) + '</button></div><p class="rbn-field__err" data-inline-err hidden></p></div></td>';
+				+ '<div class="wps-inline__row"><label class="rbn-sr" for="sg-own-' + id + '">' + esc( I.otherAddress ) + '</label><input class="rbn-input rbn-input--mono" id="sg-own-' + id + '" placeholder="/" autocomplete="off"><button type="button" class="rbn-btn rbn-btn--pri" data-create>' + icon( 'plus' ) + esc( I.createRedirect ) + '</button><button type="button" class="rbn-btn" data-close>' + esc( I.close ) + '</button></div><p class="rbn-field__err" data-inline-err hidden></p></div></td>';
 			tr.parentNode.insertBefore( inl, tr.nextSibling );
 			var words = x.url_path.replace( /[-_/]+/g, ' ' ).replace( /\b\d+\b/g, '' ).trim();
 			request( 'GET', '' ).then( function () {
@@ -1201,7 +1204,7 @@
 			var found = 0, will = 0, conf = 0;
 			$( 'tbody', $s( 'import-table' ) ).innerHTML = ( rep.rows || [] ).map( function ( x ) {
 				found += +x.found || 0; will += +x.will_import || 0; conf += +x.conflicts || 0;
-				return '<tr><th scope="row" data-label="Data">' + esc( x.label ) + '</th><td data-label="Found" class="rbn-num">' + esc( x.found ) + '</td><td data-label="Will import" class="rbn-num">' + esc( x.will_import ) + '</td><td data-label="Note">' + esc( x.note || '' ) + '</td></tr>';
+				return '<tr><th scope="row" data-label="' + esc( I.importData ) + '">' + esc( x.label ) + '</th><td data-label="' + esc( I.found ) + '" class="rbn-num">' + esc( x.found ) + '</td><td data-label="' + esc( I.willImport ) + '" class="rbn-num">' + esc( x.will_import ) + '</td><td data-label="' + esc( I.importNote ) + '">' + esc( x.note || '' ) + '</td></tr>';
 			} ).join( '' );
 			$s( 'import-summary' ).textContent = found + ' ' + I.found.toLowerCase() + ' · ' + will + ' ' + I.willImport.toLowerCase() + ' · ' + conf + ' ' + I.conflicts.toLowerCase();
 			return conf;
@@ -1276,13 +1279,13 @@
 				if ( ! r.ok ) { say( 'err', '<b>' + esc( I.saveFailed ) + '</b> ' + esc( errMsg( r ) ) ); b.disabled = false; return; }
 				$s( 'import-bar' ).classList.remove( 'is-dirty' );
 				goTab( 'report' );
-				$s( 'import-done' ).innerHTML = note( 'ok', '<b>' + esc( I.importDone ) + '</b> <button type="button" class="rbn-btn rbn-btn--sm" data-import-verify>' + icon( 'scan' ) + esc( I.verify || 'Verify' ) + '</button>', 'status' );
+				$s( 'import-done' ).innerHTML = note( 'ok', '<b>' + esc( I.importDone ) + '</b> <button type="button" class="rbn-btn rbn-btn--sm" data-import-verify>' + icon( 'scan' ) + esc( I.verify ) + '</button>', 'status' );
 				restore();
 			} );
 		} );
 		on( doc, 'click', '[data-import-verify]', function ( e, b ) {
 			b.disabled = true;
-			api( 'POST', 'import/yoast', { mode: 'verify' } ).then( function ( r ) { b.disabled = false; say( r.ok ? 'ok' : 'err', r.ok ? '<b>' + esc( I.verified || 'Verified.' ) + '</b>' : esc( errMsg( r ) ) ); restore(); } );
+			api( 'POST', 'import/yoast', { mode: 'verify' } ).then( function ( r ) { b.disabled = false; say( r.ok ? 'ok' : 'err', r.ok ? '<b>' + esc( I.verified ) + '</b>' : esc( errMsg( r ) ) ); restore(); } );
 		} );
 		if ( $s( 'import-done' ) ) { restore(); }
 	}
@@ -1416,7 +1419,7 @@
 
 		function renderInuse() {
 			var auto = $( '[data-addr-auto]', box ), inuse = $( '[data-addr-inuse]', box );
-			if ( auto ) { auto.textContent = status ? sub( A.autoNow, autoScheme() ) : ( A.auto || 'Automatic' ); }
+			if ( auto ) { auto.textContent = status ? sub( A.autoNow, autoScheme() ) : ( A.auto ); }
 			if ( ! status || ! hostOk() ) { inuse.hidden = true; return; }
 			var s = scheme() === 'auto' ? autoScheme() : scheme(), h = hostVal() || autoHost();
 			$( '[data-addr-origin]', box ).textContent = s + '://' + h;

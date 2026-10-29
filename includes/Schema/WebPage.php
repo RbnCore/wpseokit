@@ -177,7 +177,8 @@ final class WebPage extends Piece {
 
 		if ( $is_search ) {
 			$query = (string) ( $this->context['search_query'] ?? get_search_query() );
-			return $query . ' için arama yaptınız - ' . $sitename;
+			/* translators: %s: search phrase. */
+			return sprintf( __( 'You searched for %s', 'wpseokit' ), $query ) . ' - ' . $sitename;
 		}
 
 		if ( $is_cat || $is_tag || $is_tax ) {

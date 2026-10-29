@@ -103,7 +103,13 @@ final class YoastImportService {
 	/** @return array<string, mixed> `{ state: none|dry-run|applied, time, report, baseline }`. */
 	public static function state(): array {
 		$state = get_option( self::STATE_OPTION, array() );
-		return is_array( $state ) && isset( $state['state'] ) ? $state : array( 'state' => 'none' );
+		if ( ! is_array( $state ) || ! isset( $state['state'] ) ) {
+			return array( 'state' => 'none' );
+		}
+		if ( is_array( $state['report'] ?? null ) ) {
+			$state['report'] = ImportReport::from_array( $state['report'] )->to_array();
+		}
+		return $state;
 	}
 
 	/**
@@ -146,7 +152,7 @@ final class YoastImportService {
 		$state = array(
 			'state'      => $name,
 			'time'       => $report->time(),
-			'report'     => $report->to_array(),
+			'report'     => $report->to_array( false ), // Stored untranslated; state() translates it for the viewer.
 			'baseline'   => is_array( $old['baseline'] ?? null ) ? $old['baseline'] : $report->source_counts(),
 			'dry_run_at' => $is_dry_run ? $report->time() : (int) ( $old['dry_run_at'] ?? 0 ),
 		);
@@ -287,10 +293,10 @@ final class YoastImportService {
 		}
 		$unknown = Variables::unknown( $out );
 		if ( array() !== $unknown ) {
-			$report->note( sprintf( '%s: unknown variable(s) %s (they render blank).', $where, '%' . implode( '%, %', $unknown ) . '%' ) );
+			$report->note( sprintf( /* translators: 1: where, 2: variable list. */ __( '%1$s: unknown variable(s) %2$s (they render blank).', 'wpseokit' ), $where, '%' . implode( '%, %', $unknown ) . '%' ) );
 		}
 		if ( false !== strpos( $out, '%%' ) ) {
-			$report->note( sprintf( '%s: a Yoast variable could not be converted.', $where ) );
+			$report->note( sprintf( /* translators: %s: where. */ __( '%s: a Yoast variable could not be converted.', 'wpseokit' ), $where ) );
 		}
 		return $out;
 	}
@@ -446,7 +452,7 @@ final class YoastImportService {
 			}
 		}
 		if ( $disagree > 0 ) {
-			$report->note( sprintf( 'Primary category: %d post(s) differ between the post meta and the Yoast table; the table value is used.', $disagree ) );
+			$report->note( sprintf( /* translators: %d: number of posts. */ __( 'Primary category: %d post(s) differ between the post meta and the Yoast table; the table value is used.', 'wpseokit' ), $disagree ) );
 		}
 
 		$assigned = array();
@@ -461,7 +467,7 @@ final class YoastImportService {
 		foreach ( $wanted as $post_id => $term_id ) {
 			if ( empty( $assigned[ $post_id ][ $term_id ] ) ) {
 				$report->count( 'primary', 'invalid' );
-				$report->note( sprintf( 'Primary category of post %d (term %d) is not assigned to the post; skipped.', $post_id, $term_id ) );
+				$report->note( sprintf( /* translators: 1: post ID, 2: term ID. */ __( 'Primary category of post %1$d (term %2$d) is not assigned to the post; skipped.', 'wpseokit' ), $post_id, $term_id ) );
 				continue;
 			}
 			$decision = self::decide( (int) ( $current[ $post_id ][ PrimaryTermService::META_KEY ] ?? 0 ), $term_id, 0, $overwrite );
@@ -470,7 +476,7 @@ final class YoastImportService {
 				PrimaryTermService::set( $post_id, $term_id );
 			}
 		}
-		$report->note_row( 'primary', sprintf( 'Posts keep their URLs. %d empty Yoast rows are ignored (WordPress default applies).', $empty ) );
+		$report->note_row( 'primary', sprintf( /* translators: %d: number of empty rows. */ __( 'Posts keep their URLs. %d empty Yoast rows are ignored (WordPress default applies).', 'wpseokit' ), $empty ) );
 	}
 
 	/* ---- term meta ---- */
@@ -685,7 +691,7 @@ final class YoastImportService {
 					return '';
 				}
 				if ( ! isset( self::SEPARATORS[ (string) $raw ] ) ) {
-					$report->note( sprintf( '%s: separator "%s" is unknown; skipped.', $where, (string) $raw ) );
+					$report->note( sprintf( /* translators: 1: where, 2: separator code. */ __( '%1$s: separator "%2$s" is unknown; skipped.', 'wpseokit' ), $where, (string) $raw ) );
 					return null;
 				}
 				return self::SEPARATORS[ (string) $raw ];

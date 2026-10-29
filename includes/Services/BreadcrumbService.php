@@ -175,7 +175,8 @@ namespace Wpseokit\Services {
 
 				$links[] = array(
 					'url'  => home_url( '/?s=' . rawurlencode( $query ) ),
-					'text' => 'Şunu aradınız ' . $query,
+					/* translators: %s: search phrase. */
+					'text' => sprintf( __( 'You searched for %s', 'wpseokit' ), $query ),
 				);
 			} elseif ( $is_author ) {
 				$author = ( null !== $context && isset( $context['author'] ) && $context['author'] instanceof \WP_User )

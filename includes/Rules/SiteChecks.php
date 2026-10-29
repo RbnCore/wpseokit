@@ -110,7 +110,7 @@ final class SiteChecks {
 			'target_ok'    => (bool) $target_ok,
 		);
 		$state = ( ! $lines ) ? 0.0 : ( $checks['line_present'] && $checks['target_ok'] ? 1.0 : 0.5 );
-		return self::result( $checks, $state, sprintf( '%d line(s)', count( $lines ) ) );
+		return self::result( $checks, $state, sprintf( /* translators: %d: number of lines. */ __( '%d line(s)', 'wpseokit' ), count( $lines ) ) );
 	}
 
 	private static function sitemap_reachable_valid( string $sitemap_url ): array {
@@ -137,7 +137,7 @@ final class SiteChecks {
 	private static function sitemap_urls_resolve( array $entries ): array {
 		$sample = array_slice( $entries, 0, self::SAMPLE_URLS );
 		if ( ! $sample ) {
-			return self::result( array( 'sample_200' => false ), 0.0, '0 URLs' );
+			return self::result( array( 'sample_200' => false ), 0.0, __( '0 URLs', 'wpseokit' ) );
 		}
 		$ok = 0;
 		foreach ( $sample as $row ) {
@@ -157,7 +157,7 @@ final class SiteChecks {
 		$sample = array_slice( $entries, 0, self::SAMPLE_LASTMOD );
 		$n      = count( $sample );
 		if ( 0 === $n ) {
-			return self::result( array( 'distinct' => false, 'bulk_generation' => false ), 0.0, '0 URLs' );
+			return self::result( array( 'distinct' => false, 'bulk_generation' => false ), 0.0, __( '0 URLs', 'wpseokit' ) );
 		}
 		$counts = array_count_values( array_filter( array_column( $sample, 'lastmod' ), 'strlen' ) );
 		$ratio  = count( $counts ) / $n;
@@ -167,7 +167,7 @@ final class SiteChecks {
 			'distinct'        => $ratio >= 1.0,
 			'bulk_generation' => ! $bulk,
 		);
-		return self::result( $checks, $bulk ? 0.0 : min( 1.0, $ratio ), sprintf( '%d distinct / %d', count( $counts ), $n ) );
+		return self::result( $checks, $bulk ? 0.0 : min( 1.0, $ratio ), sprintf( /* translators: 1: distinct counts, 2: sample size. */ __( '%1$d distinct / %2$d', 'wpseokit' ), count( $counts ), $n ) );
 	}
 
 	private static function https_secure(): array {
@@ -349,7 +349,7 @@ final class SiteChecks {
 			return array(
 				'state'    => null,
 				'checks'   => array(),
-				'measured' => 'llms.txt is off',
+				'measured' => __( 'llms.txt is off', 'wpseokit' ),
 			);
 		}
 		$res    = Probe::fetch( home_url( '/llms.txt' ) );
@@ -372,6 +372,6 @@ final class SiteChecks {
 			'h1_first'     => is_string( $first ) && 0 === strpos( $first, '# ' ) && ( '' === $name || false !== stripos( $first, $name ) ),
 			'links'        => $links_ok,
 		);
-		return self::result( $checks, null, sprintf( '%d, %d link(s)', $res['status'], count( $links ) ) );
+		return self::result( $checks, null, sprintf( /* translators: 1: HTTP status, 2: number of links. */ __( '%1$d, %2$d link(s)', 'wpseokit' ), $res['status'], count( $links ) ) );
 	}
 }

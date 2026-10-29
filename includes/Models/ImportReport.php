@@ -64,6 +64,11 @@ final class ImportReport {
 		return $this->time;
 	}
 
+	/** Translates a fixed English report text when the report is read, so a stored report follows the viewer's language (msgids live in the .pot). */
+	private static function t( string $en ): string {
+		return __( $en, 'wpseokit' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
+	}
+
 	/** Starts (or resets) a row. */
 	public function row( string $key, string $label ): void {
 		$this->rows[ $key ] = array(
@@ -167,9 +172,13 @@ final class ImportReport {
 	 *
 	 * @return array<string, mixed>
 	 */
-	public function to_array(): array {
+	public function to_array( bool $translate = true ): array {
 		$rows = array();
 		foreach ( $this->rows as $row ) {
+			if ( $translate ) {
+				$row['label'] = self::t( (string) $row['label'] );
+				$row['note']  = self::t( (string) $row['note'] );
+			}
 			$row['skipped'] = (int) $row['same'] + (int) $row['empty'] + (int) $row['invalid'];
 			$rows[]         = $row;
 		}
@@ -186,7 +195,14 @@ final class ImportReport {
 				'invalid'     => $this->total( 'invalid' ),
 				'conflicts'   => $this->total( 'conflicts' ),
 			),
-			'not_migrated'  => $this->not_migrated,
+			'not_migrated'  => array_map(
+				static fn( array $n ): array => array(
+					'label'  => $translate ? self::t( (string) $n['label'] ) : $n['label'],
+					'count'  => $n['count'],
+					'reason' => $translate ? self::t( (string) $n['reason'] ) : $n['reason'],
+				),
+				$this->not_migrated
+			),
 			'notes'         => $this->notes,
 			'source_counts' => $this->source_counts,
 			'extra'         => $this->extra,

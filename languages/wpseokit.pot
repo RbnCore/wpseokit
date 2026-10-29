@@ -4279,3 +4279,165 @@ msgstr ""
 #: includes/Screens/SchemaScreen.php:141
 msgid "Your theme draws the visible breadcrumb; WPSeoKit sends the same path to search engines as BreadcrumbList data."
 msgstr ""
+
+msgid "Problem"
+msgstr ""
+
+msgid "Invalid"
+msgstr ""
+
+msgid "Lines that need attention"
+msgstr ""
+
+msgid "Up to 1 MB."
+msgstr ""
+
+msgid "“From” does not start with a slash"
+msgstr ""
+
+msgid "Type %s is not supported"
+msgstr ""
+
+msgid "“To” is empty"
+msgstr ""
+
+msgid "Duplicate of line %d"
+msgstr ""
+
+msgid "Or type another address"
+msgstr ""
+
+msgid "Create redirect"
+msgstr ""
+
+msgid "Score details"
+msgstr ""
+
+msgid "You searched for %s"
+msgstr ""
+
+msgid "Content score (analysis result, no feature here)"
+msgstr ""
+
+msgid "Reading time (WordPress counts it again)"
+msgstr ""
+
+msgid "Focus keyword (no feature here)"
+msgstr ""
+
+msgid "Meta descriptions"
+msgstr ""
+
+msgid "SEO titles"
+msgstr ""
+
+msgid "Post robots"
+msgstr ""
+
+msgid "Post canonical URLs"
+msgstr ""
+
+msgid "Post social fields"
+msgstr ""
+
+msgid "Variables are converted (%%sitename%% becomes %sitename%)."
+msgstr ""
+
+msgid "Twitter fields fill in only where the Open Graph field is empty."
+msgstr ""
+
+msgid "Category descriptions"
+msgstr ""
+
+msgid "Term titles, robots and images"
+msgstr ""
+
+msgid "Stored in term meta, not in one serialized option."
+msgstr ""
+
+msgid "Analysis result, no feature here."
+msgstr ""
+
+msgid "Robots rules"
+msgstr ""
+
+msgid "General and verification"
+msgstr ""
+
+msgid "Schema (organization)"
+msgstr ""
+
+msgid "Social settings"
+msgstr ""
+
+msgid "Variables are converted; the separator code (sc-dash) becomes the character."
+msgstr ""
+
+msgid "Yoast cache; its content is imported from the sources above."
+msgstr ""
+
+msgid "Yoast cache."
+msgstr ""
+
+msgid "Internal link counter, no feature here."
+msgstr ""
+
+msgid "Yoast schema history."
+msgstr ""
+
+msgid "Temporary store."
+msgstr ""
+
+msgid "Read as the second source of the primary category."
+msgstr ""
+
+msgid "WordPress handles this in Settings > Permalinks."
+msgstr ""
+
+msgid "No matching setting here."
+msgstr ""
+
+msgid "wpseo (secrets and tokens)"
+msgstr ""
+
+msgid "Never copied: tokens and keys stay out."
+msgstr ""
+
+msgid "%1$s: unknown variable(s) %2$s (they render blank)."
+msgstr ""
+
+msgid "%s: a Yoast variable could not be converted."
+msgstr ""
+
+msgid "Primary category: %d post(s) differ between the post meta and the Yoast table; the table value is used."
+msgstr ""
+
+msgid "Primary category of post %1$d (term %2$d) is not assigned to the post; skipped."
+msgstr ""
+
+msgid "Posts keep their URLs. %d empty Yoast rows are ignored (WordPress default applies)."
+msgstr ""
+
+msgid "%1$s: separator \"%2$s\" is unknown; skipped."
+msgstr ""
+
+msgid "Select"
+msgstr ""
+
+msgid "%d line(s)"
+msgstr ""
+
+msgid "0 URLs"
+msgstr ""
+
+msgid "%1$d distinct / %2$d"
+msgstr ""
+
+msgid "%1$d, %2$d link(s)"
+msgstr ""
+
+msgid "no canonical output"
+msgstr ""
+
+msgid "llms.txt is off"
+msgstr ""

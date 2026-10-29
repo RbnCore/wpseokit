@@ -117,7 +117,7 @@ final class PostChecks {
 			return array(
 				'state'    => null,
 				'checks'   => array(),
-				'measured' => 'no canonical output',
+				'measured' => __( 'no canonical output', 'wpseokit' ),
 			);
 		}
 		$all = array_merge( $in_head, '' !== $in_header ? array( $in_header ) : array() );

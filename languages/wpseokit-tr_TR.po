@@ -4435,3 +4435,165 @@ msgstr "WPSeoKit kapalı: AdminKit eklentisine (önbellek, günlükler ve RBN Ki
 #: includes/Screens/DashboardScreen.php:326
 msgid "A check that cannot reach the release list is expected until the first release is published. WPSeoKit tries again later."
 msgstr "İlk sürüm yayımlanana kadar sürüm listesine ulaşamayan bir denetim beklenen durumdur. WPSeoKit daha sonra yeniden dener."
+
+msgid "Problem"
+msgstr "Sorun"
+
+msgid "Invalid"
+msgstr "Geçersiz"
+
+msgid "Lines that need attention"
+msgstr "Dikkat isteyen satırlar"
+
+msgid "Up to 1 MB."
+msgstr "En çok 1 MB."
+
+msgid "“From” does not start with a slash"
+msgstr "“Kaynak” eğik çizgiyle başlamıyor"
+
+msgid "Type %s is not supported"
+msgstr "%s türü desteklenmiyor"
+
+msgid "“To” is empty"
+msgstr "“Hedef” boş"
+
+msgid "Duplicate of line %d"
+msgstr "%d. satırın kopyası"
+
+msgid "Or type another address"
+msgstr "Ya da başka bir adres yazın"
+
+msgid "Create redirect"
+msgstr "Yönlendirme oluştur"
+
+msgid "Score details"
+msgstr "Skor ayrıntıları"
+
+msgid "You searched for %s"
+msgstr "%s için arama yaptınız"
+
+msgid "Content score (analysis result, no feature here)"
+msgstr "İçerik skoru (analiz sonucu, bizde karşılığı yok)"
+
+msgid "Reading time (WordPress counts it again)"
+msgstr "Okuma süresi (WordPress yeniden hesaplar)"
+
+msgid "Focus keyword (no feature here)"
+msgstr "Odak anahtar kelime (bizde karşılığı yok)"
+
+msgid "Meta descriptions"
+msgstr "Meta açıklamaları"
+
+msgid "SEO titles"
+msgstr "SEO başlıkları"
+
+msgid "Post robots"
+msgstr "Yazı robots ayarları"
+
+msgid "Post canonical URLs"
+msgstr "Yazı kanonik adresleri"
+
+msgid "Post social fields"
+msgstr "Yazı sosyal alanları"
+
+msgid "Variables are converted (%%sitename%% becomes %sitename%)."
+msgstr "Değişkenler dönüştürülür (%%sitename%% → %sitename%)."
+
+msgid "Twitter fields fill in only where the Open Graph field is empty."
+msgstr "Twitter alanları yalnız Open Graph alanı boşsa doldurulur."
+
+msgid "Category descriptions"
+msgstr "Kategori açıklamaları"
+
+msgid "Term titles, robots and images"
+msgstr "Terim başlıkları, robots ve görseller"
+
+msgid "Stored in term meta, not in one serialized option."
+msgstr "Tek bir seçenekte değil, terim meta verisinde saklanır."
+
+msgid "Analysis result, no feature here."
+msgstr "Analiz sonucu, bizde karşılığı yok."
+
+msgid "Robots rules"
+msgstr "Robots kuralları"
+
+msgid "General and verification"
+msgstr "Genel ve doğrulama"
+
+msgid "Schema (organization)"
+msgstr "Şema (kuruluş)"
+
+msgid "Social settings"
+msgstr "Sosyal ayarlar"
+
+msgid "Variables are converted; the separator code (sc-dash) becomes the character."
+msgstr "Değişkenler dönüştürülür; ayırıcı kodu (sc-dash) karaktere çevrilir."
+
+msgid "Yoast cache; its content is imported from the sources above."
+msgstr "Yoast önbelleği; içeriği yukarıdaki kaynaklardan alınır."
+
+msgid "Yoast cache."
+msgstr "Yoast önbelleği."
+
+msgid "Internal link counter, no feature here."
+msgstr "İç bağlantı sayacı, bizde karşılığı yok."
+
+msgid "Yoast schema history."
+msgstr "Yoast şema geçmişi."
+
+msgid "Temporary store."
+msgstr "Geçici depo."
+
+msgid "Read as the second source of the primary category."
+msgstr "Ana kategorinin ikinci kaynağı olarak okunur."
+
+msgid "WordPress handles this in Settings > Permalinks."
+msgstr "WordPress bunu Ayarlar > Kalıcı bağlantılar bölümünde yönetir."
+
+msgid "No matching setting here."
+msgstr "Bizde karşılığı olan bir ayar yok."
+
+msgid "wpseo (secrets and tokens)"
+msgstr "wpseo (gizli anahtarlar ve belirteçler)"
+
+msgid "Never copied: tokens and keys stay out."
+msgstr "Hiç kopyalanmaz: belirteçler ve anahtarlar dışarıda kalır."
+
+msgid "%1$s: unknown variable(s) %2$s (they render blank)."
+msgstr "%1$s: bilinmeyen değişken(ler) %2$s (boş görünür)."
+
+msgid "%s: a Yoast variable could not be converted."
+msgstr "%s: bir Yoast değişkeni dönüştürülemedi."
+
+msgid "Primary category: %d post(s) differ between the post meta and the Yoast table; the table value is used."
+msgstr "Ana kategori: %d yazıda yazı meta verisi ile Yoast tablosu farklı; tablodaki değer kullanılır."
+
+msgid "Primary category of post %1$d (term %2$d) is not assigned to the post; skipped."
+msgstr "%1$d numaralı yazının ana kategorisi (terim %2$d) yazıya atanmamış; atlandı."
+
+msgid "Posts keep their URLs. %d empty Yoast rows are ignored (WordPress default applies)."
+msgstr "Yazılar adreslerini korur. %d boş Yoast satırı yok sayılır (WordPress varsayılanı geçerli)."
+
+msgid "%1$s: separator \"%2$s\" is unknown; skipped."
+msgstr "%1$s: \"%2$s\" ayırıcısı bilinmiyor; atlandı."
+
+msgid "Select"
+msgstr "Seç"
+
+msgid "%d line(s)"
+msgstr "%d satır"
+
+msgid "0 URLs"
+msgstr "0 adres"
+
+msgid "%1$d distinct / %2$d"
+msgstr "%1$d farklı / %2$d"
+
+msgid "%1$d, %2$d link(s)"
+msgstr "%1$d, %2$d bağlantı"
+
+msgid "no canonical output"
+msgstr "kanonik çıktı yok"
+
+msgid "llms.txt is off"
+msgstr "llms.txt kapalı"
