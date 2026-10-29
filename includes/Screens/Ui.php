@@ -173,6 +173,13 @@ final class Ui {
 			'repPostsCount'  => __( 'Posts counted', 'wpseokit' ),
 			'repSitemapOf'   => __( 'Sitemap: %s', 'wpseokit' ),
 			'repSchemaOf'    => __( 'Schema: %s', 'wpseokit' ),
+			'schemaTypes'    => array(
+				'BlogPosting' => __( 'Blog post', 'wpseokit' ),
+				'Article'     => __( 'Article', 'wpseokit' ),
+				'NewsArticle' => __( 'News article', 'wpseokit' ),
+				'Movie'       => __( 'Movie', 'wpseokit' ),
+				'TVSeries'    => __( 'TV series', 'wpseokit' ),
+			),
 			'repValue'       => __( 'Value', 'wpseokit' ),
 			'reviewPosts'    => __( 'Review posts', 'wpseokit' ),
 			/* translators: %d: number of addresses. */

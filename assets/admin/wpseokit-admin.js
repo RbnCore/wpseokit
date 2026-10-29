@@ -571,10 +571,14 @@
 			'not_found.addresses': I.repAddresses, 'not_found.hits': sp( I.repTotal, I.repHits404 ), 'not_found.new_24h': I.repNew24, 'sitemap.total': I.repUrls, 'meta.title_pct': I.repTitles, 'meta.description_pct': I.repDescs,
 			'rules.total': I.repRulesTotal, 'rules.passed': I.repRulesPassed, 'rules.remaining': I.repRulesLeft, 'rules.na': I.repRulesNa, 'meta.posts': I.repPostsCount
 		};
+		function schemaName( k ) {
+			var n = k.slice( 7 );
+			return ( I.schemaTypes && I.schemaTypes[ n ] ) || n;
+		}
 		function label( k ) {
 			if ( LABEL[ k ] ) { return LABEL[ k ]; }
 			if ( k.indexOf( 'sitemap.group.' ) === 0 ) { return sp( I.repSitemapOf, k.slice( 14 ) ); }
-			if ( k.indexOf( 'schema.' ) === 0 ) { return sp( I.repSchemaOf, k.slice( 7 ) ); }
+			if ( k.indexOf( 'schema.' ) === 0 ) { return sp( I.repSchemaOf, schemaName( k ) ); }
 			return k.replace( /[._]/g, ' ' );
 		}
 		function state( name ) {
@@ -670,12 +674,12 @@
 			if ( d.latest ) { meta_txt.push( sp( I.repMeta, when( d.latest.taken_at ) ) ); }
 			if ( meta ) { meta.textContent = meta_txt.join( ' · ' ); }
 			var schemaKeys = ( d.columns || [] ).map( function ( c ) { return c.key; } ).filter( function ( k ) { return k.indexOf( 'schema.' ) === 0; } );
-			if ( d.points.length === 1 ) { box.innerHTML = '<ul class="wps-reports">' + bars( d, { keys: [ 'meta.title_pct', 'meta.description_pct' ], title: I.repCoverage, pct: true } ) + bars( d, { keys: schemaKeys, title: I.repSchema, names: function ( k ) { return k.replace( 'schema.', '' ); } } ) + valuesCard( d ) + '</ul>'; finish( d, box, one, main ); return; }
+			if ( d.points.length === 1 ) { box.innerHTML = '<ul class="wps-reports">' + bars( d, { keys: [ 'meta.title_pct', 'meta.description_pct' ], title: I.repCoverage, pct: true } ) + bars( d, { keys: schemaKeys, title: I.repSchema, names: schemaName } ) + valuesCard( d ) + '</ul>'; finish( d, box, one, main ); return; }
 			var html = chart( d, { keys: [ 'score.site' ], title: I.repScore, text: I.repGap, wide: true, min: 0, max: 100, suffix: ' / 100' } )
 				+ chart( d, { keys: [ 'redirects.active', 'not_found.hits' ], title: I.repRedirects, text: I.repGap } )
 				+ chart( d, { keys: [ 'sitemap.total' ], title: I.repSitemap, text: I.repGap } )
 				+ bars( d, { keys: [ 'meta.title_pct', 'meta.description_pct' ], title: I.repCoverage, pct: true } )
-				+ bars( d, { keys: schemaKeys, title: I.repSchema, names: function ( k ) { return k.replace( 'schema.', '' ); } } )
+				+ bars( d, { keys: schemaKeys, title: I.repSchema, names: schemaName } )
 				+ summaryCard( d );
 			box.innerHTML = '<ul class="wps-reports">' + html + '</ul>';
 			finish( d, box, one, main );

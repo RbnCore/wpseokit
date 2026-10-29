@@ -227,7 +227,7 @@ final class Updater {
 		$found = 'ok' === $status && is_array( $rel ) && version_compare( $rel['version'], WPSEOKIT_VERSION, '>' );
 		Logs::update_check( 'error' === $status ? 'failed' : ( $found ? 'update_found' : 'up_to_date' ), $found ? $rel['version'] : WPSEOKIT_VERSION );
 		if ( 'error' === $status ) {
-			Logs::error( 'update_check', 'The release check failed.' );
+			Logs::error( 'update_check', __( 'The release check failed.', 'wpseokit' ) );
 		}
 		return $record;
 	}

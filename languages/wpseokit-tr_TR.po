@@ -4597,3 +4597,7 @@ msgstr "kanonik çıktı yok"
 
 msgid "llms.txt is off"
 msgstr "llms.txt kapalı"
+
+#: src/includes/Updater.php
+msgid "The release check failed."
+msgstr "Sürüm denetimi başarısız oldu."

@@ -124,7 +124,7 @@ final class ReportService {
 		$date    = wp_date( 'Y-m-d' );
 		$created = SnapshotRepository::upsert( $date, $metrics, Snapshot::SCHEMA_VERSION );
 		if ( null === $created ) {
-			Logs::error( 'snapshot', 'The snapshot could not be saved.' );
+			Logs::error( 'snapshot', __( 'The snapshot could not be saved.', 'wpseokit' ) );
 			return array(
 				'status'  => 'error',
 				'message' => __( 'The snapshot could not be saved.', 'wpseokit' ),

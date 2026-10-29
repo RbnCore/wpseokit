@@ -4441,3 +4441,7 @@ msgstr ""
 
 msgid "llms.txt is off"
 msgstr ""
+
+#: src/includes/Updater.php
+msgid "The release check failed."
+msgstr ""
