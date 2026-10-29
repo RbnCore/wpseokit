@@ -23,7 +23,7 @@ final class Gate {
 
 	/** True when the AdminKit core is loaded and new enough; otherwise registers the notice and returns false. */
 	public static function open(): bool {
-		if ( defined( 'ADMINKIT_CORE_API' ) && (int) ADMINKIT_CORE_API >= self::REQUIRED_API ) {
+		if ( defined( 'ADMINKIT_CORE_API' ) && (int) ADMINKIT_CORE_API >= self::REQUIRED_API && class_exists( 'AdminKit\Core\Core' ) ) {
 			return true;
 		}
 		add_action( 'admin_notices', array( self::class, 'notice' ) );
@@ -36,7 +36,7 @@ final class Gate {
 			return;
 		}
 		$installed = file_exists( WP_PLUGIN_DIR . '/' . self::BASENAME );
-		$loaded    = defined( 'ADMINKIT_CORE_API' );
+		$loaded    = defined( 'ADMINKIT_CORE_API' ) && class_exists( 'AdminKit\Core\Core' );
 		if ( $installed && ! $loaded && ! is_plugin_active( self::BASENAME ) ) {
 			$url    = wp_nonce_url( self_admin_url( 'plugins.php?action=activate&plugin=' . rawurlencode( self::BASENAME ) ), 'activate-plugin_' . self::BASENAME );
 			$action = '<a class="button button-primary" href="' . esc_url( $url ) . '">' . esc_html__( 'Activate AdminKit', 'wpseokit' ) . '</a>';
