@@ -3,7 +3,7 @@
  * `/llms.txt`: a plain-text site summary with links for AI systems (format: https://llmstxt.org).
  *
  * Off by default; while off the request is not touched and WordPress answers 404. Generated on the fly (no file is
- * written), cached in one transient, and cleared whenever content, terms or settings change. Noindex and
+ * written), cached in the `wpseokit.llms` group, and cleared whenever content, terms or settings change. Noindex and
  * password-protected content never appears. REST: `/llms/preview` (GET saved settings, POST unsaved ones) and
  * `/llms/flush`. Contract: docs/sozlesme.md §2.1 and §4.5, behaviour: docs/kapsam-ve-mimari.md §3.7.
  *
@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Cache;
+use Wpseokit\Registry;
 use Wpseokit\Repositories\SettingsRepository;
 use Wpseokit\Rest;
 use Wpseokit\Settings;
@@ -22,11 +24,10 @@ defined( 'ABSPATH' ) || exit;
 
 final class LlmsTxtService {
 
-	public const REQUEST   = 'llms.txt';
-	public const TRANSIENT = 'wpseokit_llms';
+	public const REQUEST = 'llms.txt';
 
-	/** Cache lifetime in seconds (changes clear it earlier). */
-	private const TTL = 12 * HOUR_IN_SECONDS;
+	/** Key of the file body in the `wpseokit.llms` cache group. */
+	private const KEY = 'content';
 
 	/** Longest link note, in characters. */
 	private const NOTE_MAX = 160;
@@ -99,18 +100,17 @@ final class LlmsTxtService {
 
 	/** The file body for the saved settings, from the cache when possible. */
 	public static function content(): string {
-		$cached = get_transient( self::TRANSIENT );
-		if ( is_string( $cached ) && '' !== $cached ) {
-			return $cached;
-		}
-		$body = self::generate( SettingsRepository::section( 'llms' ) )['content'];
-		set_transient( self::TRANSIENT, $body, self::TTL );
-		return $body;
+		return (string) Cache::remember(
+			Registry::LLMS,
+			self::KEY,
+			null,
+			static fn(): string => self::generate( SettingsRepository::section( 'llms' ) )['content']
+		);
 	}
 
 	/** Clears the cache. Hooked to every change that can alter the file. */
 	public static function flush(): void {
-		delete_transient( self::TRANSIENT );
+		Cache::flush_group( Registry::LLMS );
 	}
 
 	/**

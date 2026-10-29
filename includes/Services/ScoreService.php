@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Cache;
+use Wpseokit\Logs;
+use Wpseokit\Registry;
 use Wpseokit\Repositories\SettingsRepository;
 use Wpseokit\Rest;
 use Wpseokit\Settings;
@@ -33,9 +36,7 @@ final class ScoreService {
 	public const CRON_SITE        = 'wpseokit_score_site_recalc';
 	public const CRON_DAILY       = 'wpseokit_score_daily';
 
-	private const CACHE_GROUP  = 'wpseokit';
-	private const CACHE_SITE   = 'score_site';
-	private const LOCK         = 'wpseokit_score_lock';
+	private const CACHE_SITE   = 'site';
 	private const DISMISS_DAYS = 30;
 
 	/** Registers all hooks. */
@@ -97,7 +98,7 @@ final class ScoreService {
 	/** A background run that returns an error is written to the Logs error list. */
 	private static function log_failure( $result ): void {
 		if ( is_wp_error( $result ) ) {
-			EventLogService::error( 'score', $result->get_error_message() );
+			Logs::error( 'score', $result->get_error_message() );
 		}
 	}
 
@@ -332,26 +333,28 @@ final class ScoreService {
 	 * @return array<string, mixed>|\WP_Error
 	 */
 	public static function compute_site( bool $all = false ) {
-		if ( get_transient( self::LOCK ) ) {
-			return new \WP_Error( 'wpseokit_score_busy', __( 'A score calculation is already running.', 'wpseokit' ), array( 'status' => 409 ) );
+		Cache::delete( Registry::SCORE, self::CACHE_SITE );
+		return self::present_site( Cache::remember( Registry::SCORE, self::CACHE_SITE, null, static fn(): array => self::measure_site( $all ) ) );
+	}
+
+	/**
+	 * The measurement itself; the cache group lock (Cache::remember) keeps two runs from measuring at once.
+	 *
+	 * @param bool $all All posts instead of the newest 200.
+	 * @return array<string, mixed> The stored site score.
+	 */
+	private static function measure_site( bool $all ): array {
+		Probe::reset();
+		$measured = SiteChecks::run( self::sitemap_url() );
+		$config   = Calculator::score( RuleSet::rules( 'site' ), self::states( $measured ), RuleSet::cap() );
+		$posts    = self::posts_part( true, $all );
+		$stored   = self::assemble( $config, self::slim( $measured ), $posts );
+		update_option( self::OPTION_SITE, $stored, false );
+		if ( $posts['pending'] > 0 && ! wp_next_scheduled( self::CRON_SITE ) ) {
+			wp_schedule_single_event( time() + 60, self::CRON_SITE );
 		}
-		set_transient( self::LOCK, 1, 2 * MINUTE_IN_SECONDS );
-		try {
-			Probe::reset();
-			$measured = SiteChecks::run( self::sitemap_url() );
-			$config   = Calculator::score( RuleSet::rules( 'site' ), self::states( $measured ), RuleSet::cap() );
-			$posts    = self::posts_part( true, $all );
-			$stored   = self::assemble( $config, self::slim( $measured ), $posts );
-			update_option( self::OPTION_SITE, $stored, false );
-			wp_cache_set( self::CACHE_SITE, $stored, self::CACHE_GROUP, 5 * MINUTE_IN_SECONDS );
-			if ( $posts['pending'] > 0 && ! wp_next_scheduled( self::CRON_SITE ) ) {
-				wp_schedule_single_event( time() + 60, self::CRON_SITE );
-			}
-			EventLogService::record( 'score', 'score_refreshed', (string) ( $stored['score'] ?? '' ), array( 'tool' => 'score' ) );
-			return self::present_site( $stored );
-		} finally {
-			delete_transient( self::LOCK );
-		}
+		Logs::activity( 'score', 'score_refreshed', (string) ( $stored['score'] ?? '' ), 'score' );
+		return $stored;
 	}
 
 	/**
@@ -389,7 +392,7 @@ final class ScoreService {
 		$next   = self::assemble( $config, $stored['config']['rules'], self::posts_part( false, false ) );
 		$next['calculated_at'] = (int) $stored['calculated_at'];
 		update_option( self::OPTION_SITE, $next, false );
-		wp_cache_set( self::CACHE_SITE, $next, self::CACHE_GROUP, 5 * MINUTE_IN_SECONDS );
+		Cache::set( Registry::SCORE, self::CACHE_SITE, $next );
 	}
 
 	/**
@@ -398,15 +401,15 @@ final class ScoreService {
 	 * @return array<string, mixed>|\WP_Error
 	 */
 	public static function site_score() {
-		$stored = wp_cache_get( self::CACHE_SITE, self::CACHE_GROUP );
-		if ( ! is_array( $stored ) ) {
-			$stored = get_option( self::OPTION_SITE );
-			if ( is_array( $stored ) && isset( $stored['score'], $stored['config'] ) ) {
-				wp_cache_set( self::CACHE_SITE, $stored, self::CACHE_GROUP, 5 * MINUTE_IN_SECONDS );
-			} else {
-				return self::compute_site();
+		$stored = Cache::remember(
+			Registry::SCORE,
+			self::CACHE_SITE,
+			null,
+			static function (): array {
+				$saved = get_option( self::OPTION_SITE );
+				return is_array( $saved ) && isset( $saved['score'], $saved['config'] ) ? $saved : self::measure_site( false );
 			}
-		}
+		);
 		return self::present_site( $stored );
 	}
 

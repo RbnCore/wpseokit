@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use Wpseokit\Logs;
 use Wpseokit\Models\Snapshot;
 use Wpseokit\Plugin;
 use Wpseokit\Repositories\RedirectRepository;
@@ -123,14 +124,14 @@ final class ReportService {
 		$date    = wp_date( 'Y-m-d' );
 		$created = SnapshotRepository::upsert( $date, $metrics, Snapshot::SCHEMA_VERSION );
 		if ( null === $created ) {
-			EventLogService::error( 'snapshot', 'The snapshot could not be saved.' );
+			Logs::error( 'snapshot', 'The snapshot could not be saved.' );
 			return array(
 				'status'  => 'error',
 				'message' => __( 'The snapshot could not be saved.', 'wpseokit' ),
 			);
 		}
 		SnapshotRepository::prune( (int) SettingsRepository::get( 'reports.retention_days', 400 ) );
-		EventLogService::record( 'snapshot', $created ? 'snapshot_taken' : 'snapshot_replaced', $date, array( 'tool' => 'reports' ) );
+		Logs::activity( 'snapshot', $created ? 'snapshot_taken' : 'snapshot_replaced', $date, 'reports' );
 		$row = SnapshotRepository::find_by_date( $date );
 		return array(
 			'status'   => 'ok',

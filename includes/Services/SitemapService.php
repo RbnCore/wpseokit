@@ -3,7 +3,7 @@
  * XML sitemap: `/sitemap_index.xml` plus `/post-sitemap.xml`, `/page-sitemap.xml`, `/category-sitemap.xml` (the same
  * addresses and shape Yoast SEO used, so search engines keep their submitted sitemap).
  *
- * - Served on the fly from `parse_request` (no rewrite rules, nothing to flush); documents are cached in transients
+ * - Served on the fly from `parse_request` (no rewrite rules, nothing to flush); documents are cached in the `wpseokit.sitemap` group
  *   behind one version token, so a content change clears everything at once.
  * - Posts and pages: `lastmod` = last modified (UTC), `image:image` = featured image then images used in the content
  *   (uploads of this site only). Terms: `lastmod` = newest modified post inside the term; empty terms are left out.
@@ -21,6 +21,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Cache;
+use Wpseokit\Registry;
 use Wpseokit\Repositories\SettingsRepository;
 use Wpseokit\Rest;
 
@@ -28,8 +30,7 @@ defined( 'ABSPATH' ) || exit;
 
 final class SitemapService {
 
-	public const INDEX      = 'sitemap_index.xml';
-	public const VERSION    = 'wpseokit_sitemap_ver';
+	public const INDEX = 'sitemap_index.xml';
 
 	private const NS_SITEMAP = 'http://www.sitemaps.org/schemas/sitemap/0.9';
 	private const NS_IMAGE   = 'http://www.google.com/schemas/sitemap-image/1.1';
@@ -214,14 +215,12 @@ final class SitemapService {
 		if ( ! isset( $kinds[ $prefix ] ) ) {
 			return array();
 		}
-		$key    = self::key( 'rows-' . $prefix );
-		$cached = get_transient( $key );
-		if ( is_array( $cached ) ) {
-			return $cached;
-		}
-		$rows = 'post' === $kinds[ $prefix ]['kind'] ? self::post_rows( $prefix ) : self::term_rows( $prefix );
-		set_transient( $key, $rows, self::ttl() );
-		return $rows;
+		return (array) Cache::remember(
+			Registry::SITEMAP,
+			'rows-' . $prefix,
+			self::ttl(),
+			static fn(): array => 'post' === $kinds[ $prefix ]['kind'] ? self::post_rows( $prefix ) : self::term_rows( $prefix )
+		);
 	}
 
 	/** @return array<int, array{0: int, 1: string}> */
@@ -346,22 +345,22 @@ final class SitemapService {
 	 * The index document.
 	 */
 	public static function index_xml(): string {
-		$key    = self::key( 'index' );
-		$cached = get_transient( $key );
-		if ( is_string( $cached ) && '' !== $cached ) {
-			return $cached;
-		}
-		$xml = self::head( 'sitemapindex' );
-		foreach ( self::files() as $file ) {
-			$xml .= "\t<sitemap>\n\t\t<loc>" . self::esc( $file['url'] ) . "</loc>\n";
-			if ( '' !== $file['lastmod'] ) {
-				$xml .= "\t\t<lastmod>" . self::esc( $file['lastmod'] ) . "</lastmod>\n";
+		return (string) Cache::remember(
+			Registry::SITEMAP,
+			'index',
+			self::ttl(),
+			static function (): string {
+				$xml = self::head( 'sitemapindex' );
+				foreach ( self::files() as $file ) {
+					$xml .= "\t<sitemap>\n\t\t<loc>" . self::esc( $file['url'] ) . "</loc>\n";
+					if ( '' !== $file['lastmod'] ) {
+						$xml .= "\t\t<lastmod>" . self::esc( $file['lastmod'] ) . "</lastmod>\n";
+					}
+					$xml .= "\t</sitemap>\n";
+				}
+				return $xml . "</sitemapindex>\n";
 			}
-			$xml .= "\t</sitemap>\n";
-		}
-		$xml .= "</sitemapindex>\n";
-		set_transient( $key, $xml, self::ttl() );
-		return $xml;
+		);
 	}
 
 	/**
@@ -447,26 +446,26 @@ final class SitemapService {
 		if ( ! isset( $chunks[ $page - 1 ] ) ) {
 			return null;
 		}
-		$key    = self::key( 'file-' . $prefix . '-' . $page );
-		$cached = get_transient( $key );
-		if ( is_string( $cached ) && '' !== $cached ) {
-			return $cached;
-		}
-		$chunk  = $chunks[ $page - 1 ];
-		$images = 'post' === $kinds[ $prefix ]['kind'] && (bool) SettingsRepository::get( 'sitemap.include_images', true );
-		if ( 'post' === $kinds[ $prefix ]['kind'] ) {
-			$ids = array_filter( array_map( 'intval', array_column( $chunk, 0 ) ) );
-			if ( $ids ) {
-				_prime_post_caches( $ids, false, true );
+		return (string) Cache::remember(
+			Registry::SITEMAP,
+			'file-' . $prefix . '-' . $page,
+			self::ttl(),
+			static function () use ( $kinds, $prefix, $page, $chunks ): string {
+				$chunk  = $chunks[ $page - 1 ];
+				$images = 'post' === $kinds[ $prefix ]['kind'] && (bool) SettingsRepository::get( 'sitemap.include_images', true );
+				if ( 'post' === $kinds[ $prefix ]['kind'] ) {
+					$ids = array_filter( array_map( 'intval', array_column( $chunk, 0 ) ) );
+					if ( $ids ) {
+						_prime_post_caches( $ids, false, true );
+					}
+				}
+				$xml = self::head( 'urlset', $prefix . '-sitemap' . ( 1 === $page ? '' : (string) $page ) . '.xml' );
+				foreach ( $chunk as $row ) {
+					$xml .= self::url_xml( $kinds[ $prefix ], (int) $row[0], (string) $row[1], $images );
+				}
+				return $xml . "</urlset>\n";
 			}
-		}
-		$xml = self::head( 'urlset', $prefix . '-sitemap' . ( 1 === $page ? '' : (string) $page ) . '.xml' );
-		foreach ( $chunk as $row ) {
-			$xml .= self::url_xml( $kinds[ $prefix ], (int) $row[0], (string) $row[1], $images );
-		}
-		$xml .= "</urlset>\n";
-		set_transient( $key, $xml, self::ttl() );
-		return $xml;
+		);
 	}
 
 	/** One `<url>` block ('' when the object vanished since the list was cached). */
@@ -555,19 +554,9 @@ final class SitemapService {
 		return max( 1, (int) SettingsRepository::get( 'sitemap.cache_hours', 12 ) ) * HOUR_IN_SECONDS;
 	}
 
-	/** Transient name: tied to the version token, so one delete invalidates every document. */
-	private static function key( string $part ): string {
-		$ver = get_transient( self::VERSION );
-		if ( ! is_string( $ver ) || '' === $ver ) {
-			$ver = dechex( (int) ( microtime( true ) * 1000 ) );
-			set_transient( self::VERSION, $ver, self::ttl() );
-		}
-		return 'wpseokit_sm_' . $ver . '_' . $part;
-	}
-
 	/** Clears every cached document. Hooked to each change that can alter a sitemap. */
 	public static function flush(): void {
-		delete_transient( self::VERSION );
+		Cache::flush_group( Registry::SITEMAP );
 	}
 
 	/**

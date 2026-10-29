@@ -20,6 +20,7 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use Wpseokit\Logs;
 use Wpseokit\Models\ImportReport;
 use Wpseokit\Repositories\SettingsRepository;
 use Wpseokit\Rest;
@@ -115,6 +116,8 @@ final class YoastImportService {
 		if ( ImportReport::MODE_DRY_RUN === $mode ) {
 			$report = self::dry_run( $overwrite );
 			self::save_state( 'applied' === $state['state'] ? 'applied' : 'dry-run', $report, $state, true );
+			Logs::yoast( 'found', $report->to_array()['totals'] );
+			Logs::yoast( 'dry_run', $report->to_array()['totals'] );
 			return $report;
 		}
 		if ( ImportReport::MODE_APPLY === $mode ) {
@@ -123,12 +126,14 @@ final class YoastImportService {
 			}
 			$report = self::run( $overwrite );
 			self::save_state( 'applied', $report, $state, false );
+			Logs::yoast( 'run', $report->to_array()['totals'] );
 			return $report;
 		}
 		if ( ImportReport::MODE_VERIFY === $mode ) {
 			$report = self::verify( is_array( $state['baseline'] ?? null ) ? array_map( 'intval', $state['baseline'] ) : array() );
 			$state  = array_merge( $state, array( 'verified_at' => time(), 'verified_ok' => (bool) ( $report->to_array()['extra']['ok'] ?? false ) ) );
 			update_option( self::STATE_OPTION, $state, false );
+			Logs::yoast( 'report', array_merge( $report->to_array()['totals'], array( 'ok' => (int) $state['verified_ok'] ) ) );
 			return $report;
 		}
 		return new \WP_Error( 'wpseokit_bad_mode', __( 'Unknown import mode.', 'wpseokit' ), array( 'status' => 400 ) );

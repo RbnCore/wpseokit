@@ -10,9 +10,11 @@ declare(strict_types=1);
 
 namespace Wpseokit\Screens;
 
+use AdminKit\Core\Cache;
 use Wpseokit\Admin;
 use Wpseokit\Db;
 use Wpseokit\Plugin;
+use Wpseokit\Registry;
 use Wpseokit\Updater;
 
 defined( 'ABSPATH' ) || exit;
@@ -129,7 +131,7 @@ final class SettingsScreen {
 	private static function updates(): string {
 		$on      = Updater::enabled();
 		$checked = (int) get_option( Updater::OPT_CHECKED, 0 );
-		$cached  = $on ? get_transient( Updater::CACHE ) : false;
+		$cached  = $on ? Cache::get( Registry::UPDATES, Updater::CACHE_KEY ) : false;
 		if ( ! $on ) {
 			$state = esc_html__( 'The update check is off; GitHub is never contacted.', 'wpseokit' );
 		} elseif ( ! is_array( $cached ) ) {

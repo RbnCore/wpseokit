@@ -1,6 +1,6 @@
 <?php
 /**
- * Database schema (redirects, 404 log, report snapshot and activity event tables). Additive and idempotent: dbDelta may run any number of times.
+ * Database schema (redirects, 404 log and report snapshot tables). Additive and idempotent: dbDelta may run any number of times.
  *
  * @package Wpseokit
  */
@@ -13,13 +13,13 @@ defined( 'ABSPATH' ) || exit;
 
 final class Db {
 
-	/** Schema version; raise it whenever DDL below changes. */
-	public const VERSION = 3;
+	/** Schema version; raise it whenever DDL below changes. 4: the activity event table moved to the AdminKit log. */
+	public const VERSION = 4;
 
 	public const OPTION = 'wpseokit_db_version';
 
 	/**
-	 * Full table name for a short name: 'redirects', '404_logs', 'snapshots' or 'events'.
+	 * Full table name for a short name: 'redirects', '404_logs' or 'snapshots'.
 	 */
 	public static function table( string $name ): string {
 		global $wpdb;
@@ -46,7 +46,6 @@ final class Db {
 		$redir   = self::table( 'redirects' );
 		$logs    = self::table( '404_logs' );
 		$snaps   = self::table( 'snapshots' );
-		$events  = self::table( 'events' );
 
 		dbDelta(
 			"CREATE TABLE {$redir} (
@@ -91,19 +90,15 @@ final class Db {
   UNIQUE KEY snapshot_date (snapshot_date)
 ) {$charset};"
 		);
-		dbDelta(
-			"CREATE TABLE {$events} (
-  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  at datetime NOT NULL,
-  type varchar(20) NOT NULL,
-  event varchar(40) NOT NULL,
-  detail varchar(255) NOT NULL DEFAULT '',
-  link varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY  (id),
-  KEY at (at),
-  KEY type_at (type,at)
-) {$charset};"
-		);
+		self::drop_legacy_events();
 		update_option( self::OPTION, self::VERSION, true );
+	}
+
+	/** Schema 4: the own activity table is gone (logs live in the AdminKit core); one idempotent clean-up. */
+	private static function drop_legacy_events(): void {
+		global $wpdb;
+		$wpdb->query( 'DROP TABLE IF EXISTS `' . esc_sql( $wpdb->prefix . 'seokit_events' ) . '`' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared -- fixed table name.
+		delete_option( 'wpseokit_log_errors' );
+		delete_option( 'wpseokit_log_updates' );
 	}
 }

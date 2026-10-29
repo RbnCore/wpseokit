@@ -15,7 +15,9 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Cache;
 use Wpseokit\Models\Log404;
+use Wpseokit\Registry;
 use Wpseokit\Repositories\Log404Repository;
 use Wpseokit\Repositories\SettingsRepository;
 use Wpseokit\Rest;
@@ -27,8 +29,8 @@ final class Log404Service {
 	/** Option that holds the secret mixed into the address hash (`wpseokit_ip_salt`, never autoloaded). */
 	public const SALT_OPTION = 'wpseokit_ip_salt';
 
-	/** Transient that limits the cleanup to once a day. */
-	public const PRUNE_TRANSIENT = 'wpseokit_404_pruned';
+	/** Key in the `wpseokit.maintenance` cache group (one day) that limits the cleanup to once a day. */
+	private const PRUNE_KEY = 'prune_404';
 
 	/** Paths that only vulnerability scanners ask for. */
 	private const PROBES = '#^/(wp-login\.php|xmlrpc\.php|wp-admin|wp-content|wp-includes|\.env|\.git)|\.php/?$#i';
@@ -87,10 +89,11 @@ final class Log404Service {
 
 	/** Removes old rows by age and count, at most once a day. Returns the rows removed (0 when skipped). */
 	public static function maybe_prune( bool $force = false ): int {
-		if ( ! $force && false !== get_transient( self::PRUNE_TRANSIENT ) ) {
+		Cache::get( Registry::MAINTENANCE, self::PRUNE_KEY, $done );
+		if ( ! $force && $done ) {
 			return 0;
 		}
-		set_transient( self::PRUNE_TRANSIENT, time(), DAY_IN_SECONDS );
+		Cache::set( Registry::MAINTENANCE, self::PRUNE_KEY, time() );
 		return Log404Repository::prune(
 			(int) SettingsRepository::get( 'redirects.log_retention_days', 30 ),
 			(int) SettingsRepository::get( 'redirects.log_max_rows', 5000 )

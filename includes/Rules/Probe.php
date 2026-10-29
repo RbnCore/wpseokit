@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Rules;
 
+use AdminKit\Core\Cache;
+use Wpseokit\Registry;
 use Wpseokit\Repositories\SettingsRepository;
 
 defined( 'ABSPATH' ) || exit;
@@ -83,14 +85,14 @@ final class Probe {
 	}
 
 	/**
-	 * Status code of a HEAD request (GET when the server rejects HEAD), cached in a transient.
+	 * Status code of a HEAD request (GET when the server rejects HEAD), cached in the `wpseokit.probe` group.
 	 * A redirect or an error counts as it is: 3xx/4xx/5xx are not 200.
 	 */
 	public static function head_status( string $url, bool $use_cache = true ): int {
-		$key = 'wpseokit_sc_h_' . md5( $url );
+		$key = 'h_' . md5( $url );
 		if ( $use_cache ) {
-			$hit = get_transient( $key );
-			if ( false !== $hit ) {
+			$hit = Cache::get( Registry::PROBE, $key, $found );
+			if ( $found ) {
 				return (int) $hit;
 			}
 		}
@@ -98,7 +100,7 @@ final class Probe {
 		if ( in_array( $res['status'], array( 403, 405, 501 ), true ) ) {
 			$res = self::fetch( $url, 'GET' );
 		}
-		set_transient( $key, $res['status'], self::ttl() );
+		Cache::set( Registry::PROBE, $key, $res['status'], self::ttl() );
 		return $res['status'];
 	}
 
@@ -145,8 +147,8 @@ final class Probe {
 	 * @return array<string, string> Normalised URL => lastmod ('' when none).
 	 */
 	public static function sitemap_map( string $index_url ): array {
-		$key = 'wpseokit_sc_map_' . md5( $index_url );
-		$hit = get_transient( $key );
+		$key = 'map_' . md5( $index_url );
+		$hit = Cache::get( Registry::PROBE, $key );
 		if ( is_array( $hit ) ) {
 			return $hit;
 		}
@@ -155,7 +157,7 @@ final class Probe {
 			$map[ HeadParser::norm_url( $row['loc'] ) ] = $row['lastmod'];
 		}
 		if ( $map ) {
-			set_transient( $key, $map, self::ttl() );
+			Cache::set( Registry::PROBE, $key, $map, self::ttl() );
 		}
 		return $map;
 	}

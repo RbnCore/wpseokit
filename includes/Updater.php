@@ -16,6 +16,8 @@ declare(strict_types=1);
 
 namespace Wpseokit;
 
+use AdminKit\Core\Cache;
+
 defined( 'ABSPATH' ) || exit;
 
 final class Updater {
@@ -25,7 +27,7 @@ final class Updater {
 	public const SLUG         = 'wpseokit';
 	public const OPT_OFF      = 'wpseokit_update_off';
 	public const OPT_CHECKED  = 'wpseokit_update_checked';
-	public const CACHE        = 'wpseokit_update_release';
+	public const CACHE_KEY    = 'release';
 	public const MAX_ZIP      = 8388608; // 8 MB.
 	private const TTL_OK      = 43200;   // 12 hours (GitHub: 60 token-less requests per hour).
 	private const TTL_ERR     = 3600;
@@ -182,7 +184,7 @@ final class Updater {
 			return null;
 		}
 		if ( ! $force ) {
-			$cached = get_transient( self::CACHE );
+			$cached = Cache::get( Registry::UPDATES, self::CACHE_KEY );
 			if ( is_array( $cached ) && isset( $cached['status'] ) ) {
 				return $cached;
 			}
@@ -218,12 +220,12 @@ final class Updater {
 			'release' => $rel,
 			'time'    => time(),
 		);
-		set_transient( self::CACHE, $record, $ttl );
+		Cache::set( Registry::UPDATES, self::CACHE_KEY, $record, $ttl );
 		update_option( self::OPT_CHECKED, $record['time'], false );
 		$found = 'ok' === $status && is_array( $rel ) && version_compare( $rel['version'], WPSEOKIT_VERSION, '>' );
-		Services\EventLogService::update_check( 'error' === $status ? 'failed' : ( $found ? 'update_found' : 'up_to_date' ), $found ? $rel['version'] : WPSEOKIT_VERSION );
+		Logs::update_check( 'error' === $status ? 'failed' : ( $found ? 'update_found' : 'up_to_date' ), $found ? $rel['version'] : WPSEOKIT_VERSION );
 		if ( 'error' === $status ) {
-			Services\EventLogService::error( 'update_check', 'The release check failed.' );
+			Logs::error( 'update_check', 'The release check failed.' );
 		}
 		return $record;
 	}
@@ -293,7 +295,7 @@ final class Updater {
 		if ( 'plugin_information' !== $action || ! is_object( $args ) || self::SLUG !== ( $args->slug ?? '' ) || ! self::enabled() ) {
 			return $result;
 		}
-		$cached = get_transient( self::CACHE );
+		$cached = Cache::get( Registry::UPDATES, self::CACHE_KEY );
 		$rel    = ( is_array( $cached ) && 'ok' === ( $cached['status'] ?? '' ) && is_array( $cached['release'] ?? null ) ) ? $cached['release'] : null;
 		$new    = $rel && version_compare( $rel['version'], WPSEOKIT_VERSION, '>' );
 		$meta   = self::local_meta();
@@ -395,7 +397,7 @@ final class Updater {
 	public static function action_check(): void {
 		self::guard( 'wpseokit_update_check' );
 		if ( self::enabled() ) {
-			delete_transient( self::CACHE );
+			Cache::delete( Registry::UPDATES, self::CACHE_KEY );
 			delete_site_transient( 'update_plugins' );
 			wp_update_plugins();
 			self::redirect( 'update_checked' );
@@ -407,7 +409,7 @@ final class Updater {
 		self::guard( 'wpseokit_update_toggle' );
 		$off = self::enabled(); // If on now, it will be turned off.
 		update_option( self::OPT_OFF, $off ? '1' : '0', false );
-		delete_transient( self::CACHE );
+		Cache::delete( Registry::UPDATES, self::CACHE_KEY );
 		if ( $off ) {
 			$cur = get_site_transient( 'update_plugins' );
 			if ( is_object( $cur ) ) {
@@ -434,7 +436,7 @@ final class Updater {
 	public static function render_card(): string {
 		$on      = self::enabled();
 		$checked = (int) get_option( self::OPT_CHECKED, 0 );
-		$cached  = $on ? get_transient( self::CACHE ) : false;
+		$cached  = $on ? Cache::get( Registry::UPDATES, self::CACHE_KEY ) : false;
 		$state   = '';
 		if ( ! $on ) {
 			$state = esc_html__( 'The update check is off; GitHub is never contacted.', 'wpseokit' );

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use Wpseokit\Logs;
 use Wpseokit\Models\Redirect;
 use Wpseokit\Repositories\Log404Repository;
 use Wpseokit\Repositories\RedirectRepository;
@@ -362,7 +363,7 @@ final class RedirectService {
 			return self::error( 'db', __( 'The redirect could not be saved.', 'wpseokit' ), 500 );
 		}
 		Log404Repository::delete_by_path( $clean['source_path'] );
-		EventLogService::record( 'redirects', 'redirect_added', $clean['source_path'], array( 'tool' => 'redirects' ) );
+		Logs::activity( 'redirects', 'redirect_added', $clean['source_path'], 'redirects' );
 		if ( $rebuild ) {
 			self::rebuild();
 		}
@@ -385,7 +386,7 @@ final class RedirectService {
 			return $clean;
 		}
 		RedirectRepository::update( $id, $clean );
-		EventLogService::record( 'redirects', 'redirect_updated', $clean['source_path'], array( 'tool' => 'redirects' ) );
+		Logs::activity( 'redirects', 'redirect_updated', $clean['source_path'], 'redirects' );
 		self::rebuild();
 		return RedirectRepository::find( $id );
 	}
@@ -394,7 +395,7 @@ final class RedirectService {
 		$old = RedirectRepository::find( $id );
 		$ok  = RedirectRepository::delete( $id );
 		if ( $ok ) {
-			EventLogService::record( 'redirects', 'redirect_deleted', $old ? $old->source_path : '', array( 'tool' => 'redirects' ) );
+			Logs::activity( 'redirects', 'redirect_deleted', $old ? $old->source_path : '', 'redirects' );
 			self::rebuild();
 		}
 		return $ok;

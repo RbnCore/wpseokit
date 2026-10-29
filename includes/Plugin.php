@@ -38,7 +38,6 @@ final class Plugin {
 		'Services\\ScoreListService',
 		'Services\\PreferredAddressService',
 		'Services\\ReportService',
-		'Services\\EventLogService',
 	);
 
 	/** Started in the admin only. */
@@ -72,6 +71,10 @@ final class Plugin {
 	/** `plugins_loaded` (priority 5). */
 	public static function boot(): void {
 		load_plugin_textdomain( 'wpseokit', false, dirname( plugin_basename( WPSEOKIT_FILE ) ) . '/languages' );
+		if ( ! Gate::open() ) {
+			return;
+		}
+		Registry::init();
 		Db::maybe_upgrade();
 		Admin::init();
 		Rest::init();

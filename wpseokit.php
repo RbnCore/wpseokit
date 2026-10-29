@@ -4,8 +4,9 @@
  * Plugin URI:        https://github.com/RbnCore/wpseokit
  * Description:       SEO titles and meta descriptions, canonical and robots, Open Graph, XML sitemap, schema graph, redirects and 404 log. Connects to GitHub only to check for updates (can be turned off in the settings).
  * Version:           0.1.1
- * Requires at least: 6.4
+ * Requires at least: 6.5
  * Requires PHP:      8.1
+ * Requires Plugins:  adminkit
  * Author:            RBN Bilişim
  * Author URI:        https://github.com/RbnCore
  * Update URI:        https://github.com/RbnCore/wpseokit
@@ -25,8 +26,6 @@ define( 'WPSEOKIT_VERSION', '0.1.1' );
 define( 'WPSEOKIT_FILE', __FILE__ );
 define( 'WPSEOKIT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WPSEOKIT_URL', plugin_dir_url( __FILE__ ) );
-
-require_once WPSEOKIT_DIR . 'includes/RbnKitMenu.php';
 
 spl_autoload_register(
 	static function ( string $class_name ): void {
