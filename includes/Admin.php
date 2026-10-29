@@ -67,16 +67,7 @@ final class Admin {
 
 	/** Registers the page under the single RBN Kit top-level menu. */
 	public static function menu(): void {
-		\AdminKit\Helpers\Menu::add(
-			array(
-				'slug'       => self::SLUG,
-				'title'      => __( 'WPSeoKit — SEO Toolkit', 'wpseokit' ),
-				'menu_title' => __( 'SEO Toolkit', 'wpseokit' ),
-				'cap'        => 'manage_options',
-				'callback'   => array( self::class, 'render' ),
-				'version'    => WPSEOKIT_VERSION,
-			)
-		);
+		\AdminKit\Helpers\Menu::add( array( 'slug' => self::SLUG, 'title' => __( 'WPSeoKit — SEO Toolkit', 'wpseokit' ), 'menu_title' => __( 'SEO Toolkit', 'wpseokit' ), 'cap' => 'manage_options', 'callback' => array( self::class, 'render' ), 'version' => WPSEOKIT_VERSION ) );
 	}
 
 	/** Reads the screen id once the menu is built. */
