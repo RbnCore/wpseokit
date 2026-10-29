@@ -559,8 +559,8 @@ msgid "Review import"
 msgstr "İçe aktarmayı incele"
 
 #: src/includes/Screens
-msgid "%1$d of %2$d posts have a description"
-msgstr "%2$d yazının %1$d tanesinde açıklama var"
+msgid "%1$d of %2$d posts have a custom description"
+msgstr "%2$d yazının %1$d tanesinde özel açıklama var"
 
 #: src/includes/Screens
 msgid "Edit post template"
@@ -719,8 +719,8 @@ msgid "404 errors logged"
 msgstr "Kaydedilen 404 hataları"
 
 #: src/includes/Screens
-msgid "Posts with a description"
-msgstr "Açıklaması olan yazılar"
+msgid "Posts with a custom description"
+msgstr "Özel açıklaması olan yazılar"
 
 #: src/includes/Screens
 msgid "WPSeoKit"
@@ -3683,8 +3683,12 @@ msgid "Posts counted"
 msgstr "Sayılan yazılar"
 
 #: src/includes/Screens/Ui.php
-msgid "Posts with a title"
-msgstr "Başlığı olan yazılar"
+msgid "Posts with a custom SEO title"
+msgstr "Özel SEO başlığı olan yazılar"
+
+#: src/includes/Screens
+msgid "Posts without a custom title use the title template (for example post title + site name); that is normal. The percentage shows only the custom titles and descriptions written by hand or imported."
+msgstr "Özel başlığı olmayan yazılar başlık şablonunu kullanır (örn. yazı başlığı + site adı); bu normaldir. Yüzde, elle ya da içe aktarmayla yazılmış özel başlıkları ve açıklamaları gösterir."
 
 #: src/includes/Screens/Ui.php
 msgid "Previous page"
@@ -3819,8 +3823,8 @@ msgid "The snapshot could not be taken."
 msgstr "Anlık görüntü alınamadı."
 
 #: src/includes/Screens/Ui.php
-msgid "Title and description coverage"
-msgstr "Başlık ve açıklama kapsamı"
+msgid "Custom title and description coverage"
+msgstr "Özel başlık ve açıklama kapsamı"
 
 #: src/includes/Screens/Ui.php
 msgid "Up to +%s points"

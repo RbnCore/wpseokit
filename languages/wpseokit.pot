@@ -15,7 +15,7 @@ msgstr ""
 
 #: includes/Screens/DashboardScreen.php:153
 #, php-format
-msgid "%1$d of %2$d posts have a description"
+msgid "%1$d of %2$d posts have a custom description"
 msgstr ""
 
 #: includes/Screens/Ui.php:99
@@ -2340,11 +2340,15 @@ msgid "Posts counted"
 msgstr ""
 
 #: includes/Screens/Ui.php:160
-msgid "Posts with a description"
+msgid "Posts with a custom description"
 msgstr ""
 
 #: includes/Screens/Ui.php:159
-msgid "Posts with a title"
+msgid "Posts with a custom SEO title"
+msgstr ""
+
+#: includes/Screens/Ui.php:185
+msgid "Posts without a custom title use the title template (for example post title + site name); that is normal. The percentage shows only the custom titles and descriptions written by hand or imported."
 msgstr ""
 
 #: includes/Screens/Ui.php:310
@@ -3573,7 +3577,7 @@ msgid "This site uses HTTPS. Do not redirect to an HTTP address."
 msgstr ""
 
 #: includes/Screens/Ui.php:158
-msgid "Title and description coverage"
+msgid "Custom title and description coverage"
 msgstr ""
 
 #: includes/Screens/DashboardScreen.php:90

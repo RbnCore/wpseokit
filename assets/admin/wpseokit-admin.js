@@ -679,9 +679,9 @@
 			if ( ! items.length ) { return ''; }
 			var max = o.pct ? 100 : Math.max.apply( null, items.map( function ( k ) { return +lastVal( d, k ); } ).concat( [ 1 ] ) );
 			return '<li><section class="rbn-card"><div class="rbn-card__h"><h2>' + esc( o.title ) + '</h2><p>' + esc( sp( I.repMeta, d.latest ? when( d.latest.taken_at ) : '' ) ) + '</p></div><div class="rbn-card__b"><ul class="wps-hbars">' + items.map( function ( k, i ) {
-				var v = +lastVal( d, k );
-				return '<li' + ( i % 2 ? ' class="is-2"' : '' ) + '><span>' + esc( o.names ? o.names( k ) : label( k ) ) + '</span><span class="wps-hbars__t" aria-hidden="true"><i data-w="' + esc( Math.max( 0, Math.min( 100, v / max * 100 ) ) ) + '"></i></span><span class="wps-hbars__v">' + esc( num( v ) + ( o.pct ? '%' : '' ) ) + '</span></li>';
-			} ).join( '' ) + '</ul></div></section></li>';
+				var v = +lastVal( d, k ), posts = +lastVal( d, 'meta.posts' ), abs = o.counts && posts > 0 ? ' (' + Math.round( v * posts / 100 ) + ' / ' + posts + ')' : '';
+				return '<li' + ( i % 2 && ! o.counts ? ' class="is-2"' : '' ) + '><span>' + esc( ( o.names ? o.names( k ) : label( k ) ) + abs ) + '</span><span class="wps-hbars__t" aria-hidden="true"><i data-w="' + esc( Math.max( 0, Math.min( 100, v / max * 100 ) ) ) + '"></i></span><span class="wps-hbars__v">' + esc( num( v ) + ( o.pct ? '%' : '' ) ) + '</span>' + '</li>';
+			} ).join( '' ) + '</ul>' + ( o.help ? '<p class="rbn-help">' + esc( o.help ) + '</p>' : '' ) + '</div></section></li>';
 		}
 		function summaryCard( d ) {
 			var keys = Object.keys( d.summary || {} ).filter( function ( k ) { var s = d.summary[ k ]; return s.start !== null || s.end !== null; } );
@@ -703,11 +703,11 @@
 			if ( d.latest ) { meta_txt.push( sp( I.repMeta, when( d.latest.taken_at ) ) ); }
 			if ( meta ) { meta.textContent = meta_txt.join( ' · ' ); }
 			var schemaKeys = ( d.columns || [] ).map( function ( c ) { return c.key; } ).filter( function ( k ) { return k.indexOf( 'schema.' ) === 0; } );
-			if ( d.points.length === 1 ) { box.innerHTML = '<ul class="wps-reports">' + bars( d, { keys: [ 'meta.title_pct', 'meta.description_pct' ], title: I.repCoverage, pct: true } ) + bars( d, { keys: schemaKeys, title: I.repSchema, names: schemaName } ) + valuesCard( d ) + '</ul>'; finish( d, box, one, main ); return; }
+			if ( d.points.length === 1 ) { box.innerHTML = '<ul class="wps-reports">' + bars( d, { keys: [ 'meta.title_pct', 'meta.description_pct' ], title: I.repCoverage, pct: true, counts: true, help: I.repCoverageHelp } ) + bars( d, { keys: schemaKeys, title: I.repSchema, names: schemaName } ) + valuesCard( d ) + '</ul>'; finish( d, box, one, main ); return; }
 			var html = chart( d, { keys: [ 'score.site' ], title: I.repScore, text: I.repGap, wide: true, min: 0, max: 100, suffix: ' / 100' } )
 				+ chart( d, { keys: [ 'redirects.active', 'not_found.hits' ], title: I.repRedirects, text: I.repGap } )
 				+ chart( d, { keys: [ 'sitemap.total' ], title: I.repSitemap, text: I.repGap } )
-				+ bars( d, { keys: [ 'meta.title_pct', 'meta.description_pct' ], title: I.repCoverage, pct: true } )
+				+ bars( d, { keys: [ 'meta.title_pct', 'meta.description_pct' ], title: I.repCoverage, pct: true, counts: true, help: I.repCoverageHelp } )
 				+ bars( d, { keys: schemaKeys, title: I.repSchema, names: schemaName } )
 				+ summaryCard( d );
 			box.innerHTML = '<ul class="wps-reports">' + html + '</ul>';

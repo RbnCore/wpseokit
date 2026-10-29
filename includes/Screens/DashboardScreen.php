@@ -168,8 +168,8 @@ final class DashboardScreen {
 		switch ( $id ) {
 			case 'templates':
 				[ $done, $total ] = self::described();
-				/* translators: 1: posts with a description, 2: all posts. */
-				$line = sprintf( __( '%1$d of %2$d posts have a description', 'wpseokit' ), $done, $total );
+				/* translators: 1: posts with a custom description, 2: all posts. */
+				$line = sprintf( __( '%1$d of %2$d posts have a custom description', 'wpseokit' ), $done, $total );
 				return array( $ok( __( 'Configured', 'wpseokit' ) ), $line, $link( 'templates', 'posts', __( 'Edit post template', 'wpseokit' ) ) );
 			case 'schema':
 				$pub   = Organization::publisher_status();
@@ -256,7 +256,7 @@ final class DashboardScreen {
 			array( 'sitemap', 'sitemap', __( 'URLs in the sitemap', 'wpseokit' ), '–', '', 'sitemap' ),
 			array( 'redirects', 'arrows', __( 'Active redirects', 'wpseokit' ), '–', '', 'redirects' ),
 			array( 'log', 'alert', __( '404 errors logged', 'wpseokit' ), '–', '', 'log404' ),
-			array( 'described', 'doc', __( 'Posts with a description', 'wpseokit' ), (string) $done, ' <small>/ ' . (int) $total . '</small>', 'templates' ),
+			array( 'described', 'doc', __( 'Posts with a custom description', 'wpseokit' ), (string) $done, ' <small>/ ' . (int) $total . '</small>', 'templates' ),
 		);
 		$out              = '<ul class="rbn-stats">';
 		foreach ( $stats as $s ) {
