@@ -286,8 +286,17 @@
 		function go( spec, heading ) {
 			var p = String( spec ).split( ':' ), ok = p[ 1 ] ? showSub( p[ 0 ], p[ 1 ], false ) : showTop( p[ 0 ], false );
 			if ( ok && heading ) {
-				var top = doc.getElementById( 'dpan-' + p[ 0 ] ), sub = top && p[ 1 ] ? doc.getElementById( 'spn-' + p[ 0 ] + '-' + p[ 1 ] ) : null, h = $( 'h2', sub || top );
-				if ( h ) { h.setAttribute( 'tabindex', '-1' ); h.focus(); }
+				var top = doc.getElementById( 'dpan-' + p[ 0 ] ), sub = top && p[ 1 ] ? doc.getElementById( 'spn-' + p[ 0 ] + '-' + p[ 1 ] ) : null;
+				var targetEl = p[ 2 ] ? doc.getElementById( p[ 2 ] ) : null;
+				if ( targetEl ) {
+					if ( targetEl.scrollIntoView ) { targetEl.scrollIntoView( { behavior: 'smooth', block: 'start' } ); }
+					var focusEl = $( 'h2, input, button', targetEl ) || targetEl;
+					focusEl.setAttribute( 'tabindex', '-1' );
+					focusEl.focus();
+				} else {
+					var h = $( 'h2', sub || top );
+					if ( h ) { h.setAttribute( 'tabindex', '-1' ); h.focus(); }
+				}
 			}
 			return ok;
 		}
@@ -1215,35 +1224,44 @@
 			if ( e.key === 'Escape' ) { closeInline( +i.closest( 'tr' ).id.replace( 'sg-', '' ), true ); }
 			if ( e.key === 'Enter' ) { e.preventDefault(); $( '[data-create]', i.closest( 'tr' ) ).click(); }
 		} );
-		on( tbody, 'click', '[data-ignore]', function ( e, b ) {
-			api( 'DELETE', '404-logs/' + b.getAttribute( 'data-ignore' ) ).then( function () {
-				if ( window.RbnUi && window.RbnUi.toast ) {
-					window.RbnUi.toast( I.removed, { type: 'success' } );
-				}
-				load();
-			} );
-		} );
-		on( bulk, 'click', '[data-bulk-delete]', function () {
-			var ids = sel.ids();
-			if ( ! ids.length ) { return; }
+		// Delete (single and bulk) through RbnUi.confirm modal (WPRJ-692, WPRJ-667)
+		function askDelete( ids ) {
+			if ( ! ids || ! ids.length ) { return; }
 			if ( ! window.RbnUi || ! window.RbnUi.confirm ) { return; }
-			window.RbnUi.confirm( {
-				title: fmt( I.deleteN, ids.length ),
-				message: I.deleteBody,
+			var single = ids.length === 1;
+			var row = single ? ( rows[ ids[ 0 ] ] || {} ) : null;
+			var url = row ? ( row.url_path || '' ) : '';
+			var title = single ? ( I.delete + ( url ? ' ' + url + '?' : '?' ) ) : fmt( I.delete404N || I.deleteN, ids.length );
+			var btnLabel = single ? I.delete : fmt( I.delete404NBtn || I.deleteNBtn, ids.length );
+			var confirmOpts = {
+				title: title,
+				message: I.delete404Body || I.deleteBody,
 				tone: 'danger',
-				confirmLabel: fmt( I.deleteNBtn, ids.length ),
-				confirmText: fmt( I.deleteNBtn, ids.length ),
+				confirmLabel: btnLabel,
+				confirmText: btnLabel,
 				cancelLabel: I.keep,
 				cancelText: I.keep
-			} ).then( function ( ok ) {
+			};
+			if ( single && url ) {
+				confirmOpts.details = url;
+			}
+			window.RbnUi.confirm( confirmOpts ).then( function ( ok ) {
 				if ( ! ok ) { return; }
 				Promise.all( ids.map( function ( id ) { return api( 'DELETE', '404-logs/' + id ); } ) ).then( function () {
 					if ( window.RbnUi && window.RbnUi.toast ) {
 						window.RbnUi.toast( I.removed, { type: 'success' } );
+					} else {
+						say( 'ok', '<b>' + esc( I.removed ) + '</b>' );
 					}
 					load();
 				} );
 			} );
+		}
+		on( tbody, 'click', '[data-ignore]', function ( e, b ) {
+			askDelete( [ +b.getAttribute( 'data-ignore' ) ] );
+		} );
+		on( bulk, 'click', '[data-bulk-delete]', function () {
+			askDelete( sel.ids() );
 		} );
 
 		var bform = $( '[data-bulk-form]', root ), berr = $( '[data-bulk-error]', root );

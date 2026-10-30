@@ -4670,3 +4670,85 @@ msgstr "Denetim bitti."
 msgid "The check found something that has to be fixed first."
 msgstr "Denetim, önce düzeltilmesi gereken bir şey buldu."
 
+
+#: includes/Screens/SettingsScreen.php
+msgid "SEO score and reports"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "Background calculation of SEO health scores and daily performance snapshots."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "Daily recalculation"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "Recalculate SEO scores daily"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "When turned off, scores are only recalculated when you click Recalculate or edit a post."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "Score cache lifetime"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "How long calculated scores stay cached before a refresh (1–48 hours)."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "HTTP timeout"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "Wait time for local HTTP requests during checks (2–15 seconds)."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "Batch runtime"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "Maximum time per background batch when scoring posts (5–60 seconds)."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "Daily snapshots"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "Save daily snapshot reports"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "When turned off, daily snapshot reports are paused. You can still take snapshots manually."
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "Snapshot retention"
+msgstr ""
+
+#: includes/Screens/SettingsScreen.php
+msgid "How many days of snapshot history to keep before deleting old ones (30–1095 days)."
+msgstr ""
+
+#: includes/Screens/Ui.php
+#, php-format
+msgid "Delete %d 404 log entries?"
+msgid_plural "Delete %d 404 log entries?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Screens/Ui.php
+#, php-format
+msgid "Delete %d entries"
+msgid_plural "Delete %d entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Screens/Ui.php
+msgid "This removes the logged 404 visits. If visitors request these addresses again, new log entries will appear."
+msgstr ""

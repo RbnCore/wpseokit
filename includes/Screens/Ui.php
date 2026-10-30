@@ -251,6 +251,11 @@ final class Ui {
 			/* translators: %d: number of selected rows. */
 			'deleteNBtn'     => __( 'Delete %d redirects', 'wpseokit' ),
 			'deleteBody'     => __( 'Visitors who use these old addresses will see a 404 page again. This cannot be undone, but you can add the redirects back.', 'wpseokit' ),
+			/* translators: %d: number of selected 404 rows. */
+			'delete404N'     => __( 'Delete %d 404 log entries?', 'wpseokit' ),
+			/* translators: %d: number of selected 404 rows. */
+			'delete404NBtn'  => __( 'Delete %d entries', 'wpseokit' ),
+			'delete404Body'  => __( 'This removes the logged 404 visits. If visitors request these addresses again, new log entries will appear.', 'wpseokit' ),
 			'keep'           => __( 'Keep them', 'wpseokit' ),
 			/* translators: %d: number of redirects. */
 			'importN'        => __( 'Import %d redirects', 'wpseokit' ),

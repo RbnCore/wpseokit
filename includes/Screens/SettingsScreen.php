@@ -106,6 +106,13 @@ final class SettingsScreen {
 	}
 
 	private static function advanced(): string {
+		$score_reports  = Ui::toggle_row( __( 'Daily recalculation', 'wpseokit' ), 'score.daily_recalc', 'st-score-daily', __( 'Recalculate SEO scores daily', 'wpseokit' ), __( 'When turned off, scores are only recalculated when you click Recalculate or edit a post.', 'wpseokit' ) );
+		$score_reports .= Ui::text( 'score.cache_hours', 'st-score-cache', __( 'Score cache lifetime', 'wpseokit' ), array( 'type' => 'number', 'min' => 1, 'max' => 48, 'step' => 1, 'unit' => __( 'hours', 'wpseokit' ), 'help' => __( 'How long calculated scores stay cached before a refresh (1–48 hours).', 'wpseokit' ) ) );
+		$score_reports .= Ui::text( 'score.http_timeout', 'st-score-timeout', __( 'HTTP timeout', 'wpseokit' ), array( 'type' => 'number', 'min' => 2, 'max' => 15, 'step' => 1, 'unit' => __( 'seconds', 'wpseokit' ), 'help' => __( 'Wait time for local HTTP requests during checks (2–15 seconds).', 'wpseokit' ) ) );
+		$score_reports .= Ui::text( 'score.batch_seconds', 'st-score-batch', __( 'Batch runtime', 'wpseokit' ), array( 'type' => 'number', 'min' => 5, 'max' => 60, 'step' => 1, 'unit' => __( 'seconds', 'wpseokit' ), 'help' => __( 'Maximum time per background batch when scoring posts (5–60 seconds).', 'wpseokit' ) ) );
+		$score_reports .= Ui::toggle_row( __( 'Daily snapshots', 'wpseokit' ), 'reports.daily_enabled', 'st-rep-daily', __( 'Save daily snapshot reports', 'wpseokit' ), __( 'When turned off, daily snapshot reports are paused. You can still take snapshots manually.', 'wpseokit' ) );
+		$score_reports .= Ui::text( 'reports.retention_days', 'st-rep-retention', __( 'Snapshot retention', 'wpseokit' ), array( 'type' => 'number', 'min' => 30, 'max' => 1095, 'step' => 1, 'unit' => __( 'days', 'wpseokit' ), 'help' => __( 'How many days of snapshot history to keep before deleting old ones (30–1095 days).', 'wpseokit' ) ) );
+
 		$data = Ui::toggle_row( __( 'Uninstall', 'wpseokit' ), 'general.delete_on_uninstall', 'st-del', __( 'Delete all WPSeoKit data when the plugin is deleted', 'wpseokit' ), __( 'Settings, redirects, the 404 log and per-post SEO fields. Leave off to keep them for a later reinstall.', 'wpseokit' ) );
 
 		$status = '';
@@ -119,7 +126,11 @@ final class SettingsScreen {
 		$status = '<section class="rbn-card"><div class="rbn-card__h"><h2>' . esc_html__( 'Status', 'wpseokit' ) . '</h2></div><div class="rbn-card__b rbn-card__b--flush"><div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html__( 'Plugin status', 'wpseokit' ) . '</caption><tbody>' . $status . '</tbody></table></div></div></section>';
 
 		return Admin::note_html()
-			. Ui::form( 'settings', Ui::card( __( 'Data and uninstall', 'wpseokit' ), '', $data ) )
+			. Ui::form(
+				'settings',
+				Ui::card( __( 'SEO score and reports', 'wpseokit' ), __( 'Background calculation of SEO health scores and daily performance snapshots.', 'wpseokit' ), $score_reports, ' id="sec-score-reports"' )
+				. Ui::card( __( 'Data and uninstall', 'wpseokit' ), '', $data )
+			)
 			. $status
 			. self::updates();
 	}

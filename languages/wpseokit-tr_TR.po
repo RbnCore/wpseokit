@@ -4533,3 +4533,85 @@ msgstr "Tercih edilen adres bu site için geçerli bir adres değil. Ağ denetim
 #: includes/Services/PreferredAddressService.php
 msgid "The preferred address is not a valid address for this site. Server rules cannot be generated for an external domain."
 msgstr "Tercih edilen adres bu site için geçerli bir adres değil. Harici bir alan adı için sunucu kuralları üretilemez."
+
+#: includes/Screens/SettingsScreen.php
+msgid "SEO score and reports"
+msgstr "SEO skoru ve raporlar"
+
+#: includes/Screens/SettingsScreen.php
+msgid "Background calculation of SEO health scores and daily performance snapshots."
+msgstr "SEO sağlık skorlarının ve günlük performans anlık görüntülerinin arka planda hesaplanması."
+
+#: includes/Screens/SettingsScreen.php
+msgid "Daily recalculation"
+msgstr "Günlük yeniden hesaplama"
+
+#: includes/Screens/SettingsScreen.php
+msgid "Recalculate SEO scores daily"
+msgstr "SEO skorlarını her gün yeniden hesapla"
+
+#: includes/Screens/SettingsScreen.php
+msgid "When turned off, scores are only recalculated when you click Recalculate or edit a post."
+msgstr "Kapatıldığında, skorlar yalnızca Yeniden hesapla düğmesine tıklandığında veya bir yazı düzenlendiğinde güncellenir."
+
+#: includes/Screens/SettingsScreen.php
+msgid "Score cache lifetime"
+msgstr "Skor önbellek süresi"
+
+#: includes/Screens/SettingsScreen.php
+msgid "How long calculated scores stay cached before a refresh (1–48 hours)."
+msgstr "Hesaplanan skorların yenilenmeden önce önbellekte ne kadar tutulacağı (1–48 saat)."
+
+#: includes/Screens/SettingsScreen.php
+msgid "HTTP timeout"
+msgstr "HTTP zaman aşımı"
+
+#: includes/Screens/SettingsScreen.php
+msgid "Wait time for local HTTP requests during checks (2–15 seconds)."
+msgstr "Denetimler sırasında yerel HTTP istekleri için bekleme süresi (2–15 saniye)."
+
+#: includes/Screens/SettingsScreen.php
+msgid "Batch runtime"
+msgstr "Toplu işlem çalışma süresi"
+
+#: includes/Screens/SettingsScreen.php
+msgid "Maximum time per background batch when scoring posts (5–60 seconds)."
+msgstr "Yazılar puanlanırken arka plan kümesi başına en uzun çalışma süresi (5–60 saniye)."
+
+#: includes/Screens/SettingsScreen.php
+msgid "Daily snapshots"
+msgstr "Günlük anlık görüntüler"
+
+#: includes/Screens/SettingsScreen.php
+msgid "Save daily snapshot reports"
+msgstr "Günlük anlık görüntü raporlarını kaydet"
+
+#: includes/Screens/SettingsScreen.php
+msgid "When turned off, daily snapshot reports are paused. You can still take snapshots manually."
+msgstr "Kapatıldığında, günlük anlık görüntü raporları duraklatılır. Yine de el ile anlık görüntü alabilirsiniz."
+
+#: includes/Screens/SettingsScreen.php
+msgid "Snapshot retention"
+msgstr "Anlık görüntü saklama süresi"
+
+#: includes/Screens/SettingsScreen.php
+msgid "How many days of snapshot history to keep before deleting old ones (30–1095 days)."
+msgstr "Eski kayıtlar silinmeden önce anlık görüntü geçmişinin kaç gün tutulacağı (30–1095 gün)."
+
+#: includes/Screens/Ui.php
+#, php-format
+msgid "Delete %d 404 log entries?"
+msgid_plural "Delete %d 404 log entries?"
+msgstr[0] "%d 404 günlük kaydı silinsin mi?"
+msgstr[1] "%d 404 günlük kaydı silinsin mi?"
+
+#: includes/Screens/Ui.php
+#, php-format
+msgid "Delete %d entries"
+msgid_plural "Delete %d entries"
+msgstr[0] "%d kaydı sil"
+msgstr[1] "%d kaydı sil"
+
+#: includes/Screens/Ui.php
+msgid "This removes the logged 404 visits. If visitors request these addresses again, new log entries will appear."
+msgstr "Bu işlem günlüğe kaydedilen 404 ziyaretlerini siler. Ziyaretçiler bu adresleri tekrar isterse yeni günlük kayıtları oluşturulur."
