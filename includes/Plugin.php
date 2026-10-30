@@ -81,6 +81,8 @@ final class Plugin {
 		Rest::init();
 		// Updates are done by the AdminKit core (one central updater); the plugin only registers.
 		\AdminKit\Core\Updater::register( 'wpseokit', WPSEOKIT_FILE, WPSEOKIT_VERSION );
+		// Settings: one typed schema, stored and cleaned by the shared AdminKit settings engine.
+		Settings::register();
 		if ( ! self::output_enabled() ) {
 			return;
 		}

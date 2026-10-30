@@ -2,7 +2,10 @@
 /**
  * Settings storage: the single `wpseokit_settings` option. Every other class reads settings only through here.
  *
- * Contract: docs/sozlesme.md §2.
+ * The engine (AdminKit\Core\Settings) owns the schema, the dotted paths, the cleaning and the option write; this
+ * class is the plugin's thin adapter so the rest of the plugin and the tests keep their call signatures.
+ *
+ * Contract: docs/sozlesme.md §2, adminkit/src/docs/ayar-motoru.md §10.3.
  *
  * @package Wpseokit
  */
@@ -11,15 +14,12 @@ declare(strict_types=1);
 
 namespace Wpseokit\Repositories;
 
-use Wpseokit\Logs;
+use AdminKit\Core\Settings as Engine;
 use Wpseokit\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
 final class SettingsRepository {
-
-	/** @var array<string, array<string, mixed>>|null Request-level cache. */
-	private static ?array $cache = null;
 
 	/** @return array<string, array<string, mixed>> */
 	public static function defaults(): array {
@@ -27,43 +27,38 @@ final class SettingsRepository {
 	}
 
 	/**
-	 * Stored values merged over the defaults: every key exists.
+	 * Stored values merged over the defaults: every key exists (the engine also cleans them on read).
 	 *
 	 * @return array<string, array<string, mixed>>
 	 */
 	public static function all(): array {
-		if ( null === self::$cache ) {
-			$stored      = get_option( Settings::OPTION, array() );
-			self::$cache = Settings::sanitize( is_array( $stored ) ? $stored : array(), Settings::defaults() );
-		}
-		return self::$cache;
+		$all = Engine::all( Settings::SLUG );
+		// A missing/foreign option row must still answer with the schema shape.
+		return array() === $all ? Settings::defaults() : $all;
 	}
 
 	/** @return array<string, mixed> */
 	public static function section( string $name ): array {
-		return self::all()[ $name ] ?? array();
+		$value = self::all()[ $name ] ?? array();
+		return is_array( $value ) ? $value : array();
 	}
 
 	/**
 	 * Reads a dotted path: "section.key", or deeper into a map value ("social.profiles.facebook").
+	 * A single segment is not a path (the plugin never exposed sections this way) and returns the default.
 	 *
 	 * @param mixed $default Returned when the path is unknown.
 	 * @return mixed
 	 */
 	public static function get( string $path, $default = null ) {
-		$parts = explode( '.', $path );
-		$value = self::all();
-		foreach ( $parts as $i => $part ) {
-			if ( ! is_array( $value ) || ! array_key_exists( $part, $value ) || ( 0 === $i && count( $parts ) < 2 ) ) {
-				return $default;
-			}
-			$value = $value[ $part ];
+		if ( '' === $path || false === strpos( $path, '.' ) ) {
+			return $default;
 		}
-		return $value;
+		return Engine::get( Settings::SLUG, $path, $default );
 	}
 
 	/**
-	 * Cleans a partial update over the current values (unknown keys are dropped).
+	 * Cleans a partial update over the current values (unknown keys are dropped) without writing.
 	 *
 	 * @param array<string, mixed> $partial Partial data.
 	 * @return array<string, array<string, mixed>>
@@ -73,21 +68,18 @@ final class SettingsRepository {
 	}
 
 	/**
-	 * Saves a partial update and returns the full clean settings.
+	 * Saves a partial update and returns the full clean settings. The change log entry is written by the engine's
+	 * `log` callback (`Logs::settings_changed`), so it fires exactly when something changed.
 	 *
 	 * @param array<string, mixed> $partial Partial data.
 	 * @return array<string, array<string, mixed>>
 	 */
 	public static function update( array $partial ): array {
-		$before = self::all();
-		update_option( Settings::OPTION, self::sanitize( $partial ), true );
-		self::reset_cache();
-		$after = self::all();
-		Logs::settings_changed( $before, $after );
-		return $after;
+		$res = Engine::update( Settings::SLUG, $partial );
+		return array() === $res['settings'] ? self::all() : (array) $res['settings'];
 	}
 
 	public static function reset_cache(): void {
-		self::$cache = null;
+		Engine::reset_cache( Settings::SLUG );
 	}
 }
