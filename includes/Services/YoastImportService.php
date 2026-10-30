@@ -745,13 +745,7 @@ final class YoastImportService {
 	 * @return mixed
 	 */
 	private static function path_get( array $data, string $path, $default ) {
-		foreach ( explode( '.', $path ) as $part ) {
-			if ( ! is_array( $data ) || ! array_key_exists( $part, $data ) ) {
-				return $default;
-			}
-			$data = $data[ $part ];
-		}
-		return $data;
+		return \AdminKit\Core\Settings::value_at( $data, $path, $default );
 	}
 
 	/**

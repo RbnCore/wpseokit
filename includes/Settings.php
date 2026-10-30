@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace Wpseokit;
 
-use AdminKit\Core\Security\Host;
-
 defined( 'ABSPATH' ) || exit;
 
 final class Settings {
@@ -343,21 +341,12 @@ final class Settings {
 
 	/**
 	 * A bare host name (letters, digits, dots, hyphens; lower case; no scheme, path, port or user), or an empty string.
+	 * The rules live in the AdminKit settings engine (one copy for every plugin).
 	 *
 	 * @param mixed $value Value.
 	 */
 	public static function host( $value ): string {
-		if ( ! is_string( $value ) ) {
-			return '';
-		}
-		$host = strtolower( trim( $value ) );
-		if ( strlen( $host ) > 253 || 1 !== preg_match( '/^(?=.{1,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/', $host ) ) {
-			return '';
-		}
-		if ( 1 === preg_match( '/^[0-9.]+$/', $host ) || Host::is_ip( $host ) ) {
-			return '';
-		}
-		return $host;
+		return \AdminKit\Core\Settings::clean_host( $value );
 	}
 
 	/**
