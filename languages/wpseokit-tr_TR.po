@@ -4615,3 +4615,7 @@ msgstr[1] "%d kaydı sil"
 #: includes/Screens/Ui.php
 msgid "This removes the logged 404 visits. If visitors request these addresses again, new log entries will appear."
 msgstr "Bu işlem günlüğe kaydedilen 404 ziyaretlerini siler. Ziyaretçiler bu adresleri tekrar isterse yeni günlük kayıtları oluşturulur."
+
+#: includes/Screens/SettingsScreen.php:111 includes/Screens/SettingsScreen.php:112
+msgid "seconds"
+msgstr "saniye"

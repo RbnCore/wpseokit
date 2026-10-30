@@ -4752,3 +4752,7 @@ msgstr[1] ""
 #: includes/Screens/Ui.php
 msgid "This removes the logged 404 visits. If visitors request these addresses again, new log entries will appear."
 msgstr ""
+
+#: includes/Screens/SettingsScreen.php:111 includes/Screens/SettingsScreen.php:112
+msgid "seconds"
+msgstr ""
