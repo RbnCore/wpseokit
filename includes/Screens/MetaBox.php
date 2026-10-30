@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Screens;
 
+use AdminKit\Core\Security\Host;
+
 use Wpseokit\Plugin;
 
 defined( 'ABSPATH' ) || exit;
@@ -55,7 +57,7 @@ final class MetaBox {
 		$type   = $m( 'schema_type' );
 		$tpl    = (array) Ui::val( 'templates.post_types.' . $post->post_type, array() );
 		$plain  = trim( wp_strip_all_tags( strip_shortcodes( (string) $post->post_content ) ) );
-		$host   = (string) wp_parse_url( home_url(), PHP_URL_HOST );
+		$host   = Host::host( home_url() );
 		$path   = (string) wp_parse_url( (string) get_permalink( $post ), PHP_URL_PATH );
 
 		ob_start();

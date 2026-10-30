@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+
 use Wpseokit\Repositories\RedirectRepository;
 use Wpseokit\Rest;
 
@@ -166,7 +168,7 @@ final class CsvService {
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( self::class, 'rest_import' ),
-				'permission_callback' => Rest::permission(),
+				'permission_callback' => Guard::rest(),
 				'args'                => array(
 					'csv' => array( 'type' => 'string' ),
 				),
@@ -178,7 +180,7 @@ final class CsvService {
 			array(
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( self::class, 'rest_export' ),
-				'permission_callback' => Rest::permission(),
+				'permission_callback' => Guard::rest(),
 			)
 		);
 	}

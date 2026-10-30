@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+
 use Wpseokit\Rest;
 use Wpseokit\Rules\RuleSet;
 
@@ -27,7 +29,7 @@ final class ScoreListService {
 			array(
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( self::class, 'rest_posts' ),
-				'permission_callback' => Rest::permission(),
+				'permission_callback' => Guard::rest(),
 				'args'                => array(),
 			)
 		);

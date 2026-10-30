@@ -20,6 +20,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Host;
+
 defined( 'ABSPATH' ) || exit;
 
 final class SitemapView {
@@ -223,7 +225,7 @@ final class SitemapView {
 			$files += count( $g['files'] );
 			$urls  += $g['urls'];
 		}
-		$host = esc_html( (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
+		$host = esc_html( Host::host( home_url() ) );
 		$out .= '<p class="lead">' . sprintf( esc_html__( 'This is the list of pages on %s that search engines such as Google can read. You can browse it here; the plain XML behind this page is what the bots use.', 'wpseokit' ), '<strong>' . $host . '</strong>' ) . '</p>'
 			. '<ul class="meta"><li>' . self::count_b( count( $groups ), _n_noop( '%s group', '%s groups', 'wpseokit' ) ) . '</li><li>' . self::count_b( $files, _n_noop( '%s file', '%s files', 'wpseokit' ) ) . '</li><li>' . self::count_b( $urls, _n_noop( '%s URL', '%s URLs', 'wpseokit' ) ) . '</li></ul>'
 			. '<p class="tools">' . self::xml_button( SitemapService::index_url() ) . '</p>'

@@ -23,7 +23,7 @@ final class SnapshotRepository {
 
 	public static function find_by_date( string $date ): ?Snapshot {
 		global $wpdb;
-		$row = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . self::table() . ' WHERE snapshot_date = %s', $date ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
+		$row = \AdminKit\Helpers\Db::get_row( 'SELECT * FROM ' . self::table() . ' WHERE snapshot_date = %s', array( $date ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
 		return is_array( $row ) ? Snapshot::from_row( $row ) : null;
 	}
 
@@ -34,19 +34,19 @@ final class SnapshotRepository {
 	 */
 	public static function between( string $from, string $to ): array {
 		global $wpdb;
-		$rows = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . self::table() . ' WHERE snapshot_date >= %s AND snapshot_date <= %s ORDER BY snapshot_date ASC', $from, $to ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
+		$rows = \AdminKit\Helpers\Db::get_results( 'SELECT * FROM ' . self::table() . ' WHERE snapshot_date >= %s AND snapshot_date <= %s ORDER BY snapshot_date ASC', array( $from, $to ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
 		return array_map( array( Snapshot::class, 'from_row' ), is_array( $rows ) ? $rows : array() );
 	}
 
 	public static function latest(): ?Snapshot {
 		global $wpdb;
-		$row = $wpdb->get_row( 'SELECT * FROM ' . self::table() . ' ORDER BY snapshot_date DESC LIMIT 1', ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
+		$row = \AdminKit\Helpers\Db::get_row( 'SELECT * FROM ' . self::table() . ' ORDER BY snapshot_date DESC LIMIT 1', array(), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
 		return is_array( $row ) ? Snapshot::from_row( $row ) : null;
 	}
 
 	public static function count(): int {
 		global $wpdb;
-		return (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . self::table() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
+		return (int) \AdminKit\Helpers\Db::get_var( 'SELECT COUNT(*) FROM ' . self::table() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
 	}
 
 	/**
@@ -61,16 +61,8 @@ final class SnapshotRepository {
 		if ( ! is_string( $json ) ) {
 			return null;
 		}
-		$result = $wpdb->query( // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table(); values are placeholders.
-			$wpdb->prepare(
-				'INSERT INTO ' . self::table() . ' (snapshot_date, metrics, schema_version, taken_at) VALUES (%s, %s, %d, %s)
-				ON DUPLICATE KEY UPDATE metrics = VALUES(metrics), schema_version = VALUES(schema_version), taken_at = VALUES(taken_at)',
-				$date,
-				$json,
-				$schema_version,
-				gmdate( 'Y-m-d H:i:s' )
-			)
-		);
+		$result = \AdminKit\Helpers\Db::query( 'INSERT INTO ' . self::table() . ' (snapshot_date, metrics, schema_version, taken_at) VALUES (%s, %s, %d, %s)
+				ON DUPLICATE KEY UPDATE metrics = VALUES(metrics), schema_version = VALUES(schema_version), taken_at = VALUES(taken_at)', array( $date, $json, $schema_version, gmdate( 'Y-m-d H:i:s' ) ) );
 		if ( false === $result ) {
 			return null;
 		}
@@ -86,13 +78,13 @@ final class SnapshotRepository {
 	public static function prune( int $days ): int {
 		global $wpdb;
 		$cutoff = wp_date( 'Y-m-d', time() - max( 1, $days ) * DAY_IN_SECONDS );
-		return (int) $wpdb->query( $wpdb->prepare( 'DELETE FROM ' . self::table() . ' WHERE snapshot_date < %s', $cutoff ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
+		return (int) \AdminKit\Helpers\Db::query( 'DELETE FROM ' . self::table() . ' WHERE snapshot_date < %s', array( $cutoff ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
 	}
 
 	/** Total hits of all redirect rules (read-only). */
 	public static function redirect_hits(): int {
 		global $wpdb;
-		return (int) $wpdb->get_var( 'SELECT COALESCE(SUM(hits), 0) FROM ' . Db::table( 'redirects' ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
+		return (int) \AdminKit\Helpers\Db::get_var( 'SELECT COALESCE(SUM(hits), 0) FROM ' . Db::table( 'redirects' ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
 	}
 
 	/**
@@ -102,7 +94,7 @@ final class SnapshotRepository {
 	 */
 	public static function not_found_totals( string $since_utc ): array {
 		global $wpdb;
-		$row = $wpdb->get_row( $wpdb->prepare( 'SELECT COUNT(*) AS addresses, COALESCE(SUM(hit_count), 0) AS hits, COALESCE(SUM(first_seen_at >= %s), 0) AS fresh FROM ' . Db::table( '404_logs' ), $since_utc ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
+		$row = \AdminKit\Helpers\Db::get_row( 'SELECT COUNT(*) AS addresses, COALESCE(SUM(hit_count), 0) AS hits, COALESCE(SUM(first_seen_at >= %s), 0) AS fresh FROM ' . Db::table( '404_logs' ), array( $since_utc ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
 		return array(
 			'addresses' => (int) ( $row['addresses'] ?? 0 ),
 			'hits'      => (int) ( $row['hits'] ?? 0 ),
@@ -127,14 +119,9 @@ final class SnapshotRepository {
 		}
 		$marks = implode( ',', array_fill( 0, count( $types ), '%s' ) );
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- read-only counts; placeholders are generated above.
-		$posts = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_status = 'publish' AND post_type IN ($marks)", $types ) );
+		$posts = (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_status = 'publish' AND post_type IN ($marks)", $types );
 		$count = static function ( string $meta_key ) use ( $wpdb, $marks, $types ): int {
-			return (int) $wpdb->get_var(
-				$wpdb->prepare(
-					"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p INNER JOIN {$wpdb->postmeta} m ON m.post_id = p.ID AND m.meta_key = %s AND m.meta_value <> '' WHERE p.post_status = 'publish' AND p.post_type IN ($marks)",
-					array_merge( array( $meta_key ), $types )
-				)
-			);
+			return (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p INNER JOIN {$wpdb->postmeta} m ON m.post_id = p.ID AND m.meta_key = %s AND m.meta_value <> '' WHERE p.post_status = 'publish' AND p.post_type IN ($marks)", array_merge( array( $meta_key ), $types ) );
 		};
 		// phpcs:enable
 		return array(

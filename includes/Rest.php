@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Wpseokit;
 
+use AdminKit\Core\Security\Guard;
 use Wpseokit\Repositories\SettingsRepository;
 
 defined( 'ABSPATH' ) || exit;
@@ -22,25 +23,6 @@ final class Rest {
 		add_action( 'rest_api_init', array( self::class, 'register' ) );
 	}
 
-	/** Permission check for settings, redirects and import routes. */
-	public static function can_manage(): bool {
-		return current_user_can( 'manage_options' );
-	}
-
-	/** Permission check for a route that carries `post_id`. */
-	public static function can_edit_post( \WP_REST_Request $request ): bool {
-		return current_user_can( 'edit_post', (int) $request['post_id'] );
-	}
-
-	/**
-	 * Builds a `permission_callback` for a capability.
-	 *
-	 * @return callable(): bool
-	 */
-	public static function permission( string $cap = 'manage_options' ): callable {
-		return static fn(): bool => current_user_can( $cap );
-	}
-
 	public static function register(): void {
 		register_rest_route(
 			self::NAMESPACE,
@@ -48,7 +30,7 @@ final class Rest {
 			array(
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( self::class, 'status' ),
-				'permission_callback' => self::permission(),
+				'permission_callback' => Guard::rest(),
 			)
 		);
 		register_rest_route(
@@ -58,12 +40,12 @@ final class Rest {
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( self::class, 'get_settings' ),
-					'permission_callback' => self::permission(),
+					'permission_callback' => Guard::rest(),
 				),
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( self::class, 'save_settings' ),
-					'permission_callback' => self::permission(),
+					'permission_callback' => Guard::rest(),
 					'args'                => array(),
 				),
 			)

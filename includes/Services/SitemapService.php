@@ -21,6 +21,9 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+use AdminKit\Core\Security\Host;
+
 use AdminKit\Core\Cache;
 use Wpseokit\Registry;
 use Wpseokit\Repositories\SettingsRepository;
@@ -226,13 +229,7 @@ final class SitemapService {
 	/** @return array<int, array{0: int, 1: string}> */
 	private static function post_rows( string $type ): array {
 		global $wpdb;
-		$found = $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT ID, post_modified_gmt FROM {$wpdb->posts} WHERE post_type = %s AND post_status = 'publish' AND post_password = '' ORDER BY post_modified_gmt ASC, ID ASC", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- core table name.
-				$type
-			),
-			ARRAY_N
-		);
+		$found = \AdminKit\Helpers\Db::get_results( "SELECT ID, post_modified_gmt FROM {$wpdb->posts} WHERE post_type = %s AND post_status = 'publish' AND post_password = '' ORDER BY post_modified_gmt ASC, ID ASC", array( $type ), ARRAY_N ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- core table name.
 		$found = is_array( $found ) ? $found : array();
 		$ids   = array_map( 'intval', array_column( $found, 0 ) );
 		if ( $ids ) {
@@ -310,13 +307,7 @@ final class SitemapService {
 		}
 		// Newest modified published post in each term, one query (children do not count for their parent).
 		$latest = array();
-		$found  = $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT tt.term_id, MAX(p.post_modified_gmt) FROM {$wpdb->term_taxonomy} tt INNER JOIN {$wpdb->term_relationships} tr ON tr.term_taxonomy_id = tt.term_taxonomy_id INNER JOIN {$wpdb->posts} p ON p.ID = tr.object_id WHERE tt.taxonomy = %s AND p.post_status = 'publish' GROUP BY tt.term_id", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- core table names.
-				$taxonomy
-			),
-			ARRAY_N
-		);
+		$found  = \AdminKit\Helpers\Db::get_results( "SELECT tt.term_id, MAX(p.post_modified_gmt) FROM {$wpdb->term_taxonomy} tt INNER JOIN {$wpdb->term_relationships} tr ON tr.term_taxonomy_id = tt.term_taxonomy_id INNER JOIN {$wpdb->posts} p ON p.ID = tr.object_id WHERE tt.taxonomy = %s AND p.post_status = 'publish' GROUP BY tt.term_id", array( $taxonomy ), ARRAY_N ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- core table names.
 		foreach ( is_array( $found ) ? $found : array() as $row ) {
 			$latest[ (int) $row[0] ] = (string) $row[1];
 		}
@@ -518,7 +509,7 @@ final class SitemapService {
 				$found[] = html_entity_decode( trim( $src ), ENT_QUOTES | ENT_HTML5 );
 			}
 		}
-		$host = (string) wp_parse_url( home_url(), PHP_URL_HOST );
+		$host = Host::host( home_url() );
 		$out  = array();
 		foreach ( $found as $src ) {
 			if ( 0 === strpos( $src, '//' ) ) {
@@ -526,7 +517,7 @@ final class SitemapService {
 			} elseif ( 0 === strpos( $src, '/' ) ) {
 				$src = home_url( $src );
 			}
-			if ( ! preg_match( '#^https?://#i', $src ) || strtolower( (string) wp_parse_url( $src, PHP_URL_HOST ) ) !== strtolower( $host ) ) {
+			if ( ! preg_match( '#^https?://#i', $src ) || ! Host::same_site_pair( Host::host( $src ), $host ) ) {
 				continue;
 			}
 			$out[ $src ] = $src;
@@ -616,7 +607,7 @@ final class SitemapService {
 			array(
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( self::class, 'rest_status' ),
-				'permission_callback' => Rest::permission(),
+				'permission_callback' => Guard::rest(),
 				'args'                => array(),
 			)
 		);
@@ -629,7 +620,7 @@ final class SitemapService {
 					self::flush();
 					return new \WP_REST_Response( array( 'flushed' => true ) );
 				},
-				'permission_callback' => Rest::permission(),
+				'permission_callback' => Guard::rest(),
 				'args'                => array(),
 			)
 		);

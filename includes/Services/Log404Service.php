@@ -15,6 +15,9 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+use AdminKit\Core\Security\Host;
+
 use AdminKit\Core\Cache;
 use Wpseokit\Models\Log404;
 use Wpseokit\Registry;
@@ -47,7 +50,7 @@ final class Log404Service {
 
 	/** Salted SHA-256 of an address; an empty string when it is not a valid address. */
 	public static function ip_hash( string $ip ): string {
-		if ( false === filter_var( $ip, FILTER_VALIDATE_IP ) ) {
+		if ( ! Host::is_ip( $ip ) ) {
 			return '';
 		}
 		$salt = (string) get_option( self::SALT_OPTION, '' );
@@ -114,7 +117,7 @@ final class Log404Service {
 			array(
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( self::class, 'rest_list' ),
-				'permission_callback' => Rest::permission(),
+				'permission_callback' => Guard::rest(),
 				'args'                => array(
 					'search'   => array( 'type' => 'string' ),
 					'orderby'  => array( 'type' => 'string' ),
@@ -130,7 +133,7 @@ final class Log404Service {
 			array(
 				'methods'             => \WP_REST_Server::DELETABLE,
 				'callback'            => array( self::class, 'rest_delete' ),
-				'permission_callback' => Rest::permission(),
+				'permission_callback' => Guard::rest(),
 				'args'                => array( 'id' => $id ),
 			)
 		);
@@ -140,7 +143,7 @@ final class Log404Service {
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( self::class, 'rest_redirect' ),
-				'permission_callback' => Rest::permission(),
+				'permission_callback' => Guard::rest(),
 				'args'                => array(
 					'id'          => $id,
 					'target_url'  => array(

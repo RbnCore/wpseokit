@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Rules;
 
+use AdminKit\Core\Security\Host;
+
 use Wpseokit\Repositories\SettingsRepository;
 use Wpseokit\Schema\Organization;
 
@@ -172,7 +174,7 @@ final class SiteChecks {
 	}
 
 	private static function https_secure(): array {
-		$host = (string) wp_parse_url( home_url(), PHP_URL_HOST );
+		$host = Host::host( home_url() );
 		$http = Probe::fetch( 'http://' . $host . '/' );
 		$tls  = Probe::fetch( 'https://' . $host . '/' );
 		$loc  = strtolower( $http['location'] );
@@ -231,7 +233,7 @@ final class SiteChecks {
 	private static function schema_organization_complete( ?array $head, string $home ): array {
 		$nodes = $head['jsonld'] ?? array();
 		$org   = HeadParser::by_type( $nodes, array( 'Organization', 'Corporation', 'LocalBusiness', 'NewsMediaOrganization', 'OnlineStore' ) )[0] ?? array();
-		$host  = strtolower( (string) wp_parse_url( $home, PHP_URL_HOST ) );
+		$host  = Host::host( $home );
 		$url   = (string) ( $org['url'] ?? '' );
 		$logo  = HeadParser::resolve( $nodes, $org['logo'] ?? '' );
 		if ( is_array( $logo ) ) {
@@ -239,7 +241,7 @@ final class SiteChecks {
 		}
 		$checks = array(
 			'name' => '' !== trim( (string) ( $org['name'] ?? '' ) ),
-			'url'  => HeadParser::is_absolute_url( $url ) && strtolower( (string) wp_parse_url( $url, PHP_URL_HOST ) ) === $host,
+			'url'  => HeadParser::is_absolute_url( $url ) && Host::same_site_pair( Host::host( $url ), $host ),
 			'logo' => HeadParser::is_absolute_url( (string) $logo ),
 		);
 		// The check measures the published JSON-LD; the source (settings / site_icon / none) comes from the one logo resolver the card and the Schema screen use.

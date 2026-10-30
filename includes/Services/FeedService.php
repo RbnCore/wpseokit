@@ -22,6 +22,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+
 use Wpseokit\Plugin;
 use Wpseokit\Repositories\SettingsRepository;
 use Wpseokit\Rest;
@@ -416,7 +418,7 @@ final class FeedService {
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( self::class, 'rest_status' ),
-					'permission_callback' => Rest::permission(),
+					'permission_callback' => Guard::rest(),
 					'args'                => array(),
 				),
 			)
@@ -429,13 +431,13 @@ final class FeedService {
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( self::class, 'rest_preview' ),
-					'permission_callback' => Rest::permission(),
+					'permission_callback' => Guard::rest(),
 					'args'                => array(),
 				),
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( self::class, 'rest_preview' ),
-					'permission_callback' => Rest::permission(),
+					'permission_callback' => Guard::rest(),
 					'args'                => array(
 						'feed'    => array(
 							'type'     => 'object',

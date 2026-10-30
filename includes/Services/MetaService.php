@@ -16,6 +16,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+
 use Wpseokit\Repositories\SettingsRepository;
 use Wpseokit\Rest;
 
@@ -173,7 +175,7 @@ final class MetaService {
 			array(
 				'methods'             => 'GET',
 				'callback'            => static fn() => new \WP_REST_Response( array( 'names' => Variables::names() ) ),
-				'permission_callback' => Rest::permission(),
+				'permission_callback' => Guard::rest(),
 			)
 		);
 		register_rest_route(
@@ -182,9 +184,7 @@ final class MetaService {
 			array(
 				'methods'             => 'POST',
 				'callback'            => array( self::class, 'rest_preview' ),
-				'permission_callback' => static function ( \WP_REST_Request $request ): bool {
-					return $request['post_id'] ? Rest::can_edit_post( $request ) : Rest::can_manage();
-				},
+				'permission_callback' => Guard::rest( 'edit_post', object_param: 'post_id', fallback_cap: 'manage_options' ),
 				'args'                => array(
 					'post_id'     => array( 'type' => 'integer' ),
 					'term_id'     => array( 'type' => 'integer' ),

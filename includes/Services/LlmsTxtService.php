@@ -14,6 +14,9 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+use AdminKit\Core\Security\Host;
+
 use AdminKit\Core\Cache;
 use Wpseokit\Registry;
 use Wpseokit\Repositories\SettingsRepository;
@@ -180,7 +183,7 @@ final class LlmsTxtService {
 		);
 
 		$name    = Variables::plain( (string) get_option( 'blogname' ) );
-		$name    = '' !== $name ? $name : (string) wp_parse_url( home_url(), PHP_URL_HOST );
+		$name    = '' !== $name ? $name : Host::host( home_url() );
 		$summary = self::one_line( Variables::plain( (string) ( $cfg['summary'] ?? '' ) ) );
 		if ( '' === $summary ) {
 			$summary = self::one_line( Variables::plain( (string) get_option( 'blogdescription' ) ) );
@@ -439,13 +442,13 @@ final class LlmsTxtService {
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( self::class, 'rest_preview' ),
-					'permission_callback' => Rest::permission(),
+					'permission_callback' => Guard::rest(),
 					'args'                => array(),
 				),
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( self::class, 'rest_preview' ),
-					'permission_callback' => Rest::permission(),
+					'permission_callback' => Guard::rest(),
 					'args'                => array(
 						'llms' => array(
 							'type'     => 'object',
@@ -464,7 +467,7 @@ final class LlmsTxtService {
 					self::flush();
 					return new \WP_REST_Response( array( 'flushed' => true ) );
 				},
-				'permission_callback' => Rest::permission(),
+				'permission_callback' => Guard::rest(),
 				'args'                => array(),
 			)
 		);

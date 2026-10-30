@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Screens;
 
+use AdminKit\Core\Security\Host;
+
 use Wpseokit\Admin;
 use Wpseokit\Plugin;
 use Wpseokit\Repositories\SettingsRepository;
@@ -72,7 +74,7 @@ final class Ui {
 			'tone'     => self::tone(),
 			'editor'   => $editor,
 			'siteName' => (string) get_bloginfo( 'name' ),
-			'siteHost' => (string) wp_parse_url( home_url(), PHP_URL_HOST ),
+			'siteHost' => Host::host( home_url() ),
 			'i18n'     => self::strings(),
 		);
 	}

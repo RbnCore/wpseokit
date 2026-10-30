@@ -24,14 +24,14 @@ final class RedirectRepository {
 
 	public static function find( int $id ): ?Redirect {
 		global $wpdb;
-		$row = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . self::table() . ' WHERE id = %d', $id ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
+		$row = \AdminKit\Helpers\Db::get_row( 'SELECT * FROM ' . self::table() . ' WHERE id = %d', array( $id ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
 		return is_array( $row ) ? Redirect::from_row( $row ) : null;
 	}
 
 	/** @param string $source_path Stored form (see RedirectService::store_path()). */
 	public static function find_by_source( string $source_path ): ?Redirect {
 		global $wpdb;
-		$row = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . self::table() . ' WHERE source_path = %s', $source_path ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
+		$row = \AdminKit\Helpers\Db::get_row( 'SELECT * FROM ' . self::table() . ' WHERE source_path = %s', array( $source_path ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
 		return is_array( $row ) ? Redirect::from_row( $row ) : null;
 	}
 
@@ -42,7 +42,7 @@ final class RedirectRepository {
 	public static function find_by_target( string $path, int $except_id = 0 ): ?Redirect {
 		global $wpdb;
 		$like = $wpdb->esc_like( $path );
-		$row  = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . self::table() . ' WHERE is_active = 1 AND id <> %d AND (target_url = %s OR target_url LIKE %s OR target_url LIKE %s) LIMIT 1', $except_id, $path, $like . '?%', $like . '#%' ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
+		$row  = \AdminKit\Helpers\Db::get_row( 'SELECT * FROM ' . self::table() . ' WHERE is_active = 1 AND id <> %d AND (target_url = %s OR target_url LIKE %s OR target_url LIKE %s) LIMIT 1', array( $except_id, $path, $like . '?%', $like . '#%' ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
 		return is_array( $row ) ? Redirect::from_row( $row ) : null;
 	}
 
@@ -79,7 +79,7 @@ final class RedirectRepository {
 		$table    = self::table();
 
 		$count_sql = "SELECT COUNT(*) FROM {$table} WHERE {$clause}";
-		$total     = (int) ( $params ? $wpdb->get_var( $wpdb->prepare( $count_sql, $params ) ) : $wpdb->get_var( $count_sql ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- placeholders only; table from Db::table().
+		$total     = (int) ( $params ? \AdminKit\Helpers\Db::get_var( $count_sql, $params ) : \AdminKit\Helpers\Db::get_var( $count_sql ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- placeholders only; table from Db::table().
 
 		$sql = "SELECT * FROM {$table} WHERE {$clause} ORDER BY {$orderby} {$order}, id DESC";
 		if ( $per_page > 0 ) {
@@ -87,7 +87,7 @@ final class RedirectRepository {
 			$params[] = $per_page;
 			$params[] = ( $page - 1 ) * $per_page;
 		}
-		$rows = $params ? $wpdb->get_results( $wpdb->prepare( $sql, $params ), ARRAY_A ) : $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- orderby/order are whitelisted above.
+		$rows = $params ? \AdminKit\Helpers\Db::get_results( $sql, $params, ARRAY_A ) : \AdminKit\Helpers\Db::get_results( $sql, array(), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- orderby/order are whitelisted above.
 		return array(
 			'items' => array_map( array( Redirect::class, 'from_row' ), is_array( $rows ) ? $rows : array() ),
 			'total' => $total,
@@ -108,7 +108,7 @@ final class RedirectRepository {
 
 	public static function count_active(): int {
 		global $wpdb;
-		return (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . self::table() . ' WHERE is_active = 1' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
+		return (int) \AdminKit\Helpers\Db::get_var( 'SELECT COUNT(*) FROM ' . self::table() . ' WHERE is_active = 1' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
 	}
 
 	/**
@@ -118,9 +118,7 @@ final class RedirectRepository {
 	public static function insert( array $data ): int {
 		global $wpdb;
 		$now = gmdate( 'Y-m-d H:i:s' );
-		$ok  = $wpdb->insert(
-			self::table(),
-			array(
+		$ok  = \AdminKit\Helpers\Db::insert( self::table(), array(
 				'source_path' => (string) $data['source_path'],
 				'target_url'  => (string) $data['target_url'],
 				'status_code' => (int) $data['status_code'],
@@ -128,9 +126,7 @@ final class RedirectRepository {
 				'is_active'   => ! empty( $data['is_active'] ) ? 1 : 0,
 				'created_at'  => $now,
 				'updated_at'  => $now,
-			),
-			array( '%s', '%s', '%d', '%s', '%d', '%s', '%s' )
-		);
+			), array( '%s', '%s', '%d', '%s', '%d', '%s', '%s' ) );
 		return false === $ok ? 0 : (int) $wpdb->insert_id;
 	}
 
@@ -153,17 +149,17 @@ final class RedirectRepository {
 			$set['is_active'] = $data['is_active'] ? 1 : 0;
 			$format[]         = '%d';
 		}
-		return false !== $wpdb->update( self::table(), $set, array( 'id' => $id ), $format, array( '%d' ) );
+		return false !== \AdminKit\Helpers\Db::update( self::table(), $set, array( 'id' => $id ), $format, array( '%d' ) );
 	}
 
 	public static function delete( int $id ): bool {
 		global $wpdb;
-		return false !== $wpdb->delete( self::table(), array( 'id' => $id ), array( '%d' ) ) && $wpdb->rows_affected > 0;
+		return false !== \AdminKit\Helpers\Db::delete( self::table(), array( 'id' => $id ), array( '%d' ) ) && $wpdb->rows_affected > 0;
 	}
 
 	/** One hit: counter plus time. A single UPDATE by primary key. */
 	public static function touch_hit( int $id ): void {
 		global $wpdb;
-		$wpdb->query( $wpdb->prepare( 'UPDATE ' . self::table() . ' SET hits = hits + 1, last_hit_at = %s WHERE id = %d', gmdate( 'Y-m-d H:i:s' ), $id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
+		\AdminKit\Helpers\Db::query( 'UPDATE ' . self::table() . ' SET hits = hits + 1, last_hit_at = %s WHERE id = %d', array( gmdate( 'Y-m-d H:i:s' ), $id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from Db::table().
 	}
 }

@@ -16,6 +16,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+
 use Wpseokit\Repositories\SettingsRepository;
 use Wpseokit\Rest;
 
@@ -109,7 +111,7 @@ final class PrimaryTermService {
 			array(
 				'methods'             => 'POST',
 				'callback'            => array( self::class, 'rest_set' ),
-				'permission_callback' => array( Rest::class, 'can_edit_post' ),
+				'permission_callback' => Guard::rest( 'edit_post', object_param: 'post_id' ),
 				'args'                => array(
 					'post_id'  => array(
 						'type'     => 'integer',

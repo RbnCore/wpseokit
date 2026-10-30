@@ -12,6 +12,9 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+use AdminKit\Core\Security\Host;
+
 use Wpseokit\Logs;
 use Wpseokit\Models\Redirect;
 use Wpseokit\Repositories\Log404Repository;
@@ -54,7 +57,7 @@ final class RedirectService {
 	}
 
 	private static function home_host(): string {
-		return strtolower( (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
+		return strtolower( Host::host( home_url() ) );
 	}
 
 	private static function home_is_https(): bool {
@@ -426,7 +429,7 @@ final class RedirectService {
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( self::class, 'rest_list' ),
-					'permission_callback' => Rest::permission(),
+					'permission_callback' => Guard::rest(),
 					'args'                => array(
 						'search'      => array( 'type' => 'string' ),
 						'status_code' => array( 'type' => 'integer' ),
@@ -440,7 +443,7 @@ final class RedirectService {
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( self::class, 'rest_create' ),
-					'permission_callback' => Rest::permission(),
+					'permission_callback' => Guard::rest(),
 					'args'                => array_merge( $fields, array( 'source_path' => array( 'type' => 'string', 'required' => true ) ) ),
 				),
 			)
@@ -452,19 +455,19 @@ final class RedirectService {
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( self::class, 'rest_get' ),
-					'permission_callback' => Rest::permission(),
+					'permission_callback' => Guard::rest(),
 					'args'                => array( 'id' => $id ),
 				),
 				array(
 					'methods'             => 'PATCH',
 					'callback'            => array( self::class, 'rest_update' ),
-					'permission_callback' => Rest::permission(),
+					'permission_callback' => Guard::rest(),
 					'args'                => array_merge( $fields, array( 'id' => $id ) ),
 				),
 				array(
 					'methods'             => \WP_REST_Server::DELETABLE,
 					'callback'            => array( self::class, 'rest_delete' ),
-					'permission_callback' => Rest::permission(),
+					'permission_callback' => Guard::rest(),
 					'args'                => array( 'id' => $id ),
 				),
 			)

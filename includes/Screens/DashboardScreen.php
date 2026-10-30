@@ -63,13 +63,8 @@ final class DashboardScreen {
 		}
 		$marks = implode( ',', array_fill( 0, count( $types ), '%s' ) );
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare,WordPress.DB.DirectDatabaseQuery -- read-only counts; placeholders are generated above.
-		$total = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_status = 'publish' AND post_type IN ($marks)", $types ) );
-		$done  = (int) $wpdb->get_var(
-			$wpdb->prepare(
-				"SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p INNER JOIN {$wpdb->postmeta} m ON m.post_id = p.ID AND m.meta_key = '_wpseokit_description' AND m.meta_value <> '' WHERE p.post_status = 'publish' AND p.post_type IN ($marks)",
-				$types
-			)
-		);
+		$total = (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_status = 'publish' AND post_type IN ($marks)", $types );
+		$done  = (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(DISTINCT p.ID) FROM {$wpdb->posts} p INNER JOIN {$wpdb->postmeta} m ON m.post_id = p.ID AND m.meta_key = '_wpseokit_description' AND m.meta_value <> '' WHERE p.post_status = 'publish' AND p.post_type IN ($marks)", $types );
 		// phpcs:enable
 		return array( $done, $total );
 	}

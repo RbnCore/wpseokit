@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+
 use Wpseokit\Logs;
 use Wpseokit\Models\Snapshot;
 use Wpseokit\Plugin;
@@ -420,7 +422,7 @@ final class ReportService {
 
 	/** Registers the `/reports*` routes (docs/sozlesme.md §4.5). */
 	public static function register_routes( string $namespace ): void {
-		$manage = Rest::permission();
+		$manage = Guard::rest();
 		register_rest_route(
 			$namespace,
 			'/reports',

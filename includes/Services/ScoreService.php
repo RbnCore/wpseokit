@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+use AdminKit\Core\Security\Host;
+
 use AdminKit\Core\Cache;
 use Wpseokit\Logs;
 use Wpseokit\Registry;
@@ -440,7 +443,7 @@ final class ScoreService {
 
 	/** A local development host cannot satisfy the public-reachability rules; say so. */
 	private static function environment_note(): string {
-		$host = strtolower( (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
+		$host = Host::host( home_url() );
 		if ( 'localhost' === $host || 1 === preg_match( '/\.(test|local|localhost|invalid)$/', $host ) || 1 === preg_match( '/^(127\.|10\.|192\.168\.)/', $host ) ) {
 			return __( 'This is a local site: the HTTPS, certificate and public-access rules may fail here and pass on the live site.', 'wpseokit' );
 		}
@@ -622,8 +625,8 @@ final class ScoreService {
 
 	/** Registers the `/score/*` routes (docs/sozlesme.md §4.5). */
 	public static function register_routes( string $namespace ): void {
-		$manage = Rest::permission();
-		$edit   = array( Rest::class, 'can_edit_post' );
+		$manage = Guard::rest();
+		$edit   = Guard::rest( 'edit_post', object_param: 'post_id' );
 		$id_arg = array(
 			'post_id' => array(
 				'type'              => 'integer',

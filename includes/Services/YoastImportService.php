@@ -20,6 +20,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+
 use Wpseokit\Logs;
 use Wpseokit\Models\ImportReport;
 use Wpseokit\Repositories\SettingsRepository;
@@ -169,7 +171,7 @@ final class YoastImportService {
 			array(
 				'methods'             => 'POST',
 				'callback'            => array( self::class, 'rest_import' ),
-				'permission_callback' => Rest::permission(),
+				'permission_callback' => Guard::rest(),
 				'args'                => array(
 					'mode'      => array(
 						'type'     => 'string',
@@ -189,7 +191,7 @@ final class YoastImportService {
 			array(
 				'methods'             => 'GET',
 				'callback'            => array( self::class, 'rest_state' ),
-				'permission_callback' => Rest::permission(),
+				'permission_callback' => Guard::rest(),
 			)
 		);
 	}
@@ -412,7 +414,7 @@ final class YoastImportService {
 		$in   = implode( ',', array_fill( 0, count( $keys ), '%s' ) );
 		$join = $existing_posts_only ? "INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id AND p.post_type <> 'revision'" : '';
 		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared -- the placeholders are generated above.
-		$rows = $wpdb->get_results( $wpdb->prepare( "SELECT pm.post_id, pm.meta_key, pm.meta_value FROM {$wpdb->postmeta} pm {$join} WHERE pm.meta_key IN ({$in}) ORDER BY pm.post_id, pm.meta_id", $keys ) );
+		$rows = \AdminKit\Helpers\Db::get_results( "SELECT pm.post_id, pm.meta_key, pm.meta_value FROM {$wpdb->postmeta} pm {$join} WHERE pm.meta_key IN ({$in}) ORDER BY pm.post_id, pm.meta_id", $keys );
 		$map  = array();
 		foreach ( (array) $rows as $row ) {
 			$map[ (int) $row->post_id ][ (string) $row->meta_key ] = (string) $row->meta_value;
@@ -439,7 +441,7 @@ final class YoastImportService {
 		$table      = $wpdb->prefix . 'yoast_primary_term';
 		if ( self::table_exists( $table ) ) {
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name built from the core prefix.
-			foreach ( (array) $wpdb->get_results( "SELECT post_id, term_id FROM {$table} WHERE taxonomy = 'category' AND term_id > 0" ) as $row ) {
+			foreach ( (array) \AdminKit\Helpers\Db::get_results( "SELECT post_id, term_id FROM {$table} WHERE taxonomy = 'category' AND term_id > 0" ) as $row ) {
 				$from_table[ (int) $row->post_id ] = (int) $row->term_id;
 			}
 		}
@@ -459,7 +461,7 @@ final class YoastImportService {
 		if ( array() !== $wanted ) {
 			$ids = implode( ',', array_map( 'intval', array_keys( $wanted ) ) );
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- integers only.
-			foreach ( (array) $wpdb->get_results( "SELECT tr.object_id, tt.term_id FROM {$wpdb->term_relationships} tr INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tr.object_id IN ({$ids})" ) as $row ) {
+			foreach ( (array) \AdminKit\Helpers\Db::get_results( "SELECT tr.object_id, tt.term_id FROM {$wpdb->term_relationships} tr INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tr.object_id IN ({$ids})" ) as $row ) {
 				$assigned[ (int) $row->object_id ][ (int) $row->term_id ] = true;
 			}
 		}
@@ -783,11 +785,11 @@ final class YoastImportService {
 			$table = $wpdb->prefix . $name;
 			if ( self::table_exists( $table ) ) {
 				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name built from the core prefix.
-				$report->not_migrated( $name, (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" ), $reasons[ $name ] );
+				$report->not_migrated( $name, (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(*) FROM {$table}" ), $reasons[ $name ] );
 			}
 		}
 		foreach ( self::UNMIGRATED_META as $key => $reason ) {
-			$report->not_migrated( $key, (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = %s", $key ) ), $reason );
+			$report->not_migrated( $key, (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = %s", array( $key ) ), $reason );
 		}
 		$wpseo = get_option( 'wpseo', array() );
 		foreach ( array( 'category_base_url', 'tag_base_url' ) as $key ) {
@@ -813,12 +815,12 @@ final class YoastImportService {
 		foreach ( self::YOAST_TABLES as $name ) {
 			$table = $wpdb->prefix . $name;
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name built from the core prefix.
-			$counts[ $name ] = self::table_exists( $table ) ? (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" ) : -1;
+			$counts[ $name ] = self::table_exists( $table ) ? (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(*) FROM {$table}" ) : -1;
 		}
-		$counts['postmeta_yoast_rows'] = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key LIKE '\\_yoast\\_wpseo\\_%'" );
-		$counts['termmeta_yoast_rows'] = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->termmeta} WHERE meta_key LIKE 'wpseo\\_%'" );
+		$counts['postmeta_yoast_rows'] = (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key LIKE '\\_yoast\\_wpseo\\_%'" );
+		$counts['termmeta_yoast_rows'] = (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(*) FROM {$wpdb->termmeta} WHERE meta_key LIKE 'wpseo\\_%'" );
 		foreach ( array( '_yoast_wpseo_metadesc', '_yoast_wpseo_title', '_yoast_wpseo_primary_category' ) as $key ) {
-			$counts[ 'postmeta' . $key ] = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = %s", $key ) );
+			$counts[ 'postmeta' . $key ] = (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = %s", array( $key ) );
 		}
 		// A checksum of each Yoast option shows that not one value changed.
 		foreach ( self::YOAST_OPTIONS as $name ) {
@@ -839,6 +841,6 @@ final class YoastImportService {
 
 	private static function table_exists( string $table ): bool {
 		global $wpdb;
-		return $table === $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table ) ) );
+		return $table === \AdminKit\Helpers\Db::get_var( 'SHOW TABLES LIKE %s', array( $wpdb->esc_like( $table ) ) );
 	}
 }
