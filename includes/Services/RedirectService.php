@@ -85,8 +85,14 @@ final class RedirectService {
 			return '';
 		}
 		if ( preg_match( '#^https?://#i', $input ) ) {
+			// One door for "an address of this site" (WPRJ-685 D-1): `Host::allowed()` decides, so a foreign host, a
+			// non-http scheme or user information can never pass as a source path; a `www.` spelling of our own host
+			// counts as the same site.
+			if ( ! Host::allowed( $input, array( self::home_host() ), array( 'http', 'https' ) ) ) {
+				return '';
+			}
 			$parts = wp_parse_url( $input );
-			if ( ! is_array( $parts ) || empty( $parts['host'] ) || strtolower( (string) $parts['host'] ) !== self::home_host() ) {
+			if ( ! is_array( $parts ) ) {
 				return '';
 			}
 			$input = self::strip_home( (string) ( $parts['path'] ?? '/' ) );

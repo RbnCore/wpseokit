@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Wpseokit\Rules;
 
 use AdminKit\Core\Cache;
+use AdminKit\Core\Security\Host;
 use Wpseokit\Registry;
 use Wpseokit\Repositories\SettingsRepository;
 
@@ -38,35 +39,63 @@ final class Probe {
 		if ( isset( self::$memo[ $key ] ) ) {
 			return self::$memo[ $key ];
 		}
+		$out = self::refuse( $url ) ? self::not_measured() : self::request( $url, $method );
+		self::$memo[ $key ] = $out;
+		return $out;
+	}
+
+	/** One outgoing request; only ever runs after `refuse()` said yes (no redirect follow, fixed timeout). */
+	private static function request( string $url, string $method ): array {
 		$response = wp_remote_request(
 			$url,
 			array(
-				'method'     => $method,
-				'timeout'    => self::timeout(),
+				'method'      => $method,
+				'timeout'     => self::timeout(),
 				'redirection' => 0,
-				'user-agent' => self::UA,
-				'headers'    => array( 'Accept' => '*/*' ),
+				'user-agent'  => self::UA,
+				'headers'     => array( 'Accept' => '*/*' ),
 			)
 		);
-		$out = array(
-			'status'   => 0,
-			'headers'  => array(),
-			'body'     => '',
-			'location' => '',
-			'error'    => '',
-		);
+		$out = self::not_measured();
 		if ( is_wp_error( $response ) ) {
 			$out['error'] = $response->get_error_message();
 		} else {
-			$out['status'] = (int) wp_remote_retrieve_response_code( $response );
+			$out['error']    = '';
+			$out['status']   = (int) wp_remote_retrieve_response_code( $response );
 			foreach ( wp_remote_retrieve_headers( $response ) as $name => $value ) {
 				$out['headers'][ strtolower( (string) $name ) ] = is_array( $value ) ? implode( ', ', $value ) : (string) $value;
 			}
 			$out['body']     = 'HEAD' === $method ? '' : (string) wp_remote_retrieve_body( $response );
 			$out['location'] = $out['headers']['location'] ?? '';
 		}
-		self::$memo[ $key ] = $out;
 		return $out;
+	}
+
+	/**
+	 * May this address be contacted at all? (`Host::is_public()` decides, our own site is always allowed.) Our own
+	 * host — a local development spelling of it included — passes; every other address must be public, so a stored
+	 * redirect, og:image or schema URL cannot turn the server into a client of its own network.
+	 */
+	private static function refuse( string $url ): bool {
+		$host = Host::host( $url );
+		if ( '' === $host ) {
+			return true;
+		}
+		if ( Host::same_site_pair( $host, (string) wp_parse_url( home_url( '/' ), PHP_URL_HOST ) ) ) {
+			return false;
+		}
+		return ! Host::is_public( $host );
+	}
+
+	/** The "nothing measured" answer: status 0 (every rule reads that as failed), same shape as a real answer. */
+	private static function not_measured(): array {
+		return array(
+			'status'   => 0,
+			'headers'  => array(),
+			'body'     => '',
+			'location' => '',
+			'error'    => '',
+		);
 	}
 
 	/** Drops the per-request memory (a new measurement run). */
