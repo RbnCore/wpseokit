@@ -88,20 +88,6 @@
 		return true;
 	}
 
-	/* ---------- Tools menu ---------- */
-
-	function initMenu() {
-		$$( '[data-menu]' ).forEach( function ( btn ) {
-			var list = doc.getElementById( btn.getAttribute( 'aria-controls' ) );
-			if ( ! list ) { return; }
-			function set( open ) { btn.setAttribute( 'aria-expanded', open ? 'true' : 'false' ); list.hidden = ! open; }
-			btn.addEventListener( 'click', function () { var open = btn.getAttribute( 'aria-expanded' ) !== 'true'; set( open ); if ( open ) { var a = $( 'a', list ); if ( a ) { a.focus(); } } } );
-			doc.addEventListener( 'keydown', function ( e ) { if ( e.key === 'Escape' && btn.getAttribute( 'aria-expanded' ) === 'true' ) { set( false ); btn.focus(); } } );
-			doc.addEventListener( 'click', function ( e ) { if ( ! btn.parentNode.contains( e.target ) ) { set( false ); } } );
-			list.addEventListener( 'focusout', function ( e ) { if ( e.relatedTarget && ! btn.parentNode.contains( e.relatedTarget ) ) { set( false ); } } );
-		} );
-	}
-
 	function resolveVars( tpl, ctx ) {
 		return String( tpl || '' ).replace( /%([a-z_]+)%/g, function ( all, k ) {
 			var v = ctx[ k ];
@@ -1812,7 +1798,6 @@
 		initDialogs( doc );
 		initCopy( screen );
 		initTabs( screen );
-		initMenu();
 		var name = screen.getAttribute( 'data-screen' );
 		$$( '[data-settings-form]', screen ).forEach( function ( f ) { initVars( f ); initSettings( f ); } );
 		if ( name === 'dashboard' ) { dashApi = dashTabs( screen ); dashboard( screen ); score( screen ); reports( screen ); logs( screen ); importer( screen ); }

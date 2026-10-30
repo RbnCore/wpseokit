@@ -117,87 +117,42 @@ final class Shell {
 		echo '</div>';
 	}
 
-	/** The output chip of the page head. */
-	public static function chip(): string {
-		$paused = Plugin::yoast_active();
-		return $paused
-			? '<span class="rbn-chip rbn-chip--warn"><span class="rbn-dot"></span>' . esc_html__( 'Output paused', 'wpseokit' ) . '</span>'
-			: '<span class="rbn-chip rbn-chip--ok"><span class="rbn-dot"></span>' . esc_html__( 'Output on', 'wpseokit' ) . '</span>';
+	/** The output state of the page head status chip: label and tone. */
+	private static function status(): array {
+		return Plugin::yoast_active()
+			? array( 'label' => __( 'Output paused', 'wpseokit' ), 'tone' => 'warn' )
+			: array( 'label' => __( 'Output on', 'wpseokit' ), 'tone' => 'ok' );
 	}
 
 	/**
-	 * The one page head of every WPSeoKit screen: fixed brand row (name, version chip, output chip), the page buttons on its right and,
-	 * when `$page_title` is given, the page's single `h1` under it. Nothing else prints a head.
+	 * The one page head of every WPSeoKit screen: the shared AdminKit head with this plugin's data. Nothing else prints a head.
 	 *
-	 * Plugin data comes from outside the markup builder (`compose()`), so the same markup moves to a shared kit component as is.
-	 *
-	 * @param string                                                   $page_title Page title (`h1`); empty for no title.
-	 * @param array{current?:string,back?:bool,menu?:bool,actions?:string,badge?:string,title_hidden?:bool} $o
-	 *        current: tool id marked in the Tools menu; back: "Dashboard" button; menu: Tools menu; actions: extra button html;
-	 *        badge: extra chip html after the output chip; title_hidden: keep the `h1` for screen readers only.
+	 * @param string                                            $page_title Page title (`h1`); empty for no title.
+	 * @param array{current?:string,back?:bool,menu?:bool,title_hidden?:bool} $o
+	 *        current: tool id marked in the Tools menu; back: "Dashboard" button; menu: Tools menu; title_hidden: keep the `h1` for screen readers only.
 	 */
 	public static function header( string $page_title = '', array $o = array() ): string {
-		$menu = array();
+		$items = array();
 		foreach ( self::tools() as $id => $t ) {
-			$menu[] = array(
-				'href'    => self::url( $id ),
+			$items[] = array(
+				'url'     => self::url( $id ),
 				'label'   => $t['label'],
-				'icon'    => Ui::icon( $t['icon'] ),
+				'icon'    => $t['icon'],
 				'current' => ( $o['current'] ?? '' ) === $id,
 			);
 		}
-		return self::compose(
+		return \AdminKit\Helpers\Header::render(
 			array(
-				'name'    => __( 'WPSeoKit', 'wpseokit' ),
-				'version' => WPSEOKIT_VERSION,
-				'status'  => self::chip(),
-			),
-			$page_title,
-			array(
-				'back_url'   => ! empty( $o['back'] ) ? self::url() : '',
-				'back_icon'  => Ui::icon( 'chevl' ),
-				'back_label' => __( 'Dashboard', 'wpseokit' ),
-				'menu'       => ! empty( $o['menu'] ) ? $menu : array(),
-				'menu_icons' => array( Ui::icon( 'grid' ), Ui::icon( 'chevd' ) ),
-				'menu_label' => __( 'Tools', 'wpseokit' ),
-				'nav_label'  => __( 'Tool navigation', 'wpseokit' ),
-				'actions'    => (string) ( $o['actions'] ?? '' ),
-				'badge'      => (string) ( $o['badge'] ?? '' ),
+				'name'         => __( 'WPSeoKit', 'wpseokit' ),
+				'version'      => WPSEOKIT_VERSION,
+				'status'       => self::status(),
+				'back'         => ! empty( $o['back'] ) ? array( 'label' => __( 'Dashboard', 'wpseokit' ), 'url' => self::url() ) : array(),
+				'menu'         => ! empty( $o['menu'] ) ? array( 'label' => __( 'Tools', 'wpseokit' ), 'items' => $items ) : array(),
+				'nav_label'    => __( 'Tool navigation', 'wpseokit' ),
+				'title'        => $page_title,
 				'title_hidden' => ! empty( $o['title_hidden'] ),
 			)
 		);
-	}
-
-	/**
-	 * Pure markup of the page head: no plugin state read here, every plugin value arrives in the arguments (kit-ready).
-	 *
-	 * @param array{name:string,version:string,status:string}  $brand Plugin name, version, ready status chip html.
-	 * @param array<string, mixed>                              $p     Parts: back_url/back_icon/back_label, menu (rows of href,label,icon,current), menu_icons, menu_label, nav_label, actions, badge, title_hidden.
-	 */
-	public static function compose( array $brand, string $page_title, array $p ): string {
-		$buttons = '';
-		if ( ! empty( $p['back_url'] ) ) {
-			$buttons .= '<a class="rbn-btn" href="' . esc_url( $p['back_url'] ) . '">' . $p['back_icon'] . esc_html( $p['back_label'] ) . '</a>';
-		}
-		if ( ! empty( $p['menu'] ) ) {
-			$items = '';
-			foreach ( $p['menu'] as $row ) {
-				$items .= '<li><a href="' . esc_url( $row['href'] ) . '"' . ( $row['current'] ? ' aria-current="page"' : '' ) . '>' . $row['icon'] . esc_html( $row['label'] ) . '</a></li>';
-			}
-			$buttons .= '<div class="wps-menu"><button type="button" class="rbn-btn" aria-expanded="false" aria-controls="tools-menu" data-menu>' . $p['menu_icons'][0] . esc_html( $p['menu_label'] ) . $p['menu_icons'][1] . '</button>'
-				. '<ul class="wps-menu__list" id="tools-menu" hidden>' . $items . '</ul></div>';
-		}
-		$nav = '' !== $buttons ? '<nav class="wps-crumb" aria-label="' . esc_attr( $p['nav_label'] ) . '">' . $buttons . '</nav>' : '';
-		$act = $nav . ( $p['actions'] ?? '' );
-
-		$out = '<div class="rbn-head wps-brand"><div class="rbn-head__id"><p class="rbn-brand">' . esc_html( $brand['name'] ) . '</p><span class="rbn-chip">' . esc_html( $brand['version'] ) . '</span>' . $brand['status'] . ( $p['badge'] ?? '' ) . '</div>'
-			. ( '' !== $act ? '<div class="rbn-head__act">' . $act . '</div>' : '' ) . '</div>';
-		if ( '' !== $page_title && ! empty( $p['title_hidden'] ) ) {
-			$out .= '<h1 class="rbn-sr">' . esc_html( $page_title ) . '</h1>';
-		} elseif ( '' !== $page_title ) {
-			$out .= '<div class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html( $page_title ) . '</h1></div></div>';
-		}
-		return $out;
 	}
 
 	/** Yoast warning shown above a tool. */
