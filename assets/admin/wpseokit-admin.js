@@ -126,6 +126,11 @@
 		}
 		$$( '[data-var-target]', root ).forEach( function ( el ) { if ( $( '[data-preview-for="' + el.id + '"]' ) ) { refresh( el ); } } );
 		root.addEventListener( 'input', function ( e ) { if ( e.target.matches && e.target.matches( '[data-var-target]' ) ) { refresh( e.target ); } } );
+		// Character count under single-line text fields.
+		root.addEventListener( 'input', function ( e ) {
+			var el = e.target, out = el.matches && el.matches( '[data-count]' ) ? $( '[data-count-for="' + el.id + '"]', root ) : null;
+			if ( out ) { out.textContent = el.value.length + ' / ' + el.maxLength; }
+		} );
 		root.addEventListener( 'change', function ( e ) { if ( e.target.name === 'templates.sep' ) { $$( '[data-var-target]', root ).forEach( refresh ); } } );
 	}
 

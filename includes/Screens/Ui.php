@@ -14,6 +14,7 @@ use Wpseokit\Admin;
 use Wpseokit\Plugin;
 use Wpseokit\Repositories\SettingsRepository;
 use Wpseokit\Rest;
+use Wpseokit\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -513,7 +514,7 @@ final class Ui {
 	/**
 	 * Text field bound to a setting path.
 	 *
-	 * @param array<string, mixed> $o help, mono, placeholder, textarea, rows, vars(array), type, min, max, step, list(bool)
+	 * @param array<string, mixed> $o help, mono, placeholder, textarea, rows, vars(array), type, min, max, step, list(bool), counter(bool: single line with a live character count)
 	 */
 	public static function text( string $path, string $id, string $label, array $o = array() ): string {
 		$value = self::val( $path, '' );
@@ -534,7 +535,13 @@ final class Ui {
 				$attrs .= ' data-type="int" min="' . (int) ( $o['min'] ?? 0 ) . '" max="' . (int) ( $o['max'] ?? 0 ) . '" step="' . (int) ( $o['step'] ?? 1 ) . '"';
 			}
 			$cls = 'rbn-input' . ( ! empty( $o['mono'] ) ? ' rbn-input--mono' : '' ) . ( 'number' === $type ? ' rbn-input--s' : '' );
+			if ( ! empty( $o['counter'] ) ) {
+				$attrs .= ' maxlength="' . Settings::TEXT_MAX . '" data-count';
+			}
 			$ctl = '<input class="' . $cls . '" type="' . esc_attr( $type ) . '"' . $attrs . ' value="' . esc_attr( (string) $value ) . '">';
+			if ( ! empty( $o['counter'] ) ) {
+				$ctl .= '<p class="wps-count" data-count-for="' . esc_attr( $id ) . '">' . (int) mb_strlen( (string) $value ) . ' / ' . Settings::TEXT_MAX . '</p>';
+			}
 		}
 		if ( ! empty( $o['unit'] ) ) {
 			$ctl = '<span class="wps-unit">' . $ctl . '<span>' . esc_html( (string) $o['unit'] ) . '</span></span>';

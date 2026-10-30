@@ -17,6 +17,9 @@ final class Settings {
 
 	public const OPTION = 'wpseokit_settings';
 
+	/** Longest single-line text value, in characters. */
+	public const TEXT_MAX = 300;
+
 	/** Template row for a post type. */
 	private const TPL_POST = array(
 		'title'       => '%title% %page% %sep% %sitename%',
@@ -333,7 +336,7 @@ final class Settings {
 		}
 		$text = wp_strip_all_tags( wp_check_invalid_utf8( (string) $value ) );
 		$text = trim( (string) preg_replace( '/[\x00-\x1F\x7F]+/', ' ', $text ) );
-		return function_exists( 'mb_substr' ) ? mb_substr( $text, 0, 300 ) : substr( $text, 0, 300 );
+		return function_exists( 'mb_substr' ) ? mb_substr( $text, 0, self::TEXT_MAX ) : substr( $text, 0, self::TEXT_MAX );
 	}
 
 	/**

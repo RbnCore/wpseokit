@@ -52,7 +52,7 @@ final class LlmsScreen {
 		$copy .= '<button type="button" class="rbn-btn" data-copy="ll-url">' . Ui::icon( 'copy' ) . esc_html__( 'Copy', 'wpseokit' ) . '</button>';
 		$copy .= '<a class="rbn-btn" href="' . esc_url( $url ) . '" target="_blank" rel="noopener">' . Ui::icon( 'out' ) . esc_html__( 'Open', 'wpseokit' ) . '</a></div>';
 		$body .= Ui::row( Ui::label( 'll-url', __( 'File address', 'wpseokit' ) ), $copy );
-		$body .= Ui::text( 'llms.summary', 'll-sum', __( 'Site summary', 'wpseokit' ), array( 'textarea' => true, 'help' => __( 'One or two sentences. Plain text, no markup. Leave empty to use the site tagline.', 'wpseokit' ) ) );
+		$body .= Ui::text( 'llms.summary', 'll-sum', __( 'Site summary', 'wpseokit' ), array( 'counter' => true, 'help' => __( 'One or two sentences. Plain text, no markup. Leave empty to use the site tagline.', 'wpseokit' ) ) );
 		return Ui::card( __( 'llms.txt file', 'wpseokit' ), __( 'A plain-text page that summarizes your site for AI assistants.', 'wpseokit' ), $body );
 	}
 

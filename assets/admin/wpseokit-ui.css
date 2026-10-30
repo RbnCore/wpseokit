@@ -48,6 +48,7 @@
 .wps-vars[open]>summary{margin-bottom:var(--rbn-s1)}
 .wps-vars .wps-toks{margin-top:0}
 .wps-live{margin:var(--rbn-s2) 0 0;color:var(--rbn-muted)}
+.wps-count{margin:var(--rbn-s2) 0 0;color:var(--rbn-muted);font-size:var(--rbn-fs-sm);font-variant-numeric:tabular-nums}
 .wps-live b{color:var(--rbn-text);font-weight:600}
 
 /* ── 8. Birincil kategori (URL'yi belirler → dikkat gerektirir) ── */

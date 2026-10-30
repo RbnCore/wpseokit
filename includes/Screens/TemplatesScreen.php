@@ -55,7 +55,7 @@ final class TemplatesScreen {
 
 	private static function home(): string {
 		$body  = Ui::text( 'templates.home_title', 'tpl-home-t', __( 'Title template', 'wpseokit' ), array( 'mono' => true, 'vars' => array( '%sitename%', '%sitedesc%', '%sep%', '%page%' ) ) );
-		$body .= Ui::text( 'templates.home_description', 'tpl-home-d', __( 'Meta description', 'wpseokit' ), array( 'textarea' => true, 'vars' => array( '%sitename%', '%sitedesc%' ), 'help' => __( 'Shown under the title in search results. Aim for 70–155 characters. Leave empty to use the tagline.', 'wpseokit' ) ) );
+		$body .= Ui::text( 'templates.home_description', 'tpl-home-d', __( 'Meta description', 'wpseokit' ), array( 'counter' => true, 'vars' => array( '%sitename%', '%sitedesc%' ), 'help' => __( 'Shown under the title in search results. Aim for 70–155 characters. Leave empty to use the tagline.', 'wpseokit' ) ) );
 		return Ui::card( __( 'Home page', 'wpseokit' ), __( 'How the front page looks in search results.', 'wpseokit' ), $body );
 	}
 
@@ -75,7 +75,7 @@ final class TemplatesScreen {
 				'tpl-pt-' . $name . '-d',
 				__( 'Meta description', 'wpseokit' ),
 				array(
-					'textarea' => true,
+					'counter'  => true,
 					'vars'     => self::post_vars(),
 					'help'     => __( 'Used when an item has no description of its own. An empty template falls back to the excerpt, then to the first 155 characters of the content.', 'wpseokit' ),
 				)
