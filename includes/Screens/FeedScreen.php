@@ -70,8 +70,8 @@ final class FeedScreen {
 
 	private static function content(): string {
 		$body  = Ui::toggle_row( __( 'Source link', 'wpseokit' ), 'feed.source_link_enabled', 'fd-src', __( 'Add a link back to the original post', 'wpseokit' ), __( 'Scrapers that copy your feed also copy the link.', 'wpseokit' ) );
-		$body .= Ui::text( 'feed.footer_text', 'fd-foot', __( 'Footer text', 'wpseokit' ), array( 'counter' => true, 'vars' => array( '%title%', '%permalink%', '%sitename%', '%author%', '%date%' ) ) );
-		$body .= Ui::toggle_row( __( 'Copyright', 'wpseokit' ), 'feed.copyright_enabled', 'fd-cr', __( 'Add a copyright line', 'wpseokit' ), __( 'Printed under the footer text.', 'wpseokit' ) );
+		$body .= Ui::text( 'feed.footer_text', 'fd-foot', __( 'Feed item footer', 'wpseokit' ), array( 'counter' => true, 'help' => __( 'Added to the end of every feed item. Only subscribers see it, not your site pages.', 'wpseokit' ), 'vars' => array( '%title%', '%permalink%', '%sitename%', '%author%', '%date%' ) ) );
+		$body .= Ui::toggle_row( __( 'Copyright', 'wpseokit' ), 'feed.copyright_enabled', 'fd-cr', __( 'Add a copyright line', 'wpseokit' ), __( 'Printed under the feed item footer.', 'wpseokit' ) );
 		$body .= Ui::text( 'feed.copyright_text', 'fd-crt', __( 'Copyright text', 'wpseokit' ) );
 		$body .= Ui::toggle_row( __( 'Featured image', 'wpseokit' ), 'feed.featured_image_enabled', 'fd-img', __( 'Include the featured image in each item', 'wpseokit' ) );
 		$body .= Ui::row( esc_html__( 'Example item', 'wpseokit' ), '<pre class="wps-pre" tabindex="0" aria-label="' . esc_attr__( 'Example feed item', 'wpseokit' ) . '" data-feed-sample>' . esc_html__( 'Loading…', 'wpseokit' ) . '</pre>' );

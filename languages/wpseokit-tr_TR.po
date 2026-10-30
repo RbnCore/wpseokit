@@ -296,7 +296,7 @@ msgstr "Eksik Open Graph etiketlerini ekleyin; ana sayfa için og:title, og:type
 
 #: src/includes/Rules/score-rules.json
 msgid "Organization node is complete"
-msgstr "Organization düğümü eksiksiz"
+msgstr "Kuruluş düğümü eksiksiz"
 
 #: src/includes/Rules/score-rules.json
 msgid "Fill the organization name, URL and logo in the schema settings."
@@ -851,8 +851,12 @@ msgid "Scrapers that copy your feed also copy the link."
 msgstr "Beslemenizi kopyalayan botlar bağlantıyı da kopyalar."
 
 #: src/includes/Screens
-msgid "Footer text"
-msgstr "Alt metin"
+msgid "Feed item footer"
+msgstr "RSS öğesi alt bilgisi"
+
+#: src/includes/Screens
+msgid "Added to the end of every feed item. Only subscribers see it, not your site pages."
+msgstr "Her besleme öğesinin sonuna eklenir. Yalnız abonelere görünür, site sayfalarınızda görünmez."
 
 #: src/includes/Screens
 msgid "Copyright"
@@ -863,8 +867,8 @@ msgid "Add a copyright line"
 msgstr "Telif hakkı satırı ekle"
 
 #: src/includes/Screens
-msgid "Printed under the footer text."
-msgstr "Alt metnin altına basılır."
+msgid "Printed under the feed item footer."
+msgstr "RSS öğesi alt bilgisinin altına basılır."
 
 #: src/includes/Screens
 msgid "Copyright text"

@@ -1321,7 +1321,11 @@ msgid "Follows the WordPress permission to edit the post."
 msgstr ""
 
 #: includes/Screens/FeedScreen.php:73
-msgid "Footer text"
+msgid "Added to the end of every feed item. Only subscribers see it, not your site pages."
+msgstr ""
+
+#: includes/Screens/FeedScreen.php:73
+msgid "Feed item footer"
 msgstr ""
 
 #: includes/Screens/Ui.php:116
@@ -2412,7 +2416,7 @@ msgid "Print Twitter card tags"
 msgstr ""
 
 #: includes/Screens/FeedScreen.php:74
-msgid "Printed under the footer text."
+msgid "Printed under the feed item footer."
 msgstr ""
 
 #: includes/Screens/LlmsScreen.php:50
