@@ -27,6 +27,9 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+use AdminKit\Core\Security\Host;
+
 use Wpseokit\Admin;
 use Wpseokit\Logs;
 use Wpseokit\Plugin;
@@ -44,6 +47,9 @@ final class PreferredAddressApplyService {
 
 	/** The open confirmation window: `until`, `confirmed`, `token`, `origin`, `host`. */
 	public const PENDING_OPTION = 'wpseokit_pa_pending';
+
+	/** Concurrency lock to prevent race conditions during address apply. */
+	public const LOCK_OPTION = 'wpseokit_pa_lock';
 
 	/** The last pre-check of the site owner (per user): the checks, the token and the moment it was made. */
 	public const PRECHECK_META = 'wpseokit_pa_precheck';
@@ -152,7 +158,7 @@ final class PreferredAddressApplyService {
 
 	/** The host of this site's own address, in lower case. */
 	public static function home_host(): string {
-		$host = strtolower( (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
+		$host = strtolower( Host::host( home_url() ) );
 		return self::normalize_host( $host );
 	}
 
@@ -245,7 +251,7 @@ final class PreferredAddressApplyService {
 		if ( '' === $host ) {
 			return false;
 		}
-		if ( 1 === filter_var( $host, FILTER_VALIDATE_IP ) ) {
+		if ( Host::is_ip( $host ) ) {
 			return true;
 		}
 		return 1 === preg_match( '/^[0-9.]+$/', $host );
@@ -527,41 +533,54 @@ final class PreferredAddressApplyService {
 			);
 		}
 
-		$settings_before = array(
-			'preferred_scheme'    => (string) SettingsRepository::get( 'redirects.preferred_scheme', 'auto' ),
-			'preferred_host'      => (string) SettingsRepository::get( 'redirects.preferred_host', '' ),
-			'enforce_address'     => (bool) SettingsRepository::get( 'redirects.enforce_address', false ),
-		);
-
-		if ( $needs_change ) {
-			update_option( 'home', self::with_path( $origin, (string) get_option( 'home' ) ), true );
-			update_option( 'siteurl', self::with_path( $origin, (string) get_option( 'siteurl' ) ), true );
+		// K-1: Check if a confirmation window is already active.
+		$pending_state = self::pending_state();
+		if ( ! empty( $pending_state['open'] ) ) {
+			return array(
+				'ok'      => false,
+				'code'    => 'already_applied',
+				'message' => __( 'A confirmation window is already open for this address.', 'wpseokit' ),
+				'pending' => $pending_state,
+			);
 		}
 
-		SettingsRepository::update(
-			array(
-				'redirects' => array(
-					'preferred_scheme' => $sch['scheme'],
-					'preferred_host'   => $target['host'],
-					'enforce_address'  => true,
-				),
-			)
-		);
+		// Atomic lock to prevent concurrent executions.
+		if ( ! add_option( self::LOCK_OPTION, time(), '', 'no' ) ) {
+			return self::fail( 'locked', __( 'Another address operation is currently in progress. Please try again shortly.', 'wpseokit' ) );
+		}
 
-		update_option(
-			self::UNDO_OPTION,
-			array(
-				'home'    => $before['home'],
-				'siteurl' => $before['siteurl'],
-				'settings' => $settings_before,
-				'origin'  => $origin,
-				'at'      => time(),
-				'state'   => 'applied',
-			),
-			false
-		);
+		try {
+			$settings_before = array(
+				'preferred_scheme' => (string) SettingsRepository::get( 'redirects.preferred_scheme', 'auto' ),
+				'preferred_host'   => (string) SettingsRepository::get( 'redirects.preferred_host', '' ),
+				'enforce_address'  => (bool) SettingsRepository::get( 'redirects.enforce_address', false ),
+			);
 
-		if ( $needs_change ) {
+		if ( ! $needs_change ) {
+				// K-1: When address already matches target, only ensure forced redirect is on.
+				// Do NOT overwrite undo record and do NOT overwrite pending with fake confirmation.
+				SettingsRepository::update(
+					array(
+						'redirects' => array(
+							'preferred_scheme' => $sch['scheme'],
+							'preferred_host'   => $target['host'],
+							'enforce_address'  => true,
+						),
+					)
+				);
+				self::flush_caches();
+				delete_option( self::LOCK_OPTION );
+				return array(
+					'ok'      => true,
+					'code'    => 'applied',
+					'message' => __( 'The preferred address is already in effect. Forced redirect has been enabled.', 'wpseokit' ),
+					'origin'  => $origin,
+					'changed' => false,
+					'pending' => self::pending_state(),
+				);
+			}
+
+			// K-3: Reverse write order: persist undo checkpoint and pending confirmation window FIRST.
 			$token   = self::token();
 			$pending = array(
 				'until'     => time() + self::CONFIRM_WINDOW,
@@ -570,36 +589,62 @@ final class PreferredAddressApplyService {
 				'origin'    => $origin,
 				'host'      => $target['host'],
 			);
-			update_option( self::PENDING_OPTION, $pending, false );
-		} else {
-			$pending = array(
-				'until'     => 0,
-				'confirmed' => true,
-				'token'     => '',
-				'origin'    => $origin,
-				'host'      => $target['host'],
+
+			update_option(
+				self::UNDO_OPTION,
+				array(
+					'home'     => $before['home'],
+					'siteurl'  => $before['siteurl'],
+					'settings' => $settings_before,
+					'origin'   => $origin,
+					'at'       => time(),
+					'state'    => 'applied',
+				),
+				false
 			);
 			update_option( self::PENDING_OPTION, $pending, false );
+
+			// Now mutate WordPress core options with rollback safety on failure.
+			$new_home    = self::with_path( $origin, (string) get_option( 'home' ) );
+			$new_siteurl = self::with_path( $origin, (string) get_option( 'siteurl' ) );
+
+			update_option( 'home', $new_home, true );
+			update_option( 'siteurl', $new_siteurl, true );
+
+			SettingsRepository::update(
+				array(
+					'redirects' => array(
+						'preferred_scheme' => $sch['scheme'],
+						'preferred_host'   => $target['host'],
+						'enforce_address'  => true,
+					),
+				)
+			);
+
+			self::flush_caches();
+			Logs::activity( 'redirects', 'preferred_address_applied', $origin, 'redirects' );
+			/**
+			 * Fires after the preferred address was applied: the new address is written, the forced redirect is on and
+			 * the confirmation window is open.
+			 *
+			 * @param string $origin The new address (scheme://host).
+			 */
+			do_action( 'wpseokit_preferred_address_applied', $origin );
+
+			delete_option( self::LOCK_OPTION );
+
+			return array(
+				'ok'      => true,
+				'code'    => 'applied',
+				'message' => __( 'The new address was applied. The old address now sends visitors to it with one 301.', 'wpseokit' ),
+				'origin'  => $origin,
+				'changed' => true,
+				'pending' => self::pending_state(),
+			);
+		} catch ( \Throwable $e ) {
+			delete_option( self::LOCK_OPTION );
+			throw $e;
 		}
-
-		self::flush_caches();
-		Logs::activity( 'redirects', 'preferred_address_applied', $origin, 'redirects' );
-		/**
-		 * Fires after the preferred address was applied: the new address is written, the forced redirect is on and
-		 * the confirmation window is open.
-		 *
-		 * @param string $origin The new address (scheme://host).
-		 */
-		do_action( 'wpseokit_preferred_address_applied', $origin );
-
-		return array(
-			'ok'      => true,
-			'code'    => 'applied',
-			'message' => __( 'The new address was applied. The old address now sends visitors to it with one 301.', 'wpseokit' ),
-			'origin'  => $origin,
-			'changed' => $needs_change,
-			'pending' => self::pending_state(),
-		);
 	}
 
 	/**
@@ -624,7 +669,8 @@ final class PreferredAddressApplyService {
 				'pending' => self::pending_state(),
 			);
 		}
-		if ( '' !== $token && ! hash_equals( (string) ( $pending['token'] ?? '' ), $token ) ) {
+		$token = trim( $token );
+		if ( '' === $token || ! hash_equals( (string) ( $pending['token'] ?? '' ), $token ) ) {
 			return self::fail( 'token', __( 'The confirmation link is not valid any more. Open the Preferred address page again.', 'wpseokit' ) );
 		}
 		if ( time() > (int) ( $pending['until'] ?? 0 ) ) {
@@ -671,15 +717,51 @@ final class PreferredAddressApplyService {
 		if ( ! is_array( $undo ) || ! isset( $undo['home'], $undo['siteurl'] ) ) {
 			return self::fail( 'no_undo', __( 'There is nothing to undo: no previous address was saved.', 'wpseokit' ) );
 		}
+		// K-2: Validate restored target addresses against current home host before writing.
+		$current_host      = self::home_host();
+		$undo_home_host    = strtolower( (string) wp_parse_url( (string) $undo['home'], PHP_URL_HOST ) );
+		$undo_siteurl_host = strtolower( (string) wp_parse_url( (string) $undo['siteurl'], PHP_URL_HOST ) );
+
+		$home_valid    = '' !== $undo_home_host ? self::validate_target( $undo_home_host, $current_host ) : array( 'ok' => false );
+		$siteurl_valid = '' !== $undo_siteurl_host ? self::validate_target( $undo_siteurl_host, $current_host ) : array( 'ok' => false );
+
+		if ( ! $home_valid['ok'] || ! $siteurl_valid['ok'] || $undo_home_host !== $undo_siteurl_host ) {
+			// Fail-closed: do not write invalid or unauthorized address into core options.
+			SettingsRepository::update(
+				array(
+					'redirects' => array(
+						'preferred_scheme' => 'auto',
+						'preferred_host'   => '',
+						'enforce_address'  => false,
+					),
+				)
+			);
+			update_option( self::PENDING_OPTION, array(), false );
+			$undo['state'] = 'invalid';
+			update_option( self::UNDO_OPTION, $undo, false );
+			self::flush_caches();
+			return self::fail( 'invalid_undo', __( 'The saved rollback record contains an invalid or unauthorized address.', 'wpseokit' ) );
+		}
+
 		update_option( 'home', (string) $undo['home'], true );
 		update_option( 'siteurl', (string) $undo['siteurl'], true );
 		$settings = (array) ( $undo['settings'] ?? array() );
+
+		// Validate settings.preferred_host before restoring.
+		$pref_host = (string) ( $settings['preferred_host'] ?? '' );
+		if ( '' !== $pref_host ) {
+			$pref_val = self::validate_target( $pref_host, $undo_home_host );
+			if ( ! $pref_val['ok'] ) {
+				$pref_host = '';
+			}
+		}
+
 		SettingsRepository::update(
 			array(
 				'redirects' => array(
 					'preferred_scheme' => (string) ( $settings['preferred_scheme'] ?? 'auto' ),
-					'preferred_host'   => (string) ( $settings['preferred_host'] ?? '' ),
-					'enforce_address'  => (bool) ( $settings['enforce_address'] ?? false ),
+					'preferred_host'   => $pref_host,
+					'enforce_address'  => false,
 				),
 			)
 		);
@@ -883,22 +965,16 @@ final class PreferredAddressApplyService {
 		}
 		$like = '%' . $wpdb->esc_like( $host ) . '%';
 		$sql  = "SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_status NOT IN ('trash','auto-draft') AND (post_content LIKE %s OR post_excerpt LIKE %s)";
-		return (int) $wpdb->get_var( $wpdb->prepare( $sql, $like, $like ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from $wpdb->posts, placeholders only.
+		return (int) \AdminKit\Helpers\Db::get_var( $sql, array( $like, $like ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name from $wpdb->posts, placeholders only.
 	}
 
 	/**
-	 * The form of the screen goes to admin-post.php: the action is a nonce (`wpseokit_pa`) and the capability
-	 * (`manage_options`) are checked here. The screen itself is drawn by the Redirects screen.
+	 * The form of the screen goes to admin-post.php: the nonce (`wpseokit_pa`) and the capability (`manage_options`)
+	 * are checked by the central `Guard::admin_action()`. The screen itself is drawn by the Redirects screen.
 	 */
 	public static function handle_admin_post(): void {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have permission to do this.', 'wpseokit' ), '', array( 'response' => 403 ) );
-		}
+		Guard::admin_action( 'wpseokit_pa', 'manage_options' );
 		$action = isset( $_POST['pa_action'] ) ? sanitize_key( wp_unslash( $_POST['pa_action'] ) ) : '';
-		$nonce  = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
-		if ( ! wp_verify_nonce( $nonce, 'wpseokit_pa' ) ) {
-			wp_die( esc_html__( 'This link has expired. Open the page again and try once more.', 'wpseokit' ), '', array( 'response' => 403 ) );
-		}
 		$host   = isset( $_POST['pa-host'] ) ? sanitize_text_field( wp_unslash( $_POST['pa-host'] ) ) : '';
 		$scheme = isset( $_POST['pa-scheme'] ) ? sanitize_key( wp_unslash( $_POST['pa-scheme'] ) ) : 'auto';
 		$token  = isset( $_POST['pa-token'] ) ? sanitize_text_field( wp_unslash( $_POST['pa-token'] ) ) : '';
@@ -976,7 +1052,7 @@ final class PreferredAddressApplyService {
 					array(
 						'methods'             => $def[0],
 						'callback'            => array( self::class, $def[1] ),
-						'permission_callback' => Rest::permission(),
+						'permission_callback' => Guard::rest(),
 						'args'                => array(
 							'host'   => array( 'type' => 'string', 'default' => '' ),
 							'scheme' => array( 'type' => 'string', 'default' => 'auto' ),
@@ -997,17 +1073,32 @@ final class PreferredAddressApplyService {
 
 	/** Applies the address. */
 	public static function rest_apply( \WP_REST_Request $request ): \WP_REST_Response {
-		$body = $request->get_json_params();
-		$body = is_array( $body ) ? $body : $request->get_body_params();
+		$body     = $request->get_json_params();
+		$body     = is_array( $body ) ? $body : $request->get_body_params();
+		$token    = (string) ( $body['token'] ?? '' );
+		$precheck = self::precheck_of();
+		if ( ! self::precheck_valid( $precheck, $token ) ) {
+			return new \WP_REST_Response(
+				self::fail( 'no_precheck', __( 'Run the check first; the address cannot be applied before it.', 'wpseokit' ) ),
+				422
+			);
+		}
 		$result = self::apply( (string) ( $body['host'] ?? '' ), (string) ( $body['scheme'] ?? 'auto' ) );
 		return new \WP_REST_Response( $result, $result['ok'] ? 200 : 422 );
 	}
 
 	/** Confirms the new address. */
 	public static function rest_confirm( \WP_REST_Request $request ): \WP_REST_Response {
-		$body = $request->get_json_params();
-		$body = is_array( $body ) ? $body : $request->get_body_params();
-		$result = self::confirm( (string) ( $body['token'] ?? '' ) );
+		$body  = $request->get_json_params();
+		$body  = is_array( $body ) ? $body : $request->get_body_params();
+		$token = trim( (string) ( $body['token'] ?? '' ) );
+		if ( '' === $token ) {
+			return new \WP_REST_Response(
+				self::fail( 'token', __( 'The confirmation token is required.', 'wpseokit' ) ),
+				422
+			);
+		}
+		$result = self::confirm( $token );
 		return new \WP_REST_Response( $result, $result['ok'] ? 200 : 422 );
 	}
 

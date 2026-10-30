@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Screens;
 
+use AdminKit\Core\Security\Host;
+
 use Wpseokit\Services\PreferredAddressApplyService;
 
 defined( 'ABSPATH' ) || exit;
@@ -94,7 +96,7 @@ final class RedirectsScreen {
 		$form = '<form class="wps-stack" data-addr-form novalidate>'
 			. Ui::note( 'info', '<b>' . esc_html__( 'Why only one address?', 'wpseokit' ) . '</b> ' . wp_kses( __( '<code>http</code>, <code>https</code>, <code>www</code> and no <code>www</code> make four different addresses. If all four answer, search engines see four copies of your site. One answers, the other three redirect to it.', 'wpseokit' ), array( 'code' => array() ) ) )
 			. Ui::row( '<span id="pa-sch-l">' . esc_html__( 'Scheme', 'wpseokit' ) . '</span>', '<fieldset class="wps-radios" aria-labelledby="pa-sch-l">' . $sch . '</fieldset>', esc_html__( 'Automatic follows your WordPress address. Google prefers https pages.', 'wpseokit' ) )
-			. '<div class="rbn-field" data-addr-host-field>' . Ui::label( 'pa-host', __( 'Host name', 'wpseokit' ) ) . '<input class="rbn-input rbn-input--mono" id="pa-host" name="pa-host" type="text" value="' . esc_attr( (string) Ui::val( 'redirects.preferred_host', '' ) ) . '" placeholder="' . esc_attr( (string) wp_parse_url( home_url(), PHP_URL_HOST ) ) . '" autocomplete="off" spellcheck="false" aria-describedby="pa-host-h"><p class="rbn-help" id="pa-host-h">' . wp_kses( __( 'Leave empty to use the host of your WordPress address. Choose with or without <code>www</code>, and keep it. Changing it later means new redirects for every address.', 'wpseokit' ), array( 'code' => array() ) ) . '</p><p class="rbn-field__err" id="pa-host-e" data-addr-host-err hidden>' . Ui::icon( 'alert' ) . '<span>' . wp_kses( __( 'Enter the host name only, such as <code>example.com</code>. Leave out <code>https://</code> and any path.', 'wpseokit' ), array( 'code' => array() ) ) . '</span></p></div>'
+			. '<div class="rbn-field" data-addr-host-field>' . Ui::label( 'pa-host', __( 'Host name', 'wpseokit' ) ) . '<input class="rbn-input rbn-input--mono" id="pa-host" name="pa-host" type="text" value="' . esc_attr( (string) Ui::val( 'redirects.preferred_host', '' ) ) . '" placeholder="' . esc_attr( Host::host( home_url() ) ) . '" autocomplete="off" spellcheck="false" aria-describedby="pa-host-h"><p class="rbn-help" id="pa-host-h">' . wp_kses( __( 'Leave empty to use the host of your WordPress address. Choose with or without <code>www</code>, and keep it. Changing it later means new redirects for every address.', 'wpseokit' ), array( 'code' => array() ) ) . '</p><p class="rbn-field__err" id="pa-host-e" data-addr-host-err hidden>' . Ui::icon( 'alert' ) . '<span>' . wp_kses( __( 'Enter the host name only, such as <code>example.com</code>. Leave out <code>https://</code> and any path.', 'wpseokit' ), array( 'code' => array() ) ) . '</span></p></div>'
 			. '<p data-addr-inuse hidden>' . esc_html__( 'In use:', 'wpseokit' ) . ' <b class="wps-url" data-addr-origin></b> <span class="rbn-help">' . esc_html__( 'The audit and the rules use what you see here, even before you save.', 'wpseokit' ) . '</span></p>'
 			. '<div data-addr-warn></div>'
 			. '<div class="rbn-card__act"><button type="submit" class="rbn-btn rbn-btn--pri">' . Ui::icon( 'save' ) . esc_html__( 'Save preference', 'wpseokit' ) . '</button><span class="rbn-help" data-addr-saved role="status"></span></div></form>';
@@ -275,7 +277,7 @@ final class RedirectsScreen {
 			'<b>' . esc_html__( 'Waiting for your confirmation.', 'wpseokit' ) . '</b> ' . sprintf(
 				/* translators: 1: the new address, 2: minutes left */
 				__( 'The site now answers on %1$s. Log in there and confirm within %2$d minutes; if you do not, the previous address comes back by itself.', 'wpseokit' ),
-				$origin,
+				esc_html( $origin ),
 				$minutes
 			)
 		);
@@ -293,7 +295,7 @@ final class RedirectsScreen {
 			'<b>' . esc_html__( 'The new address is in effect.', 'wpseokit' ) . '</b> ' . sprintf(
 				/* translators: %s: the old host name */
 				__( 'The old address (%s) now sends visitors to the new one with one 301.', 'wpseokit' ),
-				$old
+				esc_html( $old )
 			)
 		);
 		$out  .= Ui::note(

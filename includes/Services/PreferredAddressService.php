@@ -22,6 +22,9 @@ declare(strict_types=1);
 
 namespace Wpseokit\Services;
 
+use AdminKit\Core\Security\Guard;
+use AdminKit\Core\Security\Host;
+
 use Wpseokit\Plugin;
 use Wpseokit\Repositories\SettingsRepository;
 use Wpseokit\Rest;
@@ -88,6 +91,11 @@ final class PreferredAddressService {
 		$port   = '' === $host ? $h_prt : '';
 		if ( '' === $host ) {
 			$host = $h_hst;
+		} elseif ( $host !== $h_hst ) {
+			$val = PreferredAddressApplyService::validate_target( $host, $h_hst );
+			if ( ! $val['ok'] ) {
+				$host = $h_hst;
+			}
 		}
 		$bare = (string) preg_replace( '/^www\./', '', $host );
 		return array(
@@ -171,8 +179,11 @@ final class PreferredAddressService {
 		if ( is_array( $pre ) ) {
 			return array_merge( self::blank(), $pre );
 		}
-		if ( microtime( true ) - self::$started > self::BUDGET ) {
+		if ( 0.0 !== self::$started && microtime( true ) - self::$started > self::BUDGET ) {
 			return array_merge( self::blank(), array( 'error' => 'Time budget used up.', 'reason' => 'timeout' ) );
+		}
+		if ( false === wp_http_validate_url( $url ) ) {
+			return array_merge( self::blank(), array( 'error' => __( 'A valid URL was not provided.', 'wpseokit' ), 'reason' => 'other' ) );
 		}
 		$args = array(
 			'timeout'             => self::TIMEOUT,
@@ -180,6 +191,7 @@ final class PreferredAddressService {
 			'user-agent'          => 'WPSeoKit/' . ( defined( 'WPSEOKIT_VERSION' ) ? WPSEOKIT_VERSION : '0' ) . ' address-audit',
 			'limit_response_size' => self::BODY_LIMIT,
 			'sslverify'           => true,
+			'reject_unsafe_urls'  => true,
 		);
 		/** Request arguments of the audit (a local site with a self-signed certificate turns `sslverify` off here). */
 		$args = (array) apply_filters( 'wpseokit_preferred_probe_args', $args, $url );
@@ -382,6 +394,24 @@ final class PreferredAddressService {
 	 */
 	public static function audit( ?array $override = null ): array {
 		self::$started = microtime( true );
+		$home          = (array) wp_parse_url( home_url() );
+		$h_hst         = strtolower( (string) ( $home['host'] ?? '' ) );
+		$cfg_host      = (string) ( ( is_array( $override ) && isset( $override['preferred_host'] ) ) ? $override['preferred_host'] : SettingsRepository::get( 'redirects.preferred_host', '' ) );
+		if ( '' !== $cfg_host && $cfg_host !== $h_hst ) {
+			$target_check = PreferredAddressApplyService::validate_target( $cfg_host, $h_hst );
+			if ( ! $target_check['ok'] ) {
+				return array(
+					'preferred'       => self::preferred(),
+					'canonical'       => array( 'status' => 'error', 'href' => '', 'host' => '', 'matches' => false ),
+					'variants'        => array(),
+					'counts'          => array(),
+					'warnings'        => array( __( 'The preferred address is not a valid address for this site. Network audit aborted.', 'wpseokit' ) ),
+					'hsts'            => array( 'present' => false, 'header' => '' ),
+					'rules'           => array( 'has_rule' => false, 'has_chain' => false ),
+					'runtime_seconds' => 0.0,
+				);
+			}
+		}
 		$pref          = self::preferred( $override );
 		$variants      = array();
 		$counts        = array();
@@ -478,7 +508,7 @@ final class PreferredAddressService {
 			$href            = self::canonical_of( $res['body'] );
 			$canon['status'] = '' === $href ? 'missing' : 'checked';
 			$canon['href']   = $href;
-			$canon['host']   = '' === $href ? '' : (string) wp_parse_url( $href, PHP_URL_HOST );
+			$canon['host']   = '' === $href ? '' : Host::host( $href );
 			$canon['matches'] = '' === $href ? false : self::origin_of( $href ) === $norm;
 		}
 		$out['canonical'] = $canon;
@@ -671,6 +701,22 @@ final class PreferredAddressService {
 	 * @return array<string, mixed>
 	 */
 	public static function snippets( ?array $override = null ): array {
+		$home  = (array) wp_parse_url( home_url() );
+		$h_hst = strtolower( (string) ( $home['host'] ?? '' ) );
+		$cfg_host = (string) ( ( is_array( $override ) && isset( $override['preferred_host'] ) ) ? $override['preferred_host'] : SettingsRepository::get( 'redirects.preferred_host', '' ) );
+		if ( '' !== $cfg_host && $cfg_host !== $h_hst ) {
+			$target_check = PreferredAddressApplyService::validate_target( $cfg_host, $h_hst );
+			if ( ! $target_check['ok'] ) {
+				return array(
+					'preferred' => self::preferred(),
+					'apache'    => '',
+					'nginx'     => '',
+					'panel'     => '',
+					'warnings'  => array( __( 'The preferred address is not a valid address for this site. Server rules cannot be generated for an external domain.', 'wpseokit' ) ),
+					'table'     => array(),
+				);
+			}
+		}
 		$pref  = self::preferred( $override );
 		$table = array();
 		foreach ( self::variants( $pref ) as $v ) {
@@ -768,9 +814,39 @@ final class PreferredAddressService {
 		if ( '' === $uri || '/' !== $uri[0] || preg_match( '/[\x00-\x20\x7f\\\\]/', $uri ) ) {
 			return null;
 		}
-		$path = strtolower( rawurldecode( (string) strtok( $uri, '?#' ) ) );
+		$raw_path = strtolower( (string) strtok( $uri, '?#' ) );
+		for ( $i = 0; $i < 3; $i++ ) {
+			$decoded = rawurldecode( $raw_path );
+			if ( $decoded === $raw_path ) {
+				break;
+			}
+			$raw_path = $decoded;
+		}
+		// D-2: Normalize consecutive slashes
+		$path = (string) preg_replace( '#/{2,}#', '/', $raw_path );
+
 		foreach ( self::FALLBACK_SKIP as $skip ) {
 			if ( 0 === strpos( $path, $skip ) ) {
+				return null;
+			}
+		}
+
+		// D-2: Subdirectory install and segment-based skip
+		$site_path = (string) wp_parse_url( home_url(), PHP_URL_PATH );
+		$site_path = '/' . trim( $site_path, '/' );
+		if ( '/' !== $site_path && str_starts_with( $path, $site_path . '/' ) ) {
+			$sub_path = substr( $path, strlen( $site_path ) );
+			foreach ( self::FALLBACK_SKIP as $skip ) {
+				if ( 0 === strpos( $sub_path, $skip ) ) {
+					return null;
+				}
+			}
+		}
+
+		$segments = array_values( array_filter( explode( '/', $path ), 'strlen' ) );
+		$skip_names = array( 'wp-admin', 'wp-json', 'wp-login.php', 'wp-cron.php', 'xmlrpc.php', '.well-known' );
+		foreach ( $segments as $segment ) {
+			if ( in_array( $segment, $skip_names, true ) ) {
 				return null;
 			}
 		}
@@ -808,7 +884,7 @@ final class PreferredAddressService {
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( self::class, 'rest_status' ),
-					'permission_callback' => Rest::permission(),
+					'permission_callback' => Guard::rest(),
 				),
 			)
 		);
@@ -819,7 +895,7 @@ final class PreferredAddressService {
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( self::class, 'rest_audit' ),
-					'permission_callback' => Rest::permission(),
+					'permission_callback' => Guard::rest(),
 					'args'                => array( 'redirects' => array( 'type' => 'object' ) ),
 				),
 			)
@@ -831,7 +907,7 @@ final class PreferredAddressService {
 				array(
 					'methods'             => array( \WP_REST_Server::READABLE, \WP_REST_Server::CREATABLE ),
 					'callback'            => array( self::class, 'rest_snippets' ),
-					'permission_callback' => Rest::permission(),
+					'permission_callback' => Guard::rest(),
 					'args'                => array( 'redirects' => array( 'type' => 'object' ) ),
 				),
 			)
@@ -852,7 +928,15 @@ final class PreferredAddressService {
 			$out['preferred_scheme'] = (string) $in['preferred_scheme'];
 		}
 		if ( array_key_exists( 'preferred_host', $in ) ) {
-			$out['preferred_host'] = Settings::host( $in['preferred_host'] );
+			$host_cand = Settings::host( $in['preferred_host'] );
+			$home_host = strtolower( Host::host( home_url() ) );
+			if ( '' !== $host_cand && $host_cand !== $home_host ) {
+				$val = PreferredAddressApplyService::validate_target( $host_cand, $home_host );
+				if ( ! $val['ok'] ) {
+					$host_cand = '';
+				}
+			}
+			$out['preferred_host'] = $host_cand;
 		}
 		return array() === $out ? null : $out;
 	}

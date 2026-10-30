@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Wpseokit;
 
+use AdminKit\Core\Security\Host;
+
 defined( 'ABSPATH' ) || exit;
 
 final class Settings {
@@ -350,6 +352,9 @@ final class Settings {
 		}
 		$host = strtolower( trim( $value ) );
 		if ( strlen( $host ) > 253 || 1 !== preg_match( '/^(?=.{1,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/', $host ) ) {
+			return '';
+		}
+		if ( 1 === preg_match( '/^[0-9.]+$/', $host ) || Host::is_ip( $host ) ) {
 			return '';
 		}
 		return $host;

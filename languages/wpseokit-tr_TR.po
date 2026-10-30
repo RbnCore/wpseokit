@@ -4497,3 +4497,35 @@ msgstr "Denetim bitti."
 msgid "The check found something that has to be fixed first."
 msgstr "Denetim, önce düzeltilmesi gereken bir şey buldu."
 
+
+#: includes/Services/PreferredAddressApplyService.php
+msgid "A confirmation window is already open for this address."
+msgstr "Bu adres için zaten açık bir onay penceresi bulunuyor."
+
+#: includes/Services/PreferredAddressApplyService.php
+msgid "Another address operation is currently in progress. Please try again shortly."
+msgstr "Şu anda başka bir adres işlemi sürüyor. Lütfen birazdan tekrar deneyin."
+
+#: includes/Services/PreferredAddressApplyService.php
+msgid "The preferred address is already in effect. Forced redirect has been enabled."
+msgstr "Tercih edilen adres zaten yürürlükte. Zorunlu yönlendirme etkinleştirildi."
+
+#: includes/Services/PreferredAddressApplyService.php
+msgid "The saved rollback record contains an invalid or unauthorized address."
+msgstr "Kaydedilen geri alma kaydı geçersiz veya yetkisiz bir adres içeriyor."
+
+#: includes/Services/PreferredAddressApplyService.php
+msgid "The confirmation token is required."
+msgstr "Onay belirteci zorunludur."
+
+#: includes/Services/PreferredAddressService.php
+msgid "A valid URL was not provided."
+msgstr "Geçerli bir URL belirtilmedi."
+
+#: includes/Services/PreferredAddressService.php
+msgid "The preferred address is not a valid address for this site. Network audit aborted."
+msgstr "Tercih edilen adres bu site için geçerli bir adres değil. Ağ denetimi durduruldu."
+
+#: includes/Services/PreferredAddressService.php
+msgid "The preferred address is not a valid address for this site. Server rules cannot be generated for an external domain."
+msgstr "Tercih edilen adres bu site için geçerli bir adres değil. Harici bir alan adı için sunucu kuralları üretilemez."
