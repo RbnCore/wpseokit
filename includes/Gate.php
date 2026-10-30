@@ -1,6 +1,6 @@
 <?php
 /**
- * Runtime gate: WPSeoKit needs the AdminKit core (cache, logs, RBN Kit menu). Without it the plugin adds no hook
+ * Runtime gate: WPSeoKit needs the AdminKit core (cache, logs, updater UI, RBN Kit menu). Without it the plugin adds no hook
  * and shows one admin notice. This class never touches an AdminKit class, so it works while AdminKit is missing.
  *
  * @package Wpseokit
@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 final class Gate {
 
 	/** Lowest AdminKit core API level this plugin works with (`ADMINKIT_CORE_API`). */
-	public const REQUIRED_API = 3;
+	public const REQUIRED_API = 4;
 
 	private const BASENAME = 'adminkit/adminkit.php';
 

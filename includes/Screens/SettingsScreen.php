@@ -135,21 +135,9 @@ final class SettingsScreen {
 			. self::updates();
 	}
 
-	/** Update check card; its buttons post to admin-post.php, so it sits outside the settings form. */
+	/** Update check card; its buttons post to admin-post.php, so it sits outside the settings form. The body is the ONE shared card (AdminKit). */
 	private static function updates(): string {
-		$st      = \AdminKit\Core\Updater::status( 'wpseokit' );
-		$checked = (int) $st['checked_at'];
-		$state   = \AdminKit\Core\Updater::state_html( $st );
-		$last    = $checked > 0 ? esc_html( wp_date( 'd.m.Y H:i', $checked ) ) : esc_html__( 'never', 'wpseokit' );
-
-		$body  = Ui::row( esc_html__( 'Installed version', 'wpseokit' ), '<b>' . esc_html( WPSEOKIT_VERSION ) . '</b>' );
-		$body .= Ui::row( esc_html__( 'Update status', 'wpseokit' ), '<p>' . $state . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
-		$body .= Ui::row( esc_html__( 'Last check', 'wpseokit' ), '<span>' . $last . '</span>', esc_html__( 'The package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Automatic updates are turned on or off with the “Enable auto-updates” link on the Plugins page.', 'wpseokit' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		$body .= '<p class="rbn-help"><a href="' . esc_url( admin_url( 'admin.php?page=adminkit#adminkit-network' ) ) . '">' . esc_html__( 'Update checks follow the RBN Kit network setting.', 'wpseokit' ) . '</a></p>';
-		$act = \AdminKit\Core\Updater::check_form( 'wpseokit', Admin::page_url( array( 'tab' => 'settings' ) ), Ui::icon( 'scan' ) . esc_html__( 'Check now', 'wpseokit' ) );
-		if ( '' !== $act ) {
-			$body .= '<div class="wps-row">' . $act . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the form escapes its own output.
-		}
+		$body = \AdminKit\Kit\UpdateCard::render( 'wpseokit', array( 'return_url' => Admin::page_url( array( 'tab' => 'settings' ) ) ) );
 		return Ui::card( __( 'Updates', 'wpseokit' ), '', $body );
 	}
 }

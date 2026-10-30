@@ -85,16 +85,15 @@ final class Admin {
 		if ( ! self::is_page( $hook ) ) {
 			return;
 		}
-		wp_register_style( 'wpseokit-admin', false, array(), WPSEOKIT_VERSION );
+		wp_register_style( 'wpseokit-admin', false, array( 'rbn-admin-ui' ), WPSEOKIT_VERSION );
 		wp_enqueue_style( 'wpseokit-admin' );
+		wp_enqueue_style( 'rbn-admin-ui' ); // The shared update card (AdminKit\Kit\UpdateCard) draws with the kit.
 		wp_add_inline_style(
 			'wpseokit-admin',
 			'.wpseokit-wrap .wpseokit-card{background:#fff;border:1px solid #c3c4c7;border-radius:4px;padding:16px 20px;margin:16px 0;max-width:820px}'
 			. '.wpseokit-wrap .wpseokit-card h2{margin-top:0}'
 			. '.wpseokit-wrap .wpseokit-dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;margin:0 0 12px}'
 			. '.wpseokit-wrap .wpseokit-dl dt{font-weight:600}.wpseokit-wrap .wpseokit-dl dd{margin:0}'
-			. '.wpseokit-wrap .wpseokit-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}'
-			. '.wpseokit-wrap .wpseokit-help{color:#50575e}'
 		);
 		wp_register_script( 'wpseokit-boot', '', array(), WPSEOKIT_VERSION, array( 'in_footer' => false ) );
 		wp_enqueue_script( 'wpseokit-boot' );
@@ -250,19 +249,7 @@ final class Admin {
 		}
 		echo '</dl></div>';
 		echo '<div class="wpseokit-card"><h2>' . esc_html__( 'Updates', 'wpseokit' ) . '</h2>';
-		echo self::update_card_body(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the body escapes its own output.
+		echo \AdminKit\Kit\UpdateCard::render( 'wpseokit', array( 'return_url' => self::page_url( array( 'tab' => 'status' ) ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- UpdateCard escapes its own output.
 		echo '</div>';
-	}
-
-	/** Body of the "Updates" card: state comes from the central updater (AdminKit), which also checks and verifies. */
-	private static function update_card_body(): string {
-		$st   = \AdminKit\Core\Updater::status( 'wpseokit' );
-		$last = (int) $st['checked_at'] > 0 ? esc_html( wp_date( 'd.m.Y H:i', (int) $st['checked_at'] ) ) : esc_html__( 'never', 'wpseokit' );
-		$html = '<dl class="wpseokit-dl"><dt>' . esc_html__( 'Installed version', 'wpseokit' ) . '</dt><dd>' . esc_html( WPSEOKIT_VERSION ) . '</dd>'
-			. '<dt>' . esc_html__( 'Status', 'wpseokit' ) . '</dt><dd>' . \AdminKit\Core\Updater::state_html( $st ) . '</dd>'
-			. '<dt>' . esc_html__( 'Last check', 'wpseokit' ) . '</dt><dd>' . $last . '</dd></dl>'
-			. '<p class="wpseokit-help"><a href="' . esc_url( admin_url( 'admin.php?page=adminkit#adminkit-network' ) ) . '">' . esc_html__( 'Update checks follow the RBN Kit network setting.', 'wpseokit' ) . '</a></p>';
-		$form = \AdminKit\Core\Updater::check_form( 'wpseokit', self::page_url( array( 'tab' => 'status' ) ), esc_html__( 'Check now', 'wpseokit' ) );
-		return '' === $form ? $html : $html . '<div class="wpseokit-actions">' . $form . '</div>';
 	}
 }

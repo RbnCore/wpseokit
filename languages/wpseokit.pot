@@ -760,10 +760,6 @@ msgstr ""
 msgid "Check my Yoast data"
 msgstr ""
 
-#: includes/Updater.php:453
-msgid "Check now"
-msgstr ""
-
 #: includes/Services/PreferredAddressService.php:693
 msgid "Check that the certificate is valid for both host names before you make HTTPS the preferred address."
 msgstr ""
@@ -1581,10 +1577,6 @@ msgstr ""
 msgid "Insert a variable"
 msgstr ""
 
-#: includes/Updater.php:445
-msgid "Installed version"
-msgstr ""
-
 #: includes/Screens/RedirectsScreen.php:151
 msgid "It redirects, but not to the preferred address."
 msgstr ""
@@ -1651,10 +1643,6 @@ msgstr ""
 
 #: includes/Screens/SettingsScreen.php:67
 msgid "Large image"
-msgstr ""
-
-#: includes/Updater.php:447
-msgid "Last check"
 msgstr ""
 
 #: includes/Screens/RedirectsScreen.php:57
@@ -1877,10 +1865,6 @@ msgstr ""
 #: includes/Rules/score-rules.json
 #: includes/Screens/Ui.php:123
 msgid "Needs improvement"
-msgstr ""
-
-#: includes/Updater.php:442
-msgid "never"
 msgstr ""
 
 #: includes/Screens/Ui.php:201
@@ -3354,10 +3338,6 @@ msgstr ""
 msgid "The oldest entries go first when the log is full."
 msgstr ""
 
-#: includes/Screens/SettingsScreen.php:154
-msgid "The package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Automatic updates are turned on or off with the “Enable auto-updates” link on the Plugins page."
-msgstr ""
-
 #: includes/Services/ScoreService.php:243
 msgid "The page did not answer 200, so it could not be measured."
 msgstr ""
@@ -3751,14 +3731,6 @@ msgstr ""
 
 #: includes/Screens/DashboardScreen.php:323
 msgid "Update checks"
-msgstr ""
-
-#: includes/Updater.php:450
-msgid "Update checks follow the RBN Kit network setting."
-msgstr ""
-
-#: includes/Screens/SettingsScreen.php:153
-msgid "Update status"
 msgstr ""
 
 #: includes/Screens/SettingsScreen.php:160

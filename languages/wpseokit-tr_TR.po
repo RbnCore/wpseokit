@@ -80,26 +80,6 @@ msgstr "Değiştirilecek ayarları JSON nesnesi olarak gönderin."
 msgid "Some settings have the wrong type."
 msgstr "Bazı ayarların türü yanlış."
 
-#: src/includes/Updater.php
-msgid "never"
-msgstr "hiç"
-
-#: src/includes/Updater.php
-msgid "Installed version"
-msgstr "Kurulu sürüm"
-
-#: src/includes/Updater.php
-msgid "Last check"
-msgstr "Son denetim"
-
-#: src/includes/Updater.php
-msgid "Check now"
-msgstr "Şimdi denetle"
-
-#: src/includes/Updater.php
-msgid "Update checks follow the RBN Kit network setting."
-msgstr "Güncelleme kontrolleri RBN Kit ağ ayarını izler."
-
 #: src/includes/Services/Variables.php
 msgid "Page %1$d of %2$d"
 msgstr "Sayfa %1$d / %2$d"
@@ -2093,14 +2073,6 @@ msgstr "Eklenti durumu"
 #: src/includes/Screens
 msgid "Data and uninstall"
 msgstr "Veri ve kaldırma"
-
-#: src/includes/Screens
-msgid "Update status"
-msgstr "Güncelleme durumu"
-
-#: src/includes/Screens
-msgid "The package is verified with its SHA-256 digest and Ed25519 signature before installation; a package that cannot be verified is not installed. Automatic updates are turned on or off with the “Enable auto-updates” link on the Plugins page."
-msgstr "Paket kurulumdan önce SHA-256 özeti ve Ed25519 imzasıyla doğrulanır; doğrulanamayan paket kurulmaz. Otomatik güncellemeler Eklentiler sayfasındaki “Otomatik güncellemeleri etkinleştir” bağlantısıyla açılır ya da kapatılır."
 
 #: src/includes/Screens
 msgid "Tool navigation"
