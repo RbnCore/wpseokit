@@ -54,6 +54,12 @@
 	}
 
 	function say( type, html ) {
+		var toastType = type === 'ok' ? 'success' : ( type === 'err' ? 'error' : ( type === 'warn' ? 'warning' : 'info' ) );
+		var text = String( html || '' ).replace( /<[^>]+>/g, '' ).trim();
+		if ( window.RbnUi && window.RbnUi.toast ) {
+			window.RbnUi.toast( text, { type: toastType } );
+			return;
+		}
 		var region = $( '[data-result]' );
 		if ( ! region ) { return; }
 		region.innerHTML = note( type, html, type === 'err' ? 'alert' : 'status' );
@@ -1051,26 +1057,35 @@
 			} );
 		} );
 
-		// Delete (single and bulk) through the confirm dialog
-		var pending = [];
-		function askDelete( ids, opener ) {
-			pending = ids;
-			$( '[data-del-title]', root ).textContent = ids.length === 1 ? ( I.delete + ' ' + ( rows[ ids[ 0 ] ] || {} ).source_path + '?' ) : fmt( I.deleteN, ids.length );
-			$( '[data-del-body]', root ).textContent = I.deleteBody;
-			$( '[data-del-run] span', root ).textContent = ids.length === 1 ? I.delete : fmt( I.deleteNBtn, ids.length );
-			openDialog( 'delete', opener );
-		}
-		on( tbody, 'click', '[data-del]', function ( e, b ) { askDelete( [ +b.getAttribute( 'data-del' ) ], b ); } );
-		on( bulk, 'click', '[data-bulk-delete]', function ( e, b ) { askDelete( sel.ids(), b ); } );
-		on( root, 'click', '[data-del-run]', function ( e, b ) {
-			b.disabled = true;
-			Promise.all( pending.map( function ( id ) { return api( 'DELETE', 'redirects/' + id ); } ) ).then( function () {
-				b.disabled = false;
-				$( 'dialog[data-dlg="delete"]', root ).close();
-				say( 'ok', '<b>' + esc( I.removed ) + '</b>' );
-				load();
+		// Delete (single and bulk) through RbnUi.confirm modal (WPRJ-667)
+		function askDelete( ids ) {
+			if ( ! ids || ! ids.length ) { return; }
+			if ( ! window.RbnUi || ! window.RbnUi.confirm ) { return; }
+			var single = ids.length === 1;
+			var title = single ? ( I.delete + ' ' + ( rows[ ids[ 0 ] ] || {} ).source_path + '?' ) : fmt( I.deleteN, ids.length );
+			var btnLabel = single ? I.delete : fmt( I.deleteNBtn, ids.length );
+			window.RbnUi.confirm( {
+				title: title,
+				message: I.deleteBody,
+				tone: 'danger',
+				confirmLabel: btnLabel,
+				confirmText: btnLabel,
+				cancelLabel: I.keep,
+				cancelText: I.keep
+			} ).then( function ( ok ) {
+				if ( ! ok ) { return; }
+				Promise.all( ids.map( function ( id ) { return api( 'DELETE', 'redirects/' + id ); } ) ).then( function () {
+					if ( window.RbnUi && window.RbnUi.toast ) {
+						window.RbnUi.toast( I.removed, { type: 'success' } );
+					} else {
+						say( 'ok', '<b>' + esc( I.removed ) + '</b>' );
+					}
+					load();
+				} );
 			} );
-		} );
+		}
+		on( tbody, 'click', '[data-del]', function ( e, b ) { askDelete( [ +b.getAttribute( 'data-del' ) ] ); } );
+		on( bulk, 'click', '[data-bulk-delete]', function () { askDelete( sel.ids() ); } );
 		function bulkActive( v ) { Promise.all( sel.ids().map( function ( id ) { return api( 'PATCH', 'redirects/' + id, { is_active: v } ); } ) ).then( load ); }
 		on( bulk, 'click', '[data-bulk-on]', function () { bulkActive( true ); } );
 		on( bulk, 'click', '[data-bulk-off]', function () { bulkActive( false ); } );
@@ -1214,8 +1229,36 @@
 			if ( e.key === 'Escape' ) { closeInline( +i.closest( 'tr' ).id.replace( 'sg-', '' ), true ); }
 			if ( e.key === 'Enter' ) { e.preventDefault(); $( '[data-create]', i.closest( 'tr' ) ).click(); }
 		} );
-		on( tbody, 'click', '[data-ignore]', function ( e, b ) { api( 'DELETE', '404-logs/' + b.getAttribute( 'data-ignore' ) ).then( load ); } );
-		on( bulk, 'click', '[data-bulk-delete]', function () { Promise.all( sel.ids().map( function ( id ) { return api( 'DELETE', '404-logs/' + id ); } ) ).then( load ); } );
+		on( tbody, 'click', '[data-ignore]', function ( e, b ) {
+			api( 'DELETE', '404-logs/' + b.getAttribute( 'data-ignore' ) ).then( function () {
+				if ( window.RbnUi && window.RbnUi.toast ) {
+					window.RbnUi.toast( I.removed, { type: 'success' } );
+				}
+				load();
+			} );
+		} );
+		on( bulk, 'click', '[data-bulk-delete]', function () {
+			var ids = sel.ids();
+			if ( ! ids.length ) { return; }
+			if ( ! window.RbnUi || ! window.RbnUi.confirm ) { return; }
+			window.RbnUi.confirm( {
+				title: fmt( I.deleteN, ids.length ),
+				message: I.deleteBody,
+				tone: 'danger',
+				confirmLabel: fmt( I.deleteNBtn, ids.length ),
+				confirmText: fmt( I.deleteNBtn, ids.length ),
+				cancelLabel: I.keep,
+				cancelText: I.keep
+			} ).then( function ( ok ) {
+				if ( ! ok ) { return; }
+				Promise.all( ids.map( function ( id ) { return api( 'DELETE', '404-logs/' + id ); } ) ).then( function () {
+					if ( window.RbnUi && window.RbnUi.toast ) {
+						window.RbnUi.toast( I.removed, { type: 'success' } );
+					}
+					load();
+				} );
+			} );
+		} );
 
 		var bform = $( '[data-bulk-form]', root ), berr = $( '[data-bulk-error]', root );
 		on( bulk, 'click', '[data-bulk-redirect]', function ( e, b ) { berr.hidden = true; bform.reset(); openDialog( 'bulk', b ); } );
@@ -1306,19 +1349,36 @@
 		on( doc, 'click', '[data-import-check]', function () { check(); } );
 		on( doc, 'click', '[data-import-confirm]', function ( e, b ) {
 			if ( ! report ) { check(); return; }
-			var ack = $s( 'import-ack' ); ack.checked = false; $s( 'import-run' ).disabled = true; openDialog( 'import', b );
-		} );
-		doc.addEventListener( 'change', function ( e ) { if ( e.target.matches && e.target.matches( '[data-import-ack]' ) ) { $s( 'import-run' ).disabled = ! e.target.checked; } } );
-		on( doc, 'click', '[data-import-run]', function ( e, b ) {
-			b.disabled = true;
-			var ov = $( 'input[name="imp-overwrite"]:checked' );
-			api( 'POST', 'import/yoast', { mode: 'apply', overwrite: !! ( ov && ov.value === '1' ) } ).then( function ( r ) {
-				$( 'dialog[data-dlg="import"]' ).close();
-				if ( ! r.ok ) { say( 'err', '<b>' + esc( I.saveFailed ) + '</b> ' + esc( errMsg( r ) ) ); b.disabled = false; return; }
-				$s( 'import-bar' ).classList.remove( 'is-dirty' );
-				goTab( 'report' );
-				$s( 'import-done' ).innerHTML = note( 'ok', '<b>' + esc( I.importDone ) + '</b> <button type="button" class="rbn-btn rbn-btn--sm" data-import-verify>' + icon( 'scan' ) + esc( I.verify ) + '</button>', 'status' );
-				restore();
+			if ( ! window.RbnUi || ! window.RbnUi.confirm ) { return; }
+			var sumEl = $s( 'import-summary' );
+			var details = sumEl ? sumEl.textContent.trim() : '';
+			window.RbnUi.confirm( {
+				title: I.importTitle || 'Import Yoast data?',
+				message: I.importMsg || 'WPSeoKit will write titles, descriptions, primary categories and settings. Your Yoast data stays where it is.',
+				tone: 'default',
+				confirmLabel: I.import || 'Import',
+				confirmText: I.import || 'Import',
+				cancelLabel: I.cancel || 'Cancel',
+				cancelText: I.cancel || 'Cancel',
+				details: details
+			} ).then( function ( ok ) {
+				if ( ! ok ) { return; }
+				b.disabled = true;
+				var ov = $( 'input[name="imp-overwrite"]:checked' );
+				api( 'POST', 'import/yoast', { mode: 'apply', overwrite: !! ( ov && ov.value === '1' ) } ).then( function ( r ) {
+					b.disabled = false;
+					if ( ! r.ok ) {
+						say( 'err', '<b>' + esc( I.saveFailed ) + '</b> ' + esc( errMsg( r ) ) );
+						return;
+					}
+					$s( 'import-bar' ).classList.remove( 'is-dirty' );
+					if ( window.RbnUi && window.RbnUi.toast ) {
+						window.RbnUi.toast( I.importDone, { type: 'success' } );
+					}
+					goTab( 'report' );
+					$s( 'import-done' ).innerHTML = note( 'ok', '<b>' + esc( I.importDone ) + '</b> <button type="button" class="rbn-btn rbn-btn--sm" data-import-verify>' + icon( 'scan' ) + esc( I.verify ) + '</button>', 'status' );
+					restore();
+				} );
 			} );
 		} );
 		on( doc, 'click', '[data-import-verify]', function ( e, b ) {
@@ -1703,10 +1763,47 @@
 		if ( /[?&]tab=pref(&|$)/.test( window.location.search ) ) { runBtn.focus(); }
 	}
 
+	/* Preferred address apply / undo confirmation modals (WPRJ-667) */
+	function initPreferredAddressConfirm() {
+		doc.addEventListener( 'submit', function ( e ) {
+			var form = e.target;
+			if ( ! form || ! form.matches || ! form.matches( 'form[data-pa-confirm]' ) ) { return; }
+			if ( ! window.RbnUi || ! window.RbnUi.confirm ) { return; }
+			var action = form.getAttribute( 'data-pa-confirm' );
+			e.preventDefault();
+			if ( action === 'apply' ) {
+				window.RbnUi.confirm( {
+					title: I.applyBtn || 'Apply this address',
+					message: I.applyConfirmMsg || 'You will have to log in again.',
+					tone: 'default',
+					confirmLabel: I.applyBtn || 'Apply this address',
+					confirmText: I.applyBtn || 'Apply this address',
+					cancelLabel: I.cancel || 'Cancel',
+					cancelText: I.cancel || 'Cancel'
+				} ).then( function ( ok ) {
+					if ( ok ) { form.submit(); }
+				} );
+			} else if ( action === 'undo' ) {
+				window.RbnUi.confirm( {
+					title: I.undoBtn || 'Go back to the previous address',
+					message: I.undoConfirmMsg || 'The previous address is in effect again.',
+					tone: 'danger',
+					confirmLabel: I.undoBtn || 'Go back to the previous address',
+					confirmText: I.undoBtn || 'Go back to the previous address',
+					cancelLabel: I.cancel || 'Cancel',
+					cancelText: I.cancel || 'Cancel'
+				} ).then( function ( ok ) {
+					if ( ok ) { form.submit(); }
+				} );
+			}
+		} );
+	}
+
 	/* ---------- Start ---------- */
 
 	function start() {
 		initShell();
+		initPreferredAddressConfirm();
 		var box = $( '[data-metabox]' );
 		if ( box ) { metabox( box ); }
 		var screen = $( '[data-screen]' );

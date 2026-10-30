@@ -56,12 +56,8 @@ final class ImportScreen {
 		return $wait . $decide . $bar;
 	}
 
-	/** The confirmation dialog; the dashboard prints it once, after the tabs. */
+	/** The confirmation dialog was migrated to dynamic RbnUi.confirm modal (WPRJ-667). */
 	public static function dialog(): string {
-		$x    = '<button type="button" class="rbn-btn rbn-btn--icon" data-dlg-close aria-label="' . esc_attr__( 'Close', 'wpseokit' ) . '">' . Ui::icon( 'x' ) . '</button>';
-		$out  = '<dialog class="rbn-dlg" aria-labelledby="imp-t" data-dlg="import"' . Ui::tone_attr() . '><div class="rbn-dlg__h wps-dlg__h"><h2 id="imp-t">' . esc_html__( 'Import Yoast data?', 'wpseokit' ) . '</h2>' . $x . '</div><div class="rbn-dlg__b"><div class="wps-stack"><p>' . esc_html__( 'WPSeoKit will write titles, descriptions, primary categories and settings. Your Yoast data stays where it is.', 'wpseokit' ) . '</p>';
-		$out .= '<label class="rbn-check"><input type="checkbox" id="imp-ack" data-import-ack><span>' . esc_html__( 'I have a database backup and I want to import now.', 'wpseokit' ) . '</span></label></div></div>';
-		$out .= '<div class="rbn-dlg__f"><button type="button" class="rbn-btn" data-dlg-close>' . esc_html__( 'Cancel', 'wpseokit' ) . '</button><button type="button" class="rbn-btn rbn-btn--pri" data-import-run disabled>' . Ui::icon( 'down' ) . esc_html__( 'Import', 'wpseokit' ) . '</button></div></dialog>';
-		return $out;
+		return '';
 	}
 }

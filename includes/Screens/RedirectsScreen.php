@@ -216,7 +216,8 @@ final class RedirectsScreen {
 
 	/** A form of the apply card (admin-post.php: the nonce and the capability are checked there). */
 	private static function apply_form( string $action, string $token, string $label, string $host = '', string $scheme = 'auto' ): string {
-		$form  = '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="wps-stack">';
+		$confirm_attr = in_array( $action, array( 'apply', 'undo' ), true ) ? ' data-pa-confirm="' . esc_attr( $action ) . '"' : '';
+		$form  = '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="wps-stack"' . $confirm_attr . '>';
 		$form .= '<input type="hidden" name="action" value="wpseokit_preferred_address">';
 		$form .= '<input type="hidden" name="pa_action" value="' . esc_attr( $action ) . '">';
 		$form .= '<input type="hidden" name="pa-host" value="' . esc_attr( $host ) . '">';
@@ -320,20 +321,21 @@ final class RedirectsScreen {
 			return '';
 		}
 		if ( 'apply' === $step ) {
-			return 'ok' === $res
-				? Ui::note( 'ok', esc_html__( 'The address was applied. The browser is sent to the new address; log in there to confirm it.', 'wpseokit' ) )
-				: Ui::note( 'err', esc_html__( 'The address was not applied. See the checks below.', 'wpseokit' ) );
-		}
-		if ( 'confirm' === $step ) {
-			return Ui::note( 'ok', esc_html__( 'The new address was confirmed.', 'wpseokit' ) );
-		}
-		if ( 'undo' === $step ) {
-			return Ui::note( 'ok', esc_html__( 'The previous address was restored.', 'wpseokit' ) );
-		}
-		if ( 'check' === $step ) {
-			return 'ok' === $res
-				? Ui::note( 'ok', esc_html__( 'The check is finished.', 'wpseokit' ) )
-				: Ui::note( 'warn', esc_html__( 'The check found something that has to be fixed first.', 'wpseokit' ) );
+			if ( 'ok' === $res ) {
+				\AdminKit\Helpers\Toast::flash( 'success', __( 'The address was applied. The browser is sent to the new address; log in there to confirm it.', 'wpseokit' ) );
+			} else {
+				\AdminKit\Helpers\Toast::flash( 'error', __( 'The address was not applied. See the checks below.', 'wpseokit' ) );
+			}
+		} elseif ( 'confirm' === $step ) {
+			\AdminKit\Helpers\Toast::flash( 'success', __( 'The new address was confirmed.', 'wpseokit' ) );
+		} elseif ( 'undo' === $step ) {
+			\AdminKit\Helpers\Toast::flash( 'success', __( 'The previous address was restored.', 'wpseokit' ) );
+		} elseif ( 'check' === $step ) {
+			if ( 'ok' === $res ) {
+				\AdminKit\Helpers\Toast::flash( 'success', __( 'The check is finished.', 'wpseokit' ) );
+			} else {
+				\AdminKit\Helpers\Toast::flash( 'warning', __( 'The check found something that has to be fixed first.', 'wpseokit' ) );
+			}
 		}
 		return '';
 	}
@@ -379,15 +381,12 @@ final class RedirectsScreen {
 		$csv .= '<div data-csv-report aria-live="polite"></div></div></div>';
 		$csv .= '<div class="rbn-dlg__f"><button type="button" class="rbn-btn" data-dlg-close>' . esc_html__( 'Cancel', 'wpseokit' ) . '</button><button type="button" class="rbn-btn rbn-btn--pri" data-csv-run disabled>' . Ui::icon( 'upload' ) . esc_html__( 'Import', 'wpseokit' ) . '</button></div></dialog>';
 
-		$del  = '<dialog class="rbn-dlg" aria-labelledby="del-t" data-dlg="delete"' . Ui::tone_attr() . '><div class="rbn-dlg__h wps-dlg__h"><h2 id="del-t" data-del-title></h2>' . $x . '</div><div class="rbn-dlg__b"><p data-del-body></p></div>';
-		$del .= '<div class="rbn-dlg__f"><button type="button" class="rbn-btn" data-dlg-close>' . esc_html__( 'Keep them', 'wpseokit' ) . '</button><button type="button" class="rbn-btn rbn-btn--danger" data-del-run>' . Ui::icon( 'trash' ) . '<span></span></button></div></dialog>';
-
 		$edit  = '<dialog class="rbn-dlg" aria-labelledby="ed-t" data-dlg="edit"' . Ui::tone_attr() . '><form method="dialog" data-edit-form novalidate><div class="rbn-dlg__h wps-dlg__h"><h2 id="ed-t">' . esc_html__( 'Edit redirect', 'wpseokit' ) . '</h2>' . $x . '</div><div class="rbn-dlg__b"><div class="wps-stack">';
 		$edit .= Ui::row( Ui::label( 'ed-from', __( 'From', 'wpseokit' ) ), '<input class="rbn-input rbn-input--mono" id="ed-from" name="source_path" type="text">' );
 		$edit .= Ui::row( Ui::label( 'ed-to', __( 'To', 'wpseokit' ) ), '<input class="rbn-input rbn-input--mono" id="ed-to" name="target_url" type="text">' );
 		$edit .= Ui::row( Ui::label( 'ed-type', __( 'Type', 'wpseokit' ) ), '<select class="rbn-select" id="ed-type" name="status_code"><option>301</option><option>302</option><option>307</option><option>410</option></select>' );
 		$edit .= '<div class="rbn-note rbn-note--err" role="alert" data-edit-error hidden></div></div></div>';
 		$edit .= '<div class="rbn-dlg__f"><button type="button" class="rbn-btn" data-dlg-close>' . esc_html__( 'Cancel', 'wpseokit' ) . '</button><button type="submit" class="rbn-btn rbn-btn--pri">' . Ui::icon( 'save' ) . esc_html__( 'Save', 'wpseokit' ) . '</button></div></form></dialog>';
-		return $csv . $del . $edit;
+		return $csv . $edit;
 	}
 }
