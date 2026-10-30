@@ -29,6 +29,8 @@ namespace Wpseokit\Services;
 
 use AdminKit\Core\Security\Guard;
 use AdminKit\Core\Security\Host;
+use AdminKit\Helpers\Db;
+use AdminKit\Helpers\Lock;
 
 use Wpseokit\Admin;
 use Wpseokit\Logs;
@@ -50,6 +52,9 @@ final class PreferredAddressApplyService {
 
 	/** Concurrency lock to prevent race conditions during address apply. */
 	public const LOCK_OPTION = 'wpseokit_pa_lock';
+
+	/** Concurrency lock time-to-live in seconds (5 minutes). */
+	public const LOCK_TTL = 300;
 
 	/** The last pre-check of the site owner (per user): the checks, the token and the moment it was made. */
 	public const PRECHECK_META = 'wpseokit_pa_precheck';
@@ -544,8 +549,8 @@ final class PreferredAddressApplyService {
 			);
 		}
 
-		// Atomic lock to prevent concurrent executions.
-		if ( ! add_option( self::LOCK_OPTION, time(), '', 'no' ) ) {
+		// Atomic lock with TTL to prevent concurrent executions and avoid permanent deadlocks.
+		if ( ! Lock::acquire( self::LOCK_OPTION, self::LOCK_TTL ) ) {
 			return self::fail( 'locked', __( 'Another address operation is currently in progress. Please try again shortly.', 'wpseokit' ) );
 		}
 
@@ -569,7 +574,7 @@ final class PreferredAddressApplyService {
 					)
 				);
 				self::flush_caches();
-				delete_option( self::LOCK_OPTION );
+				Lock::release( self::LOCK_OPTION );
 				return array(
 					'ok'      => true,
 					'code'    => 'applied',
@@ -590,26 +595,61 @@ final class PreferredAddressApplyService {
 				'host'      => $target['host'],
 			);
 
-			update_option(
-				self::UNDO_OPTION,
-				array(
-					'home'     => $before['home'],
-					'siteurl'  => $before['siteurl'],
-					'settings' => $settings_before,
-					'origin'   => $origin,
-					'at'       => time(),
-					'state'    => 'applied',
-				),
-				false
+			$undo_record = array(
+				'home'     => $before['home'],
+				'siteurl'  => $before['siteurl'],
+				'settings' => $settings_before,
+				'origin'   => $origin,
+				'at'       => time(),
+				'state'    => 'applied',
 			);
+
+			// K-3b: Fail-closed: verify undo checkpoint persistence BEFORE touching WordPress core options.
+			update_option( self::UNDO_OPTION, $undo_record, false );
+			$saved_undo = get_option( self::UNDO_OPTION );
+			if ( ! is_array( $saved_undo ) || empty( $saved_undo['home'] ) || empty( $saved_undo['siteurl'] ) ) {
+				delete_option( self::UNDO_OPTION );
+				delete_option( self::PENDING_OPTION );
+				Lock::release( self::LOCK_OPTION );
+				return self::fail( 'checkpoint_failed', __( 'The address was not applied. See the checks below.', 'wpseokit' ) );
+			}
+
 			update_option( self::PENDING_OPTION, $pending, false );
+			$saved_pending = get_option( self::PENDING_OPTION );
+			if ( ! is_array( $saved_pending ) || empty( $saved_pending['token'] ) ) {
+				delete_option( self::UNDO_OPTION );
+				delete_option( self::PENDING_OPTION );
+				Lock::release( self::LOCK_OPTION );
+				return self::fail( 'checkpoint_failed', __( 'The address was not applied. See the checks below.', 'wpseokit' ) );
+			}
 
 			// Now mutate WordPress core options with rollback safety on failure.
 			$new_home    = self::with_path( $origin, (string) get_option( 'home' ) );
 			$new_siteurl = self::with_path( $origin, (string) get_option( 'siteurl' ) );
 
 			update_option( 'home', $new_home, true );
+			global $wpdb;
+			$written_home = (string) Db::get_var( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", array( 'home' ) );
+			if ( self::origin_of( $written_home ) !== self::origin_of( $new_home ) ) {
+				// Rollback home mutation and abort.
+				update_option( 'home', $before['home'], true );
+				delete_option( self::UNDO_OPTION );
+				delete_option( self::PENDING_OPTION );
+				Lock::release( self::LOCK_OPTION );
+				return self::fail( 'apply_failed', __( 'The address was not applied. See the checks below.', 'wpseokit' ) );
+			}
+
 			update_option( 'siteurl', $new_siteurl, true );
+			$written_siteurl = (string) Db::get_var( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", array( 'siteurl' ) );
+			if ( self::origin_of( $written_siteurl ) !== self::origin_of( $new_siteurl ) ) {
+				// Partial write failure: roll back home and siteurl to original.
+				update_option( 'home', $before['home'], true );
+				update_option( 'siteurl', $before['siteurl'], true );
+				delete_option( self::UNDO_OPTION );
+				delete_option( self::PENDING_OPTION );
+				Lock::release( self::LOCK_OPTION );
+				return self::fail( 'apply_failed', __( 'The address was not applied. See the checks below.', 'wpseokit' ) );
+			}
 
 			SettingsRepository::update(
 				array(
@@ -631,7 +671,7 @@ final class PreferredAddressApplyService {
 			 */
 			do_action( 'wpseokit_preferred_address_applied', $origin );
 
-			delete_option( self::LOCK_OPTION );
+			Lock::release( self::LOCK_OPTION );
 
 			return array(
 				'ok'      => true,
@@ -642,7 +682,7 @@ final class PreferredAddressApplyService {
 				'pending' => self::pending_state(),
 			);
 		} catch ( \Throwable $e ) {
-			delete_option( self::LOCK_OPTION );
+			Lock::release( self::LOCK_OPTION );
 			throw $e;
 		}
 	}
@@ -834,7 +874,17 @@ final class PreferredAddressApplyService {
 				'state'  => (string) ( $undo['state'] ?? '' ),
 				'at'     => (int) ( $undo['at'] ?? 0 ),
 			),
+			'lock'         => self::lock_state(),
 		);
+	}
+
+	/**
+	 * The state of the concurrency lock for the screen and REST API.
+	 *
+	 * @return array{locked: bool, age: int, remaining: int, at: int}
+	 */
+	public static function lock_state(): array {
+		return Lock::state( self::LOCK_OPTION, self::LOCK_TTL );
 	}
 
 	/** The confirmation window as the screen shows it. */
