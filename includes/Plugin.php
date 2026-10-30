@@ -37,6 +37,7 @@ final class Plugin {
 		'Services\\ScoreService',
 		'Services\\ScoreListService',
 		'Services\\PreferredAddressService',
+		'Services\\PreferredAddressApplyService',
 		'Services\\ReportService',
 	);
 

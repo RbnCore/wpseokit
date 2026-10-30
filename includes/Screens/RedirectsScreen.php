@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Wpseokit\Screens;
 
+use Wpseokit\Services\PreferredAddressApplyService;
+
 defined( 'ABSPATH' ) || exit;
 
 final class RedirectsScreen {
@@ -122,10 +124,216 @@ final class RedirectsScreen {
 
 		return '<div class="wps-addr" data-addr>'
 			. Ui::card( __( 'Preferred address', 'wpseokit' ), __( 'Pick the one address your site answers on. Every other version should send visitors there in a single step.', 'wpseokit' ), $form )
+			. self::apply_card()
 			. Ui::card( __( 'Address check', 'wpseokit' ), __( 'Asks your site for each of the four versions and follows the redirects, up to 5 steps. It changes nothing.', 'wpseokit' ), $audit )
 			. Ui::card( __( 'Server rule', 'wpseokit' ), __( 'One rule that sends every other version straight to the preferred address. Copy it into your server settings or ask your host to add it.', 'wpseokit' ), $rule )
 			. Ui::card( __( 'PHP fallback', 'wpseokit' ), __( 'Only for sites where you cannot add a server rule. Off by default.', 'wpseokit' ), $fb )
 			. '</div>';
+	}
+
+	/**
+	 * The "Apply this address" card: the pre-check, the apply, the confirmation window and the undo.
+	 *
+	 * The form goes to admin-post.php (nonce + `manage_options`); the check result is drawn on the page, so the
+	 * button is only there when the check passed. No browser dialog and no new JavaScript.
+	 */
+	private static function apply_card(): string {
+		$state   = PreferredAddressApplyService::state();
+		$pending = (array) $state['pending'];
+		$precheck = PreferredAddressApplyService::precheck_of();
+		$body    = '';
+
+		if ( ! empty( $state['disabled'] ) ) {
+			$body .= Ui::note(
+				'warn',
+				'<b>' . esc_html__( 'The feature is switched off.', 'wpseokit' ) . '</b> ' . esc_html__( 'WPSEOKIT_PA_DISABLE is defined in wp-config.php, so nothing is changed and nothing is redirected.', 'wpseokit' )
+			);
+		}
+
+		// The result of the last action (the form sends it back to this page).
+		$body .= self::apply_note();
+
+		if ( 'awaiting' === $state['status'] ) {
+			$body .= self::apply_pending( $pending );
+			return Ui::card( __( 'Apply this address', 'wpseokit' ), __( 'The address is waiting for your confirmation.', 'wpseokit' ), $body );
+		}
+
+		if ( 'applied' === $state['status'] ) {
+			$body .= self::apply_done( $state );
+			return Ui::card( __( 'Apply this address', 'wpseokit' ), __( 'The preferred address is in effect.', 'wpseokit' ), $body );
+		}
+
+		// Not applied yet: the form, the check result and the apply button.
+		$host    = (string) Ui::val( 'redirects.preferred_host', '' );
+		$scheme  = (string) Ui::val( 'redirects.preferred_scheme', 'auto' );
+		$cands   = PreferredAddressApplyService::candidates();
+		$other   = '';
+		foreach ( $cands as $c ) {
+			if ( $c !== PreferredAddressApplyService::home_host() ) {
+				$other = $c;
+			}
+		}
+		if ( '' === $host ) {
+			$host = $other;
+		}
+		// The forms carry the chosen address (the host field is drawn above them).
+		$GLOBALS['pa_host']   = $host;
+		$GLOBALS['pa_scheme'] = $scheme;
+		$schemes = '';
+		foreach ( array( 'auto' => __( 'Automatic', 'wpseokit' ), 'https' => 'https', 'http' => 'http' ) as $v => $l ) {
+			$schemes .= '<label class="rbn-check"><input type="radio" name="pa-scheme" value="' . esc_attr( $v ) . '"' . checked( $scheme, $v, false ) . '><span>' . esc_html( $l ) . '</span></label>';
+		}
+		$body .= '<div class="wps-stack">'
+			. Ui::note(
+				'info',
+				'<b>' . esc_html__( 'What this does', 'wpseokit' ) . '</b> ' . esc_html__( 'It writes the new address into WordPress and sends the old address there with one 301. You will have to log in again at the new address, because the cookie domain changes.', 'wpseokit' )
+			)
+			. self::check_form( $host, $scheme, $schemes )
+			. '</div>';
+
+		if ( array() !== $precheck ) {
+			$body .= self::apply_checks( $precheck );
+			if ( ! empty( $precheck['ok'] ) ) {
+				$body .= Ui::note(
+					'warn',
+					'<b>' . esc_html__( 'You will have to log in again.', 'wpseokit' ) . '</b> ' . esc_html__( 'The address of the site changes, so the browser is sent to the new address and the session starts there. If the new address does not work, the previous one comes back by itself within ten minutes.', 'wpseokit' )
+				);
+				$body .= self::apply_form( 'apply', (string) $precheck['token'], esc_html__( 'Apply this address', 'wpseokit' ), $host, $scheme );
+			}
+		}
+
+		if ( in_array( (string) ( $state['undo']['state'] ?? '' ), array( 'undone', 'rolled_back' ), true ) ) {
+			$body .= Ui::note(
+				'ok',
+				'<b>' . esc_html__( 'The previous address is in effect again.', 'wpseokit' ) . '</b> ' . esc_html__( 'You can apply the address again whenever you are ready.', 'wpseokit' )
+			);
+		}
+
+		return Ui::card( __( 'Apply this address', 'wpseokit' ), __( 'Moves the site to the chosen address and turns the permanent redirect on.', 'wpseokit' ), $body );
+	}
+
+	/** A form of the apply card (admin-post.php: the nonce and the capability are checked there). */
+	private static function apply_form( string $action, string $token, string $label, string $host = '', string $scheme = 'auto' ): string {
+		$form  = '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="wps-stack">';
+		$form .= '<input type="hidden" name="action" value="wpseokit_preferred_address">';
+		$form .= '<input type="hidden" name="pa_action" value="' . esc_attr( $action ) . '">';
+		$form .= '<input type="hidden" name="pa-host" value="' . esc_attr( $host ) . '">';
+		$form .= '<input type="hidden" name="pa-scheme" value="' . esc_attr( $scheme ) . '">';
+		$form .= '<input type="hidden" name="pa-token" value="' . esc_attr( $token ) . '">';
+		$form .= wp_nonce_field( 'wpseokit_pa', '_wpnonce', true, false );
+		$form .= '<div class="rbn-card__act"><button type="submit" class="rbn-btn rbn-btn--pri">' . Ui::icon( 'check' ) . esc_html( $label ) . '</button></div></form>';
+		return $form;
+	}
+
+	/**
+	 * The form of the check: the host field, the scheme and the "Check first" button. The button posts the values
+	 * the site owner typed, so no JavaScript is needed.
+	 */
+	private static function check_form( string $host, string $scheme, string $schemes ): string {
+		$form  = '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="wps-stack">';
+		$form .= '<input type="hidden" name="action" value="wpseokit_preferred_address">';
+		$form .= '<input type="hidden" name="pa_action" value="precheck">';
+		$form .= wp_nonce_field( 'wpseokit_pa', '_wpnonce', true, false );
+		$form .= Ui::row(
+			'<span id="pa-target-l">' . esc_html__( 'New address', 'wpseokit' ) . '</span>',
+			'<input class="rbn-input rbn-input--mono" id="pa-target-host" name="pa-host" type="text" value="' . esc_attr( $host ) . '" autocomplete="off" spellcheck="false" aria-describedby="pa-target-h"><p class="rbn-help" id="pa-target-h">' . esc_html__( 'Only the other version of this site\'s own address may be applied: the name with www and the name without it.', 'wpseokit' ) . '</p>'
+		);
+		$form .= Ui::row( '<span id="pa-target-sch-l">' . esc_html__( 'Scheme', 'wpseokit' ) . '</span>', '<fieldset class="wps-radios" aria-labelledby="pa-target-sch-l">' . $schemes . '</fieldset>', esc_html__( 'A site on https is never moved to http.', 'wpseokit' ) );
+		$form .= '<div class="rbn-card__act"><button type="submit" class="rbn-btn rbn-btn--pri">' . Ui::icon( 'scan' ) . esc_html__( 'Check first', 'wpseokit' ) . '</button></div></form>';
+		return $form;
+	}
+
+	/** The result of the last check, drawn as a list of checks. */
+	private static function apply_checks( array $precheck ): string {
+		$out = '<div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html__( 'Checks before applying', 'wpseokit' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Check', 'wpseokit' ) . '</th><th scope="col">' . esc_html__( 'Result', 'wpseokit' ) . '</th></tr></thead><tbody>';
+		foreach ( (array) ( $precheck['checks'] ?? array() ) as $check ) {
+			$state = (string) ( $check['state'] ?? 'ok' );
+			$tone  = 'ok' === $state ? 'ok' : ( 'warn' === $state ? 'warn' : 'err' );
+			$icon  = 'ok' === $state ? 'check' : ( 'warn' === $state ? 'alert' : 'x' );
+			$out  .= '<tr><th scope="row" data-label="' . esc_attr__( 'Check', 'wpseokit' ) . '">' . esc_html( (string) ( $check['title'] ?? '' ) ) . '</th>'
+				. '<td data-label="' . esc_attr__( 'Result', 'wpseokit' ) . '"><span class="rbn-badge rbn-badge--' . esc_attr( $tone ) . '">' . Ui::icon( $icon ) . esc_html( (string) ( $check['text'] ?? '' ) ) . '</span>';
+			foreach ( (array) ( $check['lines'] ?? array() ) as $line ) {
+				$out .= '<pre class="wps-pre wps-pre--scroll" tabindex="0" role="region"><code>' . esc_html( (string) $line ) . '</code></pre>';
+			}
+			$out .= '</td></tr>';
+		}
+		$out .= '</tbody></table></div>';
+		foreach ( (array) ( $precheck['warnings'] ?? array() ) as $w ) {
+			$out .= Ui::note( 'warn', esc_html( (string) $w ) );
+		}
+		return $out;
+	}
+
+	/** The open confirmation window: the time left, the confirm button and the undo button. */
+	private static function apply_pending( array $pending ): string {
+		$origin   = (string) ( $pending['origin'] ?? '' );
+		$token    = (string) ( $pending['token'] ?? '' );
+		$left     = max( 0, (int) ( $pending['remaining'] ?? 0 ) );
+		$minutes  = (int) ceil( $left / 60 );
+		$out      = Ui::note(
+			'warn',
+			'<b>' . esc_html__( 'Waiting for your confirmation.', 'wpseokit' ) . '</b> ' . sprintf(
+				/* translators: 1: the new address, 2: minutes left */
+				__( 'The site now answers on %1$s. Log in there and confirm within %2$d minutes; if you do not, the previous address comes back by itself.', 'wpseokit' ),
+				$origin,
+				$minutes
+			)
+		);
+		$out     .= self::apply_form( 'confirm', $token, esc_html__( 'Confirm the new address', 'wpseokit' ) );
+		$out     .= self::apply_form( 'undo', '', esc_html__( 'Go back to the previous address', 'wpseokit' ) );
+		return $out;
+	}
+
+	/** The state after the address was applied and confirmed. */
+	private static function apply_done( array $state ): string {
+		$old   = PreferredAddressApplyService::old_host();
+		$count = PreferredAddressApplyService::old_link_posts( $old );
+		$out   = Ui::note(
+			'ok',
+			'<b>' . esc_html__( 'The new address is in effect.', 'wpseokit' ) . '</b> ' . sprintf(
+				/* translators: %s: the old host name */
+				__( 'The old address (%s) now sends visitors to the new one with one 301.', 'wpseokit' ),
+				$old
+			)
+		);
+		$out  .= Ui::note(
+			'info',
+			sprintf(
+				/* translators: %d: number of posts */
+				__( 'Information only: %d posts still carry the old address in their content. Those links go to the new address with a 301 as well; the plugin does not rewrite your content.', 'wpseokit' ),
+				$count
+			)
+		);
+		$out  .= self::apply_form( 'undo', '', esc_html__( 'Go back to the previous address', 'wpseokit' ) );
+		return $out;
+	}
+
+	/** The result of the last action, shown at the top of the card. */
+	private static function apply_note(): string {
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- reading two page arguments only; they are matched against a fixed list.
+		$step = isset( $_GET['pa_step'] ) ? sanitize_key( wp_unslash( $_GET['pa_step'] ) ) : '';
+		$res  = isset( $_GET['pa_res'] ) ? sanitize_key( wp_unslash( $_GET['pa_res'] ) ) : '';
+		// phpcs:enable
+		if ( '' === $step ) {
+			return '';
+		}
+		if ( 'apply' === $step ) {
+			return 'ok' === $res
+				? Ui::note( 'ok', esc_html__( 'The address was applied. The browser is sent to the new address; log in there to confirm it.', 'wpseokit' ) )
+				: Ui::note( 'err', esc_html__( 'The address was not applied. See the checks below.', 'wpseokit' ) );
+		}
+		if ( 'confirm' === $step ) {
+			return Ui::note( 'ok', esc_html__( 'The new address was confirmed.', 'wpseokit' ) );
+		}
+		if ( 'undo' === $step ) {
+			return Ui::note( 'ok', esc_html__( 'The previous address was restored.', 'wpseokit' ) );
+		}
+		if ( 'check' === $step ) {
+			return 'ok' === $res
+				? Ui::note( 'ok', esc_html__( 'The check is finished.', 'wpseokit' ) )
+				: Ui::note( 'warn', esc_html__( 'The check found something that has to be fixed first.', 'wpseokit' ) );
+		}
+		return '';
 	}
 
 	/** The verdict list under the audit; the script draws the same labels on each row (see `I.verdicts`). */

@@ -4394,3 +4394,275 @@ msgstr ""
 #: includes/Screens/Ui.php
 msgid "You: %d"
 msgstr ""
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "Enter the host name only, such as example.com. Leave out the scheme, the port and the path."
+msgstr "Yalnız ana makine adını yazın, örneğin example.com. Şemayı, portu ve yolu yazmayın."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "An IP address is not an address of a site. Enter the host name of this site."
+msgstr "IP adresi bir sitenin adresi değildir. Bu sitenin ana makine adını yazın."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The address of this site could not be read, so the target cannot be checked."
+msgstr "Bu sitenin adresi okunamadı, bu yüzden hedef denetlenemiyor."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "Only the other version of this site's own address may be applied: the name with www and the name without it. Another domain, a sub-domain or an IP address is refused."
+msgstr "Yalnız bu sitenin kendi adresinin diğer hâli uygulanabilir: www'li ve www'siz ad. Başka bir alan adı, alt alan adı ya da IP adresi reddedilir."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The scheme must be http or https."
+msgstr "Şema http ya da https olmalıdır."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "This site answers on https. Moving it to http would send every visitor from a secure address to an insecure one, so it is not allowed."
+msgstr "Bu site https üzerinden yanıt veriyor. http'ye taşımak her ziyareti güvenli bir adresten güvensiz bir adrese gönderirdi, bu yüzden izin verilmez."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+#, php-format
+msgid "%1$s is the other version of this site's own address (%2$s). Only these two names are ever touched."
+msgstr "%1$s, bu sitenin kendi adresinin (%2$s) diğer hâlidir. Yalnız bu iki ad hiçbir zaman değiştirilmez."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+#, php-format
+msgid "The new address answers on %s."
+msgstr "Yeni adres %s üzerinden yanıt veriyor."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "wp-config.php"
+msgstr "wp-config.php"
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The address of the site is stored in the database, so the plugin can change it."
+msgstr "Sitenin adresi veritabanında tutuluyor, bu yüzden eklenti onu değiştirebilir."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+#, php-format
+msgid "%s is defined in wp-config.php. That constant wins over the database, so the plugin refuses to change the address (nothing is changed). Change these two lines yourself and come back."
+msgstr "%s, wp-config.php içinde tanımlı. Bu sabit veritabanının üzerine yazar, bu yüzden eklenti adresi değiştirmeyi reddeder (hiçbir şey değişmedi). Bu iki satırı kendiniz değiştirip geri dönün."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "Multisite"
+msgstr "Çoklu site"
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "A multisite network is outside the scope of this feature. Use a server rule for the address instead."
+msgstr "Çoklu site ağı bu özelliğin kapsamı dışındadır. Bunun yerine adres için bir sunucu kuralı kullanın."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "This is a single site."
+msgstr "Bu tek bir sitedir."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The certificate of the new address could not be verified. Check it yourself before you go on; a browser must show no warning."
+msgstr "Yeni adresin sertifikası doğrulanamadı. Devam etmeden önce kendiniz kontrol edin; tarayıcı hiçbir uyarı göstermemelidir."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The new address could not be reached from the server. It may still work for visitors; check it yourself."
+msgstr "Yeni adrese sunucudan ulaşılamadı. Ziyaretçiler için çalışıyor olabilir; kendiniz kontrol edin."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The redirects of the new address lead back to themselves. Something on the server has to be fixed first."
+msgstr "Yeni adresin yönlendirmeleri kendi kendine geri dönüyor. Önce sunucuda bir şeyin düzeltilmesi gerekiyor."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The new address answers and the other version reaches it in one step."
+msgstr "Yeni adres yanıt veriyor ve diğer hâl ona tek adımda ulaşıyor."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The new address does not answer cleanly yet. The check shows the details; you can still apply it and confirm afterwards."
+msgstr "Yeni adres henüz düzgün yanıt vermiyor. Denetim ayrıntıları gösteriyor; yine de uygulayıp sonra onaylayabilirsiniz."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The server already redirects the old address somewhere else. Turn that rule off first, otherwise the visitors make two hops."
+msgstr "Sunucu eski adresi zaten başka bir yere yönlendiriyor. Önce o kuralı kapatın, yoksa ziyaretçiler iki atlama yapar."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The old address reaches the new one in more than one hop. The existing rule should be replaced, not added to."
+msgstr "Eski adres yeni adrese birden çok adımda ulaşıyor. Var olan kural eklenmemeli, yerine geçmelidir."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "Reachability"
+msgstr "Erişilebilirlik"
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The feature is switched off in wp-config.php (WPSEOKIT_PA_DISABLE)."
+msgstr "Özellik wp-config.php içinde kapatılmış (WPSEOKIT_PA_DISABLE)."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+#, php-format
+msgid "%s is defined in wp-config.php and wins over the database, so the address cannot be changed by the plugin. Nothing was changed. Change these two lines in wp-config.php and come back."
+msgstr "%s, wp-config.php içinde tanımlı ve veritabanının üzerine yazıyor, bu yüzden eklenti adresi değiştiremez. Hiçbir şey değişmedi. wp-config.php içindeki bu iki satırı değiştirip geri dönün."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The new address was applied. The old address now sends visitors to it with one 301."
+msgstr "Yeni adres uygulandı. Eski adres artık ziyaretçileri tek bir 301 ile oraya gönderiyor."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "There is no open confirmation window. The address was already confirmed or it was never applied."
+msgstr "Açık bir onay penceresi yok. Adres zaten onaylanmıştı ya da hiç uygulanmadı."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The new address was already confirmed."
+msgstr "Yeni adres zaten onaylanmıştı."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The confirmation link is not valid any more. Open the Preferred address page again."
+msgstr "Onay bağlantısı artık geçerli değil. Tercih edilen adres sayfasını yeniden açın."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The confirmation window has closed, so the previous address was restored."
+msgstr "Onay penceresi kapandı, bu yüzden önceki adres geri alındı."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The new address was confirmed. The old address now sends visitors to it for good."
+msgstr "Yeni adres onaylandı. Eski adres artık ziyaretçileri kalıcı olarak oraya gönderiyor."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "There is nothing to undo: no previous address was saved."
+msgstr "Geri alınacak bir şey yok: önceki adres kaydedilmemiş."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The confirmation window closed without a confirmation, so the previous address was restored."
+msgstr "Onay penceresi onay alınmadan kapandı, bu yüzden önceki adres geri alındı."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The previous address was restored and the forced redirect was switched off."
+msgstr "Önceki adres geri alındı ve zorunlu yönlendirme kapatıldı."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "You do not have permission to do this."
+msgstr "Bunu yapma izniniz yok."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "This link has expired. Open the page again and try once more."
+msgstr "Bu bağlantının süresi doldu. Sayfayı yeniden açıp bir kez daha deneyin."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "Run the check first; the address cannot be applied before it."
+msgstr "Önce denetimi çalıştırın; adres ondan önce uygulanamaz."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The feature is switched off."
+msgstr "Özellik kapatılmış."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "WPSEOKIT_PA_DISABLE is defined in wp-config.php, so nothing is changed and nothing is redirected."
+msgstr "wp-config.php içinde WPSEOKIT_PA_DISABLE tanımlı, bu yüzden hiçbir şey değişmiyor ve hiçbir şey yönlendirilmiyor."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "Apply this address"
+msgstr "Bu adresi uygula"
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The address is waiting for your confirmation."
+msgstr "Adres onayınızı bekliyor."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The preferred address is in effect."
+msgstr "Tercih edilen adres geçerli."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "What this does"
+msgstr "Ne yapar"
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "It writes the new address into WordPress and sends the old address there with one 301. You will have to log in again at the new address, because the cookie domain changes."
+msgstr "Yeni adresi WordPress'e yazar ve eski adresi tek bir 301 ile oraya gönderir. Çerez alanı değiştiği için yeni adreste yeniden giriş yapmanız gerekir."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "You will have to log in again."
+msgstr "Yeniden giriş yapmanız gerekir."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The address of the site changes, so the browser is sent to the new address and the session starts there. If the new address does not work, the previous one comes back by itself within ten minutes."
+msgstr "Sitenin adresi değiştiği için tarayıcı yeni adrese gönderilir ve oturum orada başlar. Yeni adres çalışmazsa önceki adres kendiliğinden on dakika içinde geri gelir."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The previous address is in effect again."
+msgstr "Önceki adres yeniden geçerli."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "You can apply the address again whenever you are ready."
+msgstr "Adresi istediğiniz zaman yeniden uygulayabilirsiniz."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "Moves the site to the chosen address and turns the permanent redirect on."
+msgstr "Siteyi seçilen adrese taşır ve kalıcı yönlendirmeyi açar."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "New address"
+msgstr "Yeni adres"
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "Only the other version of this site's own address may be applied: the name with www and the name without it."
+msgstr "Yalnız bu sitenin kendi adresinin diğer hâli uygulanabilir: www'li ve www'siz ad."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "A site on https is never moved to http."
+msgstr "https üzerindeki bir site hiçbir zaman http'ye taşınmaz."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "Check first"
+msgstr "Önce denetle"
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "Checks before applying"
+msgstr "Uygulamadan önceki denetimler"
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "Waiting for your confirmation."
+msgstr "Onayınız bekleniyor."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+#, php-format
+msgid "The site now answers on %1$s. Log in there and confirm within %2$d minutes; if you do not, the previous address comes back by itself."
+msgstr "Site artık %1$s üzerinden yanıt veriyor. Orada giriş yapıp %2$d dakika içinde onaylayın; onaylamazsanız önceki adres kendiliğinden geri gelir."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "Confirm the new address"
+msgstr "Yeni adresi onayla"
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "Go back to the previous address"
+msgstr "Önceki adrese dön"
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The new address is in effect."
+msgstr "Yeni adres geçerli."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+#, php-format
+msgid "The old address (%s) now sends visitors to the new one with one 301."
+msgstr "Eski adres (%s) artık ziyaretçileri tek bir 301 ile yenisine gönderiyor."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+#, php-format
+msgid "Information only: %d posts still carry the old address in their content. Those links go to the new address with a 301 as well; the plugin does not rewrite your content."
+msgstr "Yalnız bilgi: %d yazı hâlâ içeriğinde eski adresi taşıyor. Bu bağlantılar da 301 ile yeni adrese gider; eklenti içeriğinizi yeniden yazmaz."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The address was applied. The browser is sent to the new address; log in there to confirm it."
+msgstr "Adres uygulandı. Tarayıcı yeni adrese gönderiliyor; orada giriş yapıp onaylayın."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The address was not applied. See the checks below."
+msgstr "Adres uygulanmadı. Aşağıdaki denetimlere bakın."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The new address was confirmed."
+msgstr "Yeni adres onaylandı."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The previous address was restored."
+msgstr "Önceki adres geri alındı."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The check is finished."
+msgstr "Denetim bitti."
+
+#: includes/Services/PreferredAddressApplyService.php includes/Screens/RedirectsScreen.php
+msgid "The check found something that has to be fixed first."
+msgstr "Denetim, önce düzeltilmesi gereken bir şey buldu."
+

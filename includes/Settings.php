@@ -106,6 +106,9 @@ final class Settings {
 				'preferred_host'      => array( 'host', '' ),
 				'php_fallback'        => array( 'bool', false ),
 				'trust_proxy_headers' => array( 'bool', false ),
+				// The forced redirect of the applied preferred address (docs/kapsam-ve-mimari.md §3.11). Off until the
+				// address is applied; the dead-man switch brings the previous address back when it is not confirmed.
+				'enforce_address'     => array( 'bool', false ),
 			),
 			'general'   => array(
 				'disable_author_archive'   => array( 'bool', false ),
