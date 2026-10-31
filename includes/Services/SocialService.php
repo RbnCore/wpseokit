@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Wpseokit\Services;
 
 use Wpseokit\Repositories\SettingsRepository;
+use Wpseokit\Rules\HeadParser;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -184,7 +185,9 @@ final class SocialService {
 			}
 			return $out;
 		}
-		return false !== wp_http_validate_url( $spec ) ? array( 'og:image' => $spec ) : array();
+		// WPRJ-741: shape check only — the tag is printed, not fetched, so no DNS lookup
+		// (wp_http_validate_url() resolves the host and would drop a valid image while DNS is down).
+		return HeadParser::is_absolute_url( $spec ) ? array( 'og:image' => $spec ) : array();
 	}
 
 	/**

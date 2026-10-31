@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Wpseokit\Services;
 
 use Wpseokit\Repositories\SettingsRepository;
+use Wpseokit\Rules\HeadParser;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -47,7 +48,10 @@ final class CanonicalService {
 		$post = $ctx['post'] ?? null;
 		if ( $post instanceof \WP_Post ) {
 			$custom = trim( (string) get_post_meta( $post->ID, self::META_KEY, true ) );
-			if ( '' !== $custom && false !== wp_http_validate_url( $custom ) ) {
+			// WPRJ-741: the value is only printed, never fetched, so validate the shape locally.
+			// wp_http_validate_url() resolves the host over DNS (an SSRF guard for outbound requests) and would
+			// drop a valid canonical when DNS is down or the host is private — the page would silently lose it.
+			if ( '' !== $custom && HeadParser::is_absolute_url( $custom ) ) {
 				return $custom;
 			}
 		}
