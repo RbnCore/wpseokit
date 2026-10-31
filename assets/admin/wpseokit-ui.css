@@ -445,7 +445,5 @@
 .rbn-stat__k{display:flex;align-items:center;gap:var(--rbn-s2)}
 /* Eylem hücresi: kit display:flex veriyor ve tablo hücresinin satır çizgisini koparıyor; masaüstünde hücre kalır, yığılmış (mobil) düzende kit kuralı geçerli */
 @media (min-width:48.9375rem){.rbn-table td.rbn-acts{display:table-cell;text-align:right}.rbn-table td.rbn-acts>*{margin-left:var(--rbn-s1)}.rbn-table td.rbn-acts>*:first-child{margin-left:0}}
-/* Anahtar doğrudan .rbn-field içindeyken kitin `.rbn-field>label{display:block}` kuralı (özgüllük 0,1,1) `.rbn-switch` kuralını (0,1,0) eziyor: anahtar kutusu 0 genişlik alıp metnin üstüne biniyordu */
-.rbn-field>.rbn-switch{display:inline-flex}
 /* Yığılmış (mobil) tablo: satır başlığı (th scope=row) etiket sütunu olmadan tam genişlik alır (kit 7rem etiket sütununu th için de açıyor, ad dar sütuna sıkışıyordu); uzun durum rozeti kart dışına taşıp kırpılmasın */
 @media (max-width:48.875rem){.rbn-table--stack th[scope=row]{grid-template-columns:minmax(0,1fr)}.rbn-table--stack td .rbn-badge{max-width:100%;white-space:normal}}
