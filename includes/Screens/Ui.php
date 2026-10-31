@@ -580,7 +580,11 @@ final class Ui {
 	/** Switch bound to a boolean setting. */
 	public static function toggle( string $path, string $id, string $title, string $help = '', bool $disabled = false ): string {
 		$on = (bool) self::val( $path, false );
-		return '<label class="rbn-switch"><input type="checkbox" id="' . esc_attr( $id ) . '" name="' . esc_attr( $path ) . '" data-type="bool"' . ( $on ? ' checked' : '' ) . ( $disabled ? ' disabled' : '' ) . '><span class="rbn-switch__x"></span><span><b>' . esc_html( $title ) . '</b>' . ( '' !== $help ? '<span class="rbn-help">' . esc_html( $help ) . '</span>' : '' ) . '</span></label>';
+		// Anında anahtar işareti: kural tek yerde (AdminKit Form::instant), burada kopyalanmaz.
+		$instant = class_exists( '\AdminKit\Core\Settings\Form' )
+			? \AdminKit\Core\Settings\Form::attrs( \AdminKit\Core\Settings\Form::instant( 'wpseokit', $path, $title ) )
+			: '';
+		return '<label class="rbn-switch"><input type="checkbox" id="' . esc_attr( $id ) . '" name="' . esc_attr( $path ) . '" data-type="bool"' . ( $on ? ' checked' : '' ) . ( $disabled ? ' disabled' : '' ) . $instant . '><span class="rbn-switch__x"></span><span><b>' . esc_html( $title ) . '</b>' . ( '' !== $help ? '<span class="rbn-help">' . esc_html( $help ) . '</span>' : '' ) . '</span></label>';
 	}
 
 	/** Switch inside a field row. */
