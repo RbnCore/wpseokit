@@ -257,9 +257,9 @@ final class Settings {
 		$stored = get_option( self::OPTION, array() );
 		$stored = is_array( $stored ) ? $stored : array();
 		foreach ( self::SITE_TEXT as $path ) {
-			$value = self::walk( $stored, $path );
+			$value = Engine::value_at( $stored, $path );
 			if ( null === $value ) {
-				$value = self::walk( $schema, $path . '.default' );
+				$value = Engine::value_at( $schema, $path . '.default' );
 			}
 			if ( self::is_template( (string) $value ) ) {
 				continue;
@@ -268,23 +268,6 @@ final class Settings {
 		}
 		// Social profile links are the site's own identities too (a map is one travel row; see SITE_TEXT's limit).
 		return self::mark( $schema, 'social.profiles', 'site_specific' );
-	}
-
-	/**
-	 * Reads one dotted path out of a nested array.
-	 *
-	 * @param array<string, mixed> $data Nested data.
-	 * @return mixed Value, or null when the path does not exist.
-	 */
-	private static function walk( array $data, string $path ) {
-		$node = $data;
-		foreach ( explode( '.', $path ) as $part ) {
-			if ( ! is_array( $node ) || ! array_key_exists( $part, $node ) ) {
-				return null;
-			}
-			$node = $node[ $part ];
-		}
-		return $node;
 	}
 
 	/**
