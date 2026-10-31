@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Wpseokit;
 
 use AdminKit\Core\Settings as Engine;
+use Wpseokit\Services\Variables;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -40,6 +41,38 @@ final class Settings {
 	);
 
 	/**
+	 * Free-text fields whose value can carry THIS site's own identity (its name, host or person).
+	 *
+	 * The value decides, not the field (WPRJ-719): a template written with variables (`%sitename% %sep% %title%`) is
+	 * portable — the variables are filled in on the target site — while a plain-text value is the site's own prose and
+	 * is marked `site_specific`, so the settings file neither exports nor imports it (AdminKit `Settings::travel()`:
+	 * `site_specific` wins over the section's `portable`). Without this, a description such as “Film Makinesi'nde en
+	 * yeni filmler …” travelled to the next site.
+	 *
+	 * Known limit: a `map` field (post-type/taxonomy templates) is ONE travel row, so an admin-written prose row
+	 * inside it travels with the rest; the value-level rule cannot split a map.
+	 *
+	 * @var string[]
+	 */
+	private const SITE_TEXT = array(
+		'templates.home_title',
+		'templates.home_description',
+		'templates.search_title',
+		'templates.notfound_title',
+		'templates.date_title',
+		'templates.author_title',
+		'schema.organization_name',
+		'schema.website_name',
+		'schema.alternate_website_name',
+		'schema.person_name',
+		'social.facebook_site',
+		'social.twitter_site',
+		'llms.summary',
+		'feed.footer_text',
+		'feed.copyright_text',
+	);
+
+	/**
 	 * Schema: section => key => row (engine format). Every default is the value the plugin shipped, unchanged.
 	 *
 	 * @return array<string, array<string, array<string, mixed>>>
@@ -47,7 +80,8 @@ final class Settings {
 	public static function schema(): array {
 		// Bölüm bayrağı altındaki alanlara miras kalır (ayar dosyasıyla taşıma, AdminKit): `portable` taşınır,
 		// `site_specific` (site adresi, medya/sayfa kimliği) ve `risky` (kilitlenme riski) alan istisnalarıdır.
-		return array(
+		// Serbest metin alanlarının bayrağı DEĞERE bakar: `site_text()` aşağıda tamamlar.
+		$schema = array(
 			'templates' => array(
 				'portable' => true,
 				'sep'              => array( 'type' => 'text', 'default' => '-' ),
@@ -205,6 +239,92 @@ final class Settings {
 				'retention_days' => array( 'type' => 'int', 'default' => 400, 'min' => 30, 'max' => 1095 ),
 			),
 		);
+		return self::site_text( $schema );
+	}
+
+	/**
+	 * Marks every free-text field in `SITE_TEXT` whose CURRENT value is plain prose (no `%variable%`) as
+	 * `site_specific`. A template keeps travelling: the target site fills in its own name through the variables.
+	 *
+	 * The decision is taken when the engine resolves the schema (once per request) from the stored value, falling back
+	 * to the declared default. A save and an export never share one request (the settings screen posts to
+	 * `options.php`, the download is its own request), so the flag always reflects the value on disk at export time.
+	 *
+	 * @param array<string, array<string, mixed>> $schema Declared schema.
+	 * @return array<string, array<string, mixed>>
+	 */
+	private static function site_text( array $schema ): array {
+		$stored = get_option( self::OPTION, array() );
+		$stored = is_array( $stored ) ? $stored : array();
+		foreach ( self::SITE_TEXT as $path ) {
+			$value = self::walk( $stored, $path );
+			if ( null === $value ) {
+				$value = self::walk( $schema, $path . '.default' );
+			}
+			if ( self::is_template( (string) $value ) ) {
+				continue;
+			}
+			$schema = self::mark( $schema, $path, 'site_specific' );
+		}
+		// Social profile links are the site's own identities too (a map is one travel row; see SITE_TEXT's limit).
+		return self::mark( $schema, 'social.profiles', 'site_specific' );
+	}
+
+	/**
+	 * Reads one dotted path out of a nested array.
+	 *
+	 * @param array<string, mixed> $data Nested data.
+	 * @return mixed Value, or null when the path does not exist.
+	 */
+	private static function walk( array $data, string $path ) {
+		$node = $data;
+		foreach ( explode( '.', $path ) as $part ) {
+			if ( ! is_array( $node ) || ! array_key_exists( $part, $node ) ) {
+				return null;
+			}
+			$node = $node[ $part ];
+		}
+		return $node;
+	}
+
+	/**
+	 * Adds one travel flag to the schema node at a dotted path (a missing path is left alone).
+	 *
+	 * @param array<string, array<string, mixed>> $schema Declared schema.
+	 * @return array<string, array<string, mixed>>
+	 */
+	private static function mark( array $schema, string $path, string $flag ): array {
+		$parts = explode( '.', $path );
+		$last  = (string) array_pop( $parts );
+		$node  = &$schema;
+		foreach ( $parts as $part ) {
+			if ( ! isset( $node[ $part ] ) || ! is_array( $node[ $part ] ) ) {
+				unset( $node );
+				return $schema;
+			}
+			$node = &$node[ $part ];
+		}
+		if ( isset( $node[ $last ] ) && is_array( $node[ $last ] ) ) {
+			$node[ $last ][ $flag ] = true;
+		}
+		unset( $node );
+		return $schema;
+	}
+
+	/** True when the text carries at least one variable WPSeoKit knows (`%sitename%`, `%title%` …): a template, not prose. */
+	private static function is_template( string $text ): bool {
+		if ( '' === $text || false === strpos( $text, '%' ) ) {
+			return false;
+		}
+		if ( 0 === preg_match_all( '/%([a-z_]+)%/', $text, $matches ) ) {
+			return false;
+		}
+		foreach ( $matches[1] as $name ) {
+			if ( isset( Variables::VAR_MAP[ $name ] ) ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/** Registers the schema with the AdminKit settings engine (called once from Plugin::boot()). */
