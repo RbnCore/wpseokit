@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 8.1
 Requires Plugins: adminkit
-Stable tag: 0.1.3
+Stable tag: 0.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ Only a release check: at most once a day the plugin asks GitHub for the newest v
 Settings, tables, post meta and the temporary update records are removed only if you turned on "Delete all WPSeoKit data when the plugin is deleted" in Settings → Data and uninstall. Without that, the plugin files are removed and your data stays.
 
 == Changelog ==
+
+= 0.1.4 =
+* Fixed: canonical URL and social image could be dropped when a DNS lookup was slow; the plugin no longer does a DNS lookup for printed URLs.
 
 = 0.1.3 =
 * New: Apply the preferred address. The screen checks the four address versions first, changes the site address only after your confirmation, and one button puts the old address back.
