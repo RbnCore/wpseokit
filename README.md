@@ -45,7 +45,7 @@ Site owners and editors who need SEO titles, descriptions, canonicals, a sitemap
 ## Installation
 
 1. Install and activate **AdminKit** first; WPSeoKit cannot be activated without it.
-2. Download `wpseokit-0.1.1.zip` from [Releases](https://github.com/RbnCore/wpseokit/releases).
+2. Download `wpseokit-0.1.3.zip` from [Releases](https://github.com/RbnCore/wpseokit/releases).
 3. In WordPress go to **Plugins → Add New → Upload Plugin**, choose the zip, install and activate.
 4. Open **RBN Kit → WPSeoKit** and run the setup check.
 5. Review the title and description templates in **Templates**, then save them.
@@ -90,7 +90,7 @@ The screens live under the shared **RBN Kit** top-level menu, just below Dashboa
 
 ## Version and license
 
-- Version 0.1.1
+- Version 0.1.3
 - License: GPL-2.0-or-later (see [LICENSE](LICENSE))
 - Text domain: `wpseokit`
 
