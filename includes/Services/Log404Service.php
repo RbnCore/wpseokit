@@ -29,8 +29,8 @@ defined( 'ABSPATH' ) || exit;
 
 final class Log404Service {
 
-	/** Option that holds the secret mixed into the address hash (`wpseokit_ip_salt`, never autoloaded). */
-	public const SALT_OPTION = 'wpseokit_ip_salt';
+	/** Former option that held the address salt in the database; only removed now (schema 5, uninstall). */
+	public const LEGACY_SALT_OPTION = 'wpseokit_ip_salt';
 
 	/** Key in the `wpseokit.maintenance` cache group (one day) that limits the cleanup to once a day. */
 	private const PRUNE_KEY = 'prune_404';
@@ -48,17 +48,13 @@ final class Log404Service {
 		return 1 === preg_match( self::PROBES, $path );
 	}
 
-	/** Salted SHA-256 of an address; an empty string when it is not a valid address. */
+	/** Keyed HMAC-SHA-256 of an address (key derived from the wp-config salts); an empty string when it is not a valid address. */
 	public static function ip_hash( string $ip ): string {
 		if ( ! Host::is_ip( $ip ) ) {
 			return '';
 		}
-		$salt = (string) get_option( self::SALT_OPTION, '' );
-		if ( '' === $salt ) {
-			$salt = wp_generate_password( 64, true, true );
-			add_option( self::SALT_OPTION, $salt, '', false );
-		}
-		return hash_hmac( 'sha256', $ip, $salt );
+		// The key comes from wp-config.php (wp_salt), not from the database: a leaked database dump alone cannot then be used to test every IPv4 address against the stored hashes.
+		return hash_hmac( 'sha256', $ip, wp_salt( 'auth' ) . '|wpseokit-404-ip' );
 	}
 
 	/** Referrer reduced to host and path (the query string can carry personal data). */

@@ -13,8 +13,8 @@ defined( 'ABSPATH' ) || exit;
 
 final class Db {
 
-	/** Schema version; raise it whenever DDL below changes. 4: the activity event table moved to the AdminKit log. */
-	public const VERSION = 4;
+	/** Schema version; raise it whenever DDL below changes. 4: the activity event table moved to the AdminKit log. 5: the stored address salt is gone. */
+	public const VERSION = 5;
 
 	public const OPTION = 'wpseokit_db_version';
 
@@ -88,10 +88,11 @@ final class Db {
 		self::drop_legacy_events();
 	}
 
-	/** Schema 4: the own activity table is gone (logs live in the AdminKit core); one idempotent clean-up. */
+	/** Schema 4/5: the own activity table and the stored address salt are gone; one idempotent clean-up. */
 	private static function drop_legacy_events(): void {
 		\AdminKit\Helpers\Db::drop_tables( array( self::table( 'events' ) ) );
 		delete_option( 'wpseokit_log_errors' );
 		delete_option( 'wpseokit_log_updates' );
+		delete_option( Services\Log404Service::LEGACY_SALT_OPTION );
 	}
 }
