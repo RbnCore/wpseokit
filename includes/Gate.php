@@ -26,7 +26,7 @@ final class Gate {
 		if ( defined( 'ADMINKIT_CORE_API' ) && (int) ADMINKIT_CORE_API >= self::REQUIRED_API && class_exists( 'AdminKit\Core\Core' ) ) {
 			return true;
 		}
-		add_action( 'admin_notices', array( self::class, 'notice' ) );
+		add_action( 'admin_notices', array( self::class, 'notice' ) ); // rbn-notice-fallback: AdminKit (the bell) is not there.
 		return false;
 	}
 
@@ -46,6 +46,7 @@ final class Gate {
 		$text = $loaded
 			? __( 'WPSeoKit is switched off: the installed AdminKit is too old. Update AdminKit to turn it back on.', 'wpseokit' )
 			: __( 'WPSeoKit is switched off: it needs the AdminKit plugin (cache, logs and the RBN Kit menu).', 'wpseokit' );
+		// rbn-notice-fallback: AdminKit (the bell) is not there.
 		echo '<div class="notice notice-error"><p>' . esc_html( $text ) . '</p><p>' . $action . '</p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the button is escaped above.
 	}
 }

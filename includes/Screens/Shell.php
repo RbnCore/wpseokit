@@ -155,15 +155,6 @@ final class Shell {
 		);
 	}
 
-	/** Yoast warning shown above a tool. */
-	public static function yoast_note(): string {
-		if ( ! Plugin::yoast_active() ) {
-			return '';
-		}
-		return '<div class="rbn-note rbn-note--warn" role="status">' . Ui::icon( 'alert' ) . '<div><p><b>' . esc_html__( 'Yoast SEO is active.', 'wpseokit' ) . '</b> ' . esc_html__( 'WPSeoKit prints nothing on your site while Yoast is on, so search engines never see duplicate tags.', 'wpseokit' ) . '</p>'
-			. '<div class="rbn-note__act"><a class="rbn-btn rbn-btn--pri" href="' . esc_url( self::url( 'import' ) ) . '">' . Ui::icon( 'down' ) . esc_html__( 'Import Yoast data', 'wpseokit' ) . '</a></div></div></div>';
-	}
-
 	/**
 	 * A full tool page: bar, head, tabs and panels. With `form` the panels sit in one settings form with one save bar.
 	 *
@@ -185,7 +176,7 @@ final class Shell {
 		}
 		$list .= '</div>';
 		$body  = isset( $o['form'] ) ? Ui::form( $o['form'], $panels ) : $panels;
-		$out   = Ui::open( $tool ) . self::header( $title, array( 'current' => $tool, 'back' => true, 'menu' => true ) ) . self::yoast_note() . ( $o['top'] ?? '' ) . $list . $body . Ui::close();
+		$out   = Ui::open( $tool ) . self::header( $title, array( 'current' => $tool, 'back' => true, 'menu' => true ) ) . ( $o['top'] ?? '' ) . $list . $body . Ui::close();
 		echo $out; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- every fragment is escaped where it is built.
 	}
 }

@@ -78,6 +78,7 @@ Settings, tables, post meta and the temporary update records are removed only if
 == Changelog ==
 
 = 0.1.5 =
+* Change: the Yoast SEO warning and save messages appear in the AdminKit notification bell and dialog instead of boxes on the page.
 * Security: the 404 log no longer keeps its address-hash key in the database; it is derived from the wp-config.php salts, so a leaked database dump cannot be used to reverse stored address hashes. Old hashes in the log are no longer comparable and age out with the normal retention.
 
 = 0.1.4 =

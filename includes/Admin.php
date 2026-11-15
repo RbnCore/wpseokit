@@ -22,8 +22,6 @@ final class Admin {
 	private static string $hook = '';
 
 	/** @var array<int, array{type:string,msg:string}> */
-	private static array $notices = array();
-
 	public static function init(): void {
 		if ( ! is_admin() ) {
 			return;
@@ -31,7 +29,7 @@ final class Admin {
 		add_action( 'admin_menu', array( self::class, 'menu' ), 8 );
 		add_action( 'admin_menu', array( self::class, 'late' ), 99 );
 		add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue' ) );
-		add_action( 'admin_notices', array( self::class, 'yoast_notice' ) );
+		add_action( 'adminkit_notices', array( self::class, 'yoast_notice' ) ); // The AdminKit bell (WPRJ-948); no notice box.
 		add_filter( 'plugin_action_links_' . plugin_basename( WPSEOKIT_FILE ), array( self::class, 'links' ) );
 	}
 
@@ -45,16 +43,16 @@ final class Admin {
 	}
 
 	/**
-	 * Queues a notice shown at the top of the plugin page.
+	 * Sends a notice to the AdminKit bell.
 	 *
 	 * @param string $type One of success, error, warning, info.
 	 */
 	public static function notice( string $type, string $msg ): void {
-		$type = in_array( $type, array( 'success', 'error', 'warning', 'info' ), true ) ? $type : 'info';
-		self::$notices[] = array(
-			'type' => $type,
-			'msg'  => $msg,
-		);
+		if ( in_array( $type, array( 'error', 'warning' ), true ) ) {
+			\AdminKit\Helpers\Notices::add( 'wpseokit-' . substr( md5( $type . $msg ), 0, 8 ), $type, $msg, array( 'plugin' => 'WPSeoKit' ) );
+			return;
+		}
+		\AdminKit\Helpers\Toast::flash( 'success' === $type ? 'success' : 'info', $msg );
 	}
 
 	/**
@@ -118,16 +116,23 @@ final class Admin {
 		return is_array( $filtered ) ? $filtered : $data;
 	}
 
-	/** Warning shown on every admin screen for administrators while Yoast SEO is active. */
+	/** Bell notice shown on every admin screen for administrators while Yoast SEO is active. */
 	public static function yoast_notice(): void {
 		if ( ! Plugin::yoast_active() || ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-		if ( $screen && self::is_page( $screen->id ) ) {
-			return; // The page shows the warning inside its own shell.
-		}
-		echo '<div class="notice notice-warning"><p>' . esc_html( self::yoast_message() ) . '</p></div>';
+		\AdminKit\Helpers\Notices::add(
+			'wpseokit-yoast',
+			'warning',
+			__( 'Yoast SEO is active.', 'wpseokit' ),
+			array(
+				'plugin' => 'WPSeoKit',
+				'body'   => self::yoast_message(),
+				'links'  => array(
+					array( 'label' => __( 'Import Yoast data', 'wpseokit' ), 'url' => Screens\Shell::url( 'import' ), 'primary' => true ),
+				),
+			)
+		);
 	}
 
 	private static function yoast_message(): string {
@@ -181,12 +186,6 @@ final class Admin {
 
 		echo '<div class="wrap rbn-wrap wpseokit-wrap"><h1>' . esc_html__( 'WPSeoKit — SEO Toolkit', 'wpseokit' ) . '</h1>';
 		self::print_note();
-		if ( Plugin::yoast_active() ) {
-			echo '<div class="notice notice-warning inline"><p>' . esc_html( self::yoast_message() ) . '</p></div>';
-		}
-		foreach ( self::$notices as $notice ) {
-			echo '<div class="notice notice-' . esc_attr( $notice['type'] ) . ' inline"><p>' . esc_html( $notice['msg'] ) . '</p></div>';
-		}
 		echo '<nav class="' . esc_attr( $class ) . '" aria-label="' . esc_attr__( 'WPSeoKit sections', 'wpseokit' ) . '">';
 		foreach ( $tabs as $id => $tab ) {
 			printf(

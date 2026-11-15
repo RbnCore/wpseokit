@@ -417,7 +417,7 @@ final class DashboardScreen {
 		$list .= '</div>';
 
 		$out  = Ui::open( 'dashboard' ) . Shell::header( __( 'Overview', 'wpseokit' ), array( 'menu' => true, 'title_hidden' => true ) );
-		$out .= Shell::yoast_note() . $list . $panels . ImportScreen::dialog();
+		$out .= $list . $panels . ImportScreen::dialog();
 		echo $out . Ui::close(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- every fragment is escaped where it is built.
 	}
 }
