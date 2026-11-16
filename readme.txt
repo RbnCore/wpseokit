@@ -2,7 +2,7 @@
 Contributors: rbnbilisim
 Tags: seo, sitemap, schema, redirects, open graph
 Requires at least: 6.5
-Tested up to: 6.8
+Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: adminkit
 Stable tag: 0.1.6
@@ -20,7 +20,7 @@ WPSeoKit does the daily work of an SEO plugin on one site: it writes the tags se
 * Settings live under RBN Kit → WPSeoKit; the plugin shares the "RBN Kit" top-level menu with the other RBN plugins.
 * Needs the AdminKit plugin (shared cache, logs and the RBN Kit menu): without it WPSeoKit switches itself off and says so in the admin.
 * Does not run next to Yoast SEO: if Yoast is active, WPSeoKit prints nothing and asks you to remove Yoast first.
-* Updates from GitHub are verified with a SHA-256 digest and an Ed25519 signature; the check can be turned off in the Status tab.
+* Updates from GitHub are verified with a SHA-256 digest and an Ed25519 signature; the check can be turned off under RBN Kit → AdminKit → Network.
 * Light: nothing is loaded on the front end except the tags in the page head.
 
 **Titles and descriptions.** A template per content type (post, page, category, tag, search, 404, home, archive) with the usual variables such as `%title%`, `%sitename%`, `%sep%` and `%page%`; every post can override its own SEO title and meta description. A preview of the Google result and a character counter sit in the post editor box.

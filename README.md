@@ -99,7 +99,6 @@ The screens live under the shared **RBN Kit** top-level menu, just below Dashboa
 - This repository is the plugin folder itself. The release package is a git archive of the repository root with the `wpseokit/` prefix, so only files that belong in the package are committed here.
 - Structure: `wpseokit.php` holds the header and constants; `includes/` holds the services (one class per job), the admin screens, the score rules, the repositories and models, and the REST routes; `assets/admin/` holds the admin CSS and JS; `languages/` holds the `.pot` and the Turkish translation.
 - `includes/Gate.php` is the runtime AdminKit check. It never touches an AdminKit class, so it works while AdminKit is missing.
-- The updater is a self-contained class: copy it to another plugin by changing the constants (repository, plugin file, slug, prefix). It offers updates through WordPress's own `update_plugins_github.com` filter and never runs on the front end.
 - The signing key is never in the repository or in the package, and tests, documentation and release tooling live in the project tree outside this repository.
 
 ## Links

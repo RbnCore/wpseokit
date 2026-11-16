@@ -4728,3 +4728,35 @@ msgstr ""
 #: includes/Screens/SettingsScreen.php:111 includes/Screens/SettingsScreen.php:112
 msgid "seconds"
 msgstr ""
+
+#: includes/Services/PreferredAddressApplyService.php:547
+msgid "A confirmation window is already open for this address."
+msgstr ""
+
+#: includes/Services/PreferredAddressApplyService.php:554
+msgid "Another address operation is currently in progress. Please try again shortly."
+msgstr ""
+
+#: includes/Services/PreferredAddressApplyService.php:581
+msgid "The preferred address is already in effect. Forced redirect has been enabled."
+msgstr ""
+
+#: includes/Services/PreferredAddressApplyService.php:783
+msgid "The saved rollback record contains an invalid or unauthorized address."
+msgstr ""
+
+#: includes/Services/PreferredAddressApplyService.php:1147
+msgid "The confirmation token is required."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:186
+msgid "A valid URL was not provided."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:408
+msgid "The preferred address is not a valid address for this site. Network audit aborted."
+msgstr ""
+
+#: includes/Services/PreferredAddressService.php:715
+msgid "The preferred address is not a valid address for this site. Server rules cannot be generated for an external domain."
+msgstr ""

@@ -3296,11 +3296,9 @@ msgstr "Adresi kontrol et"
 #  ---
 #: src/includes/Screens/DashboardScreen.php
 msgid "%d setup item is missing."
-msgstr "%d kurulum adımı eksik."
-
-#: src/includes/Screens/DashboardScreen.php
-msgid "%d setup items are missing."
-msgstr "%d kurulum adımı eksik."
+msgid_plural "%d setup items are missing."
+msgstr[0] "%d kurulum adımı eksik."
+msgstr[1] "%d kurulum adımı eksik."
 
 #: src/includes/Screens/DashboardScreen.php
 msgid "30 days"
@@ -3464,11 +3462,9 @@ msgstr "Kurulum"
 
 #: src/includes/Screens/TemplatesScreen.php
 msgid "%d published item."
-msgstr "%d yayımlanmış öğe."
-
-#: src/includes/Screens/TemplatesScreen.php
-msgid "%d published items."
-msgstr "%d yayımlanmış öğe."
+msgid_plural "%d published items."
+msgstr[0] "%d yayımlanmış öğe."
+msgstr[1] "%d yayımlanmış öğe."
 
 #: src/includes/Screens/Ui.php
 msgid "%1$d of %2$d recent posts scored"
@@ -4591,3 +4587,11 @@ msgstr "Bu işlem günlüğe kaydedilen 404 ziyaretlerini siler. Ziyaretçiler b
 #: includes/Screens/SettingsScreen.php:111 includes/Screens/SettingsScreen.php:112
 msgid "seconds"
 msgstr "saniye"
+
+#: includes/Rules/score-rules.json
+msgid "How this score is calculated"
+msgstr "Bu skor nasıl hesaplanır"
+
+#: includes/Rules/score-rules.json
+msgid "Post SEO score"
+msgstr "Yazı SEO skoru"
