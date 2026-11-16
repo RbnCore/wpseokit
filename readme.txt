@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 8.1
 Requires Plugins: adminkit
-Stable tag: 0.1.5
+Stable tag: 0.1.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,8 +77,10 @@ Settings, tables, post meta and the temporary update records are removed only if
 
 == Changelog ==
 
-= 0.1.5 =
+= 0.1.6 =
 * Change: the Yoast SEO warning and save messages appear in the AdminKit notification bell and dialog instead of boxes on the page.
+
+= 0.1.5 =
 * Security: the 404 log no longer keeps its address-hash key in the database; it is derived from the wp-config.php salts, so a leaked database dump cannot be used to reverse stored address hashes. Old hashes in the log are no longer comparable and age out with the normal retention.
 
 = 0.1.4 =

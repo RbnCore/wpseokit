@@ -7,7 +7,7 @@ WPSeoKit is an SEO toolkit for a single WordPress site: it writes the tags searc
 WPSeoKit does not work without the **AdminKit** plugin. Its header declares `Requires Plugins: adminkit`.
 
 - On WordPress 6.5 and later, WordPress refuses to activate WPSeoKit while AdminKit is missing or inactive.
-- A second check runs on every request: without AdminKit, or with an AdminKit older than core API level 1, WPSeoKit adds no hook, prints nothing and shows one admin notice with an "Activate AdminKit" or "Get AdminKit" link.
+- A second check runs on every request: without AdminKit, or with an AdminKit older than core API level 4, WPSeoKit adds no hook, prints nothing and shows one admin notice with an "Activate AdminKit" or "Get AdminKit" link.
 - Install and activate **AdminKit first**, then WPSeoKit.
 
 AdminKit supplies the RBN Kit menu, the admin interface kit, the shared log list, six cache groups (`wpseokit.probe`, `wpseokit.sitemap`, `wpseokit.llms`, `wpseokit.score`, `wpseokit.updates`, `wpseokit.maintenance`), four log channels (`wpseokit.activity`, `wpseokit.errors`, `wpseokit.updates`, `wpseokit.yoast`) and the network switch that decides whether WPSeoKit may ask GitHub for updates.
@@ -45,7 +45,7 @@ Site owners and editors who need SEO titles, descriptions, canonicals, a sitemap
 ## Installation
 
 1. Install and activate **AdminKit** first; WPSeoKit cannot be activated without it.
-2. Download `wpseokit-0.1.3.zip` from [Releases](https://github.com/RbnCore/wpseokit/releases).
+2. Download `wpseokit-0.1.6.zip` from [Releases](https://github.com/RbnCore/wpseokit/releases).
 3. In WordPress go to **Plugins → Add New → Upload Plugin**, choose the zip, install and activate.
 4. Open **RBN Kit → WPSeoKit** and run the setup check.
 5. Review the title and description templates in **Templates**, then save them.
@@ -90,7 +90,7 @@ The screens live under the shared **RBN Kit** top-level menu, just below Dashboa
 
 ## Version and license
 
-- Version 0.1.3
+- Version 0.1.6
 - License: GPL-2.0-or-later (see [LICENSE](LICENSE))
 - Text domain: `wpseokit`
 
